@@ -125,7 +125,7 @@ else
 end
 if isempty(MachineType)
     switch upper(SubMachineName)
-        case {'LTB', 'LB', 'BTS', 'BS', 'LT1', 'LT2', 'INJECTOR', 'LINAC', 'GUN', 'PTB'}
+        case {'LTB', 'LB', 'BTS', 'BS', 'LT1', 'LT2', 'INJECTOR', 'LINAC', 'GUN', 'PTB','TL','TL_SL','TL_OC','TL_SST2'}
             MachineType = 'Transport';
         case {'BOOSTER', 'BOOSTER RING', 'BR'}
             MachineType = 'Booster';

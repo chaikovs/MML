@@ -1,0 +1,100 @@
+
+(1) Files need to update with the real machine:
+
+Needs to active all links with TANGO...
+
+ --15/11/2013 
+
+  …/common/cycling/*
+   Thomxinit.m; setoperationmode.m;
+   Magnetcoefficients.m; k2amp.m; amp2k.m; bend2gev.m; gev2bend.m
+
+
+
+
+
+
+(2) 17/12/2013
+ .../mml/setpathmml.m
+
+correct with the Tango of ThomX...
+
+case 'TANGO'
+
+************
+
+
+**********************************************
+24/02/2014  Jianfeng Zhang @ LAL
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+NEED TO take a lot of time & special attentions 
+            to configure:  "magnetcoefficients.m",
+
+also need to check "bend2gev.m" & "gev2bend.m".
+
+ 
+
+---- There are two types of dipoles in the transfer line (TL),
+     BEND1, BEND2, (different length and bending angle.),
+     so there will be two type of B---> I.
+
+
+----- The magnetic field strength of dipoles in the ring are 
+      the same as BEND1 in TL.
+
+
+
+**********************************************
+---- 05/03/2014
+       In AT model, the TL dipoles are set up and read back
+       by the physics units [rad].
+       While the storage ring dipoles are set up and read 
+       back by the beam energy through "bend2gev.m" & "gev2bend.m". 
+      
+      The set up and read back of the TL dipoles needs to be 
+      checked in the connections through Tango. 
+  
+
+----    Need to check the basic values setting using MML 
+        through TANGO: 
+ 
+         setsp(), getsp() 
+
+         dipole, quadrupole, sextupole, kicker, BPM, etc.
+
+----   Set element properties using CHANEL names through TANGO.
+
+
+----
+09/04/2014 
+(1)
+    Test the machine mode in TLinit.m & thomxinit.m
+
+This is a very important command!!!!!!!!!!!
+
+
+(2) Need to set the crunch & roll parameters of BPMs in the future...
+
+-----
+
+!!!!!!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 2018 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+(2) 17/08/2018
+
+ .../mml/setpathmml.m  ===>>> add case TANGO and check!
+ .../mml/setpaththomx.m
+
+../machine/THOMX
+
+/Users/ichaikov/Documents/MATLAB/MML_v1/machine/THOMX/StorageRing
+aoinit
+setoperationalmode  =>>> clean the file from SOLEIL cases + magnetcoeff
+updateatindex
+AT lattice file
+
+
+
+

@@ -1,7 +1,7 @@
 function [AM, tout, DataTime, ErrorFlag] = getpvmodel(varargin)
 %GETPVMODEL - Get the model value
-%  [Value, tout, DataTime, ErrorFlag] = getpvmodel(Family, Field, DeviceList, t)
-%  [Value, tout, DataTime, ErrorFlag] = getpvmodel(Family, DeviceList, t)
+%   [Value, tout, DataTime, ErrorFlag] = getpvmodel(Family, Field, DeviceList, t)
+%   [Value, tout, DataTime, ErrorFlag] = getpvmodel(Family, DeviceList, t)
 %  [Value, tout, DataTime, ErrorFlag] = getpvmodel(DataStructure, t)
 %
 %  INPUTS
@@ -22,8 +22,8 @@ function [AM, tout, DataTime, ErrorFlag] = getpvmodel(varargin)
 %             'DX' or 'XShift' - for a magnet shift (see setshift)
 %             'ClosedOrbit' - [x Px y Py dP dL] (dL is only calculated if the cavity is on)
 %
-%             'xTurns', 'PxTurns', 'yTurns', 'PyTurns', dpTurns', 'dLTurns' (single turn data) ("BPM" Number x N turns)
-%             'FirstTurn' or 'LinePass' - 6-dimensional first turn (single pass)
+%             'xTurns', 'PxTurns', 'yTurns', 'PyTurns', dpTurns', 'dLTurns' (single turn data) (BPM Number x N turns)
+%             'FirstTurn' - 6-dimensional first turn or single pass
 %             'Turns' - 3 dimensional matrix (BPM Number x N turns x 6)
 %             Note: Units can only be 'Physics' for these field types.  'xTurns' or 'yTurns' can
 %                   be converted to 'Hardware' units by calling physics2hw as a separate call.
@@ -45,25 +45,51 @@ function [AM, tout, DataTime, ErrorFlag] = getpvmodel(varargin)
 %
 %  NOTES
 %  1. If Family is a cell array, then DeviceList and Field can also be a cell arrays
-%
-%  See also getpv, setpvmodel
 
-%  Written by Greg Portmann
+%
+%  Written by Gregory J. Portmann
+% Revisions
+% January 25, 2005 Laurent S. Nadolski
+% ATparamgroup part modified to handle structure
+% February 2005: BEND return always an energy (??? commented in 2007)
+% 12/12/05 BPMx, BPMz, HCOR and VCOR getroll and getcrunch commented since too slow
+% add in bpm and corrector other names (machine dependent?)
+%
+%
+% Jianfeng Zhang @ LAL, 07/10/2013
+%   Need to customized for ThomX in the future...(with the real devices (mangets...),
+%    bend2gev.m, gev2bend.m, k2amp.m, amp2k,m, etc. and other parameters)
+% 
+% Jianfeng Zhang @ LAL, 05/03/2014
+%    Return the TL dipole bending angles, while still to return 
+%    the corresponding energy of the dipoles in storage ring.
+%
+% Jianfeng Zhang @ LAL, 09/04/2014
+%  Get the correct orbits at the position of BPMs in the transfer line.
+%  Maybe there is a potential bug for the multi-turn pass of the transfer line???
+%%
 
 
 global THERING THERINGCELL
 
+GCRFlag = 1; % Activate Gain Crunch Roll compulation 
+
 ErrorFlag = 0;
 
+% Active NoiseFlag if BPM in Simulation mode (AO)
+NoiseFlag = getfamilydata('BPMx','Simulated','NoiseActivated') | ...
+    getfamilydata('BPMz','Simulated','NoiseActivated');
+BPMsigma = 1e-6;
+ 
 % Input parsing
 StructOutputFlag = 0;
 NumericOutputFlag = 0;
 UnitsFlag = {};
 for i = length(varargin):-1:1
     if isstruct(varargin{i})
-        % Ignor structures
+        % Ignore structures
     elseif iscell(varargin{i})
-        % Ignor cells
+        % Ignore cells
     elseif strcmpi(varargin{i},'struct')
         StructOutputFlag = 1;
         varargin(i) = [];
@@ -71,8 +97,11 @@ for i = length(varargin):-1:1
         NumericOutputFlag = 1;
         StructOutputFlag = 0;
         varargin(i) = [];
-    elseif strcmpi(varargin{i},'simulator') || strcmpi(varargin{i},'model') || strcmpi(varargin{i},'Online') || strcmpi(varargin{i},'Manual')
-        % Remove and ignor
+    elseif strcmpi(varargin{i},'Simulator') || ...
+            strcmpi(varargin{i},'Model')  || ...
+            strcmpi(varargin{i},'Online') || ...
+            strcmpi(varargin{i},'Manual')
+        % Remove and ignore
         varargin(i) = [];
     elseif strcmpi(varargin{i},'physics')
         UnitsFlag = {'Physics'};
@@ -214,7 +243,7 @@ if isempty(DeviceList)
 else
     if isfamily(Family)
         if (size(DeviceList,2) == 1)
-            DeviceList = elem2dev(Family, Field, DeviceList);
+            DeviceList = elem2dev(Family, DeviceList);
         end
     end
 end
@@ -226,16 +255,21 @@ else
 end
 
 
-% Simulator (AT)
-if isempty(THERING)
-    %error('Simulator variable is not setup properly.');
-    JustPassItThroughFlag = 1;
-else
-    JustPassItThroughFlag = 0;
+%% set the field properties of BPM in AT
+   % by Jianfeng Zhang @ LAL, 09/04/2014
+
+submachinetype = getfamilydata('SubMachine');
+ %Modif le 8/01/2015 SC/CB, LAL pour prise en compte de toutes les
+       %structures type transport, et pas seulement TL.
+if(any(strcmpi(Family,{'BPMx','BPMz','BPMy'}))&&...
+        istransport)
+%        any(strcmpi(submachinetype,{'TL','Transport'})))
+
+    Field = 'linepass';
+    UnitsFlag = 'Physics';
 end
 
-
-% Look to see it the AT model needs to be changed for this family
+%% Look to see it the AT model needs to be changed for this family
 ATModelNumber = getfamilydata(Family, 'AT', 'ATModel');
 if ~isempty(ATModelNumber)
     % Change THERING
@@ -264,37 +298,46 @@ if ~isempty(ATModelNumber)
     end
 end
 
+
+% Simulator (AT)
+if isempty(THERING)
+    error('Simulator variable is not setup properly.');
+end
+
+
 t0 = gettime;
 
 %%%%%%%%%%%%
 % Get Data %
 %%%%%%%%%%%%
 
+% 20 hour lifetime, refill at midnight to 500 mamps
+tau = 20;
+BeamCurrent = 500;
+
+    
 % Families that do not require at AT field
-if JustPassItThroughFlag
-    AM = 0 * randn(size(DeviceList,1),1);
-elseif strcmp(Family, 'TUNE')
+if strcmp(Family, 'TUNE')
     AM = modeltune;
 
     % Add random errors
     %AM = Tune1' + rand(2,1)*.0001;
 
 elseif strcmp(Family, 'RF')
-    
+
     iCavity = findcells(THERING,'Frequency');
-    if isempty(iCavity)
-        [HarmNumber, AM] = getharmonicnumber;
-        AM = AM * 1e6;
-    else
-        AM = THERING{iCavity(1)}.Frequency;
-    end
-    
+    AM = THERING{iCavity(1)}.Frequency;
+
 elseif strcmpi(Family, 'DCCT')
 
-    % 6 hour lifetime, refill at midnight to 1000 mamps
-    tau = 6;
     a = clock;
-    AM = 1000 * exp(-(60*60*a(4)+60*a(5)+a(6))/tau/60/60);
+    AM = BeamCurrent * exp(-(60*60*a(4)+60*a(5)+a(6))/tau/60/60);
+
+elseif strcmpi(Family, 'LifeTime')
+
+    % 12 hour lifetime, refill at midnight to 500 mamps
+    AM = tau;
+    a = clock;
     
 elseif any(strcmpi(Family,{'Energy','GeV'}))
     
@@ -338,92 +381,40 @@ elseif strcmp(Family, 'TwissData')
 else
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Families that require an AT field %
-    %%%%%%%%%%%%%%%%%%%%%%\%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Find the index for where the desired data is in the total device list
     if isfamily(Family)
         DeviceListTotal = family2dev(Family, 0);
         [DeviceIndex, iNotFound] = findrowindex(DeviceList, DeviceListTotal);
-        if ~isempty(iNotFound)
+        if length(iNotFound) > 0
             % Device not found
             for i = 1:length(iNotFound)
                 fprintf('   No devices to get for Family %s(%d,%d)\n', Family, DeviceList(i,1), DeviceList(i,2));
             end
             error(sprintf('%d Devices not found', length(iNotFound)));
         end
-        
+
         % Find the AT structure if it exists
         AT = getfamilydata(Family, Field, 'AT');
-        if isempty(AT) && any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback'}))
-            % Try to defer the setpoint and monitor field to main family AT field
-            AT = getfamilydata(Family, 'AT');
-        end
         if isempty(AT)
-            % Look for Family in the AT-model
-            ATIndex = findcells(THERING, 'FamName', Family);
-            if ~isempty(ATIndex)
-                % Field becomes the sub-structure of the AT-model
-                AT.ATType = Field;
+            if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback'}))
+                AT = getfamilydata(Family, 'AT');
+                if isempty(AT)
+                    % AT.ATType must be defined
+                    %warning('Simulator not setup for %s.%s family (data filled with NaN)\n', Family, Field);
+                    fprintf('WARNING: Simulator not setup for %s.%s family (data filled with NaN)\n', Family, Field);
+                    AM = NaN * ones(length(DeviceIndex),1);
+                    tout = gettime - t0;
+                    ErrorFlag = 1;
+                    DataTime = 0+0*sqrt(-1);
+                    return
+                end
             else
-                % Make a new field
-                if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback'}))
-                    Field = 'Setpoint';
-                end
-                % Look for a model field
-                Model = getfamilydata(Family, Field, 'Model');
-                if isempty(Model)
-                    AM = zeros(size(DeviceList,1),1);
-                    %AM = NaN * zeros(size(DeviceList,1),1);
-                    %AM = randn(size(DeviceList,1),1)/1e6;  % Noise on model???                    
-                else
-                    AM = Model.Data(DeviceIndex);  % Physics units
-
-                    % Change to hardware units if requested
-                    if strcmpi(UnitsFlag, 'Hardware')
-                        AM = physics2hw(Family, Field, AM, DeviceList, getenergymodel);
-                    else
-                        UnitsFlag = 'Physics';
-                    end
-                end
-
-                % Expand if there is a time vector input
-                if length(t) > 1
-                    AM(:,1:length(t)) = AM * ones(1,length(t));
-                    tout(1,1:length(t)) = t + gettime - t0;
-                    DataTime(1:size(AM,1),1:length(t)) = fix(t0) + rem(t0,1)*1e9*sqrt(-1);
-                else
-                    tout = t + gettime - t0;
-                    DataTime = fix(t0) + rem(t0,1)*1e9*sqrt(-1);
-                end
-
-                %%%%%%%%%%%%%%%%%%%%%
-                % Structure Outputs %
-                %%%%%%%%%%%%%%%%%%%%%
-                if StructOutputFlag
-                    % Structure output for channel name method
-                    AM.Data = AM;
-                    AM.FamilyName = Family;
-                    AM.Field = Field;
-                    AM.DeviceList = DeviceList;
-                    AM.Mode = 'Simulator';
-                    AM.t = t;           % Matlab time at start of measurement
-                    AM.tout = tout;     % Matlab time at  end  of measurement
-                    AM.DataTime = DataTime;
-                    AM.TimeStamp = clock;
-                    AM.Units = UnitsFlag;
-                    if strcmpi(AM.Units,'Hardware')
-                        AM.UnitsString = getfamilydata(Family, Field, 'HWUnits');
-                    else
-                        AM.UnitsString = getfamilydata(Family, Field, 'PhysicsUnits');
-                    end
-                    AM.DataDescriptor = [];
-                    AM.CreatedBy = 'getpvmodel';
-                end
-                return
+                AT.ATType = Field;
             end
         end
-
-
+        
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % Special function for simulator %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -476,11 +467,10 @@ else
     else
         % Look for an AT family
         if strcmpi(Family, 'All')
-            AT.ATIndex = 1:length(THERING);
+            AT.ATIndex = (1:length(THERING))';
         else
             AT.ATIndex = findcells(THERING, 'FamName', Family);
         end
-        AT.ATIndex = AT.ATIndex(:);
         DeviceIndex = 1:length(AT.ATIndex);
         if isempty(DeviceList)
             DeviceList = [ones(length(DeviceIndex),1) DeviceIndex(:)];
@@ -493,7 +483,13 @@ else
     if isfield(AT, 'ATParameterGroup')
         ATIndexList = AT.ATIndex(DeviceIndex,1);  % Only use the first column
         for i = 1:size(DeviceList,1)
-            if iscell(AT.ATParameterGroup)
+            if isstruct(AT.ATParameterGroup)
+                % Introduced for SOLEIL
+                PGField = AT.ATParameterGroup(1).FieldName;
+                AM(i,1) = getfield(THERING{ATIndexList(1)}, PGField, ...
+                    AT.ATParameterGroup(1).FieldIndex);
+
+            elseif iscell(AT.ATParameterGroup)
                 % If cell, get the parameter group
                 % Note:  this only works if the first FieldName sets the group parameter value
                 PGField = AT.ATParameterGroup{DeviceIndex(i)}(1).FieldName;
@@ -537,85 +533,81 @@ else
             DataTime = 0+0*sqrt(-1);
             return;
         end
-
+        
 
         % Switch on simulation method
-        if any(strcmpi(AT.ATType, {'x','BPMx','Horizontal','y','BPMy','z','BPMz','Vertical','ClosedOrbit'}))
+        if any(strcmpi(AT.ATType, {'x','BPMx','Horizontal','y','BPMy', 'z','BPMz','Vertical','ClosedOrbit'}))
             % Need to consider AT 'x' at say Family='Quad' -> rolls etc?
             [ATIndexList, isort] = sort(ATIndexList);
-            
-            if istransport
-                % Initial launch condition
-                TwissData = getpvmodel('TwissData');
-                x0 = [TwissData.ClosedOrbit(:); TwissData.dP; TwissData.dL];
-                Orbit = linepass(THERING, x0, ATIndexList);
+
+            [CavityState, PassMethod, iCavity] = getcavity;
+            if isempty(CavityState)
+                % No cavity in AT model
+                if isradiationon
+                    fprintf('   Turning radiation off since there is no RF cavity.\n');
+                    setradiation off;
+                end
+                Orbit = findsyncorbit(THERING, 0, ATIndexList);
             else
-                [CavityState, PassMethod, iCavity] = getcavity;
-                if isempty(CavityState)
-                    % No cavity in AT model
-                    if isradiationon
-                        fprintf('   Turning radiation off since there is no RF cavity.\n');
-                        setradiation off;
+                if strcmpi(deblank(CavityState(1,:)), 'On') || isradiationon
+                    % findorbit6 recommended when cavity or radiation is on
+                    if strcmpi(deblank(CavityState(1,:)), 'Off')
+                        % Turn off cavity in AT model
+                        fprintf('   Turning the RF cavity on, since radiation is on.\n');
+                        setcavity('On');
                     end
-                    Orbit = findsyncorbit(THERING, 0, ATIndexList);
+                    Orbit = findorbit6(THERING, ATIndexList);
                 else
-                    if strcmpi(deblank(CavityState(1,:)), 'On') || isradiationon
-                        % findorbit6 recommended when cavity or radiation is on
-                        if strcmpi(deblank(CavityState(1,:)), 'Off')
-                            % Turn off cavity in AT model
-                            fprintf('   Turning the RF cavity on, since radiation is on.\n');
-                            setcavity('On');
-                        end
-                        Orbit = findorbit6(THERING, ATIndexList);
-                    else
-                        % Cavity is off in AT model
-                        %setcavity('Off');
+                    % Cavity is off in AT model
+                    %setcavity('Off');
 
-                        % This is a way to simulate the effect of the RF without a cavity
-                        C = 2.99792458e8;  % delta for non relativistic cases???
-                        CavityFrequency  = THERING{iCavity(1)}.Frequency;
-                        CavityHarmNumber = THERING{iCavity(1)}.HarmNumber;
-                        L = findspos(THERING,length(THERING)+1);   % getfamilydata('Circumference')
-                        f0 = C * CavityHarmNumber / L;
-                        DeltaRF = CavityFrequency - f0;   % Hz
-                        %Orbit = findsyncorbit(THERING, -C*DeltaRF*CavityHarmNumber/CavityFrequency^2, ATIndexList);
+                    % This is a way to simulate the effect of the RF without a cavity
+                    C = 2.99792458e8;
+                    CavityFrequency  = THERING{iCavity(1)}.Frequency;
+                    CavityHarmNumber = THERING{iCavity(1)}.HarmNumber;
+                    L = findspos(THERING,length(THERING)+1);   % getfamilydata('Circumference')
+                    f0 = C * CavityHarmNumber / L;
+                    DeltaRF = CavityFrequency - f0;   % Hz
+                    Orbit = findsyncorbit(THERING, -C*DeltaRF*CavityHarmNumber/CavityFrequency^2, ATIndexList);
+                    %Orbit = findsyncorbit(THERING, 0, ATIndexList);
 
-                        %%Orbit = findsyncorbit(THERING, 0, ATIndexList);
-                        %Orbit = findorbit4(THERING, -C*DeltaRF*CavityHarmNumber/CavityFrequency^2, ATIndexList);
-                        % Reset cavity PassMethod
-                        %setcavity(PassMethod);
-
-                        Orbit = findsyncorbit(THERING, -C*DeltaRF*CavityHarmNumber/CavityFrequency^2, 1:length(THERING)+1);
-                        Orbit = Orbit(:,ATIndexList);
-                    end
+                    % Reset cavity PassMethod
+                    %setcavity(PassMethod);
                 end
             end
+
             if any(strcmpi(AT.ATType, {'x','BPMx','Horizontal'}))
 
                 % Roll and Crunch are corrected here (BPM gain errors are corrected in real2raw/raw2real)
                 if isfamily(Family, Field)
                     % Only corrector for gain/roll errors is using a ML family
                     % Roll and Crunch are corrected here (BPM gain errors are corrected in real2raw/raw2real)
-                    %NDevices = length(ATIndexList);
-                    %GCR = zeros(NDevices,4);
-                    %GCR(:,1) = getcellstruct(THERING(ATIndexList), 'GCR', 1:NDevices, 1);
-                    %GCR(:,2) = getcellstruct(THERING(ATIndexList), 'GCR', 1:NDevices, 2);
-                    %GCR(:,3) = getcellstruct(THERING(ATIndexList), 'GCR', 1:NDevices, 3);
-                    %GCR(:,4) = getcellstruct(THERING(ATIndexList), 'GCR', 1:NDevices, 4);
-                    for i = 1:length(ATIndexList)
+                    NDevices = length(ATIndexList);
+                    for i = 1:NDevices,
                         if isfield(THERING{ATIndexList(i)}, 'GCR')
                             GCR(i,:) = THERING{ATIndexList(i)}.GCR;
                         else
-                            %GCR(i,:) = [1 1 0 0];  % [Gx Gy Crunch Roll]
-                            Crunch = getcrunch(Family, Field, DeviceList(i,:));
-                            Roll = getroll(Family, Field, DeviceList(i,:));
-                            %m = gcr2loco(1, 1, Crunch, Roll);
-                            GCR(i,:) = [1 1 Crunch Roll];
+                            if GCRFlag
+                                if i == 1 
+                                    Crunch = getcrunch(Family, Field, DeviceList);
+                                    Roll = getroll(Family, Field, DeviceList);
+                                end
+                                m = gcr2loco(1, 1, Crunch(i), Roll(i));
+                                GCR(i,:) = [1 1 Crunch(i) Roll(i)]; 
+                            else % Laurent
+                                GCR(i,:) = [1 1 0 0];
+                            end
                         end
                     end
 
-                    x = Orbit(1,:)';
-                    y = Orbit(3,:)';
+                    x = Orbit(1,:)'; %meters
+                    y = Orbit(3,:)'; %meters
+                    
+                   
+                    if NoiseFlag
+                        x = x + randncut(size(x))*BPMsigma;
+                        y = y + randncut(size(y))*BPMsigma;
+                    end
 
                     AM = ((x - GCR(:,3) .* y) .* cos(GCR(:,4)) + (y + GCR(:,3) .* x) .* sin(GCR(:,4))) ./ sqrt(1-GCR(:,3).^2);
 
@@ -629,7 +621,7 @@ else
                     AM = Orbit(1,:)';
                 end
 
-            elseif any(strcmpi(AT.ATType, {'y','BPMy','z','BPMz','Vertical'}))
+            elseif any(strcmpi(AT.ATType, {'y','BPMy', 'z', 'BPMz', 'Vertical'}))
 
                 if isfamily(Family, Field)
                     % Only corrector for gain/roll errors is using a ML family
@@ -638,16 +630,28 @@ else
                         if isfield(THERING{ATIndexList(i)}, 'GCR')
                             GCR(i,:) = THERING{ATIndexList(i)}.GCR;
                         else
-                            %GCR(i,:) = [1 1 0 0];  % [Gx Gy Crunch Roll]
-                            Crunch = getcrunch(Family, Field, DeviceList(i,:));
-                            Roll = getroll(Family, Field, DeviceList(i,:));
-                            %m = gcr2loco(1, 1, Crunch, Roll);
-                            GCR(i,:) = [1 1 Crunch Roll];
+                            if GCRFlag
+                                GCR(i,:) = [1 1 0 0];  % [Gx Gy Crunch Roll]
+                                if i == 1
+                                    Crunch = getcrunch(Family, Field, DeviceList); %Laurent
+                                    Roll = getroll(Family, Field, DeviceList); % Laurent
+                                end
+                                m = gcr2loco(1, 1, Crunch(i), Roll(i));
+                                GCR(i,:) = [1 1 Crunch(i) Roll(i)];
+                            else % Laurent
+                                GCR(i,:) = [1 1 0 0];
+                            end
                         end
                     end
 
                     x = Orbit(1,:)';
                     y = Orbit(3,:)';
+                    
+                    if NoiseFlag
+                        x = x + randn(size(x))*1e-7;
+                        y = y + randn(size(y))*1e-7;
+                    end
+
 
                     AM = ((y - GCR(:,3) .* x) .* cos(GCR(:,4)) - (x + GCR(:,3) .* y) .* sin(GCR(:,4))) ./ sqrt(1-GCR(:,3).^2);
 
@@ -667,9 +671,9 @@ else
             AM(isort,:) = AM;
 
             % Add noise to the BPMs
-            %AM = AM + .1e-6*randn(size(AM));  % .1 microns
+            %AM = AM + .1e-6*randn(size(AM));
 
-        elseif strcmpi(AT.ATType, 'HCM')
+        elseif any(strcmpi(AT.ATType, {'HCM', 'HCOR', 'FHCOR', 'CH'}))
 
             if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback','Kick'}))
                 % Bending Angle (Radians)
@@ -681,32 +685,30 @@ else
                         Roll = THERING{ATIndexList(i)}.Roll;
                     else
                         % Knowing the cross-plane family name can be a problem
-                        % If the VCM family has the same AT index, then use it.
-                        try
-                            VCMFamily = getvcmfamily;
-                            Roll = [getroll(Family, Field, DeviceList(i,:))  0];
-                            VCMDevList = family2dev(VCMFamily);
-                            iVCM = findrowindex(DeviceList(i,:), VCMDevList);
-                            if ~isempty(iVCM)
-                                ATIndexVCM = family2atindex(VCMFamily, DeviceList(i,:));
-                                if ATIndexVCM == ATIndexList(i)
-                                    Roll = [Roll(1) getroll(VCMFamily, Field, DeviceList(i,:))];
-                                else
-                                    Roll = [0 0];
+                        % If the HCM family has the same AT index, then use it.
+                        if GCRFlag
+                            try
+                                %HCMFamily = gethcmfamily;
+                                HCMFamily = 'HCOR';
+                                Roll = [0 getroll(Family, Field, DeviceList(i,:))];
+                                HCMDevList = family2dev(HCMFamily);
+                                iHCM = findrowindex(DeviceList(i,:), HCMDevList);
+                                if ~isempty(iHCM)
+                                    ATIndexHCM = family2atindex(HCMFamily, DeviceList(i,:));
+                                    if ATIndexHCM == ATIndexList(i)
+                                        Roll = [getroll(HCMFamily, Field, DeviceList(i,:)) Roll(2)];
+                                    else
+                                        Roll = [0 0];
+                                    end
                                 end
+                            catch
+                                Roll = [0 0];
                             end
-                        catch
+                        else
                             Roll = [0 0];
                         end
                     end
-                    
-                    if isfield(THERING{ATIndexList(i)}, 'KickAngle')
-                        k = THERING{ATIndexList(i)}.KickAngle(:);
-                    else
-                        k = [THERING{ATIndexList(i)}.PolynomB(1); THERING{ATIndexList(i)}.PolynomA(1)];
-                    end
-                    
-                    AM(i,1) = [cos(Roll(2)) sin(Roll(2))] * k / (cos(Roll(1)-Roll(2)));
+                    AM(i,1) = [cos(Roll(2)) sin(Roll(2))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));                    
 
                     if size(AT.ATIndex,2) > 1
                         AM(i,1) = Nsplits(i) * AM(i,1);
@@ -725,7 +727,11 @@ else
                 end
             end
 
-        elseif strcmpi(AT.ATType, 'VCM')
+                      
+        elseif any(strcmpi(AT.ATType, {'PZ'}))
+                AM = scriptSOFB_XBPM('Model', DeviceList);
+        
+        elseif any(strcmpi(AT.ATType, {'VCM', 'VCOR', 'FVCOR', 'CV'}))
 
             if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback','Kick'}))
                 % Bending Angle (Radians)
@@ -736,33 +742,32 @@ else
                     if isfield(THERING{ATIndexList(i)}, 'Roll')
                         Roll = THERING{ATIndexList(i)}.Roll;
                     else
-                        % Knowing the cross-plane family name can be a problem
+                  % Knowing the cross-plane family name can be a problem
                         % If the VCM family has the same AT index, then use it.
                         try
-                            HCMFamily = getvcmfamily;
-                            Roll = [0 getroll(Family, Field, DeviceList(i,:))];
-                            HCMDevList = family2dev(HCMFamily);
-                            iHCM = findrowindex(DeviceList(i,:), HCMDevList);
-                            if ~isempty(iHCM)
-                                ATIndexHCM = family2atindex(HCMFamily, DeviceList(i,:));
-                                if ATIndexHCM == ATIndexList(i)
-                                    Roll = [getroll(HCMFamily, Field, DeviceList(i,:)) Roll(2)];
-                                else
-                                    Roll = [0 0];
+                            if GCRFlag
+                                %VCMFamily = getvcmfamily;
+                                VCMFamily = 'VCOR';
+                                Roll = [getroll(Family, Field, DeviceList(i,:))  0];
+                                VCMDevList = family2dev(VCMFamily);
+                                iVCM = findrowindex(DeviceList(i,:), VCMDevList);
+                                if ~isempty(iVCM)
+                                    ATIndexVCM = family2atindex(VCMFamily, DeviceList(i,:));
+                                    if ATIndexVCM == ATIndexList(i)
+                                        Roll = [Roll(1) getroll(VCMFamily, Field, DeviceList(i,:))];
+                                    else
+                                        Roll = [0 0];
+                                    end
                                 end
+                            else
+                                Roll = [0 0];
                             end
-                        catch
+                        catch err
                             Roll = [0 0];
-                        end
+                        end                        
                     end
-                    
-                    if isfield(THERING{ATIndexList(i)}, 'KickAngle')
-                        k = THERING{ATIndexList(i)}.KickAngle(:);
-                    else
-                        k = [THERING{ATIndexList(i)}.PolynomB(1); THERING{ATIndexList(i)}.PolynomA(1)];
-                    end
-                    
-                    AM(i,1) = [-sin(Roll(1)) cos(Roll(1))] * k / (cos(Roll(1)-Roll(2)));
+
+                    AM(i,1) = [-sin(Roll(1)) cos(Roll(1))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
 
                     if size(AT.ATIndex,2) > 1
                         AM(i,1) = Nsplits(i) * AM(i,1);
@@ -802,7 +807,7 @@ else
             % Add noise
             %AM = AM + 1e-3*randn(length(AM),1);
 
-        elseif any(strcmpi(AT.ATType,{'K3','OCTU','Octupole'}))
+        elseif any(strcmpi(AT.ATType,{'K3','Octupole'}))
             % Octupole
             for i = 1:length(ATIndexList)
                 AM(i,1) = THERING{ATIndexList(i)}.PolynomB(4);
@@ -810,7 +815,7 @@ else
             % Add noise
             %AM = AM + 1e-3*randn(length(AM),1);
 
-        elseif any(strcmpi(AT.ATType,{'KS','KS1','SkewQ','SkewQuad'}))
+        elseif any(strcmpi(AT.ATType,{'KS','KS1','SkewQ','SkewQuad', 'QT'}))
             % SkewQuad
             for i = 1:length(ATIndexList)
                 AM(i,1) = THERING{ATIndexList(i)}.PolynomA(2);
@@ -820,11 +825,24 @@ else
 
         elseif strcmpi(AT.ATType, 'BEND')
             % BEND
-            for i = 1:length(ATIndexList)
-                AM(i,1) = THERING{ATIndexList(i)}.BendingAngle;
+           
+            % return the TL bending angle while energy in storage ring
+            %  by Jianfeng Zhang @ LAL, 05/03/2014
+            machinetype = getfamilydata('SubMachine');
+            
+            if(any(strcmpi(submachinetype,{'TL','Transport'})))
+               for i = 1:length(ATIndexList) 
+                 AM(i,1) = THERING{ATIndexList(i)}.BendingAngle;
+               end
+               
+               UnitsFlag = 'Physics';
+               fprintf('The machine type is: %s. \nThe bending angles are returned in physics unit [rad]', machinetype);
+            else
+                % Modif: Laurent to be consistent, has to return an energy
+                for i = 1:length(ATIndexList) 
+                 AM(i,1) = getenergymodel;
+                end
             end
-            % Add noise
-            %AM = AM + 1e-3*randn(length(AM),1);
 
         elseif strcmpi(AT.ATType, 'Photon BPM')
             % Spear only
@@ -919,17 +937,13 @@ else
                 end
             end
 
-        elseif any(strcmpi(AT.ATType,{'FirstTurn','LinePass','Turns', 'xTurns','PxTurns','yTurns','PyTurns','dPTurns','dLTurns'}))
+        elseif any(strcmpi(AT.ATType,{'FirstTurn','linepass','Turns', 'xTurns','PxTurns','yTurns','PyTurns','dPTurns','dLTurns'}))
             % Turn-by-turn data
-            
+
             Nturns = round(max(abs(t)));  % getfamilydata('NTURNS');
             t = Nturns; % Just incase it changed
             if isempty(Nturns) || Nturns < 1
-                if any(strcmpi(AT.ATType,{'Turns', 'xTurns','PxTurns','yTurns','PyTurns','dPTurns','dLTurns'}))
-                    Nturns = 50;
-                else
-                    Nturns = 1;
-                end
+                Nturns = 1;
             end
 
             % Initial launch condition
@@ -959,24 +973,14 @@ else
                 error('Tracking failed due to beam loss.');
             end
             
-            if any(strcmpi(AT.ATType,{'FirstTurn', 'LinePass'}))
-                if size(AM,2) == 1
-                    AM = squeeze(AM(:,:,1:6));
-                end
-            elseif any(strcmpi(AT.ATType,{'Turns'}))
-                %if size(AM,2) == 1
-                %    AM = squeeze(AM(:,:,1:6));
-                %end
+            if any(strcmpi(AT.ATType,{'FirstTurn', 'linepass', 'Turns'}))
+                %AM = squeeze(AM(:,:,1:6));
             elseif strcmpi(AT.ATType,'xTurns')
                 AM = squeeze(AM(:,:,1));
-                % Add noise to the BPMs
-                %AM = AM + .1e-6*randn(size(AM));  % .1 microns
             elseif strcmpi(AT.ATType,'PxTurns')
                 AM = squeeze(AM(:,:,2));
             elseif strcmpi(AT.ATType,'yTurns')
                 AM = squeeze(AM(:,:,3));
-                % Add noise to the BPMs
-                %AM = AM + .1e-6*randn(size(AM));  % .1 microns
             elseif strcmpi(AT.ATType,'PyTurns')
                 AM = squeeze(AM(:,:,4));
             elseif strcmpi(AT.ATType,'dPTurns')
@@ -988,15 +992,145 @@ else
             end
             
             %if size(AM, 1) ~= length(ATIndexList)
-            %if size(AM, 2) ~= Nturns
-            %    AM = AM';
-            %end
+            if size(AM, 2) ~= Nturns
+                AM = AM';
+            end
             
             % Gain/Roll coordinate change???
 
             % Add noise
             %AM = AM + 1e-3*randn(length(AM),1);
 
+            
+            
+            %
+            % Modified by Jianfeng Zhang @ LAL, 09/04/2014
+            % to get the correct orbit of the BPMs at the transfer line
+            % using the functions: getam('BPMx/z') & getx/y.
+            % 
+            % Need to set the corrector crunch & roll values of the BPMs
+            % in the future...
+            %
+            % get the horizontal orbit at the horizontal BPM
+             %Modif le 8/01/2015 SC/CB, LAL pour prise en compte de toutes les
+       %structures type transport, et pas seulement TL.
+           if(any(strcmpi(Family,{'BPMx'}))&& istransport)%any(strcmpi(submachinetype,{'TL','Transport'})))
+                    
+                       % Roll and Crunch are corrected here (BPM gain errors are corrected in real2raw/raw2real)
+               
+                       % Only corrector for gain/roll errors is using a ML family
+                       % Roll and Crunch are corrected here (BPM gain errors are corrected in real2raw/raw2real)
+
+                        [ATIndexList, isort] = sort(ATIndexList);
+                    
+                    NDevices = length(ATIndexList);
+                    for i = 1:NDevices,
+                        if isfield(THERING{ATIndexList(i)}, 'GCR')
+                            GCR(i,:) = THERING{ATIndexList(i)}.GCR;
+                        else
+                            if GCRFlag
+                                if i == 1 
+                                    Crunch = getcrunch(Family, Field, DeviceList);
+                                    Roll = getroll(Family, Field, DeviceList);
+                                end
+                                m = gcr2loco(1, 1, Crunch(i), Roll(i));
+                                GCR(i,:) = [1 1 Crunch(i) Roll(i)]; 
+                            else % Laurent
+                                GCR(i,:) = [1 1 0 0];
+                            end
+                        end
+                    end
+
+                    x = AM(:,:,1); %meters
+                    y = AM(:,:,3); %meters
+                    
+                   
+                    if NoiseFlag
+                        x = x + randncut(size(x))*BPMsigma;
+                        y = y + randncut(size(y))*BPMsigma;
+                    end
+
+                    AM = ((x - GCR(:,3) .* y) .* cos(GCR(:,4)) + (y + GCR(:,3) .* x) .* sin(GCR(:,4))) ./ sqrt(1-GCR(:,3).^2);
+
+                    % Same as:
+                    %Crunch = GCR(:,3);
+                    %Roll = GCR(:,4);
+                    %a = ( Crunch .* sin(Roll) + cos(Roll)) ./ sqrt(1 - Crunch.^2);
+                    %b = (-Crunch .* cos(Roll) + sin(Roll)) ./ sqrt(1 - Crunch.^2);
+                    %AM = a .* x + b .* y;
+%                 else
+%                     AM = Orbit(1,:)';
+%                
+            
+    AM(isort,:) = AM;
+
+           end
+            
+           
+        
+                    
+       % get the vertical orbit at the bpms of the transfer line
+       %Modif le 8/01/2015 SC/CB, LAL pour prise en compte de toutes les
+       %structures type transport, et pas seulement TL.
+if(any(strcmpi(Family,{'BPMz','BPMy'}))&& istransport)% any(strcmpi(submachinetype,{'TL','Transport'})))
+              %  if isfamily(Family, Field)
+                    % Only corrector for gain/roll errors is using a ML family
+                    % Roll and Crunch are corrected here (BPM gain errors are corrected in real2raw/raw2real)
+                 
+                    [ATIndexList, isort] = sort(ATIndexList);
+                    
+                    for i = 1:length(ATIndexList)
+                        if isfield(THERING{ATIndexList(i)}, 'GCR')
+                            GCR(i,:) = THERING{ATIndexList(i)}.GCR;
+                        else
+                            if GCRFlag
+                                GCR(i,:) = [1 1 0 0];  % [Gx Gy Crunch Roll]
+                                if i == 1
+                                    Crunch = getcrunch(Family, Field, DeviceList); %Laurent
+                                    Roll = getroll(Family, Field, DeviceList); % Laurent
+                                end
+                                m = gcr2loco(1, 1, Crunch(i), Roll(i));
+                                GCR(i,:) = [1 1 Crunch(i) Roll(i)];
+                            else % Laurent
+                                GCR(i,:) = [1 1 0 0];
+                            end
+                        end
+                    end
+
+                    x = AM(:,:,1);
+                    y = AM(:,:,3);
+                    
+                    if NoiseFlag
+                        x = x + randn(size(x))*1e-7;
+                        y = y + randn(size(y))*1e-7;
+                    end
+
+
+                    AM = ((y - GCR(:,3) .* x) .* cos(GCR(:,4)) - (x + GCR(:,3) .* y) .* sin(GCR(:,4))) ./ sqrt(1-GCR(:,3).^2);
+
+                    % Same as:
+                    %Crunch = GCR(:,3);
+                    %Roll = GCR(:,4);
+                    %c = (-Crunch .* cos(Roll) - sin(Roll)) ./ sqrt(1 - Crunch.^2);
+                    %d = (-Crunch .* sin(Roll) + cos(Roll)) ./ sqrt(1 - Crunch.^2);
+                    %AM = c .* x + d .* y;
+%                 else
+%                     AM = Orbit(3,:)';
+%                 end
+%             elseif strcmpi(AT.ATType, 'ClosedOrbit')
+%                     AM = Orbit';
+%             end
+
+      
+
+
+             AM(isort,:) = AM;
+
+end       
+            
+            
+            
+            
         elseif strcmpi(AT.ATType, 'Septum')
 
             AM = 0;
@@ -1024,7 +1158,10 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Change to hardware units if requested %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if strcmpi(UnitsFlag, 'Hardware') && ~JustPassItThroughFlag
+
+% only return the bending angle [rad] for the TL dipoles 
+    
+if strcmpi(UnitsFlag, 'Hardware') 
     if isfamily(Family, Field)
         AM = physics2hw(Family, Field, AM, DeviceList, getenergymodel);
     else
@@ -1052,13 +1189,8 @@ else
     else
         tout = t + gettime - t0;
     end
+    %DataTime = fix(t0) + rem(t0,1)*1e9*sqrt(-1);
 end
-
-TimeZoneDiff = getfamilydata('TimeZone');
-if ~isempty(TimeZoneDiff)
-    t0 = t0 - TimeZoneDiff*60*60;  % Seconds
-end
-
 DataTime(1:size(AM,1),1:length(t)) = fix(t0) + rem(t0,1)*1e9*sqrt(-1);
 
 

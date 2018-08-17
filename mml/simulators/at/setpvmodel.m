@@ -20,7 +20,7 @@ function ErrorFlag = setpvmodel(varargin)
 %             'RollX' or 'TiltX' and 'RollY' or 'TiltY'  (for a corrector magnet)
 %             Note: setpvmodel('TwissData', 'ClosedOrbit') - Sets the start condition at the first AT element
 %                   setpvmodel('TwissData', Field) - Sets the TwissData.(Field) twiss parameters at the first AT element
-%                                                    See twissline for the definition of TwissData.
+%                                                    See twissline for the definition of TwissData.  
 %                                                   'dP' and 'dL' are also stored in TwissData for 6-Dim tracking.
 %
 %  3. NewSP - Desired values {Default: getgolden}
@@ -34,15 +34,26 @@ function ErrorFlag = setpvmodel(varargin)
 %
 %  NOTES
 %  1. If Family is a cell array, then DeviceList and Field can also be a cell arrays
+
 %
-%  See also setpv, getpv, getpvmodel
+%  Written by Gregory J. Portmann
+% Revision
+%
+% January 25, 2005 Laurent S. Nadolski
+% ATparamgroup part modified to handle structure
+% Roll commented for correctors
+% Add new family names for BPM and correctors (machine dependent?)
+%
+%
+%  Jianfeng Zhang @ LAL, 05/03/2014 
+%    Set the TL dipoles by the bending angle in the AT simulator [rad],
+%    while still set the corresponding beam energy of the storage ring 
+%    dipoles.   
+%
+%
+%
 
-%  Written by Greg Portmann
-
-
-global THERING THERINGCELL
-
-
+%%
 ErrorFlag = 0;
 
 %%%%%%%%%%%%%%%%%
@@ -51,13 +62,16 @@ ErrorFlag = 0;
 UnitsFlag = {};
 for i = length(varargin):-1:1
     if isstruct(varargin{i})
-        % Ignor structures
+        % Ignore structures
     elseif iscell(varargin{i})
-        % Ignor cells
+        % Ignore cells
     elseif strcmpi(varargin{i},'struct') || strcmpi(varargin{i},'numeric')
         % Remove and ignor
         varargin(i) = [];
-    elseif strcmpi(varargin{i},'simulator') || strcmpi(varargin{i},'model') || strcmpi(varargin{i},'Online') || strcmpi(varargin{i},'Manual')
+    elseif strcmpi(varargin{i},'Simulator') || ...
+            strcmpi(varargin{i},'Model') || ...
+            strcmpi(varargin{i},'Online') || ...
+            strcmpi(varargin{i},'Manual')
         % Remove and ignor
         varargin(i) = [];
     elseif strcmpi(varargin{i},'physics')
@@ -69,7 +83,7 @@ for i = length(varargin):-1:1
     end
 end
 
-if isempty(varargin)
+if length(varargin) == 0
     error('Must have at least a family name input');
 else
     Family = varargin{1};
@@ -222,8 +236,13 @@ if isfamily(Family)
     end
 end
 
+% define the TL dipoles in physics unit;
+% while the features for ring dipoles are not changed.
+machinetype = getfamilydata('SubMachine');
 if isempty(UnitsFlag)
     UnitsFlag = 'Hardware';
+elseif(strcmp(machinetype,'TL'))
+    UnitsFlag = 'Physics';
 else
     UnitsFlag = UnitsFlag{1};
 end
@@ -238,12 +257,8 @@ if strcmpi(UnitsFlag,'Hardware') && isfamily(Family, Field)
     NewSP = hw2physics(Family, Field, NewSP, DeviceList, getenergymodel);
 end
 
-if ~isstruct(NewSP) && ~iscell(NewSP) && size(NewSP,1)~=size(DeviceList,1)
-    if size(NewSP,1) == 1
-        NewSP = ones(size(DeviceList,1),1) * NewSP;
-    else
-        error('Setpoint size must equal the device list or be a scalar.');
-    end
+if(strcmp(machinetype,'TL'))
+    NewSP_HW = NewSP;
 end
 
 % Look to see it the AT model needs to be changed for this family
@@ -253,8 +268,8 @@ if ~isempty(ATModelNumber)
     THERING = THERINGCELL{ATModelNumber};
 
     % Set AD.Circumference
-    setfamilydata(findspos(THERING, length(THERING)+1), 'Circumference');
-
+    setfamilydata(findspos(THERING,length(THERING)+1), 'Circumference');
+    
     if isfield(THERING{1}, 'MachineType')
         setfamilydata(THERING{1}.MachineType, 'MachineType');
     end
@@ -275,7 +290,7 @@ if ~isempty(ATModelNumber)
     end
 end
 
-
+global THERING
 % Simulator (AT)
 if isempty(THERING)
     error('Simulator variable is not setup properly.');
@@ -293,15 +308,15 @@ if strcmp(Family, 'RF')
     for i = 1:length(iCavity)
         THERING{iCavity(i)}.Frequency = NewSP(1);
     end
-
+    
 elseif any(strcmpi(Family,{'Energy','GeV'}))
-
+    
     % Set energy in AT
     % Noter: Changing the energy of the model is only a variable change
     setenergymodel(NewSP(1));
-
+    
 elseif strcmp(Family, 'TwissData')
-
+    
     if isfield(THERING{1}, 'TwissData')
         InATFlag = 1;
         TwissData = THERING{1}.TwissData;
@@ -313,7 +328,7 @@ elseif strcmp(Family, 'TwissData')
             InATFlag = 1;
         end
     end
-
+    
     if any(strcmpi(Field, {'ClosedOrbit','dP','dL'}))
         if ~isfield(TwissData, 'ClosedOrbit')
             TwissData.ClosedOrbit = [0 0 0 0]';
@@ -339,86 +354,68 @@ elseif strcmp(Family, 'TwissData')
         elseif strcmpi(Field, 'dL')
             TwissData.dL = NewSP(1);
         end
-    elseif any(strcmpi(Field, {'Tune'}))
-        TwissData.Tune = NewSP;
-    elseif any(strcmpi(Field, {'Setpoint','Monitor'}))
-        TwissData = NewSP;
     else
-        TwissData.(Field) = NewSP;
+        if any(strcmpi(Field, {'Setpoint','Monitor'}))
+            TwissData = NewSP;
+        else
+            TwissData.(Field) = NewSP;
+        end
     end
-
+                
     % Store TwissData where it was found
     if InATFlag
         THERING{1}.TwissData = TwissData;
     else
         setfamilydata(TwissData, 'TwissData');
     end
+    
 else
-
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Families that require an AT field %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+    
     % Find the index for where the desired data is in the total device list
     if isfamily(Family)
         DeviceListTotal = family2dev(Family, 0);
         [DeviceIndex, iNotFound] = findrowindex(DeviceList, DeviceListTotal);
-        if ~isempty(iNotFound)
+        if length(iNotFound) > 0
             % Device not found
             for i = 1:length(iNotFound)
                 fprintf('   No devices to set for Family %s(%d,%d)\n', Family, DeviceList(i,1), DeviceList(i,2));
             end
             error(sprintf('%d Devices not found', length(iNotFound)));
         end
-
+        
         % Find the AT structure if it exists
         AT = getfamilydata(Family, Field, 'AT');
         if isempty(AT)
             if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback'}))
-                % Try to defer the setpoint and monitor field to main family AT field
                 AT = getfamilydata(Family, 'AT');
-            end
-            if isempty(AT)
-                % Look for Family in the AT-model
-                ATIndex = findcells(THERING, 'FamName', Family);
-                if ~isempty(ATIndex)
-                    % Field becomes the sub-structure of the AT-model
-                    AT.ATType = Field;
-                else
-                    % Make a new field
-                    if any(strcmpi(Field,{'Setpoint','Monitor','Sum','Set','Read','Readback'}))
-                        Field = 'Setpoint';
-                    end
-                    % Look for a model field
-                    Model = getfamilydata(Family, Field, 'Model');
-                    if isempty(Model)
-                        Model.Data = NaN * ones(size(DeviceListTotal,1),1);
-                    end
-                    Model.Data(DeviceIndex) = NewSP;  % Physics units
-                    setfamilydata(Model, Family, Field, 'Model');  % Store the data in .Model field
-
+                if isempty(AT)
                     % AT.ATType must be defined
-                    %warning('Simulator not setup for %s.%s family\n', Family, Field);
-                    %fprintf('WARNING: Simulator not setup for %s.%s family\n', Family, Field);
-                    %ErrorFlag = 1;
-                    %DataTime = 0+0*sqrt(-1);
-                    ErrorFlag = 0;
+                    %warning('Simulator not setup for %s.%s family (data filled with NaN)\n', Family, Field);
+                    fprintf('WARNING: Simulator not setup for %s.%s family (data filled with NaN)\n', Family, Field);
+                    AM = NaN * ones(length(DeviceIndex),1);
+                    ErrorFlag = 1;
                     DataTime = 0+0*sqrt(-1);
                     return
                 end
-            end
-        else
-            % Set methods
-            if isfield(AT, 'SpecialFunctionSet')
-                ErrorFlag = feval(AT.SpecialFunctionSet, Family, Field, NewSP, DeviceList);
-                return
+            else
+                AT.ATType = Field;
             end
         end
-
+        
+        % Set methods
+        if isfield(AT, 'SpecialFunctionSet')
+            ErrorFlag = feval(AT.SpecialFunctionSet, Family, Field, NewSP, DeviceList);
+            return
+        end
+        
         % Make sure AT.Index exists
         if ~isfield(AT,'ATIndex')
             AT.ATIndex = family2atindex(Family, DeviceListTotal);
-        end
+        end    
     else
         % Look for an AT family
         if strcmpi(Family, 'All')
@@ -432,7 +429,8 @@ else
         end
         AT.ATType = Field;
     end
-
+    
+   
 
     % Check for a split magnet
     Nsplit = size(AT.ATIndex,2);
@@ -442,7 +440,8 @@ else
         NewSP = NewSP';
         NewSP = NewSP(:);
 
-        if strcmpi(AT.ATType, 'HCM') || strcmpi(AT.ATType, 'VCM')
+        if any(strcmpi(AT.ATType, {'HCM', 'HCOR', 'FHCOR', 'CH'})) || ...
+                any(strcmpi(AT.ATType, {'VCM', 'CVOR', 'FVCOR', 'CV'}))
             % Correctors are in radians so the kick needs to be divided amoung the splits
             % Note: NaN's in the ATIndex are not splits for instance [45 46; 67 NaN] means
             %       the first magnet is split but the second is not.
@@ -467,8 +466,10 @@ else
 
 
     % Make the setpoint changes
+
     if isfield(AT, 'ATParameterGroup')
-        for i = 1:size(NewSP,1)
+
+        for i = 1:1; %size(NewSP,1)
             if iscell(AT.ATParameterGroup)
                 % If cell, set the parameter group
                 ParameterGroup = AT.ATParameterGroup{DeviceIndex(i)};
@@ -479,8 +480,10 @@ else
                 THERING{ATIndexList(i)}.(ATField) = NewSP(i);
             end
         end
+
     else
-        if any(strcmpi(AT.ATType, {'HCM','Kicker'}))
+
+        if any(strcmpi(AT.ATType, {'HCM', 'CH', 'HCOR', 'HCORT', 'FHCOR', 'Kicker'}))
             % HCM
             for i = 1:size(NewSP,1)
                 % Coupling: Magnet roll is part of the AT model
@@ -490,45 +493,39 @@ else
                 else
                     % Knowing the cross-plane family name can be a problem
                     % If the VCM family has the same AT index, then use it.
-                    Roll = [getroll(Family, Field, DeviceList(i,:))  0];
-                    VCMDevList = family2dev('VCM');
-                    iVCM = findrowindex(DeviceList(i,:), VCMDevList);
-                    if ~isempty(iVCM)
-                        try
-                            ATIndexVCM = family2atindex('VCM', DeviceList(i,:));
-                            if ATIndexVCM == ATIndexList(i)
-                                Roll = [Roll(1) getroll('VCM', Field, DeviceList(i,:))];
-                            else
+                    % Begin Laurent
+                    %Roll = [getroll(Family, Field, DeviceList(i,:))  0];
+                    %VCMDevList = family2dev('VCM');
+                    %iVCM = findrowindex(DeviceList(i,:), VCMDevList);
+                    %if ~isempty(iVCM)
+                    %   try
+                    %        ATIndexVCM = family2atindex('VCM', DeviceList(i,:));
+                    %        if ATIndexVCM == ATIndexList(i)
+                    %            Roll = [Roll(1) getroll('VCM', Field, DeviceList(i,:))];
+                    %        else
                                 Roll = [0 0];
-                            end
-                        catch
-                        end
-                    end
+                    %        end
+                    %    catch
+                    %    end
+                    %end
+                    % End Laurent
                 end
-                
-                % Superimpose the X and Y kicks
-                if isfield(THERING{ATIndexList(i)}, 'KickAngle')
-                    % New X-Kick, but the Y-Kick needs to be maintained (middle layer coordinates)
-                    XKick = NewSP(i);
-                    YKick = [-sin(Roll(1)) cos(Roll(1))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
-                    
-                    THERING{ATIndexList(i)}.KickAngle(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
-                    THERING{ATIndexList(i)}.KickAngle(2) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
-                    %fprintf('kick(%d,%d)=%g %g  AT=%g %g  Roll=%g  %g\n',DeviceList(i,:), XKick, YKick, THERING{ATIndexList(i)}.KickAngle, Roll);
-                    % X only kick
-                    %THERING{ATIndexList(i)}.KickAngle(1) = NewSP(i) * cos(Roll(1));
-                    %THERING{ATIndexList(i)}.KickAngle(2) = NewSP(i) * sin(Roll(1));
-                else
-                    % New X-Kick, but the Y-Kick needs to be maintained (middle layer coordinates)
-                    XKick = NewSP(i);
-                    YKick = [-sin(Roll(1)) cos(Roll(1))] * [THERING{ATIndexList(i)}.PolynomB(1); THERING{ATIndexList(i)}.PolynomA(1)] / (cos(Roll(1)-Roll(2)));
 
-                    THERING{ATIndexList(i)}.PolynomB(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
-                    THERING{ATIndexList(i)}.PolynomA(1) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
-                end
+                % New X-Kick, but the Y-Kick needs to be maintained (middle layer coordinates)
+                XKick = NewSP(i);
+                YKick = [-sin(Roll(1)) cos(Roll(1))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
+
+                % Superimpose the X and Y kicks
+                THERING{ATIndexList(i)}.KickAngle(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
+                THERING{ATIndexList(i)}.KickAngle(2) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
+                %fprintf('kick(%d,%d)=%g %g  AT=%g %g  Roll=%g  %g\n',DeviceList(i,:), XKick, YKick, THERING{ATIndexList(i)}.KickAngle, Roll);
+
+                %% X only kick
+                %THERING{ATIndexList(i)}.KickAngle(1) = NewSP(i) * cos(Roll(1));
+                %THERING{ATIndexList(i)}.KickAngle(2) = NewSP(i) * sin(Roll(1));
             end
 
-        elseif strcmpi(AT.ATType, 'VCM')
+        elseif any(strcmpi(AT.ATType, {'VCM', 'CV', 'VCOR', 'VCORT', 'FVCOR'}))
             % VCM
             for i = 1:size(NewSP,1)
                 % Coupling: Magnet roll is part of the model
@@ -547,43 +544,36 @@ else
                 else
                     % Knowing the cross-plane family name can be a problem
                     % If the VCM family has the same AT index, then use it.
-                    Roll = [0 getroll(Family, Field, DeviceList(i,:))];
-                    HCMDevList = family2dev('HCM');
-                    iHCM = findrowindex(DeviceList(i,:), HCMDevList);
-                    if ~isempty(iHCM)
-                        try
-                            ATIndexHCM = family2atindex('HCM', DeviceList(i,:));
-                            if ATIndexHCM == ATIndexList(i)
-                                Roll = [getroll('HCM', Field, DeviceList(i,:)) Roll(2)];
-                            else
+                    % Begin Laurent
+                    %Roll = [0 getroll(Family, Field, DeviceList(i,:))];
+                    %HCMDevList = family2dev('HCM');
+                    %iHCM = findrowindex(DeviceList(i,:), HCMDevList);
+                    %if ~isempty(iHCM)
+                    %    try
+                    %        ATIndexHCM = family2atindex('HCM', DeviceList(i,:));
+                    %        if ATIndexHCM == ATIndexList(i)
+                    %            Roll = [getroll('HCM', Field, DeviceList(i,:)) Roll(2)];
+                    %        else
                                 Roll = [0 0];
-                            end
-                        catch
-                        end
-                    end
+                    %        end
+                    %    catch
+                    %    end
+                    %end
+                    % End Laurent
                 end
-                
+
+                % New Y-Kick, but the X-Kick needs to be maintained (middle layer coordinates)
+                XKick = [cos(Roll(2)) sin(Roll(2))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
+                YKick = NewSP(i);
+
                 % Superimpose the X and Y kicks
-                if isfield(THERING{ATIndexList(i)}, 'KickAngle')
-                    % New Y-Kick, but the X-Kick needs to be maintained (middle layer coordinates)
-                    XKick = [cos(Roll(2)) sin(Roll(2))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
-                    YKick = NewSP(i);
-                    
-                    THERING{ATIndexList(i)}.KickAngle(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
-                    THERING{ATIndexList(i)}.KickAngle(2) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
-                    %fprintf('kick(%d,%d)=%g %g  AT=%g %g  Roll=%g  %g\n',DeviceList(i,:), XKick, YKick, THERING{ATIndexList(i)}.KickAngle, Roll);
-                    
-                    % Y only kick
-                    %THERING{ATIndexList(i)}.KickAngle(1) = -1 * NewSP(i) * sin(Roll(2));
-                    %THERING{ATIndexList(i)}.KickAngle(2) =      NewSP(i) * cos(Roll(2));
-                else
-                    % New Y-Kick, but the X-Kick needs to be maintained (middle layer coordinates)
-                    XKick = [cos(Roll(2)) sin(Roll(2))] * [THERING{ATIndexList(i)}.PolynomB(1); THERING{ATIndexList(i)}.PolynomA(1)] / (cos(Roll(1)-Roll(2)));
-                    YKick = NewSP(i);
-                                        
-                    THERING{ATIndexList(i)}.PolynomB(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
-                    THERING{ATIndexList(i)}.PolynomA(1) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
-                end
+                THERING{ATIndexList(i)}.KickAngle(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
+                THERING{ATIndexList(i)}.KickAngle(2) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
+                %fprintf('kick(%d,%d)=%g %g  AT=%g %g  Roll=%g  %g\n',DeviceList(i,:), XKick, YKick, THERING{ATIndexList(i)}.KickAngle, Roll);
+
+                %% Y only kick
+                %THERING{ATIndexList(i)}.KickAngle(1) = -1 * NewSP(i) * sin(Roll(2));
+                %THERING{ATIndexList(i)}.KickAngle(2) =      NewSP(i) * cos(Roll(2));
             end
 
         elseif any(strcmpi(AT.ATType,{'K','Quad','Quadrupole'}))
@@ -601,7 +591,7 @@ else
                 THERING{ATIndexList(i)}.PolynomB(3) = NewSP(i);
             end
 
-        elseif any(strcmpi(AT.ATType,{'K3','OCTU','Octupole'}))
+        elseif any(strcmpi(AT.ATType,{'K3','Octupole'}))
             % K3 - Octupole
             for i = 1:size(NewSP,1)
                 THERING{ATIndexList(i)}.PolynomB(4) = NewSP(i);
@@ -613,91 +603,10 @@ else
                 THERING{ATIndexList(i)}.PolynomA(2) = NewSP(i);
             end
 
-        elseif any(strcmpi(AT.ATType,{'SWLS'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-         elseif any(strcmpi(AT.ATType,{'IASW6'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-          elseif any(strcmpi(AT.ATType,{'W20'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-          elseif any(strcmpi(AT.ATType,{'SW6'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-           
-          elseif any(strcmpi(AT.ATType,{'U9'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-         
-          elseif any(strcmpi(AT.ATType,{'U5'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-          elseif any(strcmpi(AT.ATType,{'EPU56'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-          elseif any(strcmpi(AT.ATType,{'IASWB'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
-          elseif any(strcmpi(AT.ATType,{'IASWC'}))
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'BendingAngle')
-                    THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
-                    THERING{ATIndexList(i)}.EntranceAngle = NewSP(i)/2;
-                    THERING{ATIndexList(i)}.ExitAngle = NewSP(i)/2;
-                end
-            end
-            
         elseif strcmpi(AT.ATType, 'BEND')
             % BEND
             % The BEND simulates very differently:
-            % 1. The BEND radians does not change
+            % 1. The BEND "K" value does not change
             % 2. The energy comes from the hw2physics (bend2gev)
             % 3. All the other magnets have a "K" change
             % 4. The underlying assumption is that the RF cavity provides the necessary energy
@@ -706,12 +615,24 @@ else
             % different setpoints will not work anyways.
 
             if isempty(NewSP_HW)
-                %fprintf('\n   WARNING: Must set the BEND magnet in the model in hardware units\n');
-                %fprintf('   since the BEND magnet in physics units does not usually change.\n');
-                %fprintf('   No change made to the BEND family in the model!\n');
+                fprintf('\n   WARNING: Must set the BEND magnet in the model in hardware units\n');
+                fprintf('   since the BEND magnet in physics units does not usually change.\n');
+                fprintf('   No change made to the BEND family in the model!\n');
                 return
             end
+            
+            
 
+            % set the TL dipoles by the bending angle in the AT simulator
+            %  by Jianfeng Zhang @ LAL, 05/03/2014 
+            if(strcmp(machinetype,'TL') || strcmp(machinetype,'TL_SL'))
+                fprintf('The machine type is: %s. \nThe bending angles will be set in physics unit: %f [rad] \n', machinetype,NewSP(i));
+                for i = 1:size(NewSP,1)
+                THERING{ATIndexList(i)}.BendingAngle = NewSP(i);
+                end
+            
+            % keep to set the ring dipoles by the beam energy     
+            else
             % Get the energy of the model
             GeVPresent = getenergy('Simulator');
 
@@ -723,150 +644,32 @@ else
                 return;
             end
 
-            % Get the present machine config in hardware units
-            SP = getmachineconfig('Hardware', 'Simulator');
-
             % Set energy in the model
             setenergymodel(GeVDesired);            % Sets the model energy which is stored in AT
             setfamilydata(GeVDesired, 'Energy');   % Set design energy in the middle layer
+            
+            % Get the present machine config in hardware units
+            SP = getmachineconfig('Hardware', 'Simulator');
 
             % Set the new "K" values (physics values)
             % The amperes does not change, but the "K" values do
             % because the energy was change between hw2physics/physics2hw calls
             if isfield(SP,'BEND')
-                SP = rmfield(SP, 'BEND');           % or anything with a BEND ATType
+                SP = rmfield(SP, 'BEND');  % or anything with a BEND ATType
             end
             if isfield(SP,'BEND_Setpoint')
                 SP = rmfield(SP, 'BEND_Setpoint');  % or anything with a BEND ATType
             end
             
-            % Or anything with a BEND ATType
-            ao = getao;
-            fieldnamecell = fieldnames(SP);
-            for i = 1:length(fieldnamecell)
-                if strcmpi(ao.(fieldnamecell{i}).AT.ATType, 'BEND')
-                    SP = rmfield(SP, fieldnamecell{i});
-                    %fieldnamecell{i}
-                end
-            end
+            % remove the dipole field; since the dipole field strength is 
+            % connected to the energy 
+            SPfieldnames = fieldnames(SP);
+            idx = find(strncmp(SPfieldnames,'BEND',4));
+            SP=rmfield(SP,SPfieldnames(idx));
             
             setmachineconfig(SP, 'Hardware', 'Simulator');
-
-        elseif strcmpi(AT.ATType, 'BD')
-            % BEND
-            % The BEND simulates very differently:
-            % 1. The BEND radians does not change
-            % 2. The energy comes from the hw2physics (bend2gev)
-            % 3. All the other magnets have a "K" change
-            % 4. The underlying assumption is that the RF cavity provides the necessary energy
-
-            % Since this takes a relatively long time, only do it once.  Setting each BEND to
-            % different setpoints will not work anyways.
-
-            if isempty(NewSP_HW)
-                %fprintf('\n   WARNING: Must set the BEND magnet in the model in hardware units\n');
-                %fprintf('   since the BEND magnet in physics units does not usually change.\n');
-                %fprintf('   No change made to the BEND family in the model!\n');
-                return
-            end
-
-            % Get the energy of the model
-            GeVPresent = getenergy('Simulator');
-
-            % Get the desired energy of the model
-            GeVDesired = bend2gev(Family, Field, NewSP_HW(i), DeviceList(i,:));
-
-            if abs(GeVPresent - GeVDesired) < 1e-9  % GeV
-                % No change needed
-                return;
-            end
             
-             
-            % Convert Ampere to bending K value
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'K')
-                    THERING{ATIndexList(i)}.K = NewSP(i);
-                end
-                THERING{ATIndexList(i)}.PolynomB(2) = NewSP(i);
             end
-            % 2009/03/23 Fan-Hsin Tseng 
-            
-            
-            % Get the present machine config in hardware units
-            SP = getmachineconfig('Hardware', 'Simulator');
-
-            % Set energy in the model
-            setenergymodel(GeVDesired);            % Sets the model energy which is stored in AT
-            setfamilydata(GeVDesired, 'Energy');   % Set design energy in the middle layer
-
-            % Set the new "K" values (physics values)
-            % The amperes does not change, but the "K" values do
-            % because the energy was change between hw2physics/physics2hw calls
-            if isfield(SP,'BD')
-                SP = rmfield(SP, 'BD');  % or anything with a BEND ATType
-            end
-            if isfield(SP,'BD_Setpoint')
-                SP = rmfield(SP, 'BD_Setpoint');  % or anything with a BEND ATType
-            end
-            setmachineconfig(SP, 'Hardware', 'Simulator');
-
-        elseif strcmpi(AT.ATType, 'BH')
-            % BEND
-            % The BEND simulates very differently:
-            % 1. The BEND radians does not change
-            % 2. The energy comes from the hw2physics (bend2gev)
-            % 3. All the other magnets have a "K" change
-            % 4. The underlying assumption is that the RF cavity provides the necessary energy
-
-            % Since this takes a relatively long time, only do it once.  Setting each BEND to
-            % different setpoints will not work anyways.
-
-            if isempty(NewSP_HW)
-                %fprintf('\n   WARNING: Must set the BEND magnet in the model in hardware units\n');
-                %fprintf('   since the BEND magnet in physics units does not usually change.\n');
-                %fprintf('   No change made to the BEND family in the model!\n');
-                return
-            end
-
-            % Get the energy of the model
-            GeVPresent = getenergy('Simulator');
-
-            % Get the desired energy of the model
-            GeVDesired = bend2gev(Family, Field, NewSP_HW(i), DeviceList(i,:));
-
-            if abs(GeVPresent - GeVDesired) < 1e-9  % GeV
-                % No change needed
-                return;
-            end
-            
-             
-            % Convert Ampere to bending K value
-            for i = 1:size(NewSP,1)
-                if isfield(THERING{ATIndexList(i)}, 'K')
-                    THERING{ATIndexList(i)}.K = NewSP(i);
-                end
-                THERING{ATIndexList(i)}.PolynomB(2) = NewSP(i);
-            end
-            % 2009/03/23 Fan-Hsin Tseng 
-            
-            
-            % Get the present machine config in hardware units
-            SP = getmachineconfig('Hardware', 'Simulator');
-
-            % Set energy in the model
-            setenergymodel(GeVDesired);            % Sets the model energy which is stored in AT
-            setfamilydata(GeVDesired, 'Energy');   % Set design energy in the middle layer
-
-            % Set the new "K" values (physics values)
-            % The amperes does not change, but the "K" values do
-            % because the energy was change between hw2physics/physics2hw calls
-            if isfield(SP,'BH')
-                SP = rmfield(SP, 'BH');  % or anything with a BEND ATType
-            end
-            if isfield(SP,'BH_Setpoint')
-                SP = rmfield(SP, 'BH_Setpoint');  % or anything with a BEND ATType
-            end
-            setmachineconfig(SP, 'Hardware', 'Simulator');
             
         elseif strcmpi(AT.ATType, 'Roll')
             % Roll or Tilt
@@ -899,18 +702,18 @@ else
                     % Roll it back to actual (measured) coordinates
                     XKick = [ cos(Roll(2)) sin(Roll(2))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
                     YKick = [-sin(Roll(1)) cos(Roll(1))] * THERING{ATIndexList(i)}.KickAngle(:) / (cos(Roll(1)-Roll(2)));
-
+                    
                     % Roll it forward to the new model coordinates
                     if strcmpi(AT.ATType, 'RollX')
                         Roll(1) = NewSP(i);
                     else
                         Roll(2) = NewSP(i);
                     end
-
+                    
                     THERING{ATIndexList(i)}.KickAngle(1) = XKick * cos(Roll(1)) - YKick * sin(Roll(2));
                     THERING{ATIndexList(i)}.KickAngle(2) = XKick * sin(Roll(1)) + YKick * cos(Roll(2));
                 else
-                    error(sprintf('%s(%d,%d) must be a KickAngle field in the model to be rolled.', Family, DeviceList(i,:)));
+                    error('%s(%d,%d) must be a KickAngle field in the model to be rolled.', Family, DeviceList(i,:));
                 end
             end
 
@@ -922,9 +725,9 @@ else
             % JR - do nothing behaviour
 
         else
-            %error(sprintf('ATType unknown for Family %s', Family));
+            warning('ATType unknown for Family %s', Family);
             for i = 1:size(NewSP,1)
-                THERING{ATIndexList(i)}.(Field) = NewSP(i,:);
+                THERING{ATIndexList(i)}.(Field) = NewSP(i);
             end
         end
     end
