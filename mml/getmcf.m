@@ -10,7 +10,7 @@ if nargin < 1
     ModelString = '';
 end
 
-if strcmpi(ModelString,'model') || strcmpi(ModelString,'simulator')
+if strcmpi(ModelString,'model') | strcmpi(ModelString,'simulator') % <<<=== operator || was changed to |
     % Get from the model
     Alpha = modelmcf;
 else

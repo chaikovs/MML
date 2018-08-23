@@ -178,7 +178,7 @@ if isempty(LinkFlag)
             LinkFlag = 'UMER_WS';
         case {'VUV','XRAY'}
             LinkFlag = 'UCODE';
-        case {'ALBA','SOLEIL', 'ELETTRA','SOLARIS','MAXIV'}
+        case {'ALBA','SOLEIL', 'ELETTRA','SOLARIS','MAXIV','THOMX'}
             LinkFlag = 'Tango';
         otherwise
             % Other

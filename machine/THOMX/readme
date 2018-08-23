@@ -1,4 +1,59 @@
 
+
+17/06/2013
+
+Change the file name "/home/jfz/codes/MML_ThomX/machine/SOLEIL/Booster/applications/set_param.m" t0 "/home/jfz/codes/MML_ThomX/machine/SOLEIL/Booster/applications/set_para.m", 
+since the file name "set_param.m" is conflict with the Matlab buildin
+file "set_param.m". 
+
+This may cause problems in some SOLEIL applications which call
+this local "set_param.m" file.
+
+
+04/10/2013
+
+(1) linopt.m 
+    Fix the bug to avoid the mirror tunes of ThomX ring.
+    Using the sign of M12.
+
+07/10/2013
+
+(1)tunechrom.m 
+   Fix the bug to avoid the mirror tunes.
+
+10/01/2014
+  Fix the bug in the longitudinal parameters definitions to get 
+  the correct 6D orbit.
+
+ 
+   10/02/2014
+
+   Fix the bug in "BndMPoleSymplecticNew4Pass.c" to 
+   compile the AT code on the MAC computers.
+
+   
+ 
+  
+
+24/02/2014
+
+Modified "setpvmodel.m", now the bending elements can be defined with 
+the names of the 4 first initials as "BEND...".
+
+
+
+05/03/2014
+
+Modified "setpvmodel.m" and "getpvmodel.m", now the values of TL ...
+    dipoles can be modified or read back by the bending angles 
+    with the physics unit [rad], through the functions "setsp()"
+    or "getsp()". While the dipoles in the storage ring are still
+    connected to the beam energy as before. 
+
+
+
+
+
 (1) Files need to update with the real machine:
 
 Needs to active all links with TANGO...
@@ -21,10 +76,9 @@ correct with the Tango of ThomX...
 
 case 'TANGO'
 
-************
 
 
-**********************************************
+
 24/02/2014  Jianfeng Zhang @ LAL
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -46,7 +100,6 @@ also need to check "bend2gev.m" & "gev2bend.m".
 
 
 
-**********************************************
 ---- 05/03/2014
        In AT model, the TL dipoles are set up and read back
        by the physics units [rad].
@@ -79,10 +132,10 @@ This is a very important command!!!!!!!!!!!
 
 -----
 
-!!!!!!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 2018 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 2018 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 
-(2) 17/08/2018
+ 17/08/2018
 
  .../mml/setpathmml.m  ===>>> add case TANGO and check!
  .../mml/setpaththomx.m
@@ -90,10 +143,17 @@ This is a very important command!!!!!!!!!!!
 ../machine/THOMX
 
 /Users/ichaikov/Documents/MATLAB/MML_v1/machine/THOMX/StorageRing
+thomxinit ===>>>check all the devices (nomenclature names)
 aoinit
 setoperationalmode  =>>> clean the file from SOLEIL cases + magnetcoeff
 updateatindex
 AT lattice file
+
+ 23/08/2018
+
+function getmcf
+Operands || was changed to | in oder to avoid the error in dispersion measurement.
+
 
 
 
