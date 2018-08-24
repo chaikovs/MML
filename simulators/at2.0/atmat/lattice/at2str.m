@@ -96,6 +96,9 @@ switch atclass
         if isfield(options,'Energy')
             options=rmfield(options,'Energy');
         end
+        if isfield(options,'TwissData')
+            options=rmfield(options,'TwissData');
+        end
 end
 varg=[args,reshape(cat(2,fieldnames(options),struct2cell(options))',1,[])];
 fmt=['%15s(%s' repmat(',%s',1,length(varg)-1) ')'];

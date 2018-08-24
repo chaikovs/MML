@@ -154,6 +154,16 @@ AT lattice file
 function getmcf
 Operands || was changed to | in oder to avoid the error in dispersion measurement.
 
+ 24/08/2018
+
+In at2str function add
+
+if isfield(options,'TwissData')
+   options=rmfield(options,'TwissData');
+end
+
+to account for the field TwissData in the first element. Created in updateatindex and used in optics_TL….
+
 
 
 
