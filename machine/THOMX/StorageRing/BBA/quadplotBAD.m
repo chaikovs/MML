@@ -1,4 +1,4 @@
-function [QMS, WarningString] = quadplot(Input1, FigureHandle, sigmaBPM)
+function [QMS, WarningString] = quadplotBAD(Input1, FigureHandle, sigmaBPM)
 %QUADPLOT - Plots quadrupole centering data
 %  [QMS, WarningString] = quadplot(Input1, Handle, sigmaBPM)
 %

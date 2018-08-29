@@ -1,5 +1,5 @@
 % Beam based measurement 
-TDR_good_017_064_r56_02_sx_Dff_BPM
+%STDR_good_017_064_r56_02_sx_Dff_BPM
 global THERING
 % rf0 = getrf
 % cspeed=299792458;
@@ -19,8 +19,8 @@ stepsp('VCOR', vcm,[2 1]);
 
 
 %%
-BPMspos = getspos('BPMx',[1 3]);
-QUADspos = getspos('QP3',[1 6]);
+BPMspos = getspos('BPMx',[1 1]);
+QUADspos = getspos('QP1',[1 1]);
 dist = abs(BPMspos-QUADspos)
 getcircumference - dist
 

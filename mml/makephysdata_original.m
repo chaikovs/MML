@@ -1,22 +1,9 @@
-function makephysdata(varargin)
+function makephysdata_original(varargin)
 %MAKEPHYSDATA - Make a starting physics data file
 %
 %  NOTE: MML creators are phasing out the use of physdata.
-%
-% NOTES
-%1. This just a rountine to be used to create the Physdata file
-%   Then the parameter like Golden parameters should be updated
-%   using setphydata command. For example, to set the golden H-orbit:
-%   setphysdata('BPMx','Golden',getx('Struct'));
-%
-% See also soleilinit
 
-%
-% Written By Gregory J. Portmann
-% Modified by Laurent S. Nadolski
-
-%
-% TODO to be adapted for SOLEIL
+%  Written by Greg Portmann
 
 FamilyName = getfamilylist;
 N = size(FamilyName,1);
@@ -30,21 +17,31 @@ for i = 1:N
         PhysData.(Family).Offset = 0;        
         PhysData.(Family).Coupling = 0;        
         
-    elseif ismemberof(Family,'COR') || ...
-            ismemberof(Family,'QUAD') || ...
-            ismemberof(Family,'SEXT') || ...
+    elseif ismemberof(Family,'COR') | ...
+            ismemberof(Family,'QUAD') | ...
+            ismemberof(Family,'SEXT') | ...
             ismemberof(Family,'BEND')
         
         PhysData.(Family).Gain = 1;        
         PhysData.(Family).Offset = 0;        
-        PhysData.(Family).Coupling = 0; 
-        
-    elseif ismemberof(Family,'TUNE')|| ...
-           ismemberof(Family,'CHRO') 
-        PhysData.TUNE.Golden = getgolden(Family);
-        
+        PhysData.(Family).Coupling = 0;        
     end
 end
+
+
+% if strcmpi(getfamilydata('Machine'), 'ALS');
+%     PhysData.TUNE.Golden = [.25; .20; NaN]; 
+%     PhysData.CHRO.Golden = [.4; 1.2];
+% elseif strcmpi(getfamilydata('Machine'), 'SPEAR') | strcmpi(getfamilydata('Machine'), 'SPEAR3')
+%     PhysData.TUNE.Golden = [.19; .23; NaN];
+%     PhysData.CHRO.Golden = [1; 1];
+% elseif strcmpi(getfamilydata('Machine'), 'PLS')
+%     PhysData.TUNE.Golden = [.19; .23; NaN];   % ???
+%     PhysData.CHRO.Golden = [1; 1];
+% elseif strcmpi(getfamilydata('Machine'), 'NSRRC')
+%     PhysData.TUNE.Golden = [.2026; .1650; NaN];
+%     PhysData.CHRO.Golden = [1; 1];
+% end
         
 
 % All calibation data is saved in this file

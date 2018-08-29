@@ -5,12 +5,13 @@ global THERING
 ifam='QP3';
 ATI = atindex(THERING);
 quad=[ATI.(ifam)] ;
-target=list(1);  % QP3.1
+target=quad(1);  
+% target=list(1);  % QP3.1
 bpm=[ATI.BPMz];
 vcor=[ATI.VCOR];
 %setpv('VCOR',[0]);
-%K0=THERING{target}.K;
-K0=-18.0545;
+K0=THERING{target}.K;
+%K0=-18.0545;
 L0=0.15;
 KL0=sqrt(-K0)*L0;
 C0C=cos(KL0/2);

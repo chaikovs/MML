@@ -122,7 +122,7 @@ if QMS.QuadPlane==1
 %     QMS.CorrDelta = 1e-4;
     switch QMS.QuadFamily
         case 'QP1'
-            QMS.QuadDelta = 0.7;
+            QMS.QuadDelta = 0.2;
             QMS.CorrDelta = 1e-4;
         case 'QP2' 
             QMS.QuadDelta = 0.5;
@@ -188,7 +188,7 @@ elseif QMS.QuadPlane==2
     switch QMS.QuadFamily
         
         case 'QP1'
-            QMS.QuadDelta = 0.7;
+            QMS.QuadDelta = 0.2;
             QMS.CorrDelta = 1e-4;
         case 'QP2'
             QMS.QuadDelta = 0.1;

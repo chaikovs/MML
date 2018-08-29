@@ -15,12 +15,15 @@ beta=cat(1,lindata.beta);
 mu=cat(1,lindata.mu);
 spos=cat(1,lindata.SPos);
 %%
-
+indm=find(atgetcells(RING,'FamName','BPMx'))
+indqp1=find(atgetcells(RING,'FamName','QP1'))
 
  figure
  set(gcf,'color','w')
  plot(spos, mu(:,1)/(2*pi),'b-','LineWidth',2,'DisplayName', 'Horizontal betatron phase')
  hold on
+ plot(spos(indm), mu(indm,1)/(2*pi),'ko','LineWidth',2,'DisplayName', 'Horizontal betatron phase')
+ plot(spos(indqp1), mu(indqp1,1)/(2*pi),'r*','LineWidth',2,'DisplayName', 'Horizontal betatron phase')
   plot(spos, mu(:,2)/(2*pi),'r-','LineWidth',2,'DisplayName', 'Vertical betatron phase')
  hold off
  grid on
@@ -30,7 +33,7 @@ xlabel('s-position [m]');                 % Add labels
 ylabel('Betatron phase \mu');
 u = legend('show','Location','NorthWest');
 set(u,'FontSize',14)
-print('thomx_betatron_phase.png','-dpng','-r300')
+%print('thomx_betatron_phase.png','-dpng','-r300')
 
 %%
 
