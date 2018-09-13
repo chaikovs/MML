@@ -14,6 +14,9 @@ function varargout = configgui(action, varargin)
 % Add the flag to switch between "online" and "simulator"
 % when use the "set" command...
 
+
+% Configgui: verified functionallity; corrections to gui; getmachinecofig
+% form SOLEIL; tested get/set configurations; added THOMX case in getpv. SK
 h = findobj(0,'Tag','cnffig');
 if ~isempty(h) cnfdata=getappdata(h,'configguidata'); end
 
@@ -456,14 +459,15 @@ switch action
                 
                 [screen_wide, screen_high]=screensizecm;
                 x0=0.01*screen_wide ; dx=0.04*screen_wide; y0=0.48*screen_high; dy=0.04*screen_high; dely=0.03*screen_high;
-                
-                col1_families={'BEND'; 'HCOR' ; 'VCOR'};
+               
+                col1_families={'BEND'; 'HCOR' ; 'VCOR'};    
                 col2_families={'QP1'; 'QP2'; 'QP3'};
                 col3_families={'QP4'; 'QP31'; 'QP41'};
-                col4_families={'SX1'; 'SX2'};
-                col5_families={'SX3'};
+                col4_families={'SX1'; 'SX2';'SX3'};
+               % col5_families={'SX3'};
                 
-                families=[col1_families(:); col2_families(:); col3_families(:) ; col4_families(:) ; col5_families(:)];
+                families=[col1_families(:); col2_families(:); col3_families(:) ; col4_families(:) ];
+                %families=[col1_families(:); col2_families(:); col3_families(:) ; col4_families(:) ; col5_families(:)];
                 cnfdata.families=families;
                 
                 %check boxes
@@ -504,20 +508,24 @@ switch action
                         'Position',[x0+7.7*dx,y0-(k-0.51)*dely,dx/5,dy/4],'HorizontalAlignment','center','String',' ','BackGroundColor','r','Userdata',0);
                 end
                 
-                for k=1:length(col5_families),
-                    cnfdata.handles.([col5_families{k} 'chk'])=uicontrol('Style','checkbox','units', 'centimeters','FontWeight','demi', ...
-                        'ToolTipString','Check to include in configuration load',...
-                        'Position',[x0+10.5*dx,y0-(k-0.33)*dely,1.8*dx,dy/2],'HorizontalAlignment','center','String',col5_families{k},...
-                        'callback','configgui(''CheckValid'')');
-                    cnfdata.handles.([col5_families{k} 'flag'])=uicontrol('Style','text','units', 'centimeters', ...
-                        'Position',[x0+10.2*dx,y0-(k-0.51)*dely,dx/5,dy/4],'HorizontalAlignment','center','String',' ','BackGroundColor','r','Userdata',0);
-                end
+%                 for k=1:length(col5_families),
+%                     cnfdata.handles.([col5_families{k} 'chk'])=uicontrol('Style','checkbox','units', 'centimeters','FontWeight','demi', ...
+%                         'ToolTipString','Check to include in configuration load',...
+%                         'Position',[x0+10.5*dx,y0-(k-0.33)*dely,1.8*dx,dy/2],'HorizontalAlignment','center','String',col5_families{k},...
+%                         'callback','configgui(''CheckValid'')');
+%                     cnfdata.handles.([col5_families{k} 'flag'])=uicontrol('Style','text','units', 'centimeters', ...
+%                         'Position',[x0+10.2*dx,y0-(k-0.51)*dely,dx/5,dy/4],'HorizontalAlignment','center','String',' ','BackGroundColor','r','Userdata',0);
+%                 end
                 
                 
                 
                 him = uicontrol('style','pushbutton', 'Units', 'centimeter', 'Position', [x0+11.5*dx,y0-15*dely,2.5*dx,1.5*dy]);
+                %him = uicontrol('style','pushbutton', 'Units', 'centimeter', 'Position', [x0+9*dx,y0-10*dely,2.5*dx,1.5*dy]);
                 a = imread('thomx_icon.png'); % set background to white
                 set(him,'cdata',a(1:2:end,1:2:end,:)) % make smaller image
+                
+                
+                y0=0.54*screen_high; % to move up all buttons SK
                 
                 %select all
                 x1 = 10.5;
@@ -569,6 +577,7 @@ switch action
                 
                 %Get Configuration
                 x1 = 0.5; x2 = x1 + 1.5;
+                
                 uicontrol('Style','text','units', 'centimeters','FontWeight','demi', ...
                     'Position',[x0+x1*dx,y0-7*dely,3.5*dx,dy/2],'HorizontalAlignment','left',...
                     'String','Get Configuration from: ');
@@ -659,6 +668,8 @@ switch action
                     'Callback','configgui(''SetSimulatorConfig'')');
                 cnfdata.handles.LoadSimulatorTime=uicontrol('Style','text','units', 'centimeters', ...
                     'Position',[x0+x2*dx,y0-11*dely,3.0*dx,dy/2],'HorizontalAlignment','center','String','');
+                
+                
                 
                 %workspace
                 uicontrol('Style','PushButton','units', 'centimeters', ...
@@ -822,8 +833,8 @@ switch action
         configgui('LBoxWait');
         cnfdata.SetpointData=[];
         cnfdata.MonitorData=[];
+
         [cnfdata.SetpointData,cnfdata.MonitorData] = getmachineconfig('simulator');
-        
         setappdata(h,'configguidata',cnfdata);
         
         configgui('ShowActiveFamilies');
@@ -1080,6 +1091,13 @@ switch action
     case 'SelectAllQuad'
         %============================================================
         %select all families for configuration load
+        
+         %select no families for configuration load
+        for k=1:length(cnfdata.families)
+            set(cnfdata.handles.([cnfdata.families{k} 'chk']),'Value',0);
+        end
+        
+        
         for k = 1:length(cnfdata.families)
             if ~isempty(regexp(cnfdata.families{k},'QP[0-5]'))
                 if get(cnfdata.handles.([cnfdata.families{k} 'flag']),'Userdata') == 1;   %contains valid data
@@ -1092,6 +1110,13 @@ switch action
     case 'SelectAllSextu'
         %============================================================
         %select all families for configuration load
+        
+        
+         %select no families for configuration load
+        for k=1:length(cnfdata.families)
+            set(cnfdata.handles.([cnfdata.families{k} 'chk']),'Value',0);
+        end
+        
         for k=1:length(cnfdata.families)
             if ~isempty(regexp(cnfdata.families{k},'SX[1-3]'))
                 if get(cnfdata.handles.([cnfdata.families{k} 'flag']),'Userdata') == 1;   %contains valid data

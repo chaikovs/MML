@@ -1180,7 +1180,7 @@ if ~isfield(AO, Field);
     else
         error(sprintf('Field %s not found for Family %s', Field, AO.FamilyName));
     end
-    if any(strcmpi(getfamilydata('Machine'),{'spear3','spear'}))
+    if any(strcmpi(getfamilydata('Machine'),{'THOMX','spear'}))
         % Spear likes to change the channel name after the ':'
         
         %i = findstr(Channel(1,:),':');
