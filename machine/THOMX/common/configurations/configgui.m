@@ -14,6 +14,9 @@ function varargout = configgui(action, varargin)
 % Add the flag to switch between "online" and "simulator"
 % when use the "set" command...
 
+
+% Configgui: verified functionallity; corrections to gui; getmachinecofig
+% form SOLEIL; tested get/set configurations; added THOMX case in getpv. SK
 h = findobj(0,'Tag','cnffig');
 if ~isempty(h) cnfdata=getappdata(h,'configguidata'); end
 
