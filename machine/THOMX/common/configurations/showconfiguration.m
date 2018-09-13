@@ -20,11 +20,11 @@ familytype=getfamilydata(family,'FamilyType');  %returns [] for family not avail
 if strcmpi(familytype,'BEND') | strcmpi(familytype,'QUAD') | strcmpi(familytype,'SEXT') | strcmpi(familytype,'COR')
     
 DevList=family2dev(family);
-SetpointPV  =getfamilydata(family,'Setpoint','ChannelNames');
+SetpointPV  =getfamilydata(family,'Setpoint','TangoNames');
 Setpoint    =getsp(family,'hardware');
 PSetpoint    =hw2physics(family,'Setpoint',Setpoint);
 
-MonitorPV   =getfamilydata(family,'Monitor','ChannelNames');
+MonitorPV   =getfamilydata(family,'Monitor','TangoNames');
 Monitor     =getam(family,'hardware');
 PMonitor     =hw2physics(family,'Monitor', Monitor);
 
@@ -33,7 +33,7 @@ PMonitor     =hw2physics(family,'Monitor', Monitor);
 fprintf('%s\n',['   Family  DeviceList  HWSetpoint PhysicsSetpoint     HWReadback    PhysicsReadback   SP-MON (HW)   SP-MON (Physics)  Setpoint_PV             Monitor_PV']);
 
   for jj=1:size(DevList,1)
-    fprintf('%8s    [%2d,%d] %14.5f %14.5f %14.5f %14.5f %14.5f %14.5f %28s %20s\n',family,DevList(jj,1),DevList(jj,2),Setpoint(jj),PSetpoint(jj),Monitor(jj),PMonitor(jj),Setpoint(jj)-Monitor(jj),PSetpoint(jj)-PMonitor(jj),SetpointPV(jj,:),MonitorPV(jj,:));
+    fprintf('%8s    [%2d,%d] %14.5f %14.5f %14.5f %14.5f %14.5f %14.5f %28s %20s\n',family,DevList(jj,1),DevList(jj,2),Setpoint(jj),PSetpoint(jj),Monitor(jj),PMonitor(jj),Setpoint(jj)-Monitor(jj),PSetpoint(jj)-PMonitor(jj),SetpointPV{jj,:},MonitorPV{jj,:});
   end
   disp(' ');
   

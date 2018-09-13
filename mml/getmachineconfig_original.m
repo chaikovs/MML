@@ -1,7 +1,7 @@
-function [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(varargin)
+function [ConfigSetpoint, ConfigMonitor, FileName, MachineConfigStructure] = getmachineconfig_original(varargin)
 %GETMACHINECONFIG - Returns or saves to file the present storage ring setpoints and monitors 
-%  [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(Family, FileName, ExtraInputs ...)
-%  [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(FileName, ExtraInputs ...)
+%  [ConfigSetpoint, ConfigMonitor, FileName, MachineConfig] = getmachineconfig(Family, FileName, ExtraInputs ...)
+%  [ConfigSetpoint, ConfigMonitor, FileName, MachineConfig] = getmachineconfig(FileName, ExtraInputs ...)
 %  
 %  INPUTS
 %  1. Family - String, string matrix, cell array of families
@@ -21,6 +21,8 @@ function [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(varargin)
 %  2. ConfigMonitor - Structure of monitor structures
 %                     each field being a family 
 %  3. FileName - If data was archived, filename where the data was saved (including the path)
+%  4. MachineConfig - ConfigSetpoint & ConfigMonitor combined into one structure (this is the
+%                     the structure that is saved to file)
 %
 %  NOTE
 %  1. Use setmachineconfig to save a configuration to file
@@ -28,19 +30,14 @@ function [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(varargin)
 %  3. Use getmachineconfig('Golden') to store the default golden lattice
 %  4. Use getmachineconfig('Archive') to archive a lattice
 %
-%  See also setmachineconfig, getproductionlattice, getinjectionlattice
+%  See also setmachineconfig, machineconfig, machineconfigsort, getproductionlattice, getinjectionlattice
 
-%
-% Written by Jeff Corbett & Greg Portmann
-% Laurent S. Nadolski - October 2010 Modification
-% Main Config if output is empty
-% Main Config result in a temporary file
+%  Written by Jeff Corbett & Greg Portmann
 
 
 DirStart = pwd;
 
-ConfigSetpoint = [];
-ConfigMonitor = [];
+MachineConfigStructure = [];
 if nargout == 0
     ArchiveFlag = 1;
     FileName = '';
@@ -48,8 +45,9 @@ else
     ArchiveFlag = 0;
     FileName = -1;
 end
-DisplayFlag = 1;
 
+DisplayFlag = 1;
+ErrorFlag = 0;
 FileName = '';
 
 % Look for keywords on the input line
@@ -94,6 +92,8 @@ for i = length(varargin):-1:1
                 FileName = varargin{i+1};
                 varargin(i+1) = [];
             end
+        else
+            FileName = -1;
         end
         varargin(i) = [];
     elseif strcmpi(varargin{i},'noarchive')
@@ -146,7 +146,7 @@ if ArchiveFlag
             return
         end
         FileName = [DirectoryName, FileName];
-        
+
     elseif FileName == -1
         FileName = appendtimestamp(getfamilydata('Default', 'CNFArchiveFile'));
         DirectoryName = getfamilydata('Directory','ConfigData');
@@ -154,69 +154,44 @@ if ArchiveFlag
             DirectoryName = [getfamilydata('Directory','DataRoot') 'MachineConfig', filesep];
         end
         FileName = [DirectoryName, FileName];
-        
+
     elseif strcmpi(FileName, 'Golden') || strcmpi(FileName, 'Production')
         % Get the production file name (full path)
         % AD.OpsData.LatticeFile could have the full path else default to AD.Directory.OpsData
         FileName = getfamilydata('OpsData','LatticeFile');
-        [DirectoryName, FileName, Ext, VerNumber] = fileparts(FileName);
+        [DirectoryName, FileName, Ext] = fileparts(FileName);
         if isempty(DirectoryName)
             DirectoryName = getfamilydata('Directory', 'OpsData');
         end
-        FileNameGolden = [FileName, '.mat'];
-        FileName = fullfile(DirectoryName,[FileName, '.mat']);
-        
-        if exist(FileName,'file')
-            AnswerString = questdlg({'Are you sure you want to overwrite the default lattice file?',sprintf('%s',FileName)},'Default Lattice','Yes','No','No');
+
+        FullFileName = fullfile(DirectoryName,[FileName, '.mat']);
+        if exist(FullFileName,'file')
+            AnswerString = questdlg({'Are you sure you want to overwrite the default lattice file?',sprintf('%s',FullFileName)},'Default Lattice','Yes','No','No');
         else
             AnswerString = 'Yes';
         end
-
         if ~strcmp(AnswerString,'Yes')
             disp('   Lattice configuration not saved (getmachineconfig).');
             return;
         end
-        
+        drawnow;
+
         % Backup first
-        if exist(FileName,'file')
-            DirStart = pwd;
-            %BackupDirectoryName = [getfamilydata('Directory','DataRoot') 'Backup' filesep];
-            %BackupDataFileName  = prependtimestamp(FileNameGolden);
-            BackupDirectoryName = [getfamilydata('Directory','ConfigData'), 'GoldenBackup', filesep];
+        BackupFileName = CreateBackupFile(DirectoryName, FileName);
+        FileName = FullFileName;
 
-            try
-                load(FileName,'ConfigSetpoint');
-                Fields = fieldnames(ConfigSetpoint);
-                BackupDataFileName = prependtimestamp(FileNameGolden, ConfigSetpoint.(Fields{1}).Setpoint.TimeStamp);
-                clear ConfigSetpoint
-            catch
-                fprintf('   Unknown time stamp on the old production lattice file, so backup file has the present time in the filename.\n');
-                BackupDataFileName = prependtimestamp(FileNameGolden);
-            end
-
-            [FinalDir, ErrorFlag] = gotodirectory(BackupDirectoryName);
-            if ~ErrorFlag
-                copyfile(FileName, [BackupDirectoryName, BackupDataFileName], 'f');
-                fprintf('   File %s backup to %s\n', FileName, [BackupDirectoryName, BackupDataFileName]);
-            else
-                fprintf('   Problem finding/creating backup directory, hence backup made to the present directory.\n');
-                copyfile(FileName, BackupDataFileName, 'f');
-            end
-            cd(DirStart);
-        end
     elseif strcmpi(FileName, 'Injection')
         % Get the injection file name (full path)
         % AD.OpsData.InjectionFile could have the full path else default to AD.Directory.OpsData
         FileName = getfamilydata('OpsData','InjectionFile');
-        [DirectoryName, FileName, Ext, VerNumber] = fileparts(FileName);
+        [DirectoryName, FileName, Ext] = fileparts(FileName);
         if isempty(DirectoryName)
             DirectoryName = getfamilydata('Directory', 'OpsData');
         end
-        FileNameGolden = [FileName, '.mat'];
-        FileName = fullfile(DirectoryName,[FileName, '.mat']);
-                
-        if exist(FileName,'file')
-            AnswerString = questdlg({'Are you sure you want to overwrite the default injection file?',sprintf('%s',FileName)},'Default Lattice','Yes','No','No');
+
+        FullFileName = fullfile(DirectoryName,[FileName, '.mat']);
+        if exist(FullFileName,'file')
+            AnswerString = questdlg({'Are you sure you want to overwrite the default injection file?',sprintf('%s',FullFileName)},'Default Lattice','Yes','No','No');
         else
             AnswerString = 'Yes';
         end
@@ -224,33 +199,11 @@ if ArchiveFlag
             disp('   Injection configuration not saved (getmachineconfig).');
             return;
         end
-        
+        drawnow;
+
         % Backup first
-        if exist(FileName,'file')
-            DirStart = pwd;
-            %BackupDirectoryName = [getfamilydata('Directory','DataRoot') 'Backup' filesep];
-            BackupDirectoryName = [getfamilydata('Directory','ConfigData'), 'GoldenBackup', filesep];
-
-            try
-                load(FileName,'ConfigSetpoint');
-                Fields = fieldnames(ConfigSetpoint);
-                BackupDataFileName = prependtimestamp(FileNameGolden, ConfigSetpoint.(Fields{1}).Setpoint.TimeStamp);
-                clear ConfigSetpoint
-            catch
-                fprintf('   Unknown time stamp on the old injection lattice file, so backup file has the present time in the filename.\n');
-                BackupDataFileName = prependtimestamp(FileNameGolden);
-            end
-
-            [FinalDir, ErrorFlag] = gotodirectory(BackupDirectoryName);
-            if ~ErrorFlag
-                copyfile(FileName, [BackupDirectoryName, BackupDataFileName], 'f');
-                fprintf('   File %s backup to %s\n', FileName, [BackupDirectoryName, BackupDataFileName]);
-            else
-                fprintf('   Problem finding/creating backup directory, hence backup made to the present directory.\n');
-                copyfile(FileName, BackupDataFileName, 'f');
-            end
-            cd(DirStart);
-        end
+        BackupFileName = CreateBackupFile(DirectoryName, FileName);
+        FileName = FullFileName;
     end
 end
 
@@ -266,81 +219,61 @@ end
 % Loop over all families
 for i = 1:N
     if iscell(FamilyName)
-        Family = deblank(FamilyName{i});        
+        Family = deblank(FamilyName{i});
     else
         Family = deblank(FamilyName(i,:));
     end
-            
-    
-    % Get the setpoint
-    if ismemberof(Family, 'MachineConfig')
+
+    % The main family MemberOf field defaults to the setpoint field
+    if ismemberof(Family, 'Save/Restore') || ismemberof(Family, 'Save') || ismemberof(Family, 'MachineConfig')
         % Get the Setpoint field
         Field = 'Setpoint';
         try
             if ~isempty(getfamilydata(Family, Field))
-                ConfigSetpoint.(Family).(Field) = getpv(Family, Field, 'Struct', InputFlags{:});
+                MachineConfigStructure.(Family).(Field) = getpv(Family, Field, 'Struct', InputFlags{:});
             end
         catch
+            ErrorFlag = 1;
             fprintf('   Trouble with getpv(''%s'',''%s''), hence ignored (getmachineconfig)\n', Family, Field);
         end
     end
-    
-    % Look if any other fields are part of the MachineConfig
+
+    % Look if any other fields are part of the 'Save/Restore', 'Save' or the legacy 'MachineConfig'
     AOFamily = getfamilydata(Family);
     FieldNameCell = fieldnames(AOFamily);
     for j = 1:size(FieldNameCell,1)
         if isfield(AOFamily.(FieldNameCell{j}),'MemberOf')
-            if any(strcmpi(AOFamily.(FieldNameCell{j}).MemberOf, 'MachineConfig'))
+            if any(strcmpi(AOFamily.(FieldNameCell{j}).MemberOf, 'Save/Restore')) || any(strcmpi(AOFamily.(FieldNameCell{j}).MemberOf, 'Save')) || any(strcmpi(AOFamily.(FieldNameCell{j}).MemberOf, 'MachineConfig'))
                 try
-                    ConfigSetpoint.(Family).(FieldNameCell{j}) = getpv(Family, FieldNameCell{j}, 'Struct', InputFlags{:});
+                    MachineConfigStructure.(Family).(FieldNameCell{j}) = getpv(Family, FieldNameCell{j}, 'Struct', InputFlags{:});
                 catch
+                    ErrorFlag = 1;
                     fprintf('   Trouble with getpv(''%s'',''%s''), hence ignored (getmachineconfig)\n', Family, FieldNameCell{j});
-                end                
-            end
-        end
-    end
-    
-    
-    % Get the monitors
-    if nargout >= 2 || ArchiveFlag
-        if ismemberof(Family, 'MachineConfig') || ismemberof(Family, 'Setpoint', 'MachineConfig') || ismemberof(Family, 'BPM') || strcmp(Family, 'DCCT')
-            try
-                if ~isempty(getfamilydata(Family, 'Monitor'))
-                    ConfigMonitor.(Family).Monitor = getam(Family, 'Struct', InputFlags{:});
                 end
-            catch
-                fprintf('   Trouble with getam(%s), hence ignored (getmachineconfig)\n', Family);
             end
         end
     end
+
+    % Save monitors (should be done above)
+    %if nargout >= 2 || ArchiveFlag
+    %    if ismemberof(Family, 'MachineConfig') || ismemberof(Family, 'Setpoint', 'MachineConfig') || ismemberof(Family, 'Monitor', 'MachineConfig') || ismemberof(Family, 'BPM') || strcmp(Family, 'DCCT')
+    %        try
+    %            if ~isempty(getfamilydata(Family, 'Monitor'))
+    %                ConfigMonitor.(Family).Monitor = getam(Family, 'Struct', InputFlags{:});
+    %            end
+    %        catch
+    %            fprintf('   Trouble with getam(%s), hence ignored (getmachineconfig)\n', Family);
+    %        end
+    %    end
+    %end
 end
 
 
-% % Get other RF channels
-% if nargout >= 2 | ArchiveFlag
-%     try
-%         ConfigMonitor.RFPower = getpv('RF', 'Power', 'Struct', InputFlags{:});
-%         ConfigMonitor.RFVoltage = getpv('RF', 'Voltage', 'Struct', InputFlags{:});
-%         ConfigMonitor.KlysPower = getpv('RF', 'KlysPower', 'Struct', InputFlags{:});
-%     catch
-%         %fprintf('   Trouble getting RF KlysPower, hence ignored (getmachineconfig)\n');
-%     end
-% end
-
-
-
-% Put fields in alphabetical order 
+% Put fields in alphabetical order
 % (Not a good idea to change the set order)
-% if ~isempty(ConfigSetpoint)
-%     ConfigSetpoint = orderfields(ConfigSetpoint);
+% if ~isempty(MachineConfigStructure)
+%     MachineConfigStructure = orderfields(MachineConfigStructure);
 % end
-
-
-if nargout >= 2 || ArchiveFlag
-    if ~isempty(ConfigMonitor)
-        ConfigMonitor = orderfields(ConfigMonitor);
-    end
-end
 
 
 if ArchiveFlag
@@ -348,10 +281,10 @@ if ArchiveFlag
     [DirectoryName, FileName, Ext] = fileparts(FileName);
     DirStart = pwd;
     [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
-    save(FileName, 'ConfigMonitor', 'ConfigSetpoint');
+    save(FileName, 'MachineConfigStructure');
     cd(DirStart);
     FileName = [DirectoryName FileName];
-    
+
     if DisplayFlag
         fprintf('   Machine configuration data saved to %s.mat\n', FileName);
         if ErrorFlag
@@ -364,16 +297,93 @@ else
 end
 
 
+% 
+if nargout >= 1
+    [ConfigSetpoint, ConfigMonitor] = machineconfigsort(MachineConfigStructure);
+end
+
 
 % Special function call for further updates
 % Note that the eval allows one to run it has a script (for better or worse).
-ExtraSetFunction = getfamilydata('getmachineconfigfunction');
+ExtraGetFunction = getfamilydata('getmachineconfigfunction');
 
-if ~isempty(ExtraSetFunction)
+if ~isempty(ExtraGetFunction)
     try
-        eval(ExtraSetFunction);
+        feval(ExtraGetFunction, FileName);
     catch
         fprintf('\n%s\n', lasterr);
-        fprintf('   Warning: %s did not compete without error in getmachineconfig.', ExtraSetFunction);
+        fprintf('   Warning: %s did not complete without error in getmachineconfig.', ExtraGetFunction);
     end
+end
+
+if DisplayFlag
+    if ErrorFlag
+        if ArchiveFlag
+            fprintf('   Machine configuration save complete with errors!\n\n');
+        else
+            fprintf('   Error getting a machine configuration!\n\n');
+        end
+    else
+        if ArchiveFlag
+            fprintf('   Machine configuration save complete.\n\n');
+        else
+            %fprintf('   Machine configuration complete.\n\n');
+        end
+    end
+    drawnow;
+end
+
+
+function BackupFileName = CreateBackupFile(DirectoryName, FileName)
+
+BackupFileName = '';
+FileName = [FileName, '.mat'];
+FullFileName = fullfile(DirectoryName, FileName);
+
+% Build the backup filename
+if exist(FullFileName, 'file')
+    % Append the creation time stamp to the backup file
+    try
+        % Check for legacy save/restore file
+        load(FullFileName);
+        if exist('ConfigSetpoint', 'var')
+            % Change to new method
+            Fields = fieldnames(ConfigSetpoint);
+            TimeStamp = ConfigSetpoint.(Fields{1}).Setpoint.TimeStamp;
+        else
+            % New method
+            if ~exist('MachineConfigStructure', 'var')
+                error('Machine configuration variable not found.')
+            end
+            [MC_Restore, MC_Save, SPcell] = machineconfigsort(MachineConfigStructure);
+            if isempty(SPcell)
+                % Try the monitor structure
+                Field1 = fieldnames(MC_Save);
+                Field2 = fieldnames(MC_Save.(Field1{1}));
+                TimeStamp = MC_Save.(Field1{1}).(Field2{1}).TimeStamp;
+            else
+                TimeStamp = SPcell{1}.TimeStamp;
+            end
+        end
+        
+        BackupFileName = prependtimestamp(FileName, TimeStamp);
+        
+    catch
+        fprintf('   Unknown time stamp on the old injection lattice file, so backup file has the present time in the filename.\n');
+        BackupFileName = prependtimestamp(FileName);
+    end
+
+    % Spear3 requested that the machine config backups go to a subdirectory of ConfigData instead of the normal DataRoot/Backup
+    DirStart = pwd;
+    %BackupDirectoryName = [getfamilydata('Directory','DataRoot') 'Backup' filesep];
+    BackupDirectoryName = [getfamilydata('Directory','ConfigData'), 'GoldenBackup', filesep];
+    [FinalDir, ErrorFlag] = gotodirectory(BackupDirectoryName);
+    if ~ErrorFlag
+        copyfile(FullFileName, [BackupDirectoryName, BackupFileName], 'f');
+        fprintf('   File %s backup to %s\n', FileName, [BackupDirectoryName, BackupFileName]);
+    else
+        fprintf('   Problem finding/creating backup directory, hence backup made to the present directory.\n');
+        copyfile(FullFileName, BackupFileName, 'f');
+    end
+    cd(DirStart);
 end

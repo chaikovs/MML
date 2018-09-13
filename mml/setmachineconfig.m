@@ -145,7 +145,8 @@ if isempty(MachineConfigStructure)
             % Default file
             %FileName = getfamilydata('Default', 'CNFArchiveFile');
             % Spear has an operator cluge on where to save default files
-            if any(strcmpi(getfamilydata('Machine'),{'spear3','spear'}))
+            %if any(strcmpi(getfamilydata('Machine'),{'spear3','spear'}))
+            if any(strcmpi(getfamilydata('Machine'),{'THOMX'}))
                 DirectoryName = getfamilydata('Directory', 'GoldenConfigFiles');
             else
                 DirectoryName = getfamilydata('Directory', 'ConfigData');
