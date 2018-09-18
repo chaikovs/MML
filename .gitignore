@@ -24,3 +24,8 @@ Thumbs.db
 
 #matlab startup.m
 startup.m
+
+#matlab mex files
+*.mexmaci64
+*.mexw64
+*..mexa64
