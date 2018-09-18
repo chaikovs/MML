@@ -22,6 +22,8 @@ Matrix66Pass
 MatrixTijkPass
 QuadLinearFPass
 QuadLinearPass
+QuadMPoleFringePass
+QuadMPoleFringeRadPass
 QuantDiffPass
 RFCavityPass
 SolenoidLinearPass
