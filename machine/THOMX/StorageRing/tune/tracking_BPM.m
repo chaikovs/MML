@@ -42,6 +42,33 @@ plot(X,'b.')
 figure
 plot(abs(fft(X)))
 
+%%
+
+BPMindex = family2atindex('BPMx');
+spos = getspos('BPMx');
+
+X00 = [1e-3 0 1e-3 0 0 0]';
+X01 = linepass(THERING, X00(:,end), 1:length(THERING)+1);
+X02 = linepass(THERING, X01(:,end), 1:length(THERING)+1);
+X03 = linepass(THERING, X02(:,end), 1:length(THERING)+1);
+X04 = linepass(THERING, X03(:,end), 1:length(THERING)+1);
+
+    [X1 X2 X3 X4 ] = deal(X01(1,BPMindex)*1e3, X02(1,BPMindex)*1e3, X03(1,BPMindex)*1e3, X04(1,BPMindex)*1e3);
+    [Z1 Z2 Z3 Z4 ] = deal(X01(3,BPMindex)*1e3, X02(3,BPMindex)*1e3, X03(3,BPMindex)*1e3, X04(3,BPMindex)*1e3);
+    
+figure
+plot(X01(1,BPMindex)*1e3,'b.')
+hold on
+plot(X02(1,BPMindex)*1e3,'r.')
+plot(X03(1,BPMindex)*1e3,'g.')
+plot(X04(1,BPMindex)*1e3,'m.')
+hold off
+xlabel('BPM number')
+ylabel('COD [mm]')
+
+%%
+
+Q01 = ringpass(THERING, X00(:,end),10);
 
 %% 
 
