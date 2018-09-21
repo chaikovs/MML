@@ -44,7 +44,7 @@ RF = rfcavity('RF', 0.0,  300e3, HarmNumber*C0/L0, HarmNumber, ...
 % drift
 %%========================
 %sextupole length
-LSX = 0.06;
+LSX = 0;%0.06;
 dL = (0.296233-0.27646)/2;
 dL_track = (0.296351 - 0.296233)/2;
 
@@ -123,13 +123,13 @@ SPassMethod = 'StrMPoleSymplectic4Pass';
 %  SX3 = sextupole('SX3', LSX, -.3289547E+01/LSX*sx_on, SPassMethod); 
 
 
- SX1 = sextupole('SX1', LSX, 0.1*sx_on,  SPassMethod); 
- SX2 = sextupole('SX2', LSX,  2.91240510193354/LSX *sx_on, SPassMethod); 
- SX3 = sextupole('SX3', LSX,  -8.84477704272277/LSX *sx_on, SPassMethod);
+%  SX1 = sextupole('SX1', LSX, 0.1*sx_on,  SPassMethod); 
+%  SX2 = sextupole('SX2', LSX,  2.91240510193354/LSX *sx_on, SPassMethod); 
+%  SX3 = sextupole('SX3', LSX,  -8.84477704272277/LSX *sx_on, SPassMethod);
 
-%  SX1 = sextupole('SX1', 0.1000000E-05, 0*sx_on,  SPassMethod); 
-%  SX2 = sextupole('SX2', 0.1000000E-05,  2912405.10193354 *sx_on, SPassMethod); 
-%  SX3 = sextupole('SX3', 0.1000000E-05,  -8844777.04272277 *sx_on, SPassMethod); 
+ SX1 = sextupole('SX1', 0.1000000E-05, 0*sx_on,  SPassMethod); 
+ SX2 = sextupole('SX2', 0.1000000E-05,  2912405.10193354 *sx_on, SPassMethod); 
+ SX3 = sextupole('SX3', 0.1000000E-05,  -8844777.04272277 *sx_on, SPassMethod); 
 
 %% =======================
 % BPM
