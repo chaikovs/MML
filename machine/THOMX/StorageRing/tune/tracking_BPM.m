@@ -13,9 +13,11 @@ thomx_ring=ThomX_017_064_r56_02_chro00;
 
 %%
 
-Z0=[0.01 0 0.00 0 0 0]';
+Z0=[0.01 0.0 0.00 0 0 0]';
+Z1=[0.0 0.001 0.00 0 0 0]';
 
-[OUT_thomx,lost_thomx]=ringpass(thomx_ring,Z0,1000); %(X, PX, Y, PY, DP, CT2 ) 
+[OUT_thomx,lost_thomx]=ringpass(thomx_ring,Z0,10000); %(X, PX, Y, PY, DP, CT2 ) 
+[OUT_thomxV,lost_thomxV]=ringpass(thomx_ring,Z1,10000); %(X, PX, Y, PY, DP, CT2 ) 
 
 
  X = OUT_thomx(1,:);
@@ -25,6 +27,13 @@ Z0=[0.01 0 0.00 0 0 0]';
  DP= OUT_thomx(5,:);
  CT= OUT_thomx(6,:);
  
+ X_V = OUT_thomxV(1,:);
+ PX_V= OUT_thomxV(2,:);
+ Y_V= OUT_thomxV(3,:);
+ PY_V= OUT_thomxV(4,:);
+ DP_V= OUT_thomxV(5,:);
+ CT_V= OUT_thomxV(6,:);
+ 
 
 figure
 plot(X,PX,'b.','DisplayName', 'x-Px')
@@ -32,15 +41,52 @@ hold on
 plot(Y,PY,'r.','DisplayName', 'y-Py')
 hold off
 legend('show','Location','NorthEast');
+ylabel('P_x/P_y');
+xlabel('x/y');
 %print('tracking','-dpng','-r300')
+
+figure
+plot(X_V,PX_V,'b.','DisplayName', 'x-Px')
+hold on
+plot(Y_V,PY_V,'r.','DisplayName', 'y-Py')
+hold off
+legend('show','Location','NorthEast');
+ylabel('P_x/P_y');
+xlabel('x/y');
 
 %% BPM turn-by-turn and its FFT
 
 figure
+subplot 211
 plot(X,'b.')
+subplot 212
+plot(Y,'b.')
+
+figure
+subplot 211
+plot(X_V,'b.')
+subplot 212
+plot(Y_V,'b.')
+
+%%
 
 figure
 plot(abs(fft(X)))
+
+figure
+plot(abs(fft(X_V)))
+
+fftx=abs(fft(X));
+f = [1:length(fftx)]/length(fftx);
+
+[tune_ampl tune_ind] = max(fftx);
+tune = f(tune_ind);
+
+figure
+plot(f, fftx);
+xlabel('\nu_x');
+ylabel('fft(x)');
+%xaxis([0 0.5]);
 
 %%
 
@@ -91,4 +137,50 @@ Q01 = ringpass(THERING, X00(:,end),10);
 % plot(X0(1,:),X0(2,:),'.b')
 % plot(X3(1,:),X3(2,:),'*k')
 
+
+%%
+
+circumference = findspos(thomx_ring, length(thomx_ring)+1);
+revTime = circumference / 2.99792458e8;
+revFreq = 2.99792458e8 / circumference;
+%[TD, tunes, chromaticity] = twissring(thomx_ring,0, length(thomx_ring)+1, 'chrom', 1e-8);
+[lindata,tunes_fraq,chrom]=atlinopt(thomx_ring,0,1:length(thomx_ring)+1); 
+tunes = lindata(end).mu/2/pi;
+tunexfreq = tunes(1)/revTime
+tuneyfreq = tunes(2)/revTime
+
+tunexfreq_fraq = tunes_fraq(1)/revTime
+tuneyfreq_fraq = tunes_fraq(2)/revTime
+
+%%
+
+Fs = 1/revTime;                   % samples per second
+N = length(X);            % samples
+dF = Fs/N;                 % hertz per sample
+
+X1_fft = fftshift(fft(X))/N;
+
+f = -Fs/2:dF:Fs/2-dF + (dF/2)*mod(N,2);      % hertz
+
+figure;
+plot(f,abs(X1_fft));
+
+figure;
+plot(f./Fs,abs(X1_fft));
+
+
+%%
+Fs = 1/revTime;                   
+N = length(X);            
+dF = Fs/N;                
+
+XX = fft(X,N);
+XX = XX(1:N/2);
+mx = abs(XX);
+f = (0:N/2-1)*Fs/N;
+
+figure;
+plot(f, mx);
+
+%%
 
