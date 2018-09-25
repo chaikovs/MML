@@ -66,7 +66,7 @@ fftx=abs(fft(X));
 f = [1:length(fftx)]/length(fftx);
 
 [tuneFFT_ampl tuneFFT_ind] = max(fftx);
-tuneFFT  = f(tuneFFT_ind);
+tuneFFT  = f(tuneFFT_ind)
 
 figure
 plot(f, fftx);
@@ -75,6 +75,14 @@ ylabel('fft(x)');
 title(['Tune \nu_x = ' num2str(tuneFFT) ' ( Model ' num2str(tunes_fraq(1)) ' ) \nu_x - \nu_{x0} = ' num2str((tuneFFT-tunes_fraq(1)))])
 %xaxis([0 0.5]);
 
+
+%%
+lpad = 2*length(X);
+fftx_zpadding=abs(fft(X, lpad));
+f = [1:length(fftx_zpadding)]/length(fftx_zpadding);
+
+[tuneFFT_zpadding_ampl tuneFFT_zpadding_ind] = max(fftx_zpadding);
+tuneFFT_zpadding  = f(tuneFFT_zpadding_ind)
 %%
 Fs = 1/revTime;                   
 N = length(X);            
@@ -146,9 +154,14 @@ Xnoise = X + 0.002*randn(size(X));
 
 fftx=abs(fft(X));
 f = [1:length(fftx)]/length(fftx);
-
-[tuneFFT_ampl tuneFFT_ind] = max(fftx);
+[tuneFFT_ampl, tuneFFT_ind] = max(fftx);
 nu_fft(iturn)  = f(tuneFFT_ind);
+
+lpad = 2*length(X);
+fftx_zpadding=abs(fft(X, lpad));
+f_zpadding = [1:length(fftx_zpadding)]/length(fftx_zpadding);
+[tuneFFT_zpadding_ampl, tuneFFT_zpadding_ind] = max(fftx_zpadding);
+nu_zpadding(iturn)  = f_zpadding(tuneFFT_zpadding_ind);
 
 [nu_naff(iturn), amp1] = naff(X');
 nu_findfreq(iturn) = findfreq(X',X');
@@ -161,16 +174,18 @@ end
 %%
 
 figure
-plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko')
+plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko','DisplayName', 'fft')
 hold on
-plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro')
-plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'go')
-plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'k*')
-plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*')
+plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo','DisplayName', 'fft zero padding')
+plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro','DisplayName', 'NAFF')
+plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'go','DisplayName', 'findfreq')
+plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'k*','DisplayName', 'NAFF+noise')
+plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*','DisplayName', 'findfreq+noise')
 plot(Nturns, 1./Nturns,'k--')
 hold off
 set(gca, 'YScale', 'log')
-
+u = legend('show','Location','NorthEast');
+set(u,'FontSize',14)
 
 %%
 
