@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of learn_tangodb</title>
+  <meta name="keywords" content="learn_tangodb">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">database</a> &gt; learn_tangodb.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/database&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>learn_tangodb
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%</span>
+0002 <span class="keyword">return</span>;
+0003 dbserver = <span class="string">'sys/database/2'</span>;
+0004 res = tango_command_list_query(dbserver)
+0005 
+0006 DbAddDevice
+0007 DbAddServer
+0008 DbDeleteAttributeAlias
+0009 DbDeleteClassAttribute
+0010 DbDeleteClassAttributeProperty
+0011 DbDeleteClassProperty
+0012 DbDeleteDevice
+0013 DbDeleteDeviceAlias
+0014 DbDeleteDeviceAttribute
+0015 DbDeleteDeviceAttributeProperty
+0016 DbDeleteDeviceProperty
+0017 DbDeleteProperty
+0018 DbDeleteServer
+0019 DbDeleteServerInfo
+0020 DbExportDevice
+0021 DbExportEvent
+0022 DbGetAliasDevice
+0023 DbGetAttributeAlias
+0024 DbGetAttributeAliasList
+0025 DbGetClassAttributeList
+0026 DbGetClassAttributeProperty
+0027 DbGetClassList
+0028 DbGetClassProperty
+0029 DbGetClassPropertyList
+0030 DbGetDeviceAliasList
+0031 DbGetDeviceAttributeList
+0032 DbGetDeviceAttributeProperty
+0033 DbGetDeviceClassList
+0034 DbGetDeviceDomainList
+0035 DbGetDeviceExportedList
+0036 DbGetDeviceFamilyList
+0037 DbGetDeviceList
+0038 DbGetDeviceMemberList
+0039 DbGetDeviceProperty
+0040 DbGetDevicePropertyList
+0041 DbGetDeviceServerClassList
+0042 DbGetHostList
+0043 DbGetHostServerList
+0044 DbGetHostServersInfo
+0045 DbGetInstanceNameList
+0046 DbGetObjectList
+0047 DbGetProperty
+0048 DbGetPropertyList
+0049 DbGetServerInfo
+0050 DbGetServerList
+0051 DbGetServerNameList
+0052 DbImportDevice
+0053 DbImportEvent
+0054 DbInfo
+0055 DbPutAttributeAlias
+0056 DbPutClassAttributeProperty
+0057 DbPutClassProperty
+0058 DbPutDeviceAlias
+0059 DbPutDeviceAttributeProperty
+0060 DbPutDeviceProperty
+0061 DbPutProperty
+0062 DbPutServerInfo
+0063 DbUnExportDevice
+0064 DbUnExportEvent
+0065 DbUnExportServer
+0066 Init
+0067 State
+0068 Status
+0069 
+0070 res = tango_command_inout(dbserver,<span class="string">'DbGetDeviceFamilyList'</span>,<span class="string">'*'</span>)
+0071 res = tango_command_inout(dbserver,<span class="string">'DbInfo'</span>)
+0072 res = tango_command_inout(dbserver,<span class="string">'Status'</span>)
+0073 
+0074 <span class="comment">%% Ajout d'un device</span>
+0075 <span class="comment">% Argument minimum: serveur device Class</span>
+0076 
+0077 tango_command_inout(dbserver,<span class="string">'DbAddDevice'</span>,{<span class="string">'ds_bpm/bpm1'</span>,<span class="string">'ANS/DGsim/BPM000'</span>,<span class="string">'Bpm'</span>})
+0078 
+0079 <span class="keyword">for</span> k=1:5
+0080     Device = strcat(<span class="string">'ANS/DGsim/BPM00'</span>,num2str(k))
+0081     tango_command_inout(dbserver,<span class="string">'DbAddDevice'</span>,{<span class="string">'ds_bpm/bpm1'</span>,Device,<span class="string">'Bpm'</span>})
+0082 <span class="keyword">end</span>
+0083 
+0084 <span class="comment">%% Effacer une device de la Database statique</span>
+0085 <span class="keyword">for</span> k=1:5
+0086     Device = strcat(<span class="string">'ANS/DGsim/BPM00'</span>,num2str(k))
+0087     tango_command_inout(dbserver,<span class="string">'DbDeleteDevice'</span>,Device)
+0088 <span class="keyword">end</span>
+0089 
+0090 <span class="comment">% Ajouter un device serveur et les devices associes</span>
+0091 className=<span class="string">'TangoParser'</span>;
+0092 deviceName=<span class="string">'LT1/VI/COMP.3'</span>;
+0093 serverName=<span class="string">'tangoparser/LT1'</span>;
+0094 
+0095 argin = {serverName,deviceName,className};
+0096 tango_command_inout(dbserver,<span class="string">'DbAddDevice'</span>,argin)
+0097 
+0098 <span class="comment">% efface</span>
+0099 <span class="comment">%tango_command_inout(dbserver,'DbDeleteDevice',deviceName)</span>
+0100 
+0101 <span class="comment">% Lire une propriete d'un device</span>
+0102 tango_command_inout2(dbserver,<span class="string">'DbGetDeviceProperty'</span>,{deviceName, propertyName});
+0103 
+0104 <span class="comment">% cree une propriete de device</span>
+0105 <span class="comment">% valeur somme pour les pressions</span>
+0106 propertyName = <span class="string">'AttributeNames'</span>;
+0107 tangoNames= family2tango(<span class="string">'PI'</span>);
+0108 <span class="comment">%%</span>
+0109 nb = length(tangoNames);
+0110 
+0111 <span class="comment">% build list of the type</span>
+0112 <span class="comment">% x1, attribute1</span>
+0113 <span class="comment">% x2, attribute2</span>
+0114 <span class="comment">% ...</span>
+0115 <span class="comment">% xn, attributen</span>
+0116 
+0117 <span class="keyword">for</span> k = 1:nb,
+0118     mapping{k} = [<span class="string">'x'</span>, num2str(k) <span class="string">','</span> tangoNames{k}]
+0119 <span class="keyword">end</span>
+0120 
+0121 argin = {deviceName, <span class="string">'1'</span>, propertyName, num2str(nb), mapping{:}};
+0122 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,argin);
+0123 
+0124 propertyName = <span class="string">'OutputNames'</span>;
+0125 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,{deviceName, <span class="string">'1'</span>, propertyName, <span class="string">'1'</span>, <span class="string">'diff '</span>});
+0126 
+0127 <span class="comment">%% 2 commands required</span>
+0128 <span class="comment">% init</span>
+0129 <span class="comment">%tango_command_inout2(deviceName,'Init');</span>
+0130 
+0131 <span class="comment">% set expression</span>
+0132 stringExpression = [];
+0133 <span class="keyword">for</span> k=1:nb,
+0134     <span class="keyword">if</span> k ~= nb &amp;&amp; k ~= 1
+0135         stringExpression = [stringExpression <span class="string">'x'</span> num2str(k) <span class="string">'+'</span>];
+0136     <span class="keyword">elseif</span> k == 1
+0137         stringExpression = [<span class="string">'('</span> stringExpression <span class="string">'x'</span> num2str(k) <span class="string">'+'</span>];
+0138     <span class="keyword">elseif</span> k == nb
+0139         stringExpression = [stringExpression <span class="string">'x'</span> num2str(k) <span class="string">') + 54/'</span> num2str(nb)];
+0140     <span class="keyword">end</span>
+0141 <span class="keyword">end</span>
+0142 
+0143 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{<span class="string">'sum'</span>, stringExpression});
+0144 
+0145 <span class="comment">% tango_command_inout2(deviceName,'GetExpression','meanPressure');</span>
+0146 
+0147 <span class="comment">% unexport un device</span>
+0148 <span class="comment">%tango_command_inout2(dbserver,'DbUnExportDevice','tango/tangoparser/1')</span>
+0149 
+0150 <span class="comment">%% Nomenclature vide LT2</span>
+0151 
+0152 <span class="comment">%% vide</span>
+0153 
+0154 liste = {
+0155 <span class="string">'LT2/VI/PI40.1'</span>,
+0156 <span class="string">'LT2/VI/PI55.2'</span>,
+0157 <span class="string">'LT2/VI/PI55.3'</span>,
+0158 <span class="string">'LT2/VI/PI55.4'</span>,
+0159 <span class="string">'LT2/VI/PI55.5'</span>,
+0160 <span class="string">'LT2/VI/PI55.6'</span>,
+0161 <span class="string">'LT2/VI/PI150.7'</span>,
+0162 <span class="string">'LT2/VI/PI55.8'</span>,
+0163 <span class="string">'LT2/VI/PI55.9'</span>,
+0164 <span class="string">'LT2/VI/PI55.10'</span>,
+0165 <span class="string">'LT2/VI/PI55.11'</span>,
+0166 <span class="string">'LT2/VI/PI55.12'</span>,
+0167 <span class="string">'LT2/VI/PI55.13'</span>,
+0168 <span class="string">'LT2/VI/PI55.14'</span>,
+0169 <span class="string">'LT2/VI/PI40.15'</span>
+0170 }
+0171 
+0172 serverName = <span class="string">'ionpump/PI4LT2'</span>;
+0173 className = <span class="string">'IonPump'</span>;
+0174 <span class="keyword">for</span> k=1:length(liste),
+0175     deviceName = liste{k};
+0176     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0177 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0178 <span class="keyword">end</span>
+0179 
+0180 serverName = <span class="string">'penninggauge/JPEN4LT2'</span>;
+0181 className = <span class="string">'PenningGauge'</span>;
+0182 <span class="keyword">for</span> k=1:3,
+0183     deviceName = [<span class="string">'LT2/VI/JPEN.'</span> num2str(k)];
+0184      tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0185 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0186 <span class="keyword">end</span>
+0187 
+0188 
+0189 serverName = <span class="string">'piranigauge/JPIR4LT2'</span>;
+0190 className = <span class="string">'PiraniGauge'</span>;
+0191 
+0192 <span class="keyword">for</span> k=1:3,
+0193     deviceName = [<span class="string">'LT2/VI/JPIR.'</span> num2str(k)];
+0194      tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0195 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0196 <span class="keyword">end</span>
+0197 
+0198 
+0199 liste = {
+0200 <span class="string">'LT2/VI/VS40.1'</span>,
+0201 <span class="string">'LT2/VI/VS63.2'</span>,
+0202 <span class="string">'LT2/VI/VS40.3'</span>};
+0203 
+0204 serverName = <span class="string">'vacuumvalve/VS4LT2'</span>;
+0205 className = <span class="string">'VacuumValve'</span>;
+0206 <span class="keyword">for</span> k=1:length(liste),
+0207     deviceName = liste{k};
+0208     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0209 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0210 <span class="keyword">end</span>
+0211 
+0212 liste = {
+0213 <span class="string">'LT2/AE/D.1'</span>,
+0214 <span class="string">'LT2/AE/Q.1'</span>,
+0215 <span class="string">'LT2/AE/Q.2'</span>,
+0216 <span class="string">'LT2/AE/Q.3'</span>,
+0217 <span class="string">'LT2/AE/Q.4'</span>,
+0218 <span class="string">'LT2/AE/Q.5'</span>,
+0219 <span class="string">'LT2/AE/Q.6'</span>,
+0220 <span class="string">'LT2/AE/Q.7'</span>,
+0221 <span class="string">'LT2/AE/CV.1'</span>,
+0222 <span class="string">'LT2/AE/CV.2'</span>,
+0223 <span class="string">'LT2/AE/CV.3'</span>,
+0224 <span class="string">'LT2/AE/CV.4'</span>,
+0225 <span class="string">'LT2/AE/CV.5'</span>,
+0226 <span class="string">'LT2/AE/CH.1'</span>,
+0227 <span class="string">'LT2/AE/CH.2'</span>,
+0228 <span class="string">'LT2/AE/CH.3'</span>};
+0229 
+0230 serverName = <span class="string">'ds_magnetsim/magnet4LT2'</span>;
+0231 className = <span class="string">'MagnetAlimSim'</span>;
+0232 <span class="keyword">for</span> k=1:length(liste),
+0233     deviceName = liste{k};
+0234     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0235 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0236 <span class="keyword">end</span>
+0237 
+0238 liste = {
+0239 <span class="string">'BOO-Binj/VI/PI55.1'</span>,
+0240 <span class="string">'BOO-Binj/VI/PI55.2'</span>,
+0241 <span class="string">'BOO-Binj/VI/PI300.3'</span>,
+0242 <span class="string">'BOO-Binj/VI/PI55.4'</span>,
+0243 <span class="string">'BOO-Binj/VI/PI55.5'</span>,
+0244 <span class="string">'BOO-Binj/VI/PI55.6'</span>,
+0245 <span class="string">'BOO-Binj/VI/PI500.7'</span>, 
+0246 <span class="string">'BOO-B1/VI/PI55.1'</span>,
+0247 <span class="string">'BOO-B1/VI/PI55.2'</span>,
+0248 <span class="string">'BOO-B1/VI/PI55.3'</span>,
+0249 <span class="string">'BOO-B1/VI/PI55.4'</span>,
+0250 <span class="string">'BOO-B1/VI/PI55.5'</span>,
+0251 <span class="string">'BOO-B1/VI/PI55.6'</span>,
+0252 <span class="string">'BOO-B1/VI/PI55.7'</span>,
+0253 <span class="string">'BOO-B1/VI/PI55.8'</span>,
+0254 <span class="string">'BOO-B1/VI/PI55.9'</span>,
+0255 <span class="string">'BOO-B2/VI/PI55.1'</span>,
+0256 <span class="string">'BOO-B2/VI/PI55.2'</span>,
+0257 <span class="string">'BOO-B2/VI/PI55.3'</span>,
+0258 <span class="string">'BOO-B2/VI/PI55.4'</span>,
+0259 <span class="string">'BOO-B2/VI/PI55.5'</span>,
+0260 <span class="string">'BOO-B2/VI/PI55.6'</span>,
+0261 <span class="string">'BOO-B2/VI/PI55.7'</span>,
+0262 <span class="string">'BOO-Bext/VI/PI55.1'</span>,
+0263 <span class="string">'BOO-Bext/VI/PI55.2'</span>,
+0264 <span class="string">'BOO-Bext/VI/PI300.3'</span>,
+0265 <span class="string">'BOO-Bext/VI/PI55.4'</span>,
+0266 <span class="string">'BOO-Bext/VI/PI55.5'</span>,
+0267 <span class="string">'BOO-Bext/VI/PI55.6'</span>,
+0268 <span class="string">'BOO-B3/VI/PI55.1'</span>,
+0269 <span class="string">'BOO-B3/VI/PI55.2'</span>,
+0270 <span class="string">'BOO-B3/VI/PI55.3'</span>,
+0271 <span class="string">'BOO-B3/VI/PI55.4'</span>,
+0272 <span class="string">'BOO-B3/VI/PI55.5'</span>,
+0273 <span class="string">'BOO-B3/VI/PI55.6'</span>,
+0274 <span class="string">'BOO-B3/VI/PI55.7'</span>,
+0275 <span class="string">'BOO-B3/VI/PI55.8'</span>,
+0276 <span class="string">'BOO-B4/VI/PI55.1'</span>,
+0277 <span class="string">'BOO-B4/VI/PI55.2'</span>,
+0278 <span class="string">'BOO-B4/VI/PI55.3'</span>,
+0279 <span class="string">'BOO-B4/VI/PI55.4'</span>,
+0280 <span class="string">'BOO-B4/VI/PI55.5'</span>,
+0281 <span class="string">'BOO-B4/VI/PI55.6'</span>,
+0282 <span class="string">'BOO-B4/VI/PI55.7'</span>};
+0283 
+0284 serverName = <span class="string">'ionpump/PI4BOOSTER'</span>;
+0285 className = <span class="string">'IonPump'</span>;
+0286 <span class="keyword">for</span> k=1:length(liste),
+0287     deviceName = liste{k};
+0288     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0289 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0290 <span class="keyword">end</span>
+0291 
+0292 
+0293 liste = {
+0294 <span class="string">'BOO-Binj/VI/VS63.1'</span>,
+0295 <span class="string">'BOO-Binj/VI/VS100.2'</span>,
+0296 <span class="string">'BOO-B1/VI/VS100.1'</span>,
+0297 <span class="string">'BOO-B2/VI/VS63.1'</span>,
+0298 <span class="string">'BOO-Bext/VI/VS63.1'</span>,
+0299 <span class="string">'BOO-B3/VI/VS63.1'</span>,
+0300 <span class="string">'BOO-B4/VI/VS63.1'</span>};
+0301 
+0302 serverName = <span class="string">'vacuumvalve/VS4BOOSTER'</span>;
+0303 className = <span class="string">'VacuumValve'</span>;
+0304 <span class="keyword">for</span> k=1:length(liste),
+0305     deviceName = liste{k};
+0306     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0307 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0308 <span class="keyword">end</span>
+0309 
+0310 liste = {
+0311 <span class="string">'BOO-B1/VI/JPEN.1'</span>,
+0312 <span class="string">'BOO-B1/VI/JPEN.2'</span>,
+0313 <span class="string">'BOO-Binj/VI/JPEN.1'</span>,
+0314 <span class="string">'BOO-Binj/VI/JPEN.2'</span>,
+0315 <span class="string">'BOO-B2/VI/JPEN.1'</span>,
+0316 <span class="string">'BOO-B2/VI/JPEN.2'</span>,
+0317 <span class="string">'BOO-B2/VI/JPEN.3'</span>,
+0318 <span class="string">'BOO-Bext/VI/JPEN.1'</span>,
+0319 <span class="string">'BOO-Bext/VI/JPEN.2'</span>,
+0320 <span class="string">'BOO-B3/VI/JPEN.1'</span>,
+0321 <span class="string">'BOO-B3/VI/JPEN.2'</span>,
+0322 <span class="string">'BOO-B4/VI/JPEN.1'</span>,
+0323 <span class="string">'BOO-B4/VI/JPEN.2'</span>,
+0324 <span class="string">'BOO-B4/VI/JPEN.3'</span>};
+0325 
+0326 serverName = <span class="string">'penninggauge/JPEN4BOOSTER'</span>;
+0327 className = <span class="string">'PenningGauge'</span>;
+0328 <span class="keyword">for</span> k=1:length(liste),
+0329     deviceName = liste{k};
+0330      tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0331 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0332 <span class="keyword">end</span>
+0333 
+0334 liste = {
+0335 <span class="string">'BOO-B1/VI/JPIR.1'</span>,
+0336 <span class="string">'BOO-Binj/VI/JPIR.1'</span>,
+0337 <span class="string">'BOO-Binj/VI/JPIR.2'</span>,
+0338 <span class="string">'BOO-B2/VI/JPIR.1'</span>,
+0339 <span class="string">'BOO-Bext/VI/JPIR.1'</span>,
+0340 <span class="string">'BOO-B3/VI/JPIR.1'</span>,
+0341 <span class="string">'BOO-B4/VI/JPIR.1'</span>};
+0342 
+0343 serverName = <span class="string">'piranigauge/JPIR4BOOSTER'</span>;
+0344 className = <span class="string">'PiraniGauge'</span>;
+0345 <span class="keyword">for</span> k=1:length(liste),
+0346     deviceName = liste{k};
+0347      tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0348 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0349 <span class="keyword">end</span>
+0350 
+0351 liste = {
+0352 <span class="string">'BOO-B1/VI/VS100.1'</span>,
+0353 <span class="string">'BOO-Binj/VI/VS63.1'</span>,
+0354 <span class="string">'BOO-Binj/VI/VS100.2'</span>,
+0355 <span class="string">'BOO-B2/VI/VS63.1'</span>,
+0356 <span class="string">'BOO-Bext/VI/VS63.1'</span>,
+0357 <span class="string">'BOO-B3/VI/VS63.1'</span>,
+0358 <span class="string">'BOO-B4/VI/VS63.1'</span>};
+0359 
+0360 serverName = <span class="string">'vacuumvalve/VS4BOOSTER'</span>;
+0361 className = <span class="string">'VacuumValve'</span>;
+0362 <span class="keyword">for</span> k=1:length(liste),
+0363     deviceName = liste{k};
+0364     tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0365 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0366 <span class="keyword">end</span>
+0367</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

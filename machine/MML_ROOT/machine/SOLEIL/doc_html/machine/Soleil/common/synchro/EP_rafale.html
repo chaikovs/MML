@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of EP_rafale</title>
+  <meta name="keywords" content="EP_rafale">
+  <meta name="description" content="mode rafale test EP">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; EP_rafale.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>EP_rafale
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>mode rafale test EP</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> mode rafale test EP</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="bucketnumber.html" class="code" title="function [n1 n2] = bucketnumber(num)">bucketnumber</a>	BUCKETNUMBER - Computes n1 n2 for timing system master board for a bucket</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% mode rafale test EP</span>
+0002 <span class="comment">%</span>
+0003 burst=5 ;     <span class="comment">% nb de coup rafale</span>
+0004 boucle=1 ;  <span class="comment">% nb de rafale</span>
+0005 delai=3 ;      <span class="comment">% delai entre rafale (s)</span>
+0006 
+0007 <span class="comment">% Set table to one value</span>
+0008 bunch=[1];
+0009 [dtour,dpaquet]=<a href="bucketnumber.html" class="code" title="function [n1 n2] = bucketnumber(num)">bucketnumber</a>(bunch);
+0010 table=int32([length(bunch) dtour dpaquet]);
+0011 tango_command_inout(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'SetTables'</span>,table);
+0012 
+0013 
+0014 <span class="comment">% Profondeur rafale</span>
+0015 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'burstSize'</span>,int32(burst));
+0016 
+0017 
+0018 
+0019 <span class="comment">% boucle</span>
+0020 <span class="keyword">for</span> i=1:boucle
+0021     i
+0022     tango_command_inout2(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'FireBurstEvent'</span>);
+0023     pause(delai)
+0024 <span class="keyword">end</span>
+0025 
+0026 
+0027     
+0028</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

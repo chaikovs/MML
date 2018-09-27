@@ -1,0 +1,616 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of readwrite</title>
+  <meta name="keywords" content="readwrite">
+  <meta name="description" content="READWRITE - Multipurpose read/write function for orbit correction applicaiton">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">orbit</a> &gt; readwrite.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/orbit&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>readwrite
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>READWRITE - Multipurpose read/write function for orbit correction applicaiton</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function readwrite(action, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">READWRITE - Multipurpose read/write function for orbit correction applicaiton
+ function varargout = readwrite(action, varargin)
+ readwrite supplies a switchyard of routines
+ to read and write data files in solorbit formats
+ 
+ ReadCorrectors
+ WriteCorrectors
+ ReadBPMReference
+ ArchiveBPMOrbit
+ DialogBox
+ ReadResponse
+ ProcessDialog</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>	function varargout = bpmgui(action, varargin)</li><li><a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>	ORBGUI -- Contains routines to set up the main orbit control panel</li><li><a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>	READWRITE - Multipurpose read/write function for orbit correction applicaiton</li><li><a href="response2rsp.html" class="code" title="function rsp = response2rsp(datastruct,rsp,plane)">response2rsp</a>	RESPONSE2RSP - Loads middlelayer response matrix data format into orbit program response structure</li><li><a href="sortbpms.html" class="code" title="function varargout = sortbpms(varargin)">sortbpms</a>	SORTBPMS - Compares vectors for several cases:</li><li><a href="sortcors.html" class="code" title="function varargout = sortcors(varargin)">sortcors</a>	SORTCORS - Compares vectors for several cases:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>	READWRITE - Multipurpose read/write function for orbit correction applicaiton</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function readwrite(action, varargin)</a>
+0002 <span class="comment">%READWRITE - Multipurpose read/write function for orbit correction applicaiton</span>
+0003 <span class="comment">% function varargout = readwrite(action, varargin)</span>
+0004 <span class="comment">% readwrite supplies a switchyard of routines</span>
+0005 <span class="comment">% to read and write data files in solorbit formats</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% ReadCorrectors</span>
+0008 <span class="comment">% WriteCorrectors</span>
+0009 <span class="comment">% ReadBPMReference</span>
+0010 <span class="comment">% ArchiveBPMOrbit</span>
+0011 <span class="comment">% DialogBox</span>
+0012 <span class="comment">% ReadResponse</span>
+0013 <span class="comment">% ProcessDialog</span>
+0014 <span class="comment">%</span>
+0015 
+0016 
+0017 <span class="comment">%</span>
+0018 <span class="comment">% Written by William J. Corbett</span>
+0019 <span class="comment">% Modified by Laurent S. Nadolski</span>
+0020 
+0021 <span class="comment">%% TODO NEED adaption for SOLEIL</span>
+0022 
+0023 <span class="comment">% orbfig = findobj(0,'tag','orbfig');  %orbfig &quot;global&quot;</span>
+0024 <span class="keyword">global</span> BPM COR RSP SYS
+0025 
+0026 [BPMxFamily, BPMzFamily] = BPM.AOFamily;
+0027 
+0028 <span class="keyword">switch</span> action
+0029 
+0030 <span class="comment">%     %=============================================================</span>
+0031 <span class="comment">%     case 'LogFdbkData'                       % *** LogFdbkData ***</span>
+0032 <span class="comment">%         %=============================================================</span>
+0033 <span class="comment">%         if strcmp(SYS.machine,'SPEAR2')</span>
+0034 <span class="comment">%             [SYS.energy,SYS.curr,SYS.lt,SYS.ahr] = getset('GetRingParams',SYS.mode);</span>
+0035 <span class="comment">%             setappdata(0,'SYS',SYS);</span>
+0036 <span class="comment">%         elseif strcmp(SYS.machine,'SOLEIL')</span>
+0037 <span class="comment">%            % TODO</span>
+0038 <span class="comment">%            disp('LogFdbckData TODO')</span>
+0039 <span class="comment">%         end</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">%         BPMLog(SYS,BPM);</span>
+0042 <span class="comment">%         CORLog(SYS,COR);</span>
+0043 
+0044         <span class="comment">%=============================================================</span>
+0045     <span class="keyword">case</span> <span class="string">'ReadCorrectors'</span>               <span class="comment">% *** ReadCorrectors ***</span>
+0046         <span class="comment">%=============================================================</span>
+0047         <span class="comment">% read corrector strength files produced by this program</span>
+0048         FileName = char(varargin(1));
+0049         auto     = char(varargin(2));    <span class="comment">%cell array</span>
+0050         
+0051         [fid,message] = fopen(FileName,<span class="string">'r'</span>);
+0052         <span class="keyword">if</span> fid == -1
+0053             disp([<span class="string">'WARNING: Corrector file not found:'</span> FileName]);
+0054             disp(message);
+0055             <span class="keyword">return</span>
+0056         <span class="keyword">end</span>
+0057 
+0058         header    = fgetl(fid);
+0059         disp(header);
+0060         timestamp = fgetl(fid);
+0061         disp(timestamp);
+0062         comment   = fgetl(fid);
+0063         disp(comment);
+0064 
+0065         <span class="keyword">if</span> ~strcmp(auto,<span class="string">'auto'</span>) == 1
+0066             answer = input(<span class="string">'Read Corrector File? Y/N [Y]: '</span>,<span class="string">'s'</span>);
+0067             <span class="keyword">if</span> isempty(answer), answer = <span class="string">'n'</span>; <span class="keyword">end</span>
+0068             <span class="keyword">if</span> answer==<span class="string">'n'</span> || answer==<span class="string">'N'</span>
+0069                 disp(<span class="string">'WARNING: Corrector File NOT LOADED'</span>);
+0070                 fclose(fid);
+0071                 <span class="keyword">return</span>
+0072             <span class="keyword">end</span>
+0073         <span class="keyword">end</span>
+0074 
+0075         disp([<span class="string">'Reading corrector file: '</span> FileName]);
+0076         COR(1).ntcor = fscanf(fid,<span class="string">'%d\n'</span>,1);
+0077         COR(2).ntcor = fscanf(fid,<span class="string">'%d\n'</span>,1);
+0078         disp([COR(1).ntcor,COR(2).ntcor]);
+0079         setappdata(0,<span class="string">'COR'</span>,COR);
+0080 
+0081         fscanf(fid,<span class="string">'%d %f %*s'</span>,[3,54]);  <span class="comment">%ntbpm rows, 5 columns wide</span>
+0082         fclose(fid);
+0083 
+0084         <span class="comment">%=============================================================</span>
+0085     <span class="keyword">case</span> <span class="string">'WriteCorrectors'</span>               <span class="comment">% *** WriteCorrectors ***</span>
+0086         <span class="comment">%=============================================================</span>
+0087         <span class="comment">% write reference orbit file in format of orbit program</span>
+0088         FileName = char(varargin(1));
+0089         comment  = char(varargin(2));
+0090 
+0091         [fid,message] = fopen(FileName,<span class="string">'w'</span>);
+0092         <span class="keyword">if</span> fid == -1
+0093             disp([<span class="string">'WARNING: Unable to open file to write correctors :'</span> FileName]);
+0094             disp(message);
+0095             <span class="keyword">return</span>
+0096         <span class="keyword">end</span>
+0097         disp([<span class="string">'Writing corrector file: '</span> FileName]);
+0098         fprintf(fid,<span class="string">'%s\n'</span>,<span class="string">'Correctors'</span>);
+0099         fprintf(fid,<span class="string">'%s\n'</span>,[<span class="string">'timestamp: '</span> datestr(now,0)]);
+0100         fprintf(fid,<span class="string">'%s\n'</span>, comment);
+0101         fprintf(fid,<span class="string">'%d %d\n'</span>, COR(1).ntcor, COR(2).ntcor);
+0102       
+0103         <span class="keyword">for</span> ii = 1:COR(2).ntcor,
+0104             fprintf(fid,<span class="string">'%3d %6.3f %s\n'</span>,<span class="keyword">...</span>
+0105                 ii, COR(1).act(ii),COR(1).name(ii,:)); <span class="comment">%3 columns wide</span>
+0106         <span class="keyword">end</span>
+0107 
+0108         <span class="keyword">for</span> ii = 1:COR(2).ntcor,
+0109             fprintf(fid,<span class="string">'%3d %6.3f %s\n'</span>,<span class="keyword">...</span>
+0110                 ii, COR(2).act(ii),COR(2).name(ii,:)); <span class="comment">%3 columns wide</span>
+0111         <span class="keyword">end</span>
+0112         fclose(fid);
+0113 
+0114 <span class="comment">%         %=============================================================</span>
+0115 <span class="comment">%     case 'WriteResponse'                     % *** WriteResponse ***</span>
+0116 <span class="comment">%         %=============================================================</span>
+0117 <span class="comment">%         %read in terms of RSP, write in terms of BPM, COR</span>
+0118 <span class="comment">%         %readwrite('WriteSPEAR3Response','dummy','auto');</span>
+0119 <span class="comment">%         FileName = char(varargin(1));</span>
+0120 <span class="comment">%         comment  = char(varargin(2));</span>
+0121 <span class="comment">% %         WriteSPEAR2Response(FileName,comment,BPM,BL,COR,RSP);</span>
+0122 <span class="comment">%         disp('WriteResponse TODO')</span>
+0123 
+0124 <span class="comment">%         %=============================================================</span>
+0125 <span class="comment">%     case 'ReadBPMxReference'         % *** ReadBPMxReference ***</span>
+0126 <span class="comment">%         %=============================================================</span>
+0127 <span class="comment">%         %read archive orbit as reference</span>
+0128 <span class="comment">%</span>
+0129 <span class="comment">%         [X,Z] = loadorbit([],[],'struct');     %select file from browser</span>
+0130 <span class="comment">%</span>
+0131 <span class="comment">%         %process for orbit program</span>
+0132 <span class="comment">%         if isempty(X)</span>
+0133 <span class="comment">%             orbgui('LBox','X-Reference orbit not available');</span>
+0134 <span class="comment">%         else</span>
+0135 <span class="comment">%             BPM(1).iref = dev2elem(BPMxFamily,X.DeviceList);</span>
+0136 <span class="comment">%             BPM(1).ref  = X.Data;</span>
+0137 <span class="comment">%             BPM(1).des  = X.Data;</span>
+0138 <span class="comment">%             BPM(1).abs  = X.Data;</span>
+0139 <span class="comment">%             orbgui('LBox','X-Reference orbit loaded');</span>
+0140 <span class="comment">%         end</span>
+0141 <span class="comment">%</span>
+0142 <span class="comment">%         if SYS.relative == 1   %absolute mode</span>
+0143 <span class="comment">%             ntbpm      = length(BPM(1).name(:,1));</span>
+0144 <span class="comment">%             BPM(1).abs = zeros(1,ntbpm)';</span>
+0145 <span class="comment">%         end</span>
+0146 <span class="comment">%</span>
+0147 <span class="comment">%         [BPM] = SortBPMs(BPM,RSP);</span>
+0148 <span class="comment">%</span>
+0149 <span class="comment">%         setappdata(0,'BPM',BPM);</span>
+0150 <span class="comment">%</span>
+0151 <span class="comment">%         bpmgui('RePlot');        %reference, desired, absolute</span>
+0152 <span class="comment">%         orbgui('RefreshOrbGUI');</span>
+0153 <span class="comment">%</span>
+0154         <span class="comment">%=============================================================</span>
+0155     <span class="keyword">case</span> <span class="string">'ReadBPMReference'</span>             <span class="comment">% *** ReadBPMReference ***</span>
+0156         <span class="comment">%=============================================================</span>
+0157         <span class="comment">%read archive orbit as reference</span>
+0158         refplane = varargin{1};
+0159         [varargin, GoldenFlag] = findkeyword(varargin,<span class="string">'Golden'</span>);
+0160 
+0161         <span class="keyword">if</span> GoldenFlag
+0162             <span class="comment">%retrieve data from PhysData Structure</span>
+0163 <span class="comment">%             physdatafile = getfamilydata('OpsData', 'PhysDataFile');</span>
+0164 <span class="comment">%             datastruct   = load(physdatafile);</span>
+0165 <span class="comment">%             X = datastruct.PhysData.BPMx.Golden;</span>
+0166 <span class="comment">%             Z = datastruct.PhysData.BPMz.Golden;</span>
+0167             <span class="comment">%datastruct = getphysdata({BPMxFamily,BPMzFamily});</span>
+0168             <span class="comment">%X          = datastruct{1}.Golden;</span>
+0169             <span class="comment">%Z          = datastruct{2}.Golden;</span>
+0170              X = getgolden(BPMxFamily,<span class="string">'Struct'</span>);
+0171              Z = getgolden(BPMzFamily, <span class="string">'Struct'</span>);
+0172             <span class="comment">%   DirSpec  = getfamilydata('Directory','OpsData');</span>
+0173             <span class="comment">%   FileName = getfamilydata('OpsData', 'BPMGoldenFile');</span>
+0174             <span class="comment">%   [X,Z] = loadorbit([],[],DirSpec,FileName,'b','Struct','Auto');  %both planes, structure, automatic read</span>
+0175         <span class="keyword">else</span>
+0176             [X,Z] = loadorbit([],[],<span class="string">'struct'</span>);     <span class="comment">%select file from browser</span>
+0177         <span class="keyword">end</span>
+0178 
+0179         <span class="comment">%process for orbit program</span>
+0180         <span class="keyword">switch</span> upper(refplane)
+0181             <span class="keyword">case</span> <span class="string">'X'</span> <span class="comment">% Horizontal plane</span>
+0182                 <span class="keyword">if</span> isempty(X)
+0183                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'X-Reference orbit not available'</span>);
+0184                     <span class="keyword">return</span>
+0185                 <span class="keyword">else</span>
+0186                     BPM(1).iref=dev2elem(BPMxFamily,X.DeviceList);
+0187                     <span class="comment">%decompress data</span>
+0188                     temp        = getfamilydata(BPMxFamily,<span class="string">'Status'</span>);
+0189                     status      = find(temp);
+0190                     temp(status)= X.Data;
+0191                     BPM(1).ref  = temp;
+0192                     BPM(1).des  = temp;
+0193                     BPM(1).abs  = temp;
+0194                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'X-Reference orbit loaded'</span>);
+0195                     <span class="keyword">if</span> isfield(X,<span class="string">'FileName'</span>), <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,X.FileName);
+0196                     <span class="keyword">else</span>
+0197                         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Horizontal reference orbit loaded'</span>);
+0198                     <span class="keyword">end</span>
+0199                 <span class="keyword">end</span>
+0200 
+0201             <span class="keyword">case</span> <span class="string">'Z'</span> <span class="comment">% Vertical plane</span>
+0202                 <span class="keyword">if</span> isempty(Z)
+0203                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Z-Reference orbit not available'</span>);
+0204                     <span class="keyword">return</span>
+0205                 <span class="keyword">else</span>
+0206                     BPM(2).iref = dev2elem(BPMzFamily,Z.DeviceList);
+0207                     <span class="comment">%decompress data</span>
+0208                     temp        = getfamilydata(BPMzFamily,<span class="string">'Status'</span>);
+0209                     status      = find(temp);
+0210                     temp(status)= Z.Data;
+0211                     BPM(2).ref  = temp;
+0212                     BPM(2).des  = temp;
+0213                     BPM(2).abs  = temp;
+0214                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Z-Reference orbit loaded'</span>);
+0215                     <span class="keyword">if</span> isfield(Z,<span class="string">'FileName'</span>), <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,Z.FileName);
+0216                     <span class="keyword">else</span>
+0217                         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Vertical reference orbit loaded'</span>);
+0218                     <span class="keyword">end</span>
+0219                 <span class="keyword">end</span>
+0220 
+0221             <span class="keyword">case</span> <span class="string">'XZ'</span> <span class="comment">% both planes</span>
+0222                 <span class="keyword">if</span> isempty(X)
+0223                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'X-Reference orbit not available'</span>);
+0224                 <span class="keyword">else</span>
+0225                     BPM(1).iref = dev2elem(BPMxFamily,X.DeviceList);
+0226                     <span class="comment">%decompress data</span>
+0227                     temp        = getfamilydata(BPMxFamily,<span class="string">'Status'</span>);
+0228                     status      = find(temp);
+0229                     temp(status)= X.Data;
+0230                     BPM(1).ref  = temp;
+0231                     BPM(1).des  = temp;
+0232                     BPM(1).abs  = temp;
+0233                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'X-Reference orbit loaded'</span>);
+0234                     <span class="keyword">if</span> isfield(X,<span class="string">'FileName'</span>), <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,X.FileName);
+0235                     <span class="keyword">else</span>
+0236                         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Horizontal reference orbit loaded'</span>);
+0237                     <span class="keyword">end</span>
+0238                 <span class="keyword">end</span>
+0239                 <span class="keyword">if</span> isempty(Z)
+0240                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Z-Reference orbit not available'</span>);
+0241                 <span class="keyword">else</span>
+0242                     BPM(2).iref = dev2elem(BPMzFamily,Z.DeviceList);
+0243                     <span class="comment">%decompress data</span>
+0244                     temp        = getfamilydata(BPMzFamily,<span class="string">'Status'</span>);
+0245                     status      = find(temp);
+0246                     temp(status)= Z.Data;
+0247                     BPM(2).ref  = temp;
+0248                     BPM(2).des  = temp;
+0249                     BPM(2).abs  = temp;
+0250                     <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Z-Reference orbit loaded'</span>);
+0251                     <span class="keyword">if</span> isfield(Z,<span class="string">'FileName'</span>), <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,Z.FileName);
+0252                     <span class="keyword">else</span>
+0253                         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Vertical reference orbit loaded'</span>);
+0254                     <span class="keyword">end</span>
+0255                 <span class="keyword">end</span>
+0256 
+0257         <span class="keyword">end</span> <span class="comment">%end case</span>
+0258 
+0259         <span class="keyword">if</span> SYS.relative==1   <span class="comment">%absolute mode</span>
+0260             ntbpm      = length(BPM(1).name(:,1));
+0261             BPM(1).abs = zeros(1,ntbpm)';
+0262             ntbpm      = length(BPM(2).name(:,1));
+0263             BPM(2).abs = zeros(1,ntbpm)';
+0264         <span class="keyword">end</span>
+0265 
+0266         [BPM] = SortBPMs(BPM,RSP);
+0267 
+0268         setappdata(0,<span class="string">'BPM'</span>,BPM);
+0269 
+0270         <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'RePlot'</span>);        <span class="comment">%reference, desired, absolute</span>
+0271         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0272 
+0273         <span class="comment">%===============================================================</span>
+0274     <span class="keyword">case</span> <span class="string">'ArchiveBPMOrbit'</span>                 <span class="comment">% *** ArchiveBPMOrbit ***</span>
+0275         <span class="comment">%===============================================================</span>
+0276         <span class="comment">%archive present orbit as reference orbitref</span>
+0277         <span class="comment">%'X','Z','XZ' options</span>
+0278         <span class="comment">%'Golden' option</span>
+0279 
+0280         refplane              = varargin{1};
+0281         [varargin,GoldenFlag] = findkeyword(varargin,<span class="string">'Golden'</span>);
+0282 
+0283         <span class="keyword">if</span> GoldenFlag
+0284 <span class="comment">%             DirectoryName  = getfamilydata('Directory','OpsData');</span>
+0285 <span class="comment">%             FileName = getfamilydata('OpsData', 'BPMGoldenFile');</span>
+0286             tmp = questdlg(<span class="string">'Save Golden Reference Orbit (solid blue line)?'</span>,<span class="string">'Golden Orbit'</span>,<span class="string">'YES'</span>,<span class="string">'NO'</span>,<span class="string">'YES'</span>);
+0287             <span class="keyword">if</span> strcmp(tmp,<span class="string">'NO'</span>)
+0288                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>, <span class="string">' Golden orbit save aborted'</span>);
+0289                 <span class="keyword">return</span>
+0290             <span class="keyword">end</span>
+0291         <span class="keyword">else</span> <span class="comment">%search for BPM directory</span>
+0292             DirStart      = pwd;
+0293             DirectoryName = getfamilydata(<span class="string">'Directory'</span>,<span class="string">'BPMData'</span>);
+0294             [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0295         <span class="keyword">end</span>
+0296 
+0297         <span class="keyword">switch</span> refplane <span class="comment">% Select plane to save</span>
+0298             <span class="keyword">case</span> <span class="string">'X'</span> <span class="comment">% Horizontal plane</span>
+0299                 BPMxData           = getx(<span class="string">'struct'</span>);
+0300                 <span class="comment">% Modified creator field</span>
+0301                 BPMxData.CreatedBy =<span class="string">'solorbit-readwrite'</span>;
+0302 <span class="comment">%                 BPMxData.iFit      = BPM(1).ifit;         %on for fitting (contstraint)</span>
+0303                 <span class="keyword">if</span> GoldenFlag <span class="comment">% Golden orbit</span>
+0304 <span class="comment">%                     physdatafile   = getfamilydata('OpsData', 'PhysDataFile');</span>
+0305 <span class="comment">%                     datastruct     = load(physdatafile); % read old one to get the right format</span>
+0306 <span class="comment">%                     PhysData             = getphysdata;</span>
+0307 <span class="comment">%                     PhysData.BPMx.Golden = BPMxData;</span>
+0308 <span class="comment">%                     save GoldenPhysData PhysData</span>
+0309                     setphysdata(BPMxFamily,<span class="string">'Golden'</span>,BPMxData);
+0310                 <span class="keyword">else</span> <span class="comment">% not a golden orbit</span>
+0311                     FileName = appendtimestamp([getfamilydata(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>),<span class="string">'x'</span>], clock);
+0312                     save(FileName, <span class="string">'BPMxData'</span>);
+0313                 <span class="keyword">end</span>
+0314                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>, <span class="string">' BPMx-Reference orbit archived'</span>);
+0315 
+0316             <span class="keyword">case</span> <span class="string">'Z'</span> <span class="comment">% Vertical plane</span>
+0317                 BPMzData           = getz(<span class="string">'struct'</span>);
+0318                 BPMzData.CreatedBy = <span class="string">'solorbit-readwrite'</span>;
+0319 <span class="comment">%                 BPMzData.iFit      = BPM(2).ifit;         %on for fitting (contstraint)</span>
+0320                 <span class="keyword">if</span> GoldenFlag
+0321 <span class="comment">%                     physdatafile=getfamilydata('OpsData', 'PhysDataFile');</span>
+0322 <span class="comment">%                     datastruct=load(physdatafile);</span>
+0323 <span class="comment">%                     PhysData             = getphysdata;</span>
+0324 <span class="comment">%                     PhysData.BPMz.Golden = BPMzData;</span>
+0325                     setphysdata(BPMzFamily,<span class="string">'Golden'</span>,BPMzData);
+0326 <span class="comment">%                     datastruct.PhysData.BPMz.Golden=BPMzData;</span>
+0327 <span class="comment">%                     PhysData=datastruct.PhysData;</span>
+0328 <span class="comment">%                     save GoldenPhysData PhysData</span>
+0329                 <span class="keyword">else</span> <span class="comment">% Not a golden orbit</span>
+0330                     FileName = appendtimestamp([getfamilydata(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>),<span class="string">'z'</span>], clock);
+0331                     save(FileName, <span class="string">'BPMzData'</span>);
+0332                 <span class="keyword">end</span>
+0333                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>, <span class="string">' BPMz-Reference orbit archived'</span>);
+0334 
+0335             <span class="keyword">case</span> <span class="string">'XZ'</span> <span class="comment">% Both planes</span>
+0336                 BPMxData           = getx(<span class="string">'struct'</span>);
+0337                 BPMxData.CreatedBy = <span class="string">'solorbit-readwrite'</span>;
+0338 <span class="comment">%                 BPMxData.iFit      = BPM(1).ifit;         %on for fitting (contstraint)</span>
+0339                 BPMzData           = getz(<span class="string">'struct'</span>);
+0340                 BPMzData.CreatedBy = <span class="string">'solorbit-readwrite'</span>;
+0341 <span class="comment">%                 BPMzData.iFit      = BPM(2).ifit;</span>
+0342                 <span class="keyword">if</span> GoldenFlag
+0343                     setphysdata({BPMxFamily, BPMzFamily},{<span class="string">'Golden'</span>, <span class="string">'Golden'</span>}, {BPMxData, BPMzData});
+0344 <span class="comment">%                     physdatafile=getfamilydata('OpsData', 'PhysDataFile');</span>
+0345 <span class="comment">%                     datastruct=load(physdatafile);</span>
+0346 <span class="comment">%                     datastruct.PhysData.BPMx.Golden=BPMxData;</span>
+0347 <span class="comment">%                     datastruct.PhysData.BPMz.Golden=BPMzData;</span>
+0348 <span class="comment">%                     PhysData=datastruct.PhysData;</span>
+0349 <span class="comment">%                     PhysData             = getphysdata;</span>
+0350 <span class="comment">%                     PhysData.BPMx.Golden = BPMxData;</span>
+0351 <span class="comment">%                     PhysData.BPMx.Golden = BPMzData;</span>
+0352 <span class="comment">%                     save GoldenPhysData PhysData</span>
+0353                 <span class="keyword">else</span> <span class="comment">% not a golden orbit</span>
+0354                     FileName = appendtimestamp(getfamilydata(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>), clock);
+0355                     save(FileName, <span class="string">'BPMxData'</span>, <span class="string">'BPMzData'</span>);
+0356                 <span class="keyword">end</span>
+0357                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>, <span class="string">' BPMx/z-Reference orbit archived'</span>);
+0358         <span class="keyword">end</span>
+0359 
+0360 
+0361         <span class="keyword">if</span> GoldenFlag, <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'UpdateRef'</span>);  <span class="comment">%establish new reference orbit, refreshorbgui</span>
+0362         <span class="keyword">else</span>
+0363             cd(DirStart);
+0364             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">' Archive file: '</span> FileName]);
+0365         <span class="keyword">end</span>
+0366         
+0367         <span class="comment">%=============================================================</span>
+0368     <span class="keyword">case</span> <span class="string">'DialogBox'</span>               <span class="comment">% *** DialogBox ***</span>
+0369         <span class="comment">%=============================================================</span>
+0370 <span class="comment">%         figtitle = char(varargin(1));</span>
+0371         ftype    = char(varargin(2));    <span class="comment">%type of file, eg ReadReference: must be case in readwrite</span>
+0372         
+0373         <span class="comment">%read file options</span>
+0374         
+0375         cd(SYS.localdata);
+0376 
+0377         extype = <span class="string">'*.dat'</span>;
+0378         <span class="keyword">if</span> strcmp(ftype,<span class="string">'ReadDispersion'</span>)  ||<span class="keyword">...</span>
+0379            strcmp(ftype,<span class="string">'ReadCorrectors'</span>)  ||<span class="keyword">...</span>
+0380            strcmp(ftype,<span class="string">'RestoreSystem'</span>)
+0381        
+0382             <span class="keyword">if</span> strcmp(ftype,<span class="string">'RestoreSystem'</span>)
+0383                 extype = <span class="string">'*.m'</span>; 
+0384             <span class="keyword">elseif</span> strcmp(ftype,<span class="string">'ReadDispersion'</span>)
+0385                 extype = <span class="string">'*.mat'</span>;
+0386                 cd(SYS.etafile);                
+0387             <span class="keyword">end</span>
+0388 
+0389             [FileName,DirSpec] = uigetfile(extype,[ftype, <span class="string">' - please supply .m extension'</span>]);
+0390 
+0391             ts = datestr(now,0);
+0392             
+0393             <span class="keyword">if</span> isequal(FileName,0) || isequal(DirSpec,0)
+0394                 disp([<span class="string">'File '</span>,[DirSpec FileName],<span class="string">' not found'</span>]);
+0395                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[ ts <span class="string">': File '</span>,[DirSpec FileName],<span class="string">' not found'</span>]);
+0396                 <span class="keyword">return</span>
+0397             <span class="keyword">else</span>
+0398                 disp([<span class="string">'File '</span>, [DirSpec FileName], <span class="string">' found'</span>]);
+0399                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">'File '</span>, [DirSpec FileName], <span class="string">' found'</span>]);
+0400                 <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>(<span class="string">'ProcessDialog'</span>,ftype,DirSpec,FileName);
+0401                 <span class="keyword">return</span>
+0402             <span class="keyword">end</span>
+0403         <span class="keyword">end</span>
+0404 
+0405         <span class="comment">%write file options</span>
+0406         extype = <span class="string">'*.dat'</span>;
+0407         <span class="keyword">if</span> strcmp(ftype,<span class="string">'WriteCorrectors'</span>)  ||<span class="keyword">...</span>
+0408                 strcmp(ftype,<span class="string">'WriteResponse'</span>)    ||<span class="keyword">...</span>
+0409                 strcmp(ftype,<span class="string">'SaveSystem'</span>)
+0410             <span class="keyword">if</span> strcmp(ftype,<span class="string">'SaveSystem'</span>), extype = <span class="string">'*.m'</span>; <span class="keyword">end</span>
+0411 
+0412             [FileName,DirSpec] = uiputfile(extype,ftype);
+0413             <span class="keyword">if</span> isempty(findstr(FileName,<span class="string">'.m'</span>)) &amp;&amp; strcmpi(ftype,<span class="string">'SaveSystem'</span>)
+0414                 FileName = [FileName,<span class="string">'.m'</span>];
+0415             <span class="keyword">elseif</span> isempty(findstr(FileName,<span class="string">'.dat'</span>)) &amp;&amp; ~strcmpi(ftype,<span class="string">'SaveSystem'</span>)
+0416                 FileName = [FileName,<span class="string">'.dat'</span>];
+0417             <span class="keyword">end</span>
+0418 
+0419             ts = datestr(now,0);
+0420             <span class="keyword">if</span> isequal(FileName,0) || isequal(DirSpec,0)
+0421                 disp(<span class="string">'File not open'</span>);
+0422                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[ ts <span class="string">': File not opened...'</span>]);
+0423                 <span class="keyword">return</span>
+0424             <span class="keyword">else</span>
+0425                 disp([<span class="string">'File '</span>, [DirSpec FileName], <span class="string">' open'</span>]);
+0426                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">'File '</span>, [DirSpec FileName], <span class="string">' open'</span>]);
+0427                 <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>(<span class="string">'ProcessDialog'</span>,ftype,DirSpec,FileName);
+0428                 <span class="keyword">return</span>
+0429             <span class="keyword">end</span>
+0430         <span class="keyword">end</span>
+0431 
+0432         <span class="comment">%==================</span>
+0433     <span class="keyword">case</span> <span class="string">'ReadResponse'</span>
+0434         <span class="comment">%==================</span>
+0435 
+0436         FileName =<span class="string">''</span>; <span class="comment">%asks user to select Rmatrix</span>
+0437         
+0438         temp = getbpmresp(BPM(1).AOFamily, BPM(2).AOFamily, COR(1).AOFamily, <span class="keyword">...</span>
+0439             COR(2).AOFamily,FileName,<span class="string">'struct'</span>);
+0440 
+0441         <span class="keyword">if</span> isempty(temp)
+0442             disp(<span class="string">'No Response matrix read'</span>);
+0443             <span class="keyword">return</span>
+0444         <span class="keyword">end</span>
+0445 
+0446         <span class="comment">% Fils up matrix reponse structure</span>
+0447         RSP(1) = <a href="response2rsp.html" class="code" title="function rsp = response2rsp(datastruct,rsp,plane)">response2rsp</a>(temp(1,1),RSP(1),1);
+0448         RSP(2) = <a href="response2rsp.html" class="code" title="function rsp = response2rsp(datastruct,rsp,plane)">response2rsp</a>(temp(2,2),RSP(2),2);
+0449 
+0450         BPM = <a href="sortbpms.html" class="code" title="function varargout = sortbpms(varargin)">sortbpms</a>(BPM,RSP); <span class="comment">%sort for avail, ifit</span>
+0451         COR = <a href="sortcors.html" class="code" title="function varargout = sortcors(varargin)">sortcors</a>(COR,RSP); <span class="comment">%sort for avail, ifit</span>
+0452 
+0453         <span class="comment">% Updates values into workspace</span>
+0454         setappdata(0,<span class="string">'BPM'</span>,BPM);
+0455         setappdata(0,<span class="string">'COR'</span>,COR);
+0456         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0457 
+0458         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0459 
+0460         <span class="comment">%==============================================================</span>
+0461     <span class="keyword">case</span> <span class="string">'ProcessDialog'</span>                    <span class="comment">% *** ProcessDialog ***</span>
+0462         <span class="comment">%==============================================================</span>
+0463         ftype    = char(varargin(1));
+0464         DirSpec  = char(varargin(2));
+0465         FileName = char(varargin(3));
+0466 
+0467         <span class="keyword">switch</span> ftype
+0468 
+0469                 <span class="comment">%===================</span>
+0470             <span class="keyword">case</span> <span class="string">'ReadDispersion'</span>
+0471                 <span class="comment">%===================</span>
+0472 
+0473                 filename = [DirSpec FileName];
+0474                 
+0475                 <span class="comment">%% load file</span>
+0476                 temp = load(filename);
+0477                 
+0478                 <span class="comment">%% Check data contents</span>
+0479                 <span class="keyword">if</span> ~isfield(temp,<span class="string">'BPMxDisp'</span>) &amp;&amp; ~isfield(temp,<span class="string">'BPMzDisp'</span>)
+0480                     disp([<span class="string">'WARNING: Dispersion orbit file not found:'</span> <span class="keyword">...</span>
+0481                         [DirSpec FileName]]);                   
+0482                     <span class="keyword">return</span>
+0483                 <span class="keyword">else</span> <span class="comment">% Load data (Dispersion in HW means frequency)</span>
+0484                     RSP(1).eta = temp.BPMxDisp.Data;
+0485                     RSP(2).eta = temp.BPMzDisp.Data;
+0486                 <span class="keyword">end</span>
+0487 
+0488                 <span class="comment">%Update RSP</span>
+0489                 setappdata(0,<span class="string">'RSP'</span>,RSP);
+0490 
+0491                 <span class="comment">%===================</span>
+0492             <span class="keyword">case</span> <span class="string">'ReadCorrectors'</span>
+0493                 <span class="comment">%===================</span>
+0494                 [fid,message] = fopen([DirSpec FileName],<span class="string">'r'</span>);
+0495                 <span class="keyword">if</span> fid == -1
+0496                     disp([<span class="string">'WARNING: Corrector file not found:'</span> [DirSpec FileName]]);
+0497                     disp(message);
+0498                     <span class="keyword">return</span>
+0499                 <span class="keyword">end</span>
+0500                 fclose(fid);
+0501 
+0502                 <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>(ftype,[DirSpec FileName],<span class="string">'auto'</span>);
+0503 
+0504                 <span class="comment">%===================</span>
+0505             <span class="keyword">case</span> <span class="string">'WriteCorrectors'</span>
+0506                 <span class="comment">%===================</span>
+0507                 comment = <span class="string">'Write Correctors'</span>;
+0508                 <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>(ftype,[DirSpec FileName],comment);
+0509 
+0510                 <span class="comment">%===================</span>
+0511             <span class="keyword">case</span> <span class="string">'WriteResponse'</span>
+0512                 <span class="comment">%===================</span>
+0513                 comment = <span class="string">'Write Response'</span>;
+0514                 <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>(ftype,[DirSpec FileName],comment);
+0515 
+0516                 <span class="comment">%===================</span>
+0517             <span class="keyword">case</span> <span class="string">'RestoreSystem'</span>
+0518                 <span class="comment">%===================</span>
+0519                 isok = exist([DirSpec FileName],<span class="string">'file'</span>);
+0520                 <span class="keyword">if</span> ~isok == 2
+0521                     disp([<span class="string">'WARNING: Restore file not found:'</span> [DirSpec FileName]]);
+0522                     <span class="keyword">return</span>
+0523                 <span class="keyword">end</span>
+0524                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(ftype,DirSpec,FileName,<span class="string">'auto'</span>);
+0525 
+0526                 <span class="comment">%===================</span>
+0527             <span class="keyword">case</span> <span class="string">'SaveSystem'</span>
+0528                 <span class="comment">%===================</span>
+0529                 comment = <span class="string">'Save System'</span>;
+0530                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(ftype,[DirSpec FileName],comment);
+0531 
+0532             <span class="keyword">otherwise</span>
+0533                 disp([<span class="string">'Warning: no CASE found in readwrite/Dialog Box: '</span> action]);
+0534         <span class="keyword">end</span>   <span class="comment">%end of ProcessDialog switch yard</span>
+0535         <span class="comment">%pause(3);    delete(gcf);</span>
+0536         <span class="comment">%=============================================================</span>
+0537 
+0538 <span class="comment">%         %=============================================================</span>
+0539 <span class="comment">%     case 'OpenHelp'                            % *** OpenHelp ***</span>
+0540 <span class="comment">%         %==============================================================</span>
+0541 <span class="comment">%         FileName = 'HelpD.m';</span>
+0542 <span class="comment">%         fid = fopen(FileName, 'r');</span>
+0543 <span class="comment">%</span>
+0544 <span class="comment">%         if fid &lt; 0</span>
+0545 <span class="comment">%             disp(['**Warning: Help file &quot;', FileName, '&quot; cannot be found.']);</span>
+0546 <span class="comment">%             return</span>
+0547 <span class="comment">%         end</span>
+0548 <span class="comment">%</span>
+0549 <span class="comment">%         while feof(fid) == 0</span>
+0550 <span class="comment">%             t = fgetl(fid);</span>
+0551 <span class="comment">%             disp(t);</span>
+0552 <span class="comment">%         end</span>
+0553 <span class="comment">%</span>
+0554 <span class="comment">%         fclose(fid);</span>
+0555 <span class="comment">%</span>
+0556         <span class="comment">%==============================================================</span>
+0557     <span class="keyword">otherwise</span>
+0558         disp([<span class="string">'Warning: no CASE found in readwrite: '</span> action]);
+0559 <span class="keyword">end</span>  <span class="comment">%end switchyard</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

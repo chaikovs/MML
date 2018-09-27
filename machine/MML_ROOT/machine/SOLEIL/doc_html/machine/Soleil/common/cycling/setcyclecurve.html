@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of setcyclecurve</title>
+  <meta name="keywords" content="setcyclecurve">
+  <meta name="description" content="SETCYCLECURVE - Set curve for cycling magnet in Dserver">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">cycling</a> &gt; setcyclecurve.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/cycling&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>setcyclecurve
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>SETCYCLECURVE - Set curve for cycling magnet in Dserver</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function setcyclecurve(dev_name, curve) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> SETCYCLECURVE - Set curve for cycling magnet in Dserver
+
+  INPUTS
+  1. dev_name - Tango sequencer device name
+  2. curve  - nx2 vector current versus times
+
+  EXAMPLES
+  1. setcyclecurve('LT1/AE/cycleCH.2', curve);
+  2. setcyclecurve({'LT1/tests/currentCH.1','LT1/AE/cycleCH.2'}, {curve1, curve2});
+
+  NOTES
+  1. Inputs can by cells of dev_name and cells of curves
+  2. Tango specific
+
+  See Also <a href="getcyclecurve.html" class="code" title="function curve = getcyclecurve(varargin)">getcyclecurve</a>, <a href="magnetcycle.html" class="code" title="function magnetcycle(varargin)">magnetcycle</a>, LT1cycling, Ringcycling,<a href="cyclingcommand.html" class="code" title="function varargout= cyclecommand(varargin)">cyclingcommand</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="setcyclecurve.html" class="code" title="function setcyclecurve(dev_name, curve)">setcyclecurve</a>	SETCYCLECURVE - Set curve for cycling magnet in Dserver</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="createcyclecurvefull.html" class="code" title="function createcylecurvefull(varargin);">createcyclecurvefull</a>	INPUTS</li><li><a href="magnetcycle.html" class="code" title="function magnetcycle(varargin)">magnetcycle</a>	MAGNETCYCLE - Standardize machine magnets</li><li><a href="setcyclecurve.html" class="code" title="function setcyclecurve(dev_name, curve)">setcyclecurve</a>	SETCYCLECURVE - Set curve for cycling magnet in Dserver</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function setcyclecurve(dev_name, curve)</a>
+0002 <span class="comment">% SETCYCLECURVE - Set curve for cycling magnet in Dserver</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. dev_name - Tango sequencer device name</span>
+0006 <span class="comment">%  2. curve  - nx2 vector current versus times</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">%  EXAMPLES</span>
+0009 <span class="comment">%  1. setcyclecurve('LT1/AE/cycleCH.2', curve);</span>
+0010 <span class="comment">%  2. setcyclecurve({'LT1/tests/currentCH.1','LT1/AE/cycleCH.2'}, {curve1, curve2});</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%  NOTES</span>
+0013 <span class="comment">%  1. Inputs can by cells of dev_name and cells of curves</span>
+0014 <span class="comment">%  2. Tango specific</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">%  See Also getcyclecurve, magnetcycle, LT1cycling, Ringcycling,cyclingcommand</span>
+0017 
+0018 <span class="comment">%</span>
+0019 <span class="comment">% Written by Laurent S. Nadolski</span>
+0020 
+0021 <span class="keyword">if</span> iscell(dev_name)
+0022     <span class="keyword">for</span> k = 1:length(dev_name),
+0023         <a href="setcyclecurve.html" class="code" title="function setcyclecurve(dev_name, curve)">setcyclecurve</a>(dev_name{k}, curve{k});        
+0024     <span class="keyword">end</span>
+0025 <span class="keyword">else</span>
+0026     dev_name
+0027     <span class="comment">% Get size of sequence</span>
+0028     len = tango_get_properties2(dev_name,{<span class="string">'SequenceSize'</span>});
+0029 
+0030     <span class="comment">% Needed in order if Fault state</span>
+0031     tango_command_inout2(dev_name, <span class="string">'Init'</span>);
+0032 
+0033     <span class="keyword">if</span> str2double(len.value{:}) ~= size(curve,1)
+0034         <span class="comment">% Modify size of the sequence</span>
+0035         prop.name = <span class="string">'SequenceSize'</span>;
+0036         prop.value = {num2str(size(curve,1))};
+0037         tango_put_properties2(dev_name,prop);
+0038         <span class="comment">% Needed in order to take into account modification</span>
+0039         tango_command_inout2(dev_name, <span class="string">'Init'</span>);
+0040     <span class="keyword">end</span>
+0041 
+0042     <span class="comment">% Load the curve into Dserver : attribute part and time part</span>
+0043     tango_command_inout2(dev_name,<span class="string">'LoadSequenceValues'</span>, curve(:,1)');
+0044     tango_command_inout2(dev_name,<span class="string">'LoadWaitingTimes'</span>, curve(:,2)');
+0045 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,53 @@
+Installation du MML Windows et GNU/LINUX
+----------------------------------------
+
+12 mai 2005 - Voir entree WIKI pour la derniere mise a jour
+
+Configuration pour tous les utilisateurs
+
+3 VARIABLES d'environnement
+
+MATLABML_ROOT : repertoire d'installation
+MATLABML_ROOT=/home/matlabML
+
+HOME_OPERATION : pour windows seulement
+HOME_OPERATION=M:
+
+ATROOT=$MATLABML_ROOT/at/at
+
+EN droits ROOT
+
+1/ Modifier le fichier matlabrc.m :
+$(MATLAB)/toolbox/local
+
+Apres les lignes :
+% Execute startup M-file, if it exists.
+if (exist('startup','file') == 2) ||...
+        (exist('startup','file') == 6)
+    startup
+end
+
+Ajouter
+
+%% MML initialization file
+
+dirname = [getenv('MATLABML_ROOT') '/mmlcontrol/config'];
+if (exist(dirname,'dir') == 7) 
+    cd(dirname)
+    eval('startup4mml')
+end 
+
+
+2/ dans le repertoire :
+$(CONTROLROOM)/mmlcontrol/config
+
+
+## NOTE Compatibilite MATLAB/TANGO GNU/LINUX uniquement
+En droits ROOT
+BUG: matlab bug si librairies C++ C livrees avec matlab sont utilisees
+Solution les deplacer dans un repertoire non accessible par matlab
+Ainsi les libraires systemes seront utilisees
+
+cd /usr/local/matlabR14SP1/sys/os/glnx86
+mkdir lib_origin
+mv libgcc_s.so.1  libstdc++.so.5  libstdc++.so.5.0.3 lib_origin/

@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of get_synchro_address</title>
+  <meta name="keywords" content="get_synchro_address">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; get_synchro_address.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>get_synchro_address
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function get_synchro_address(handles) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="synchro_injecteur7_rafale.html" class="code" title="function varargout = synchro_injecteur7_rafale(varargin)">synchro_injecteur7_rafale</a>	SYNCHRO_INJECTEUR7_RAFALE M-file for synchro_injecteur7_rafale.fig</li><li><a href="synchro_injecteur8_rafale.html" class="code" title="function varargout = synchro_injecteur8_rafale(varargin)">synchro_injecteur8_rafale</a>	SYNCHRO_INJECTEUR8_RAFALE M-file for synchro_injecteur8_rafale.fig</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function get_synchro_address(handles)</a>
+0002 bug_device=<span class="string">'Bug device'</span>;
+0003 n=1;
+0004 
+0005 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSprTimeDelay'</span>);
+0006 set(handles.central_spare,<span class="string">'String'</span>,num2str(temp.value(n)));
+0007 
+0008 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+0009 set(handles.central_inj,<span class="string">'String'</span>,num2str(temp.value(n)));
+0010 
+0011 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+0012 <span class="comment">%set(handles.central_soft,'String',num2str(temp.value(n)));</span>
+0013 
+0014 temp=tango_read_attribute(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+0015 set(handles.central_ext,<span class="string">'String'</span>,num2str(temp.value(n)));
+0016 
+0017 
+0018 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>);
+0019 set(handles.sdc1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0020 
+0021 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>);
+0022 set(handles.lin_canon_lpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0023 
+0024 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>);
+0025 set(handles.lin_canon_spm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0026 <span class="comment">%set(handles.lin_canon_spm_fin,'String','Off Set table');</span>
+0027 
+0028 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>);
+0029 set(handles.boo_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0030 
+0031 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>);
+0032 set(handles.lt1_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+0033 
+0034 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>);
+0035 set(handles.lt1_MC1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0036 
+0037 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>);
+0038 set(handles.lt1_MC2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0039 
+0040 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>);
+0041 set(handles.lt1_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+0042 
+0043 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>);
+0044 set(handles.boo_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+0045 
+0046 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>);
+0047 set(handles.boo_nod,<span class="string">'String'</span>,num2str(temp.value(n)));
+0048 
+0049 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>);
+0050 set(handles.boo_inj_septum,<span class="string">'String'</span>,num2str(temp.value(n)));
+0051 
+0052 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>);
+0053 set(handles.boo_inj_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+0054 
+0055 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpEvent'</span>);
+0056 set(handles.boo_alim_dipole,<span class="string">'String'</span>,num2str(temp.value(n)));
+0057 
+0058 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfEvent'</span>);
+0059 set(handles.boo_alim_qf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0060 
+0061 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdEvent'</span>);
+0062 set(handles.boo_alim_qd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0063 
+0064 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfEvent'</span>);
+0065 set(handles.boo_alim_sf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0066 
+0067 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdEvent'</span>);
+0068 set(handles.boo_alim_sd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0069 
+0070 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfEvent'</span>);
+0071 set(handles.boo_rf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0072 
+0073 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>);
+0074 set(handles.lin_modulateur,<span class="string">'String'</span>,num2str(temp.value(n)));
+0075 
+0076 
+0077 
+0078 
+0079 
+0080 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>);
+0081 set(handles.boo_ext_dof,<span class="string">'String'</span>,num2str(temp.value(n)));
+0082 
+0083 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>);
+0084 set(handles.boo_ext_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+0085 
+0086 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>);
+0087 set(handles.boo_ext_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+0088 
+0089 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>);
+0090 set(handles.boo_ext_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+0091 
+0092 
+0093 
+0094 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>);
+0095 set(handles.sdc2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0096 
+0097 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>);
+0098 set(handles.lt2_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+0099 
+0100 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>);
+0101 set(handles.lt2_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+0102 
+0103 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>);
+0104 set(handles.lt2_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0105 
+0106 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigEvent'</span>);
+0107 set(handles.ans_inj_k1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0108 
+0109 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigEvent'</span>);
+0110 set(handles.ans_inj_k2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0111 
+0112 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigEvent'</span>);
+0113 set(handles.ans_inj_k3,<span class="string">'String'</span>,num2str(temp.value(n)));
+0114 
+0115 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigEvent'</span>);
+0116 set(handles.ans_inj_k4,<span class="string">'String'</span>,num2str(temp.value(n)));
+0117 
+0118 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigEvent'</span>);
+0119 set(handles.ans_inj_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+0120 
+0121 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigEvent'</span>);
+0122 set(handles.ans_inj_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+0123 
+0124 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>);
+0125 set(handles.ans_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+0126 
+0127 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>);
+0128 set(handles.ans_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0129 set(handles.ans_bpm_c01,<span class="string">'String'</span>,num2str(temp.value(n)));
+0130 
+0131 temp=tango_read_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0132 set(handles.ans_bpm_c02,<span class="string">'String'</span>,num2str(temp.value(n)));
+0133 temp=tango_read_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0134 set(handles.ans_bpm_c03,<span class="string">'String'</span>,num2str(temp.value(n)));
+0135 temp=tango_read_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0136 set(handles.ans_bpm_c04,<span class="string">'String'</span>,num2str(temp.value(n)));
+0137 temp=tango_read_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0138 set(handles.ans_bpm_c05,<span class="string">'String'</span>,num2str(temp.value(n)));
+0139 temp=tango_read_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0140 set(handles.ans_bpm_c06,<span class="string">'String'</span>,num2str(temp.value(n)));
+0141 temp=tango_read_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0142 set(handles.ans_bpm_c07,<span class="string">'String'</span>,num2str(temp.value(n)));
+0143 temp=tango_read_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0144 set(handles.ans_bpm_c08,<span class="string">'String'</span>,num2str(temp.value(n)));
+0145 temp=tango_read_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0146 set(handles.ans_bpm_c09,<span class="string">'String'</span>,num2str(temp.value(n)));
+0147 temp=tango_read_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0148 set(handles.ans_bpm_c10,<span class="string">'String'</span>,num2str(temp.value(n)));
+0149 temp=tango_read_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0150 set(handles.ans_bpm_c11,<span class="string">'String'</span>,num2str(temp.value(n)));
+0151 temp=tango_read_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0152 set(handles.ans_bpm_c12,<span class="string">'String'</span>,num2str(temp.value(n)));
+0153 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0154 set(handles.ans_bpm_c13,<span class="string">'String'</span>,num2str(temp.value(n)));
+0155 temp=tango_read_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0156 set(handles.ans_bpm_c14,<span class="string">'String'</span>,num2str(temp.value(n)));
+0157 temp=tango_read_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0158 set(handles.ans_bpm_c15,<span class="string">'String'</span>,num2str(temp.value(n)));
+0159 temp=tango_read_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>);
+0160 set(handles.ans_bpm_c16,<span class="string">'String'</span>,num2str(temp.value(n)));
+0161 
+0162 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigEvent'</span>);
+0163 <span class="keyword">try</span> txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=<span class="string">'bug_device'</span> ; <span class="keyword">end</span>
+0164 set(handles.ans_k_h,<span class="string">'String'</span>,txt);
+0165 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigEvent'</span>);
+0166 <span class="keyword">try</span> txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=<span class="string">'bug_device'</span> ; <span class="keyword">end</span>
+0167 set(handles.ans_k_v,<span class="string">'String'</span>,txt);
+0168 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcEvent'</span>);
+0169 <span class="keyword">try</span> txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=<span class="string">'bug_device'</span> ; <span class="keyword">end</span>
+0170 set(handles.ans_k_pc,<span class="string">'String'</span>,txt);
+0171 
+0172 <span class="keyword">return</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

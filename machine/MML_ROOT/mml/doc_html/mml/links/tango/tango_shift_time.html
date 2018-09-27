@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_shift_time</title>
+  <meta name="keywords" content="tango_shift_time">
+  <meta name="description" content="TANGO_SHIFT_TIME - TANGO time is GMT - Convert to real time (East European">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_shift_time.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_shift_time
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TANGO_SHIFT_TIME - TANGO time is GMT - Convert to real time (East European</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function realTime = tango_shift_time(tangoTime) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TANGO_SHIFT_TIME - TANGO time is GMT - Convert to real time (East European
+Time)
+
+  INPUTS
+  1. tangoTime
+  2. realTime - true time = tango time shifted by 1 or 2 hours depending
+  on the month (winter/summer time)
+
+  NOTES
+  1. This function is global but has to be modified twice a year
+     BINDING BUG: add an hour or two</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="readattribute.html" class="code" title="function [Data, tout, DataTime, ErrorFlag] = readattribute(tangolist, varargin)">readattribute</a>	READATTRIBUTE - Reads a list of Tango attributes</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function realTime = tango_shift_time(tangoTime)</a>
+0002 <span class="comment">%TANGO_SHIFT_TIME - TANGO time is GMT - Convert to real time (East European</span>
+0003 <span class="comment">%Time)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. tangoTime</span>
+0007 <span class="comment">%  2. realTime - true time = tango time shifted by 1 or 2 hours depending</span>
+0008 <span class="comment">%  on the month (winter/summer time)</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">%  NOTES</span>
+0011 <span class="comment">%  1. This function is global but has to be modified twice a year</span>
+0012 <span class="comment">%     BINDING BUG: add an hour or two</span>
+0013 
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Written by Laurent S. Nadolski</span>
+0016 
+0017 realTime = tangoTime + 1*0.04166666666667;</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

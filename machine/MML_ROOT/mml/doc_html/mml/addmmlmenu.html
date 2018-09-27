@@ -1,0 +1,1593 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of addmmlmenu</title>
+  <meta name="keywords" content="addmmlmenu">
+  <meta name="description" content="ADDMENUAO - Menu to tune AO parameters">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; addmmlmenu.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>addmmlmenu
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>ADDMENUAO - Menu to tune AO parameters</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function varargout = addmmlmenu(h, Command) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">  ADDMENUAO - Menu to tune AO parameters
+
+  INPUTS
+  1. h - handles to the parent figure
+  2. Command - Build {Default} builds menu
+               Action used for callback (edition, ...)
+               NoAction
+  3. LabelString - if Build command
+  4. ParentLabelString - if Build command
+
+  OUPUTS
+  1. hmenu - handles to admenu
+
+  See Also <a href="addmenuao.html" class="code" title="function varargout = addmenuao(h, Command)">addmenuao</a>, <a href="addmenuad.html" class="code" title="function varargout = addmenuad(h, Command)">addmenuad</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = addmmlmenu(h, Command)</a>
+0002 <span class="comment">%  ADDMENUAO - Menu to tune AO parameters</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. h - handles to the parent figure</span>
+0006 <span class="comment">%  2. Command - Build {Default} builds menu</span>
+0007 <span class="comment">%               Action used for callback (edition, ...)</span>
+0008 <span class="comment">%               NoAction</span>
+0009 <span class="comment">%  3. LabelString - if Build command</span>
+0010 <span class="comment">%  4. ParentLabelString - if Build command</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%  OUPUTS</span>
+0013 <span class="comment">%  1. hmenu - handles to admenu</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">%  See Also addmenuao, addmenuad</span>
+0016 
+0017 <span class="comment">%</span>
+0018 <span class="comment">% Written by Laurent S. Nadolski</span>
+0019 
+0020 <span class="comment">% TODO: this is just for testing</span>
+0021 
+0022 <span class="keyword">if</span> nargin &lt; 1
+0023     h = gcf;
+0024 <span class="keyword">end</span>
+0025 <span class="keyword">if</span> nargin &lt; 2
+0026     Command = <span class="string">'Build'</span>;
+0027 <span class="keyword">end</span>
+0028 
+0029 <span class="keyword">switch</span> lower(Command)
+0030     <span class="keyword">case</span> <span class="string">'build'</span>
+0031 
+0032         <span class="keyword">if</span> nargin &lt; 3
+0033             LabelString = <span class="string">'Middle Layer Family Setup'</span>;
+0034         <span class="keyword">end</span>
+0035         <span class="keyword">if</span> nargin &lt; 4
+0036             ParentLabelString = <span class="string">'MiddleLayer'</span>;
+0037         <span class="keyword">end</span>
+0038 
+0039         <span class="keyword">if</span> strcmpi(get(h,<span class="string">'Type'</span>), <span class="string">'figure'</span>)
+0040             h_childen = get(gcf,<span class="string">'children'</span>);
+0041             EditMenuFlag = 0;
+0042             <span class="keyword">for</span> i = 1:length(h_childen)
+0043                 <span class="keyword">if</span> ~strcmpi(get(h_childen(i),<span class="string">'Type'</span>),<span class="string">'uicontrol'</span>) &amp;&amp; <span class="keyword">...</span>
+0044                         strcmpi(get(h_childen(i),<span class="string">'label'</span>), ParentLabelString)
+0045                     EditMenuFlag = 1;
+0046                     h = h_childen(i);
+0047                     <span class="keyword">break</span>;
+0048                 <span class="keyword">end</span>
+0049             <span class="keyword">end</span>
+0050             <span class="keyword">if</span> ~EditMenuFlag
+0051                 <span class="comment">% Make an edit menu</span>
+0052                 h = uimenu(h, <span class="string">'Label'</span>, ParentLabelString, <span class="string">'Callback'</span>,<span class="string">''</span>);
+0053             <span class="keyword">end</span>
+0054             hmenu = uimenu(h, <span class="string">'Label'</span>, LabelString, <span class="string">'Callback'</span>,<span class="string">''</span>);
+0055         <span class="keyword">elseif</span> strcmpi(get(h,<span class="string">'Type'</span>), <span class="string">'uimenu'</span>)
+0056             <span class="keyword">if</span> isempty(findstr(get(h, <span class="string">'Label'</span>), <span class="string">'Middle Layer'</span>))
+0057                 hmenu = uimenu(h, <span class="string">'Label'</span>, LabelString, <span class="string">'Callback'</span>,<span class="string">''</span>);
+0058             <span class="keyword">else</span>
+0059                 hmenu = h;
+0060             <span class="keyword">end</span>
+0061         <span class="keyword">else</span>
+0062             hmenu = h;
+0063         <span class="keyword">end</span>
+0064 
+0065         varargout{1} = hmenu;
+0066 
+0067         <span class="comment">%% Build tree</span>
+0068         appdata = [];
+0069         h146 = uimenu(<span class="keyword">...</span>
+0070             <span class="string">'Parent'</span>,h,<span class="keyword">...</span>
+0071             <span class="string">'Label'</span>,<span class="string">'Lattice'</span>,<span class="keyword">...</span>
+0072             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0073             <span class="string">'Tag'</span>,<span class="string">'LatticeMenu'</span>,<span class="keyword">...</span>
+0074             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0075             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0076 
+0077         appdata = [];
+0078         appdata.lastValidTag = <span class="string">'THESEMENUSRUN'</span>;
+0079 
+0080         h147 = uimenu(<span class="keyword">...</span>
+0081             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0082             <span class="string">'Label'</span>,<span class="string">'THESE MENUS RUN IN THE MATLAB WINDOW'</span>,<span class="keyword">...</span>
+0083             <span class="string">'Tag'</span>,<span class="string">'THESEMENUSRUN'</span>,<span class="keyword">...</span>
+0084             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0085             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0086 
+0087         appdata = [];
+0088         appdata.lastValidTag = <span class="string">'Initialization'</span>;
+0089 
+0090         hmenu = uimenu( <span class="keyword">...</span>
+0091             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0092             <span class="string">'Label'</span>,<span class="string">'Initialization'</span>,<span class="keyword">...</span>
+0093             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0094             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0095             <span class="string">'Tag'</span>,<span class="string">'Initialization'</span>);
+0096         h148= hmenu;
+0097 <span class="comment">%         h148 = uimenu(...</span>
+0098 <span class="comment">%             'Parent',h146,...</span>
+0099 <span class="comment">%             'Label','Initialization',...</span>
+0100 <span class="comment">%             'Separator','on',...</span>
+0101 <span class="comment">%             'Tag','Initialization',...</span>
+0102 <span class="comment">%             'Behavior',get(0,'defaultuimenuBehavior'),...</span>
+0103 <span class="comment">%             'CreateFcn', {@local_CreateFcn, '', appdata} );</span>
+0104 
+0105   
+0106 <span class="comment">%         appdata = [];</span>
+0107 <span class="comment">%         appdata.lastValidTag = 'InitializetheMiddleLayer';</span>
+0108 
+0109         hmenu = uimenu( <span class="keyword">...</span>
+0110             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0111             <span class="string">'Label'</span>,<span class="string">'Initialize the Middle Layer (Default) - aoinit'</span>,<span class="keyword">...</span>
+0112             <span class="string">'Tag'</span>,<span class="string">'InitializetheMiddleLayer'</span>);
+0113         set(hmenu,<span class="string">'Callback'</span>, <span class="string">'addmmlmenu(gcbo,''Action'')'</span>);
+0114 
+0115 <span class="comment">%         h149 = uimenu(...</span>
+0116 <span class="comment">%             'Parent',h148,...</span>
+0117 <span class="comment">%             'Callback','set(gcbf,''HandleVisibility'',''off''); try; aoinit; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred initializing the middle layer''); end; set(gcbf,''HandleVisibility'',''Callback'');',...</span>
+0118 <span class="comment">%             'Label','Initialize the Middle Layer (Default) - aoinit',...</span>
+0119 <span class="comment">%             'Tag','InitializetheMiddleLayer',...</span>
+0120 <span class="comment">%             'Behavior',get(0,'defaultuimenuBehavior'),...</span>
+0121 <span class="comment">%             'CreateFcn', {@local_CreateFcn, '', appdata} );</span>
+0122 
+0123         appdata = [];
+0124         appdata.lastValidTag = <span class="string">'InitializetheMiddleLayerfromFile'</span>;
+0125 
+0126         h150 = uimenu(<span class="keyword">...</span>
+0127             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0128             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setao(''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred initializing the middle layer''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0129             <span class="string">'Label'</span>,<span class="string">'Initialize the Middle Layer from File - setao('''')'</span>,<span class="keyword">...</span>
+0130             <span class="string">'Tag'</span>,<span class="string">'InitializetheMiddleLayerfromFile'</span>,<span class="keyword">...</span>
+0131             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0132             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0133 
+0134         appdata = [];
+0135         appdata.lastValidTag = <span class="string">'SetOperationMode'</span>;
+0136 
+0137         h151 = uimenu(<span class="keyword">...</span>
+0138             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0139             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setoperationalmode; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred initializing the middle layer'');end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0140             <span class="string">'Label'</span>,<span class="string">'Set the Operation Mode - setoperationalmode'</span>,<span class="keyword">...</span>
+0141             <span class="string">'Tag'</span>,<span class="string">'SetOperationMode'</span>,<span class="keyword">...</span>
+0142             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0143             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0144 
+0145         appdata = [];
+0146         appdata.lastValidTag = <span class="string">'InitializeControlSystem'</span>;
+0147 
+0148         h152 = uimenu(<span class="keyword">...</span>
+0149             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0150             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; srinit(''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred initializing control system parameters''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0151             <span class="string">'Label'</span>,<span class="string">'Initialize Control System Parameters - srinit'</span>,<span class="keyword">...</span>
+0152             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0153             <span class="string">'Tag'</span>,<span class="string">'InitializeControlSystem'</span>,<span class="keyword">...</span>
+0154             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0155             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0156 
+0157         appdata = [];
+0158         appdata.lastValidTag = <span class="string">'SwitchtoHardwareUnits'</span>;
+0159 
+0160         h153 = uimenu(<span class="keyword">...</span>
+0161             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0162             <span class="string">'Callback'</span>,<span class="string">'switch2hw;'</span>,<span class="keyword">...</span>
+0163             <span class="string">'Label'</span>,<span class="string">'Switch to Hardware Units - switch2hw'</span>,<span class="keyword">...</span>
+0164             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0165             <span class="string">'Tag'</span>,<span class="string">'SwitchtoHardwareUnits'</span>,<span class="keyword">...</span>
+0166             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0167             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0168 
+0169         appdata = [];
+0170         appdata.lastValidTag = <span class="string">'SwitchtoPhysicsUnits'</span>;
+0171 
+0172         h154 = uimenu(<span class="keyword">...</span>
+0173             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0174             <span class="string">'Callback'</span>,<span class="string">'switch2physics;'</span>,<span class="keyword">...</span>
+0175             <span class="string">'Label'</span>,<span class="string">'Switch to Physics Units - switch2physics'</span>,<span class="keyword">...</span>
+0176             <span class="string">'Tag'</span>,<span class="string">'SwitchtoPhysicsUnits'</span>,<span class="keyword">...</span>
+0177             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0178             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0179 
+0180         appdata = [];
+0181         appdata.lastValidTag = <span class="string">'SwitchtoOnlineMode'</span>;
+0182 
+0183         h155 = uimenu(<span class="keyword">...</span>
+0184             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0185             <span class="string">'Callback'</span>,<span class="string">'switch2online;'</span>,<span class="keyword">...</span>
+0186             <span class="string">'Label'</span>,<span class="string">'Switch to Online Mode - switch2online'</span>,<span class="keyword">...</span>
+0187             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0188             <span class="string">'Tag'</span>,<span class="string">'SwitchtoOnlineMode'</span>,<span class="keyword">...</span>
+0189             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0190             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0191 
+0192         appdata = [];
+0193         appdata.lastValidTag = <span class="string">'SwitchtoSimulateMode'</span>;
+0194 
+0195         h156 = uimenu(<span class="keyword">...</span>
+0196             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0197             <span class="string">'Callback'</span>,<span class="string">'switch2sim;'</span>,<span class="keyword">...</span>
+0198             <span class="string">'Label'</span>,<span class="string">'Switch to Simulate Mode - switch2sim'</span>,<span class="keyword">...</span>
+0199             <span class="string">'Tag'</span>,<span class="string">'SwitchtoSimulateMode'</span>,<span class="keyword">...</span>
+0200             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0201             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0202 
+0203         appdata = [];
+0204         appdata.lastValidTag = <span class="string">'EditMiddleLayerAO'</span>;
+0205 
+0206         h157 = uimenu(<span class="keyword">...</span>
+0207             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0208             <span class="string">'Label'</span>,<span class="string">'Middle Layer Family Setup'</span>,<span class="keyword">...</span>
+0209             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0210             <span class="string">'Tag'</span>,<span class="string">'EditMiddleLayerAO'</span>,<span class="keyword">...</span>
+0211             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0212             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0213 
+0214         appdata = [];
+0215         appdata.lastValidTag = <span class="string">'EditMiddleLayerAD'</span>;
+0216 
+0217         h158 = uimenu(<span class="keyword">...</span>
+0218             <span class="string">'Parent'</span>,h148,<span class="keyword">...</span>
+0219             <span class="string">'Label'</span>,<span class="string">'Middle Layer Parameter Setup'</span>,<span class="keyword">...</span>
+0220             <span class="string">'Tag'</span>,<span class="string">'EditMiddleLayerAD'</span>,<span class="keyword">...</span>
+0221             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0222             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0223 
+0224         appdata = [];
+0225         appdata.lastValidTag = <span class="string">'LatticeConfiguration'</span>;
+0226 
+0227         h159 = uimenu(<span class="keyword">...</span>
+0228             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0229             <span class="string">'Label'</span>,<span class="string">'Lattice Configuration'</span>,<span class="keyword">...</span>
+0230             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0231             <span class="string">'Tag'</span>,<span class="string">'LatticeConfiguration'</span>,<span class="keyword">...</span>
+0232             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0233             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0234 
+0235         appdata = [];
+0236         appdata.lastValidTag = <span class="string">'StandardizetoPresentLattice'</span>;
+0237 
+0238         h160 = uimenu(<span class="keyword">...</span>
+0239             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0240             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; srcycle(''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred standardizing the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0241             <span class="string">'Label'</span>,<span class="string">'Standardize to Present Lattice - srcycle'</span>,<span class="keyword">...</span>
+0242             <span class="string">'Tag'</span>,<span class="string">'StandardizetoPresentLattice'</span>,<span class="keyword">...</span>
+0243             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0244             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0245 
+0246         appdata = [];
+0247         appdata.lastValidTag = <span class="string">'StandardizetoGoldenLattice'</span>;
+0248 
+0249         h161 = uimenu(<span class="keyword">...</span>
+0250             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0251             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; srcycle(''Golden'',''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred standardizing the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0252             <span class="string">'Label'</span>,<span class="string">'Standardize to Golden Lattice - srcycle(''Golden'')'</span>,<span class="keyword">...</span>
+0253             <span class="string">'Tag'</span>,<span class="string">'StandardizetoGoldenLattice'</span>,<span class="keyword">...</span>
+0254             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0255             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0256 
+0257         appdata = [];
+0258         appdata.lastValidTag = <span class="string">'StandardizetoUserSelectableLatticeFile'</span>;
+0259 
+0260         h162 = uimenu(<span class="keyword">...</span>
+0261             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0262             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; srcycle('''',''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred standardizing the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0263             <span class="string">'Label'</span>,<span class="string">'Standardize to User Selectable Lattice File - srcycle('''')'</span>,<span class="keyword">...</span>
+0264             <span class="string">'Tag'</span>,<span class="string">'StandardizetoUserSelectableLatticeFile'</span>,<span class="keyword">...</span>
+0265             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0266             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0267 
+0268         appdata = [];
+0269         appdata.lastValidTag = <span class="string">'LoadtheGoldenLattice'</span>;
+0270 
+0271         h163 = uimenu(<span class="keyword">...</span>
+0272             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0273             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setmachineconfig(''Golden'',''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while loading the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0274             <span class="string">'Label'</span>,<span class="string">'Load the Golden Lattice and Set to Machine - setmachineconfig(''Golden'')'</span>,<span class="keyword">...</span>
+0275             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0276             <span class="string">'Tag'</span>,<span class="string">'LoadtheGoldenLattice'</span>,<span class="keyword">...</span>
+0277             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0278             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0279 
+0280         appdata = [];
+0281         appdata.lastValidTag = <span class="string">'LoadtheInjectionLattice'</span>;
+0282 
+0283         h164 = uimenu(<span class="keyword">...</span>
+0284             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0285             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setmachineconfig(''Injection'',''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while loading the injection lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0286             <span class="string">'Label'</span>,<span class="string">'Load the Injection Lattice and Set to Machine - setmachineconfig(''Injection'')'</span>,<span class="keyword">...</span>
+0287             <span class="string">'Tag'</span>,<span class="string">'LoadtheInjectionLattice'</span>,<span class="keyword">...</span>
+0288             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0289             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0290 
+0291         appdata = [];
+0292         appdata.lastValidTag = <span class="string">'LoadaLatticefromFile'</span>;
+0293 
+0294         h165 = uimenu(<span class="keyword">...</span>
+0295             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0296             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setmachineconfig(''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while loading the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0297             <span class="string">'Label'</span>,<span class="string">'Load a Lattice from File and Set to Machine - setmachineconfig'</span>,<span class="keyword">...</span>
+0298             <span class="string">'Tag'</span>,<span class="string">'LoadaLatticefromFile'</span>,<span class="keyword">...</span>
+0299             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0300             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0301 
+0302         appdata = [];
+0303         appdata.lastValidTag = <span class="string">'SaveLatticetotheGoldenFile'</span>;
+0304 
+0305         h166 = uimenu(<span class="keyword">...</span>
+0306             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0307             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; getmachineconfig(''Golden''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while saving the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0308             <span class="string">'Label'</span>,<span class="string">'Save Lattice to the Golden File - getmachineconfig(''Golden'')'</span>,<span class="keyword">...</span>
+0309             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0310             <span class="string">'Tag'</span>,<span class="string">'SaveLatticetotheGoldenFile'</span>,<span class="keyword">...</span>
+0311             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0312             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0313 
+0314         appdata = [];
+0315         appdata.lastValidTag = <span class="string">'SaveLatticetotheInjectionFile'</span>;
+0316 
+0317         h167 = uimenu(<span class="keyword">...</span>
+0318             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0319             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; getmachineconfig(''Injection''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while saving the injection lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0320             <span class="string">'Label'</span>,<span class="string">'Save Lattice to the Injection File - getmachineconfig(''Injection'')'</span>,<span class="keyword">...</span>
+0321             <span class="string">'Tag'</span>,<span class="string">'SaveLatticetotheInjectionFile'</span>,<span class="keyword">...</span>
+0322             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0323             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0324 
+0325         appdata = [];
+0326         appdata.lastValidTag = <span class="string">'SaveLatticetoFile'</span>;
+0327 
+0328         h168 = uimenu(<span class="keyword">...</span>
+0329             <span class="string">'Parent'</span>,h159,<span class="keyword">...</span>
+0330             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; getmachineconfig(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while saving the lattice''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0331             <span class="string">'Label'</span>,<span class="string">'Save Lattice to File - getmachineconfig(''Archive'','''')'</span>,<span class="keyword">...</span>
+0332             <span class="string">'Tag'</span>,<span class="string">'SaveLatticetoFile'</span>,<span class="keyword">...</span>
+0333             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0334             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0335 
+0336         appdata = [];
+0337         appdata.lastValidTag = <span class="string">'CorrecttheOrbit'</span>;
+0338 
+0339         h169 = uimenu(<span class="keyword">...</span>
+0340             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0341             <span class="string">'Label'</span>,<span class="string">'Correct the Orbit '</span>,<span class="keyword">...</span>
+0342             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0343             <span class="string">'Tag'</span>,<span class="string">'CorrecttheOrbit'</span>,<span class="keyword">...</span>
+0344             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0345             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0346 
+0347         appdata = [];
+0348         appdata.lastValidTag = <span class="string">'OCBothPlanes'</span>;
+0349 
+0350         h170 = uimenu(<span class="keyword">...</span>
+0351             <span class="string">'Parent'</span>,h169,<span class="keyword">...</span>
+0352             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setorbitdefault(''Display''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while correcting the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0353             <span class="string">'Label'</span>,<span class="string">'Both Planes - setorbitdefault'</span>,<span class="keyword">...</span>
+0354             <span class="string">'Tag'</span>,<span class="string">'OCBothPlanes'</span>,<span class="keyword">...</span>
+0355             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0356             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0357 
+0358         appdata = [];
+0359         appdata.lastValidTag = <span class="string">'OCBothPlanesIncludeRF'</span>;
+0360 
+0361         h171 = uimenu(<span class="keyword">...</span>
+0362             <span class="string">'Parent'</span>,h169,<span class="keyword">...</span>
+0363             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setorbitdefault(''Display'',''FitRF''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while correcting the orbit (including RF)''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0364             <span class="string">'Label'</span>,<span class="string">'Both Planes, Included RF - setorbitdefault(''FitRF'')'</span>,<span class="keyword">...</span>
+0365             <span class="string">'Tag'</span>,<span class="string">'OCBothPlanesIncludeRF'</span>,<span class="keyword">...</span>
+0366             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0367             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0368 
+0369         appdata = [];
+0370         appdata.lastValidTag = <span class="string">'OCHorizontalPlane'</span>;
+0371 
+0372         h172 = uimenu(<span class="keyword">...</span>
+0373             <span class="string">'Parent'</span>,h169,<span class="keyword">...</span>
+0374             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setorbitdefault(''Display'',''Horizontal''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while correcting the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0375             <span class="string">'Label'</span>,<span class="string">'Horizontal Planes - setorbitdefault(''Horizontal'')'</span>,<span class="keyword">...</span>
+0376             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0377             <span class="string">'Tag'</span>,<span class="string">'OCHorizontalPlane'</span>,<span class="keyword">...</span>
+0378             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0379             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0380 
+0381         appdata = [];
+0382         appdata.lastValidTag = <span class="string">'OCHorizontalPlaneIncludeRF'</span>;
+0383 
+0384         h173 = uimenu(<span class="keyword">...</span>
+0385             <span class="string">'Parent'</span>,h169,<span class="keyword">...</span>
+0386             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setorbitdefault(''Display'',''Horizontal'',''FitRF''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while correcting the orbit (including RF)''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0387             <span class="string">'Label'</span>,<span class="string">'Horizontal Planes, Included RF - setorbitdefault(''Horizontal'',''FitRF'')'</span>,<span class="keyword">...</span>
+0388             <span class="string">'Tag'</span>,<span class="string">'OCHorizontalPlaneIncludeRF'</span>,<span class="keyword">...</span>
+0389             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0390             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0391 
+0392         appdata = [];
+0393         appdata.lastValidTag = <span class="string">'OCVerticalPlane'</span>;
+0394 
+0395         h174 = uimenu(<span class="keyword">...</span>
+0396             <span class="string">'Parent'</span>,h169,<span class="keyword">...</span>
+0397             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setorbitdefault(''Display'',''Vertical''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while correcting the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0398             <span class="string">'Label'</span>,<span class="string">'Vertical Planes - setorbitdefault(''Vertical'')'</span>,<span class="keyword">...</span>
+0399             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0400             <span class="string">'Tag'</span>,<span class="string">'OCVerticalPlane'</span>,<span class="keyword">...</span>
+0401             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0402             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0403 
+0404         appdata = [];
+0405         appdata.lastValidTag = <span class="string">'CorrecttheTune'</span>;
+0406 
+0407         h175 = uimenu(<span class="keyword">...</span>
+0408             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0409             <span class="string">'Label'</span>,<span class="string">'Correct the Tune'</span>,<span class="keyword">...</span>
+0410             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0411             <span class="string">'Tag'</span>,<span class="string">'CorrecttheTune'</span>,<span class="keyword">...</span>
+0412             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0413             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0414 
+0415         appdata = [];
+0416         appdata.lastValidTag = <span class="string">'SteptheTune'</span>;
+0417 
+0418         h176 = uimenu(<span class="keyword">...</span>
+0419             <span class="string">'Parent'</span>,h175,<span class="keyword">...</span>
+0420             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; steptune; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while stepping the tune''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0421             <span class="string">'Label'</span>,<span class="string">'Step the Tune - steptune'</span>,<span class="keyword">...</span>
+0422             <span class="string">'Tag'</span>,<span class="string">'SteptheTune'</span>,<span class="keyword">...</span>
+0423             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0424             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0425 
+0426         appdata = [];
+0427         appdata.lastValidTag = <span class="string">'SettheTune'</span>;
+0428 
+0429         h177 = uimenu(<span class="keyword">...</span>
+0430             <span class="string">'Parent'</span>,h175,<span class="keyword">...</span>
+0431             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; settune; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while setting the tune''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0432             <span class="string">'Label'</span>,<span class="string">'Set the Tune - settune'</span>,<span class="keyword">...</span>
+0433             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0434             <span class="string">'Tag'</span>,<span class="string">'SettheTune'</span>,<span class="keyword">...</span>
+0435             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0436             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0437 
+0438         appdata = [];
+0439         appdata.lastValidTag = <span class="string">'CorrecttheChromaticity'</span>;
+0440 
+0441         h178 = uimenu(<span class="keyword">...</span>
+0442             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0443             <span class="string">'Label'</span>,<span class="string">'Correct the Chromaticity'</span>,<span class="keyword">...</span>
+0444             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0445             <span class="string">'Tag'</span>,<span class="string">'CorrecttheChromaticity'</span>,<span class="keyword">...</span>
+0446             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0447             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0448 
+0449         appdata = [];
+0450         appdata.lastValidTag = <span class="string">'SteptheChromaticityHW'</span>;
+0451 
+0452         h179 = uimenu(<span class="keyword">...</span>
+0453             <span class="string">'Parent'</span>,h178,<span class="keyword">...</span>
+0454             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; stepchro; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while stepping the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0455             <span class="string">'Label'</span>,<span class="string">'Step the Chromaticity (Hardware Units) - stepchro'</span>,<span class="keyword">...</span>
+0456             <span class="string">'Tag'</span>,<span class="string">'SteptheChromaticityHW'</span>,<span class="keyword">...</span>
+0457             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0458             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0459 
+0460         appdata = [];
+0461         appdata.lastValidTag = <span class="string">'SteptheChromaticity'</span>;
+0462 
+0463         h180 = uimenu(<span class="keyword">...</span>
+0464             <span class="string">'Parent'</span>,h178,<span class="keyword">...</span>
+0465             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; stepchro(''Physics''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while stepping the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0466             <span class="string">'Label'</span>,<span class="string">'Step the Chromaticity (Physics Units) - stepchro(''Physics'')'</span>,<span class="keyword">...</span>
+0467             <span class="string">'Tag'</span>,<span class="string">'SteptheChromaticity'</span>,<span class="keyword">...</span>
+0468             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0469             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0470 
+0471         appdata = [];
+0472         appdata.lastValidTag = <span class="string">'SettheChromaticityHW'</span>;
+0473 
+0474         h181 = uimenu(<span class="keyword">...</span>
+0475             <span class="string">'Parent'</span>,h178,<span class="keyword">...</span>
+0476             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setchro; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while setting the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0477             <span class="string">'Label'</span>,<span class="string">'Set the Chromaticity (Hardware Units) - setchro'</span>,<span class="keyword">...</span>
+0478             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0479             <span class="string">'Tag'</span>,<span class="string">'SettheChromaticityHW'</span>,<span class="keyword">...</span>
+0480             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0481             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0482 
+0483         appdata = [];
+0484         appdata.lastValidTag = <span class="string">'SetptheChromaticity'</span>;
+0485 
+0486         h182 = uimenu(<span class="keyword">...</span>
+0487             <span class="string">'Parent'</span>,h178,<span class="keyword">...</span>
+0488             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; setchro(''Physics''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while setting the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0489             <span class="string">'Label'</span>,<span class="string">'Set the Chromaticity (Physics Units) - stepchro(''Physics'')'</span>,<span class="keyword">...</span>
+0490             <span class="string">'Tag'</span>,<span class="string">'SetptheChromaticity'</span>,<span class="keyword">...</span>
+0491             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0492             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0493 
+0494         appdata = [];
+0495         appdata.lastValidTag = <span class="string">'MeasureMenu'</span>;
+0496 
+0497         h183 = uimenu(<span class="keyword">...</span>
+0498             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0499             <span class="string">'Label'</span>,<span class="string">'Measure'</span>,<span class="keyword">...</span>
+0500             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0501             <span class="string">'Tag'</span>,<span class="string">'MeasureMenu'</span>,<span class="keyword">...</span>
+0502             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0503             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0504 
+0505         appdata = [];
+0506         appdata.lastValidTag = <span class="string">'DispersionHW'</span>;
+0507 
+0508         h184 = uimenu(<span class="keyword">...</span>
+0509             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0510             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measdisp(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0511             <span class="string">'Label'</span>,<span class="string">'Dispersion (Hardware Units) - measdisp(''Archive'','''')'</span>,<span class="keyword">...</span>
+0512             <span class="string">'Tag'</span>,<span class="string">'DispersionHW'</span>,<span class="keyword">...</span>
+0513             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0514             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0515 
+0516         appdata = [];
+0517         appdata.lastValidTag = <span class="string">'Dispersion'</span>;
+0518 
+0519         h185 = uimenu(<span class="keyword">...</span>
+0520             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0521             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measdisp(''Physics'',''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0522             <span class="string">'Label'</span>,<span class="string">'Dispersion (Physics Units) - measdisp(''Physics'',''Archive'','''')'</span>,<span class="keyword">...</span>
+0523             <span class="string">'Tag'</span>,<span class="string">'Dispersion'</span>,<span class="keyword">...</span>
+0524             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0525             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0526 
+0527         appdata = [];
+0528         appdata.lastValidTag = <span class="string">'ChromaticityHW'</span>;
+0529 
+0530         h186 = uimenu(<span class="keyword">...</span>
+0531             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0532             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measchro(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0533             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Hardware Units) - measchro(''Archive'','''')'</span>,<span class="keyword">...</span>
+0534             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0535             <span class="string">'Tag'</span>,<span class="string">'ChromaticityHW'</span>,<span class="keyword">...</span>
+0536             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0537             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0538 
+0539         appdata = [];
+0540         appdata.lastValidTag = <span class="string">'Chromaticity'</span>;
+0541 
+0542         h187 = uimenu(<span class="keyword">...</span>
+0543             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0544             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measchro(''Physics'',''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0545             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Physics Units) - measchro(''Physics'',''Archive'','''')'</span>,<span class="keyword">...</span>
+0546             <span class="string">'Tag'</span>,<span class="string">'Chromaticity'</span>,<span class="keyword">...</span>
+0547             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0548             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0549 
+0550         appdata = [];
+0551         appdata.lastValidTag = <span class="string">''</span>;
+0552 
+0553         h188 = uimenu(<span class="keyword">...</span>
+0554             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0555             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measbpmresp; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0556             <span class="string">'Label'</span>,<span class="string">'Orbit Response Matrix - measbpmresp'</span>,<span class="keyword">...</span>
+0557             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0558             <span class="string">'Tag'</span>,<span class="string">'OrbitResponseMatrix '</span>,<span class="keyword">...</span>
+0559             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0560             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0561 
+0562         appdata = [];
+0563         appdata.lastValidTag = <span class="string">''</span>;
+0564 
+0565         h189 = uimenu(<span class="keyword">...</span>
+0566             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0567             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; meastuneresp; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring the tune response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0568             <span class="string">'Label'</span>,<span class="string">'Tune Response Matrix - meastuneresp'</span>,<span class="keyword">...</span>
+0569             <span class="string">'Tag'</span>,<span class="string">'TuneResponseMatrix '</span>,<span class="keyword">...</span>
+0570             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0571             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0572 
+0573         appdata = [];
+0574         appdata.lastValidTag = <span class="string">''</span>;
+0575 
+0576         h190 = uimenu(<span class="keyword">...</span>
+0577             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0578             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measchroresp; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring the chromaticity response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0579             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix - measchroresp'</span>,<span class="keyword">...</span>
+0580             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrix '</span>,<span class="keyword">...</span>
+0581             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0582             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0583 
+0584         appdata = [];
+0585         appdata.lastValidTag = <span class="string">''</span>;
+0586 
+0587         h191 = uimenu(<span class="keyword">...</span>
+0588             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0589             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measdispresp; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring the dispersion response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0590             <span class="string">'Label'</span>,<span class="string">'Dispersion Response Matrix - measdispresp'</span>,<span class="keyword">...</span>
+0591             <span class="string">'Tag'</span>,<span class="string">'DispersionResponseMatrix '</span>,<span class="keyword">...</span>
+0592             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0593             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0594 
+0595         appdata = [];
+0596         appdata.lastValidTag = <span class="string">'LOCOInputData'</span>;
+0597 
+0598         h192 = uimenu(<span class="keyword">...</span>
+0599             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0600             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; measlocodata; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring the LOCO data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0601             <span class="string">'Label'</span>,<span class="string">'LOCO Input Data - measlocodata'</span>,<span class="keyword">...</span>
+0602             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0603             <span class="string">'Tag'</span>,<span class="string">'LOCOInputData'</span>,<span class="keyword">...</span>
+0604             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0605             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0606 
+0607         appdata = [];
+0608         appdata.lastValidTag = <span class="string">''</span>;
+0609 
+0610         h193 = uimenu(<span class="keyword">...</span>
+0611             <span class="string">'Parent'</span>,h183,<span class="keyword">...</span>
+0612             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; quadcenter; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while measuring a quadrupole center''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0613             <span class="string">'Label'</span>,<span class="string">'Quadrupole Center - quadcenter'</span>,<span class="keyword">...</span>
+0614             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0615             <span class="string">'Tag'</span>,<span class="string">'QuadrupoleCenter '</span>,<span class="keyword">...</span>
+0616             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0617             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0618 
+0619         appdata = [];
+0620         appdata.lastValidTag = <span class="string">'MonitorMenu'</span>;
+0621 
+0622         h194 = uimenu(<span class="keyword">...</span>
+0623             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0624             <span class="string">'Label'</span>,<span class="string">'Monitor'</span>,<span class="keyword">...</span>
+0625             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0626             <span class="string">'Tag'</span>,<span class="string">'MonitorMenu'</span>,<span class="keyword">...</span>
+0627             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0628             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0629 
+0630         appdata = [];
+0631         appdata.lastValidTag = <span class="string">'OrbitSnapshot'</span>;
+0632 
+0633         h195 = uimenu(<span class="keyword">...</span>
+0634             <span class="string">'Parent'</span>,h194,<span class="keyword">...</span>
+0635             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; getbpm(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while saving the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0636             <span class="string">'Label'</span>,<span class="string">'Orbit (Snapshot) - getbpm(''Archive'','''')'</span>,<span class="keyword">...</span>
+0637             <span class="string">'Tag'</span>,<span class="string">'OrbitSnapshot'</span>,<span class="keyword">...</span>
+0638             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0639             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0640 
+0641         appdata = [];
+0642         appdata.lastValidTag = <span class="string">'Orbit3Minutes'</span>;
+0643 
+0644         h196 = uimenu(<span class="keyword">...</span>
+0645             <span class="string">'Parent'</span>,h194,<span class="keyword">...</span>
+0646             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; monbpm(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while monitoring the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0647             <span class="string">'Label'</span>,<span class="string">'Orbit (3 minutes) - monbpm(''Archive'','''')'</span>,<span class="keyword">...</span>
+0648             <span class="string">'Tag'</span>,<span class="string">'Orbit3Minutes'</span>,<span class="keyword">...</span>
+0649             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0650             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0651 
+0652         appdata = [];
+0653         appdata.lastValidTag = <span class="string">'MagnetPowerSupplyData'</span>;
+0654 
+0655         h197 = uimenu(<span class="keyword">...</span>
+0656             <span class="string">'Parent'</span>,h194,<span class="keyword">...</span>
+0657             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; monmags(''Archive'',''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while monitoring the orbit''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0658             <span class="string">'Label'</span>,<span class="string">'Magnet Power Supply Data - monmags(''Archive'','''')'</span>,<span class="keyword">...</span>
+0659             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0660             <span class="string">'Tag'</span>,<span class="string">'MagnetPowerSupplyData'</span>,<span class="keyword">...</span>
+0661             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0662             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0663 
+0664         appdata = [];
+0665         appdata.lastValidTag = <span class="string">'PlottingandAnalysis'</span>;
+0666 
+0667         h198 = uimenu(<span class="keyword">...</span>
+0668             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0669             <span class="string">'Label'</span>,<span class="string">'Plotting and Analysis'</span>,<span class="keyword">...</span>
+0670             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0671             <span class="string">'Tag'</span>,<span class="string">'PlottingandAnalysis'</span>,<span class="keyword">...</span>
+0672             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0673             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0674 
+0675         appdata = [];
+0676         appdata.lastValidTag = <span class="string">'OrbitwrtGoldenOrbit'</span>;
+0677 
+0678         h199 = uimenu(<span class="keyword">...</span>
+0679             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0680             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotorbit(''Golden''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0681             <span class="string">'Label'</span>,<span class="string">'Orbit w.r.t. Golden Orbit - plotorbit(''Golden'')'</span>,<span class="keyword">...</span>
+0682             <span class="string">'Tag'</span>,<span class="string">'OrbitwrtGoldenOrbit'</span>,<span class="keyword">...</span>
+0683             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0684             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0685 
+0686         appdata = [];
+0687         appdata.lastValidTag = <span class="string">'OrbitwrtOffsetOrbit'</span>;
+0688 
+0689         h200 = uimenu(<span class="keyword">...</span>
+0690             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0691             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotorbit(''Offset''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0692             <span class="string">'Label'</span>,<span class="string">'Orbit w.r.t. Offset Orbit - plotorbit(''Offset'')'</span>,<span class="keyword">...</span>
+0693             <span class="string">'Tag'</span>,<span class="string">'OrbitwrtOffsetOrbit'</span>,<span class="keyword">...</span>
+0694             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0695             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0696 
+0697         appdata = [];
+0698         appdata.lastValidTag = <span class="string">'GoldenOrbit'</span>;
+0699 
+0700         h201 = uimenu(<span class="keyword">...</span>
+0701             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0702             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotgoldenorbit; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0703             <span class="string">'Label'</span>,<span class="string">'Golden Orbit - plotgoldenorbit'</span>,<span class="keyword">...</span>
+0704             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0705             <span class="string">'Tag'</span>,<span class="string">'GoldenOrbit'</span>,<span class="keyword">...</span>
+0706             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0707             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0708 
+0709         appdata = [];
+0710         appdata.lastValidTag = <span class="string">''</span>;
+0711 
+0712         h202 = uimenu(<span class="keyword">...</span>
+0713             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0714             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotoffsetorbit; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0715             <span class="string">'Label'</span>,<span class="string">'Offset Orbit - plotoffsetorbit'</span>,<span class="keyword">...</span>
+0716             <span class="string">'Tag'</span>,<span class="string">'OffsetOrbit '</span>,<span class="keyword">...</span>
+0717             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0718             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0719 
+0720         appdata = [];
+0721         appdata.lastValidTag = <span class="string">'plotcm'</span>;
+0722 
+0723         h203 = uimenu(<span class="keyword">...</span>
+0724             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0725             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotcm; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0726             <span class="string">'Label'</span>,<span class="string">'Correctors - plotcm'</span>,<span class="keyword">...</span>
+0727             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0728             <span class="string">'Tag'</span>,<span class="string">'plotcm'</span>,<span class="keyword">...</span>
+0729             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0730             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0731 
+0732         appdata = [];
+0733         appdata.lastValidTag = <span class="string">''</span>;
+0734 
+0735         h204 = uimenu(<span class="keyword">...</span>
+0736             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0737             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotlattice(''Golden''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0738             <span class="string">'Label'</span>,<span class="string">'Golden Magnet Lattice - plotlattice(''Golden'');'</span>,<span class="keyword">...</span>
+0739             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0740             <span class="string">'Tag'</span>,<span class="string">'GoldenLattice '</span>,<span class="keyword">...</span>
+0741             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0742             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0743 
+0744         appdata = [];
+0745         appdata.lastValidTag = <span class="string">'BPMSigmaDefault'</span>;
+0746 
+0747         h205 = uimenu(<span class="keyword">...</span>
+0748             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0749             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotorbitdata([getfamilydata(''Directory'',''OpsData''), getfamilydata(''OpsData'',''BPMSigmaFile'')]); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting BPM sigma data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0750             <span class="string">'Label'</span>,<span class="string">'BPM Sigma (Default)'</span>,<span class="keyword">...</span>
+0751             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0752             <span class="string">'Tag'</span>,<span class="string">'BPMSigmaDefault'</span>,<span class="keyword">...</span>
+0753             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0754             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0755 
+0756         appdata = [];
+0757         appdata.lastValidTag = <span class="string">'BPMSigmaFromFile'</span>;
+0758 
+0759         h206 = uimenu(<span class="keyword">...</span>
+0760             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0761             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotorbitdata([getfamilydata(''Directory'',''DataRoot''),''BPM'',filesep]); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting BPM sigma data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0762             <span class="string">'Label'</span>,<span class="string">'BPM Sigma (From File)'</span>,<span class="keyword">...</span>
+0763             <span class="string">'Tag'</span>,<span class="string">'BPMSigmaFromFile'</span>,<span class="keyword">...</span>
+0764             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0765             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0766 
+0767         appdata = [];
+0768         appdata.lastValidTag = <span class="string">'plotbpmresp'</span>;
+0769 
+0770         h207 = uimenu(<span class="keyword">...</span>
+0771             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0772             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmresp; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0773             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix (Default) - plotbpmresp;'</span>,<span class="keyword">...</span>
+0774             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0775             <span class="string">'Tag'</span>,<span class="string">'plotbpmresp'</span>,<span class="keyword">...</span>
+0776             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0777             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0778 
+0779         appdata = [];
+0780         appdata.lastValidTag = <span class="string">'plotbpmrespFile'</span>;
+0781 
+0782         h208 = uimenu(<span class="keyword">...</span>
+0783             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0784             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmresp(''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0785             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix (From File) - plotbpmresp('''');'</span>,<span class="keyword">...</span>
+0786             <span class="string">'Tag'</span>,<span class="string">'plotbpmrespFile'</span>,<span class="keyword">...</span>
+0787             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0788             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0789 
+0790         appdata = [];
+0791         appdata.lastValidTag = <span class="string">'plotbpmrespSym'</span>;
+0792 
+0793         h209 = uimenu(<span class="keyword">...</span>
+0794             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0795             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmrespsym; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0796             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix Symmetry (Default) - plotbpmrespsym;'</span>,<span class="keyword">...</span>
+0797             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0798             <span class="string">'Tag'</span>,<span class="string">'plotbpmrespSym'</span>,<span class="keyword">...</span>
+0799             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0800             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0801 
+0802         appdata = [];
+0803         appdata.lastValidTag = <span class="string">'plotbpmrespSymFile'</span>;
+0804 
+0805         h210 = uimenu(<span class="keyword">...</span>
+0806             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0807             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmrespsym(''''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0808             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix Symmetry (From File) - plotbpmrespsym('''');'</span>,<span class="keyword">...</span>
+0809             <span class="string">'Tag'</span>,<span class="string">'plotbpmrespSymFile'</span>,<span class="keyword">...</span>
+0810             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0811             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0812 
+0813         appdata = [];
+0814         appdata.lastValidTag = <span class="string">'plotbpmrespError'</span>;
+0815 
+0816         h211 = uimenu(<span class="keyword">...</span>
+0817             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0818             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmresp(''Error''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0819             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix Error (Default) - plotbpmresp(''Error'')'</span>,<span class="keyword">...</span>
+0820             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0821             <span class="string">'Tag'</span>,<span class="string">'plotbpmrespError'</span>,<span class="keyword">...</span>
+0822             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0823             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0824 
+0825         appdata = [];
+0826         appdata.lastValidTag = <span class="string">'plotbpmrespErrorFile'</span>;
+0827 
+0828         h212 = uimenu(<span class="keyword">...</span>
+0829             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0830             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotbpmresp('''',''Error''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the BPM response matrix''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0831             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix Error (From File) - plotbpmresp('''',''Error'');'</span>,<span class="keyword">...</span>
+0832             <span class="string">'Tag'</span>,<span class="string">'plotbpmrespErrorFile'</span>,<span class="keyword">...</span>
+0833             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0834             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0835 
+0836         appdata = [];
+0837         appdata.lastValidTag = <span class="string">'DispersionHW'</span>;
+0838 
+0839         h213 = uimenu(<span class="keyword">...</span>
+0840             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0841             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotdisp(''Hardware''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0842             <span class="string">'Label'</span>,<span class="string">'Dispersion (Default, Hardware Units) - plotdisp(''Hardware'')'</span>,<span class="keyword">...</span>
+0843             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0844             <span class="string">'Tag'</span>,<span class="string">'DispersionHW'</span>,<span class="keyword">...</span>
+0845             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0846             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0847 
+0848         appdata = [];
+0849         appdata.lastValidTag = <span class="string">'DispersionPhysics'</span>;
+0850 
+0851         h214 = uimenu(<span class="keyword">...</span>
+0852             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0853             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotdisp(''Physics''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0854             <span class="string">'Label'</span>,<span class="string">'Dispersion (Default, Physics Units) - plotdisp(''Physics'')'</span>,<span class="keyword">...</span>
+0855             <span class="string">'Tag'</span>,<span class="string">'DispersionPhysics'</span>,<span class="keyword">...</span>
+0856             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0857             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0858 
+0859         appdata = [];
+0860         appdata.lastValidTag = <span class="string">'DispersionHWFile'</span>;
+0861 
+0862         h215 = uimenu(<span class="keyword">...</span>
+0863             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0864             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotdisp('''',''Hardware''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0865             <span class="string">'Label'</span>,<span class="string">'Dispersion (From File, Hardware Units) - plotdisp('''',''Hardware'')'</span>,<span class="keyword">...</span>
+0866             <span class="string">'Tag'</span>,<span class="string">'DispersionHWFile'</span>,<span class="keyword">...</span>
+0867             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0868             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0869 
+0870         appdata = [];
+0871         appdata.lastValidTag = <span class="string">'DispersionPhysicsFile'</span>;
+0872 
+0873         h216 = uimenu(<span class="keyword">...</span>
+0874             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0875             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotdisp('''',''Physics''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the dispersion''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0876             <span class="string">'Label'</span>,<span class="string">'Dispersion (From File, Physics Units) - plotdisp('''',''Physics'')'</span>,<span class="keyword">...</span>
+0877             <span class="string">'Tag'</span>,<span class="string">'DispersionPhysicsFile'</span>,<span class="keyword">...</span>
+0878             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0879             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0880 
+0881         appdata = [];
+0882         appdata.lastValidTag = <span class="string">'ChromaticityHWFile'</span>;
+0883 
+0884         h217 = uimenu(<span class="keyword">...</span>
+0885             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0886             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotchro(''Hardware''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0887             <span class="string">'Label'</span>,<span class="string">'Chromaticity (From File, Hardware Units) - plotchro(''Hardware'')'</span>,<span class="keyword">...</span>
+0888             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0889             <span class="string">'Tag'</span>,<span class="string">'ChromaticityHWFile'</span>,<span class="keyword">...</span>
+0890             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0891             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0892 
+0893         appdata = [];
+0894         appdata.lastValidTag = <span class="string">'ChromaticityPhysicsFile'</span>;
+0895 
+0896         h218 = uimenu(<span class="keyword">...</span>
+0897             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0898             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotchro(''Physics''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the chromaticity''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0899             <span class="string">'Label'</span>,<span class="string">'Chromaticity (From File, Physics Units) - plotchro(''Physics'')'</span>,<span class="keyword">...</span>
+0900             <span class="string">'Tag'</span>,<span class="string">'ChromaticityPhysicsFile'</span>,<span class="keyword">...</span>
+0901             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0902             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0903 
+0904         appdata = [];
+0905         appdata.lastValidTag = <span class="string">'QuadrupoleCenterPlot'</span>;
+0906 
+0907         h219 = uimenu(<span class="keyword">...</span>
+0908             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0909             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; quadplot; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting the quadrupole center data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0910             <span class="string">'Label'</span>,<span class="string">'Quadrupole Center'</span>,<span class="keyword">...</span>
+0911             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0912             <span class="string">'Tag'</span>,<span class="string">'QuadrupoleCenterPlot'</span>,<span class="keyword">...</span>
+0913             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0914             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0915 
+0916         appdata = [];
+0917         appdata.lastValidTag = <span class="string">'monmagplot'</span>;
+0918 
+0919         h220 = uimenu(<span class="keyword">...</span>
+0920             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0921             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; monmags(1); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting BPM magnet data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0922             <span class="string">'Label'</span>,<span class="string">'Magnet Noise - monmags(1)'</span>,<span class="keyword">...</span>
+0923             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0924             <span class="string">'Tag'</span>,<span class="string">'monmagplot'</span>,<span class="keyword">...</span>
+0925             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0926             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0927 
+0928         appdata = [];
+0929         appdata.lastValidTag = <span class="string">'plotorbitdata'</span>;
+0930 
+0931         h221 = uimenu(<span class="keyword">...</span>
+0932             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0933             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; plotorbitdata; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while plotting data''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0934             <span class="string">'Label'</span>,<span class="string">'General Plotting Program (Orbit, Dispersion, Response, etc) - plotorbitdata'</span>,<span class="keyword">...</span>
+0935             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0936             <span class="string">'Tag'</span>,<span class="string">'plotorbitdata'</span>,<span class="keyword">...</span>
+0937             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0938             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0939 
+0940         appdata = [];
+0941         appdata.lastValidTag = <span class="string">'BuildLOCOInput'</span>;
+0942 
+0943         h222 = uimenu(<span class="keyword">...</span>
+0944             <span class="string">'Parent'</span>,h198,<span class="keyword">...</span>
+0945             <span class="string">'Callback'</span>,<span class="string">'buildlocoinput'</span>,<span class="keyword">...</span>
+0946             <span class="string">'Label'</span>,<span class="string">'Build LOCO Input File - buildlocoinput'</span>,<span class="keyword">...</span>
+0947             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0948             <span class="string">'Tag'</span>,<span class="string">'BuildLOCOInput'</span>,<span class="keyword">...</span>
+0949             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0950             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0951 
+0952         appdata = [];
+0953         appdata.lastValidTag = <span class="string">'ModelFunctionMenu'</span>;
+0954 
+0955         h223 = uimenu(<span class="keyword">...</span>
+0956             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+0957             <span class="string">'Label'</span>,<span class="string">'Model Functions'</span>,<span class="keyword">...</span>
+0958             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0959             <span class="string">'Tag'</span>,<span class="string">'ModelFunctionMenu'</span>,<span class="keyword">...</span>
+0960             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0961             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0962 
+0963         appdata = [];
+0964         appdata.lastValidTag = <span class="string">''</span>;
+0965 
+0966         h224 = uimenu(<span class="keyword">...</span>
+0967             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+0968             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; modeltwiss(''Beta''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0969             <span class="string">'Label'</span>,<span class="string">'Plot the Model Beta Function - modeltwiss(''Beta'') or modelbeta'</span>,<span class="keyword">...</span>
+0970             <span class="string">'Tag'</span>,<span class="string">'ModelBetaFunction '</span>,<span class="keyword">...</span>
+0971             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0972             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0973 
+0974         appdata = [];
+0975         appdata.lastValidTag = <span class="string">'ModelPhaseAdvance'</span>;
+0976 
+0977         h225 = uimenu(<span class="keyword">...</span>
+0978             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+0979             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; modeltwiss(''Phase''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0980             <span class="string">'Label'</span>,<span class="string">'Plot the Model Phase Advance - modeltwiss(''Phase'')'</span>,<span class="keyword">...</span>
+0981             <span class="string">'Tag'</span>,<span class="string">'ModelPhaseAdvance'</span>,<span class="keyword">...</span>
+0982             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0983             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0984 
+0985         appdata = [];
+0986         appdata.lastValidTag = <span class="string">'ModelDispersion'</span>;
+0987 
+0988         h226 = uimenu(<span class="keyword">...</span>
+0989             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+0990             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; modeltwiss(''Eta''); catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+0991             <span class="string">'Label'</span>,<span class="string">'Plot the Model Dispersion - modeltwiss(''Eta'')'</span>,<span class="keyword">...</span>
+0992             <span class="string">'Tag'</span>,<span class="string">'ModelDispersion'</span>,<span class="keyword">...</span>
+0993             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+0994             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+0995 
+0996         appdata = [];
+0997         appdata.lastValidTag = <span class="string">'UpdateOnlineAccelerator'</span>;
+0998 
+0999         h227 = uimenu(<span class="keyword">...</span>
+1000             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+1001             <span class="string">'Callback'</span>,<span class="string">'plotfamily_export(''Sim2Machine_Callback'',gcbo,[],guidata(gcbo));'</span>,<span class="keyword">...</span>
+1002             <span class="string">'Label'</span>,<span class="string">'Update the Online Accelerator with the Model - sim2machine'</span>,<span class="keyword">...</span>
+1003             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1004             <span class="string">'Tag'</span>,<span class="string">'UpdateOnlineAccelerator'</span>,<span class="keyword">...</span>
+1005             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1006             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1007 
+1008         appdata = [];
+1009         appdata.lastValidTag = <span class="string">'UpdatetheModel'</span>;
+1010 
+1011         h228 = uimenu(<span class="keyword">...</span>
+1012             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+1013             <span class="string">'Callback'</span>,<span class="string">'plotfamily_export(''Machine2Sim_Callback'',gcbo,[],guidata(gcbo));'</span>,<span class="keyword">...</span>
+1014             <span class="string">'Label'</span>,<span class="string">'Update the Model/Simulator - machine2sim'</span>,<span class="keyword">...</span>
+1015             <span class="string">'Tag'</span>,<span class="string">'UpdatetheModel'</span>,<span class="keyword">...</span>
+1016             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1017             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1018 
+1019         appdata = [];
+1020         appdata.lastValidTag = <span class="string">'UpdatetheModelWithGoldenLattice'</span>;
+1021 
+1022         h229 = uimenu(<span class="keyword">...</span>
+1023             <span class="string">'Parent'</span>,h223,<span class="keyword">...</span>
+1024             <span class="string">'Callback'</span>,<span class="string">'golden2sim;'</span>,<span class="keyword">...</span>
+1025             <span class="string">'Label'</span>,<span class="string">'Update the Model/Simulator with the Golden Lattice - golden2sim'</span>,<span class="keyword">...</span>
+1026             <span class="string">'Tag'</span>,<span class="string">'UpdatetheModelWithGoldenLattice'</span>,<span class="keyword">...</span>
+1027             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1028             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1029 
+1030         appdata = [];
+1031         appdata.lastValidTag = <span class="string">'ExporttoWorkspace'</span>;
+1032 
+1033         h230 = uimenu(<span class="keyword">...</span>
+1034             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+1035             <span class="string">'Label'</span>,<span class="string">'Export to Workspace'</span>,<span class="keyword">...</span>
+1036             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1037             <span class="string">'Tag'</span>,<span class="string">'ExporttoWorkspace'</span>,<span class="keyword">...</span>
+1038             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1039             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1040 
+1041         appdata = [];
+1042         appdata.lastValidTag = <span class="string">'MachineConfigurationStructure'</span>;
+1043 
+1044         h231 = uimenu(<span class="keyword">...</span>
+1045             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1046             <span class="string">'Callback'</span>,<span class="string">'[SP, AM] = getmachineconfig; SP'</span>,<span class="keyword">...</span>
+1047             <span class="string">'Label'</span>,<span class="string">'Machine Configuration Structure:  [SP, AM] = getmachineconfig'</span>,<span class="keyword">...</span>
+1048             <span class="string">'Tag'</span>,<span class="string">'MachineConfigurationStructure'</span>,<span class="keyword">...</span>
+1049             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1050             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1051 
+1052         appdata = [];
+1053         appdata.lastValidTag = <span class="string">'OrbitExportMenu'</span>;
+1054 
+1055         h232 = uimenu(<span class="keyword">...</span>
+1056             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1057             <span class="string">'Label'</span>,<span class="string">'Orbit'</span>,<span class="keyword">...</span>
+1058             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1059             <span class="string">'Tag'</span>,<span class="string">'OrbitExportMenu'</span>,<span class="keyword">...</span>
+1060             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1061             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1062 
+1063         appdata = [];
+1064         appdata.lastValidTag = <span class="string">'getx'</span>;
+1065 
+1066         h233 = uimenu(<span class="keyword">...</span>
+1067             <span class="string">'Parent'</span>,h232,<span class="keyword">...</span>
+1068             <span class="string">'Callback'</span>,<span class="string">'x = getx;'</span>,<span class="keyword">...</span>
+1069             <span class="string">'Label'</span>,<span class="string">'x = getx;'</span>,<span class="keyword">...</span>
+1070             <span class="string">'Tag'</span>,<span class="string">'getx'</span>,<span class="keyword">...</span>
+1071             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1072             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1073 
+1074         appdata = [];
+1075         appdata.lastValidTag = <span class="string">'gety'</span>;
+1076 
+1077         h234 = uimenu(<span class="keyword">...</span>
+1078             <span class="string">'Parent'</span>,h232,<span class="keyword">...</span>
+1079             <span class="string">'Callback'</span>,<span class="string">'y = gety;'</span>,<span class="keyword">...</span>
+1080             <span class="string">'Label'</span>,<span class="string">'y = gety;'</span>,<span class="keyword">...</span>
+1081             <span class="string">'Tag'</span>,<span class="string">'gety'</span>,<span class="keyword">...</span>
+1082             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1083             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1084 
+1085         appdata = [];
+1086         appdata.lastValidTag = <span class="string">'CorrectorExportMenu'</span>;
+1087 
+1088         h235 = uimenu(<span class="keyword">...</span>
+1089             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1090             <span class="string">'Label'</span>,<span class="string">'Correctors'</span>,<span class="keyword">...</span>
+1091             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1092             <span class="string">'Tag'</span>,<span class="string">'CorrectorExportMenu'</span>,<span class="keyword">...</span>
+1093             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1094             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1095 
+1096         appdata = [];
+1097         appdata.lastValidTag = <span class="string">'HCMam'</span>;
+1098 
+1099         h236 = uimenu(<span class="keyword">...</span>
+1100             <span class="string">'Parent'</span>,h235,<span class="keyword">...</span>
+1101             <span class="string">'Callback'</span>,<span class="string">'HCMam = getam(''HCM'');'</span>,<span class="keyword">...</span>
+1102             <span class="string">'Label'</span>,<span class="string">'HCMam = getam(''HCM'');'</span>,<span class="keyword">...</span>
+1103             <span class="string">'Tag'</span>,<span class="string">'HCMam'</span>,<span class="keyword">...</span>
+1104             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1105             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1106 
+1107         appdata = [];
+1108         appdata.lastValidTag = <span class="string">'HCMsp'</span>;
+1109 
+1110         h237 = uimenu(<span class="keyword">...</span>
+1111             <span class="string">'Parent'</span>,h235,<span class="keyword">...</span>
+1112             <span class="string">'Callback'</span>,<span class="string">'HCMsp = getsp(''HCM'');'</span>,<span class="keyword">...</span>
+1113             <span class="string">'Label'</span>,<span class="string">'HCMsp = getsp(''HCM'');'</span>,<span class="keyword">...</span>
+1114             <span class="string">'Tag'</span>,<span class="string">'HCMsp'</span>,<span class="keyword">...</span>
+1115             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1116             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1117 
+1118         appdata = [];
+1119         appdata.lastValidTag = <span class="string">'VCMam'</span>;
+1120 
+1121         h238 = uimenu(<span class="keyword">...</span>
+1122             <span class="string">'Parent'</span>,h235,<span class="keyword">...</span>
+1123             <span class="string">'Callback'</span>,<span class="string">'VCMam = getam(''VCM'');'</span>,<span class="keyword">...</span>
+1124             <span class="string">'Label'</span>,<span class="string">'VCMam = getam(''VCM'');'</span>,<span class="keyword">...</span>
+1125             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1126             <span class="string">'Tag'</span>,<span class="string">'VCMam'</span>,<span class="keyword">...</span>
+1127             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1128             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1129 
+1130         appdata = [];
+1131         appdata.lastValidTag = <span class="string">'VCMsp'</span>;
+1132 
+1133         h239 = uimenu(<span class="keyword">...</span>
+1134             <span class="string">'Parent'</span>,h235,<span class="keyword">...</span>
+1135             <span class="string">'Callback'</span>,<span class="string">'VCMsp = getsp(''VCM'');'</span>,<span class="keyword">...</span>
+1136             <span class="string">'Label'</span>,<span class="string">'VCMsp = getsp(''VCM'');'</span>,<span class="keyword">...</span>
+1137             <span class="string">'Tag'</span>,<span class="string">'VCMsp'</span>,<span class="keyword">...</span>
+1138             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1139             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1140 
+1141         appdata = [];
+1142         appdata.lastValidTag = <span class="string">'TuneExportMenu'</span>;
+1143 
+1144         h240 = uimenu(<span class="keyword">...</span>
+1145             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1146             <span class="string">'Label'</span>,<span class="string">'Tune'</span>,<span class="keyword">...</span>
+1147             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1148             <span class="string">'Tag'</span>,<span class="string">'TuneExportMenu'</span>,<span class="keyword">...</span>
+1149             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1150             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1151 
+1152         appdata = [];
+1153         appdata.lastValidTag = <span class="string">'TuneGolden'</span>;
+1154 
+1155         h241 = uimenu(<span class="keyword">...</span>
+1156             <span class="string">'Parent'</span>,h240,<span class="keyword">...</span>
+1157             <span class="string">'Callback'</span>,<span class="string">'TuneGolden = getgolden(''TUNE'',[1 1;1 2])'</span>,<span class="keyword">...</span>
+1158             <span class="string">'Label'</span>,<span class="string">'Tunes (Golden):  TuneGolden = getgolden(''TUNE'',[1 1;1 2])'</span>,<span class="keyword">...</span>
+1159             <span class="string">'Tag'</span>,<span class="string">'TuneGolden'</span>,<span class="keyword">...</span>
+1160             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1161             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1162 
+1163         appdata = [];
+1164         appdata.lastValidTag = <span class="string">'TuneModel'</span>;
+1165 
+1166         h242 = uimenu(<span class="keyword">...</span>
+1167             <span class="string">'Parent'</span>,h240,<span class="keyword">...</span>
+1168             <span class="string">'Callback'</span>,<span class="string">'TuneModel = gettune(''Model'')'</span>,<span class="keyword">...</span>
+1169             <span class="string">'Label'</span>,<span class="string">'Tunes (Model):  TuneModel = gettune(''Model'')'</span>,<span class="keyword">...</span>
+1170             <span class="string">'Tag'</span>,<span class="string">'TuneModel'</span>,<span class="keyword">...</span>
+1171             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1172             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1173 
+1174         appdata = [];
+1175         appdata.lastValidTag = <span class="string">'ChroExportMenu'</span>;
+1176 
+1177         h243 = uimenu(<span class="keyword">...</span>
+1178             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1179             <span class="string">'Label'</span>,<span class="string">'Chromaticity'</span>,<span class="keyword">...</span>
+1180             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1181             <span class="string">'Tag'</span>,<span class="string">'ChroExportMenu'</span>,<span class="keyword">...</span>
+1182             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1183             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1184 
+1185         appdata = [];
+1186         appdata.lastValidTag = <span class="string">'ChromaticityGoldenHW'</span>;
+1187 
+1188         h244 = uimenu(<span class="keyword">...</span>
+1189             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1190             <span class="string">'Callback'</span>,<span class="string">'ChroGoldenHardware = -getgolden(''Chromaticity'') / getrf / getmcf'</span>,<span class="keyword">...</span>
+1191             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Golden, Hardware Units):  ChroGoldenHardware = -getgolden(''Chromaticity'') / getrf / getmcf'</span>,<span class="keyword">...</span>
+1192             <span class="string">'Tag'</span>,<span class="string">'ChromaticityGoldenHW'</span>,<span class="keyword">...</span>
+1193             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1194             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1195 
+1196         appdata = [];
+1197         appdata.lastValidTag = <span class="string">'ChromaticityGolden'</span>;
+1198 
+1199         h245 = uimenu(<span class="keyword">...</span>
+1200             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1201             <span class="string">'Callback'</span>,<span class="string">'ChroGoldenPhysics = getgolden(''Chromaticity'')'</span>,<span class="keyword">...</span>
+1202             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Golden, Physics Units):  ChroGoldenPhysics = getgolden(''Chromaticity'')'</span>,<span class="keyword">...</span>
+1203             <span class="string">'Tag'</span>,<span class="string">'ChromaticityGolden'</span>,<span class="keyword">...</span>
+1204             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1205             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1206 
+1207         appdata = [];
+1208         appdata.lastValidTag = <span class="string">'ChromaticityModelHW'</span>;
+1209 
+1210         h246 = uimenu(<span class="keyword">...</span>
+1211             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1212             <span class="string">'Callback'</span>,<span class="string">'ChroModelHardware = measchro(''Model'',''Hardware'')'</span>,<span class="keyword">...</span>
+1213             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Model, Hardware Units):  ChroModelHardware = measchro(''Model'',''Hardware'')'</span>,<span class="keyword">...</span>
+1214             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1215             <span class="string">'Tag'</span>,<span class="string">'ChromaticityModelHW'</span>,<span class="keyword">...</span>
+1216             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1217             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1218 
+1219         appdata = [];
+1220         appdata.lastValidTag = <span class="string">'ChromaticityModel'</span>;
+1221 
+1222         h247 = uimenu(<span class="keyword">...</span>
+1223             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1224             <span class="string">'Callback'</span>,<span class="string">'ChroModelPhysics = measchro(''Model'',''Physics'')'</span>,<span class="keyword">...</span>
+1225             <span class="string">'Label'</span>,<span class="string">'Chromaticity (Model, Physics Units):  ChroModelPhysics = measchro(''Model'',''Physics'')'</span>,<span class="keyword">...</span>
+1226             <span class="string">'Tag'</span>,<span class="string">'ChromaticityModel'</span>,<span class="keyword">...</span>
+1227             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1228             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1229 
+1230         appdata = [];
+1231         appdata.lastValidTag = <span class="string">'ChromaticityFile'</span>;
+1232 
+1233         h248 = uimenu(<span class="keyword">...</span>
+1234             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1235             <span class="string">'Callback'</span>,<span class="string">'C = getchro'</span>,<span class="keyword">...</span>
+1236             <span class="string">'Label'</span>,<span class="string">'Get Chromaticity from a File (Vector):  C = getchro'</span>,<span class="keyword">...</span>
+1237             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1238             <span class="string">'Tag'</span>,<span class="string">'ChromaticityFile'</span>,<span class="keyword">...</span>
+1239             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1240             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1241 
+1242         appdata = [];
+1243         appdata.lastValidTag = <span class="string">'ChromaticityFileStructure'</span>;
+1244 
+1245         h249 = uimenu(<span class="keyword">...</span>
+1246             <span class="string">'Parent'</span>,h243,<span class="keyword">...</span>
+1247             <span class="string">'Callback'</span>,<span class="string">'C = getchro(''Struct'')'</span>,<span class="keyword">...</span>
+1248             <span class="string">'Label'</span>,<span class="string">'Get Chromaticity from a File (Stucture):  C = getchro(''Struct'') or getdata(''Chromaticity'',''Struct'')'</span>,<span class="keyword">...</span>
+1249             <span class="string">'Tag'</span>,<span class="string">'ChromaticityFileStructure'</span>,<span class="keyword">...</span>
+1250             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1251             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1252 
+1253         appdata = [];
+1254         appdata.lastValidTag = <span class="string">'ResponseMatrixExportMenu'</span>;
+1255 
+1256         h250 = uimenu(<span class="keyword">...</span>
+1257             <span class="string">'Parent'</span>,h230,<span class="keyword">...</span>
+1258             <span class="string">'Label'</span>,<span class="string">'Resonse Matrices'</span>,<span class="keyword">...</span>
+1259             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1260             <span class="string">'Tag'</span>,<span class="string">'ResponseMatrixExportMenu'</span>,<span class="keyword">...</span>
+1261             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1262             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1263 
+1264         appdata = [];
+1265         appdata.lastValidTag = <span class="string">'BPMResponseMatrixExport'</span>;
+1266 
+1267         h251 = uimenu(<span class="keyword">...</span>
+1268             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1269             <span class="string">'Callback'</span>,<span class="string">'BPMRespMatDefault = getbpmresp;'</span>,<span class="keyword">...</span>
+1270             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix (Default):  BPMRespMatDefault = getbpmresp;'</span>,<span class="keyword">...</span>
+1271             <span class="string">'Tag'</span>,<span class="string">'BPMResponseMatrixExport'</span>,<span class="keyword">...</span>
+1272             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1273             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1274 
+1275         appdata = [];
+1276         appdata.lastValidTag = <span class="string">'BPMResponseMatrixExportFile'</span>;
+1277 
+1278         h252 = uimenu(<span class="keyword">...</span>
+1279             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1280             <span class="string">'Callback'</span>,<span class="string">'BPMRespMat =getbpmresp('''');'</span>,<span class="keyword">...</span>
+1281             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix (From File):  BPMRespMat = getbpmresp('''');'</span>,<span class="keyword">...</span>
+1282             <span class="string">'Tag'</span>,<span class="string">'BPMResponseMatrixExportFile'</span>,<span class="keyword">...</span>
+1283             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1284             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1285 
+1286         appdata = [];
+1287         appdata.lastValidTag = <span class="string">'BPMResponseMatrixModelExport'</span>;
+1288 
+1289         h253 = uimenu(<span class="keyword">...</span>
+1290             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1291             <span class="string">'Callback'</span>,<span class="string">'BPMRespMatModel = measbpmresp(''Model'');'</span>,<span class="keyword">...</span>
+1292             <span class="string">'Label'</span>,<span class="string">'BPM Response Matrix (Model):  BPMRespMatModel = measbpmresp(''Model'');'</span>,<span class="keyword">...</span>
+1293             <span class="string">'Tag'</span>,<span class="string">'BPMResponseMatrixModelExport'</span>,<span class="keyword">...</span>
+1294             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1295             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1296 
+1297         appdata = [];
+1298         appdata.lastValidTag = <span class="string">'TuneResponseMatrixExport'</span>;
+1299 
+1300         h254 = uimenu(<span class="keyword">...</span>
+1301             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1302             <span class="string">'Callback'</span>,<span class="string">'TuneRespMatDefault = gettuneresp'</span>,<span class="keyword">...</span>
+1303             <span class="string">'Label'</span>,<span class="string">'Tune Response Matrix (Default):  TuneRespMatDefault = gettuneresp'</span>,<span class="keyword">...</span>
+1304             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1305             <span class="string">'Tag'</span>,<span class="string">'TuneResponseMatrixExport'</span>,<span class="keyword">...</span>
+1306             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1307             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1308 
+1309         appdata = [];
+1310         appdata.lastValidTag = <span class="string">'TuneResponseMatrixExportFile'</span>;
+1311 
+1312         h255 = uimenu(<span class="keyword">...</span>
+1313             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1314             <span class="string">'Callback'</span>,<span class="string">'TuneRespMat = gettuneresp('''')'</span>,<span class="keyword">...</span>
+1315             <span class="string">'Label'</span>,<span class="string">'Tune Response Matrix (From File):  TuneRespMat = gettuneresp('''')'</span>,<span class="keyword">...</span>
+1316             <span class="string">'Tag'</span>,<span class="string">'TuneResponseMatrixExportFile'</span>,<span class="keyword">...</span>
+1317             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1318             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1319 
+1320         appdata = [];
+1321         appdata.lastValidTag = <span class="string">'TuneResponseMatrixTuneExport'</span>;
+1322 
+1323         h256 = uimenu(<span class="keyword">...</span>
+1324             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1325             <span class="string">'Callback'</span>,<span class="string">'TuneRespMatModel = meastuneresp(''Model'',''Matrix'')'</span>,<span class="keyword">...</span>
+1326             <span class="string">'Label'</span>,<span class="string">'Tune Response Matrix (Model):  TuneRespMatModel = meastuneresp(''Model'',''Matrix'')'</span>,<span class="keyword">...</span>
+1327             <span class="string">'Tag'</span>,<span class="string">'TuneResponseMatrixTuneExport'</span>,<span class="keyword">...</span>
+1328             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1329             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1330 
+1331         appdata = [];
+1332         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixHWExport'</span>;
+1333 
+1334         h257 = uimenu(<span class="keyword">...</span>
+1335             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1336             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatDefaultHardware = getchroresp(''Hardware'')'</span>,<span class="keyword">...</span>
+1337             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (Default, Hardware Units):  ChroRespMatDefaultHardware = getchroresp(''Hardware'')'</span>,<span class="keyword">...</span>
+1338             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1339             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixHWExport'</span>,<span class="keyword">...</span>
+1340             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1341             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1342 
+1343         appdata = [];
+1344         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixExport'</span>;
+1345 
+1346         h258 = uimenu(<span class="keyword">...</span>
+1347             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1348             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatDefaultPhysics = getchroresp(''Physics'')'</span>,<span class="keyword">...</span>
+1349             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (Default, Physics Units):  ChroRespMatDefaultPhysics = getchroresp(''Physics'')'</span>,<span class="keyword">...</span>
+1350             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixExport'</span>,<span class="keyword">...</span>
+1351             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1352             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1353 
+1354         appdata = [];
+1355         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixHWExportFile'</span>;
+1356 
+1357         h259 = uimenu(<span class="keyword">...</span>
+1358             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1359             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatHardware = getchroresp('''',''Hardware'')'</span>,<span class="keyword">...</span>
+1360             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (From File, Hardware Units):  ChroRespMatHardware = getchroresp('''',''Hardware'')'</span>,<span class="keyword">...</span>
+1361             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1362             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixHWExportFile'</span>,<span class="keyword">...</span>
+1363             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1364             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1365 
+1366         appdata = [];
+1367         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixExportFile'</span>;
+1368 
+1369         h260 = uimenu(<span class="keyword">...</span>
+1370             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1371             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatPhysics = getchroresp('''',''Physics'')'</span>,<span class="keyword">...</span>
+1372             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (From File, Physics Units):  ChroRespMatPhysics = getchroresp('''',''Physics'')'</span>,<span class="keyword">...</span>
+1373             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixExportFile'</span>,<span class="keyword">...</span>
+1374             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1375             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1376 
+1377         appdata = [];
+1378         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixModelHWExport'</span>;
+1379 
+1380         h261 = uimenu(<span class="keyword">...</span>
+1381             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1382             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatModelHardware = measchroresp(''Model'',''Hardware'',''Matrix'')'</span>,<span class="keyword">...</span>
+1383             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (Model, Hardware Units):  ChroRespMatModelHardware = measchroresp(''Model'',''Hardware'',''Matrix'')'</span>,<span class="keyword">...</span>
+1384             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1385             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixModelHWExport'</span>,<span class="keyword">...</span>
+1386             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1387             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1388 
+1389         appdata = [];
+1390         appdata.lastValidTag = <span class="string">'ChromaticityResponseMatrixModelExport'</span>;
+1391 
+1392         h262 = uimenu(<span class="keyword">...</span>
+1393             <span class="string">'Parent'</span>,h250,<span class="keyword">...</span>
+1394             <span class="string">'Callback'</span>,<span class="string">'ChroRespMatModelPhysics = measchroresp(''Model'',''Physics'',''Matrix'')'</span>,<span class="keyword">...</span>
+1395             <span class="string">'Label'</span>,<span class="string">'Chromaticity Response Matrix (Model, Physics Units):  ChroRespMatModelHardware = measchroresp(''Model'',''Physics'',''Matrix'')'</span>,<span class="keyword">...</span>
+1396             <span class="string">'Tag'</span>,<span class="string">'ChromaticityResponseMatrixModelExport'</span>,<span class="keyword">...</span>
+1397             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1398             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1399 
+1400         appdata = [];
+1401         appdata.lastValidTag = <span class="string">'NewOperationalFiles'</span>;
+1402 
+1403         h263 = uimenu(<span class="keyword">...</span>
+1404             <span class="string">'Parent'</span>,h146,<span class="keyword">...</span>
+1405             <span class="string">'Label'</span>,<span class="string">'New Operational Files'</span>,<span class="keyword">...</span>
+1406             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1407             <span class="string">'Tag'</span>,<span class="string">'NewOperationalFiles'</span>,<span class="keyword">...</span>
+1408             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1409             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1410 
+1411         appdata = [];
+1412         appdata.lastValidTag = <span class="string">'InfoTag'</span>;
+1413 
+1414         h264 = uimenu(<span class="keyword">...</span>
+1415             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1416             <span class="string">'Label'</span>,<span class="string">'THERE ARE 7 DATA FILES NEEDED IN THE MIDDLE LAYER'</span>,<span class="keyword">...</span>
+1417             <span class="string">'Tag'</span>,<span class="string">'InfoTag'</span>,<span class="keyword">...</span>
+1418             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1419             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1420 
+1421         appdata = [];
+1422         appdata.lastValidTag = <span class="string">'NewLatticeConfigurationFile'</span>;
+1423 
+1424         h265 = uimenu(<span class="keyword">...</span>
+1425             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1426             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copymachineconfigfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1427             <span class="string">'Label'</span>,<span class="string">'1. Copy New Lattice Configuration File to the Golden File - copymachineconfigfile'</span>,<span class="keyword">...</span>
+1428             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1429             <span class="string">'Tag'</span>,<span class="string">'NewLatticeConfigurationFile'</span>,<span class="keyword">...</span>
+1430             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1431             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1432 
+1433         appdata = [];
+1434         appdata.lastValidTag = <span class="string">'NewInjectionConfigurationFile'</span>;
+1435 
+1436         h266 = uimenu(<span class="keyword">...</span>
+1437             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1438             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copyinjectionconfigfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1439             <span class="string">'Label'</span>,<span class="string">'2. Copy New Injection Configuration File to the Golden File - copyinjectionconfigfile'</span>,<span class="keyword">...</span>
+1440             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1441             <span class="string">'Tag'</span>,<span class="string">'NewInjectionConfigurationFile'</span>,<span class="keyword">...</span>
+1442             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1443             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1444 
+1445         appdata = [];
+1446         appdata.lastValidTag = <span class="string">''</span>;
+1447 
+1448         h267 = uimenu(<span class="keyword">...</span>
+1449             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1450             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copybpmsigmafile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1451             <span class="string">'Label'</span>,<span class="string">'3. Copy New BPM Sigma File to the Golden File - copybpmsigmafile'</span>,<span class="keyword">...</span>
+1452             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1453             <span class="string">'Tag'</span>,<span class="string">'NewBPMSigmaFile '</span>,<span class="keyword">...</span>
+1454             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1455             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1456 
+1457         appdata = [];
+1458         appdata.lastValidTag = <span class="string">'NewBPMResponseFile'</span>;
+1459 
+1460         h268 = uimenu(<span class="keyword">...</span>
+1461             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1462             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copybpmrespfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1463             <span class="string">'Label'</span>,<span class="string">'4. Copy New BPM Response File to the Golden File - copybpmrespfile'</span>,<span class="keyword">...</span>
+1464             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1465             <span class="string">'Tag'</span>,<span class="string">'NewBPMResponseFile'</span>,<span class="keyword">...</span>
+1466             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1467             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1468 
+1469         appdata = [];
+1470         appdata.lastValidTag = <span class="string">'NewTuneResponseFile'</span>;
+1471 
+1472         h269 = uimenu(<span class="keyword">...</span>
+1473             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1474             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copytunerespfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1475             <span class="string">'Label'</span>,<span class="string">'5. Copy New Tune Response File to the Golden File - copytunerespfile'</span>,<span class="keyword">...</span>
+1476             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1477             <span class="string">'Tag'</span>,<span class="string">'NewTuneResponseFile'</span>,<span class="keyword">...</span>
+1478             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1479             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1480 
+1481         appdata = [];
+1482         appdata.lastValidTag = <span class="string">'NewChromaticityResponseFile'</span>;
+1483 
+1484         h270 = uimenu(<span class="keyword">...</span>
+1485             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1486             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copychrorespfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1487             <span class="string">'Label'</span>,<span class="string">'6. Copy New Chromaticity Response File to the Golden File - copychrorespfile'</span>,<span class="keyword">...</span>
+1488             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1489             <span class="string">'Tag'</span>,<span class="string">'NewChromaticityResponseFile'</span>,<span class="keyword">...</span>
+1490             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1491             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1492 
+1493         appdata = [];
+1494         appdata.lastValidTag = <span class="string">'NewDispResponseFile'</span>;
+1495 
+1496         h271 = uimenu(<span class="keyword">...</span>
+1497             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1498             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copydisprespfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1499             <span class="string">'Label'</span>,<span class="string">'7. Copy New Dispersion Response File to the Golden File - copydisprespfile'</span>,<span class="keyword">...</span>
+1500             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1501             <span class="string">'Tag'</span>,<span class="string">'NewDispResponseFile'</span>,<span class="keyword">...</span>
+1502             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1503             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1504 
+1505         appdata = [];
+1506         appdata.lastValidTag = <span class="string">'NewDispFile'</span>;
+1507 
+1508         h272 = uimenu(<span class="keyword">...</span>
+1509             <span class="string">'Parent'</span>,h263,<span class="keyword">...</span>
+1510             <span class="string">'Callback'</span>,<span class="string">'set(gcbf,''HandleVisibility'',''off''); try; copydispersionfile; catch; fprintf(''%s\n'',lasterr); set(gcbf,''HandleVisibility'',''Callback''); disp(''   An error occurred while coping file''); end; set(gcbf,''HandleVisibility'',''Callback'');'</span>,<span class="keyword">...</span>
+1511             <span class="string">'Label'</span>,<span class="string">'8. Copy New Dispersion File to the Golden File - copydispersionfile'</span>,<span class="keyword">...</span>
+1512             <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1513             <span class="string">'Tag'</span>,<span class="string">'NewDispFile'</span>,<span class="keyword">...</span>
+1514             <span class="string">'Behavior'</span>,get(0,<span class="string">'defaultuimenuBehavior'</span>),<span class="keyword">...</span>
+1515             <span class="string">'CreateFcn'</span>, {@local_CreateFcn, <span class="string">''</span>, appdata} );
+1516     <span class="keyword">case</span> <span class="string">'action'</span>
+1517         
+1518         Data = get(h, <span class="string">'UserData'</span>);
+1519 
+1520         TagName = get(h,<span class="string">'Tag'</span>);
+1521         <span class="keyword">switch</span> TagName
+1522             <span class="keyword">case</span> <span class="string">'InitializetheMiddleLayer'</span>
+1523                 set(gcbf,<span class="string">'HandleVisibility'</span>,<span class="string">'off'</span>); 
+1524                 <span class="keyword">try</span>; 
+1525                     aoinit; 
+1526                 <span class="keyword">catch</span>; 
+1527                     fprintf(<span class="string">'%s\n'</span>,lasterr); 
+1528                     set(gcbf,<span class="string">'HandleVisibility'</span>,<span class="string">'Callback'</span>); 
+1529                     disp(<span class="string">'   An error occurred initializing the middle layer'</span>); 
+1530                 <span class="keyword">end</span>; 
+1531                 set(gcbf,<span class="string">'HandleVisibility'</span>,<span class="string">'Callback'</span>);
+1532             <span class="keyword">otherwise</span>
+1533         <span class="keyword">end</span>
+1534 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

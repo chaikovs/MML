@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of physics_quantumlifetime</title>
+  <meta name="keywords" content="physics_quantumlifetime">
+  <meta name="description" content="physics_quantum_lifetime - computes quantum lifetime">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; physics_quantumlifetime.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>physics_quantumlifetime
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>physics_quantum_lifetime - computes quantum lifetime</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function tau_q = physics_quantumlifetime(epsilon_RF,sigma_epsilon,tau_epsilon) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> physics_quantum_lifetime - computes quantum lifetime
+
+  INPUTS
+  1. epsilon_RF - RF acceptance
+  2. sigma_epsilon - Energy spread
+  3. tau_epsilon - Longitudinal damping time
+
+  OUPUTS
+  1. tau_q - Quantum lifetime in s
+
+  See Also ...</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="physics_booster.html" class="code" title="function physics_booster">physics_booster</a>	</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function tau_q = physics_quantumlifetime(epsilon_RF,sigma_epsilon,tau_epsilon)</a>
+0002 <span class="comment">% physics_quantum_lifetime - computes quantum lifetime</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. epsilon_RF - RF acceptance</span>
+0006 <span class="comment">%  2. sigma_epsilon - Energy spread</span>
+0007 <span class="comment">%  3. tau_epsilon - Longitudinal damping time</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  OUPUTS</span>
+0010 <span class="comment">%  1. tau_q - Quantum lifetime in s</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%  See Also ...</span>
+0013 
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Written by Laurent S. Nadolski</span>
+0016 
+0017 xi = power(epsilon_RF,2)/2./power(sigma_epsilon,2);
+0018 
+0019 tau_q = tau_epsilon/2./xi.*exp(xi);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

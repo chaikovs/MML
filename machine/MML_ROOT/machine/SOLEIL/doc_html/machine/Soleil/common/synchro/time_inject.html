@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of time_inject</title>
+  <meta name="keywords" content="time_inject">
+  <meta name="description" content="calcul du temp d'injection">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; time_inject.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>time_inject
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>calcul du temp d'injection</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> calcul du temp d'injection</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 
+0002 <span class="comment">% calcul du temp d'injection</span>
+0003 
+0004 
+0005 Id_inj=21.3;
+0006 
+0007 Idc=0.;
+0008 Id0=546.76;
+0009 w=2*3.14159*(50./17.);
+0010 
+0011 t_inj=real(acos( 1-2*(Id_inj-Idc)/Id0 ) / w);
+0012 
+0013 
+0014 sprintf(<span class="string">' Dt  / déclanchement alim dipole injection : %g  ms avant canon/kicker'</span>, t_inj)
+0015 sprintf(<span class="string">' Delai carte CPT alim dipole injection     : %g '</span>, (0.33 + 7.83e-05 - t_inj))
+0016  
+0017 
+0018 
+0019 Gr = 0.0435 ;           <span class="comment">% gradient remanent  T/m</span>
+0020 a  = 0.0517 ;           <span class="comment">% G/I   T/m/A</span>
+0021 Br = 0.0006 ;           <span class="comment">% Champ remanent T</span>
+0022 b  = 0.00135416 ;       <span class="comment">% B/I  T/A</span>
+0023 
+0024 
+0025 Iqf0 = 198.38 ;
+0026 Iqd0 = 157.28 ;
+0027 Iqfc = 7.16 ;             <span class="comment">% Offset QPF</span>
+0028 Iqdc = 5.55 ; 
+0029 
+0030 Iqpf_inj=Iqfc + 0.5*Iqf0*(1-cos(w*t_inj));
+0031 Iqpd_inj=Iqdc + 0.5*Iqd0*(1-cos(w*t_inj));
+0032 sprintf(<span class="string">' injection  Iqf= %g   et Iqd= %g  A'</span>,Iqpf_inj , Iqpd_inj)
+0033 
+0034 
+0035 
+0036 B_inj  = Br + b*(Idc + 0.5*Id0*(1-cos(w*t_inj))); 
+0037 sprintf(<span class="string">' B dipole injection : %g   T'</span>, B_inj)
+0038 t=t_inj+1e-06 ;
+0039 B      = Br + b*(Idc + 0.5*Id0*(1-cos(w*t)));
+0040 sprintf(<span class="string">' Variation relative avec dt= 1*µs  : %g '</span>, (B_inj-B)/B_inj )</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

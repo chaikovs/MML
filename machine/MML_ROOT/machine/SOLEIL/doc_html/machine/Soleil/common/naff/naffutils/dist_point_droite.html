@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of dist_point_droite</title>
+  <meta name="keywords" content="dist_point_droite">
+  <meta name="description" content="% calcul la distance entre la droite et un point pt">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; dist_point_droite.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>dist_point_droite
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>% calcul la distance entre la droite et un point pt</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function d = dist_point_droite(m1,m2,m3,pt) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% calcul la distance entre la droite et un point pt
+% droite m1 *x + m2 *y =m3
+ pt =[0 2]
+ dist_point_droite(1,2,4,pt)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="plusprochereson.html" class="code" title="function str = plusprochereson(pt,tab)">plusprochereson</a>	function str = plusprochereson(pt,tab)</li><li><a href="reson.html" class="code" title="function [k, tab]=reson(ordre,period,fen)">reson</a>	function reson(ordre, period, fen)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function d = dist_point_droite(m1,m2,m3,pt)</a>
+0002 <span class="comment">%% calcul la distance entre la droite et un point pt</span>
+0003 <span class="comment">%% droite m1 *x + m2 *y =m3</span>
+0004 <span class="comment">% pt =[0 2]</span>
+0005 <span class="comment">% dist_point_droite(1,2,4,pt)</span>
+0006 
+0007 <span class="comment">%% centre de la fenetre</span>
+0008 P= [pt 0];
+0009 
+0010 <span class="comment">%vecteur directeur normalise</span>
+0011 u = [-m2 m1 0];
+0012 
+0013 <span class="keyword">if</span> (norm(u)~=0) 
+0014     u = u/norm(u);
+0015 <span class="keyword">end</span>
+0016 
+0017 <span class="comment">% vecteur AP, ou A appartient a la droite et P est le centre de la fenetre</span>
+0018 <span class="keyword">if</span> (m1 ~= 0)
+0019     A = [m3/m1 0 0];
+0020 <span class="keyword">elseif</span> (m2 ~=0)
+0021     A=[0 m3/m2 0];
+0022 <span class="keyword">else</span>
+0023     A=[0 0 0]
+0024 <span class="keyword">end</span>
+0025 
+0026 AP= P - A;
+0027 
+0028 d = norm(cross(AP,u),2);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

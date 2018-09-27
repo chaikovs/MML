@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mkparamgroup</title>
+  <meta name="keywords" content="mkparamgroup">
+  <meta name="description" content="MKPARAMGROUP simplifies creation of AT parameter groups">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">at</a> &gt; <a href="index.html">lattice</a> &gt; mkparamgroup.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for at/lattice&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>mkparamgroup
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>MKPARAMGROUP simplifies creation of AT parameter groups</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function P = mkparamgroup(LATTICE,varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MKPARAMGROUP simplifies creation of AT parameter groups
+ It group one or more elements in the
+ same family and simultaneously vary
+
+ MKPARAMGROUP(LATTICE,ELEMINDEX,PARAMSTR)
+ MKPARAMGROUP(LATTICE,FAMNAMESTR,PARAMSTR)
+ MKPARAMGROUP(LATTICE,FAMNAMESTR,KIDNUM,PARAMSTR)
+
+ EXAMPLES
+1. mkparamgroup(THERING,ATINDEX.QPF,'K');
+
+ PARAMSTR: 'K','K1', 'K2', 'KS1','PB1'
+
+ See also  <a href="atparamgroup.html" class="code" title="">atparamgroup</a> <a href="restoreparamgroup.html" class="code" title="function NEWLATTICE = restoreparamgroup(LATTICE,PARAMGROUP)">restoreparamgroup</a> <a href="saveparamgroup.html" class="code" title="function NEWPARAMGROUP = saveparamgroup(LATTICE,PARAMGROUP)">saveparamgroup</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="findcells.html" class="code" title="function index = findcells(CELLARRAY, field, varargin)">findcells</a>	FINDCELLS performs a search on MATLAB cell arrays of structures</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function P = mkparamgroup(LATTICE,varargin)</a>
+0002 <span class="comment">%MKPARAMGROUP simplifies creation of AT parameter groups</span>
+0003 <span class="comment">% It group one or more elements in the</span>
+0004 <span class="comment">% same family and simultaneously vary</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% MKPARAMGROUP(LATTICE,ELEMINDEX,PARAMSTR)</span>
+0007 <span class="comment">% MKPARAMGROUP(LATTICE,FAMNAMESTR,PARAMSTR)</span>
+0008 <span class="comment">% MKPARAMGROUP(LATTICE,FAMNAMESTR,KIDNUM,PARAMSTR)</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% EXAMPLES</span>
+0011 <span class="comment">%1. mkparamgroup(THERING,ATINDEX.QPF,'K');</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% PARAMSTR: 'K','K1', 'K2', 'KS1','PB1'</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% See also  atparamgroup restoreparamgroup saveparamgroup</span>
+0016 
+0017 <span class="comment">% Revision History:</span>
+0018 <span class="comment">%   2002-06-26 Christoph Steier</span>
+0019 <span class="comment">%       Added skew quadrupole gradient (KS1) as one possible parameter</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">%   2004-02-09 WJC</span>
+0022 <span class="comment">%       'TILT','K1','K2','K3' changed index 'i' to 'k'</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">%   2005-01-23 Laurent S. Nadolski</span>
+0025 <span class="comment">%       correction error function misused</span>
+0026 
+0027 
+0028 <span class="keyword">if</span> isnumeric(varargin{1})
+0029     <span class="keyword">if</span> ~((nargin==3) &amp;&amp; ischar(varargin{2}))
+0030         error(<span class="string">'The third argument must be a string'</span>)
+0031     <span class="keyword">else</span>
+0032         INDEX    = varargin{1};
+0033         KIDNUM   = 1:length(INDEX);
+0034         PARAMSTR = varargin{2};
+0035     <span class="keyword">end</span>
+0036 <span class="keyword">else</span>
+0037     FAMNAMESTR = varargin{1};
+0038     INDEX      = <a href="findcells.html" class="code" title="function index = findcells(CELLARRAY, field, varargin)">findcells</a>(LATTICE,<span class="string">'FamName'</span>,FAMNAMESTR);
+0039     <span class="keyword">if</span>(isempty(INDEX))
+0040         error([<span class="string">'No elements that belong to the family '''</span>,FAMNAMESTR,<span class="keyword">...</span>
+0041             <span class="string">''' found in the lattice '</span>,inputname(1)]);
+0042     <span class="keyword">end</span>
+0043     <span class="keyword">if</span> isnumeric(varargin{2})
+0044         KIDNUM   = varargin{2};
+0045         PARAMSTR = varargin{3};
+0046     <span class="keyword">else</span>
+0047         KIDNUM   = 1:length(INDEX);
+0048         PARAMSTR = varargin{2};
+0049     <span class="keyword">end</span>
+0050 <span class="keyword">end</span>
+0051 
+0052 <span class="keyword">switch</span> lower(PARAMSTR)
+0053     <span class="keyword">case</span> {<span class="string">'k1'</span>,<span class="string">'k'</span>} <span class="comment">% Quadrupole</span>
+0054         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'K'</span>)
+0055             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''K'''</span>]);
+0056         <span class="keyword">end</span>
+0057         P1 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'K'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0058         [P1.FieldIndex] = deal({1,1});
+0059         [P1.Args]       = deal({});
+0060 
+0061         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomB'</span>)
+0062             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomB'''</span>]);
+0063         <span class="keyword">end</span>
+0064         P2 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomB'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0065         [P2.FieldIndex] = deal({1,2});
+0066         [P2.Args]       = deal({});
+0067 
+0068         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0069             P1(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.K;
+0070             P2(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomB(2);
+0071         <span class="keyword">end</span>
+0072         P = reshape([P1;P2],1,2*length(P1));
+0073 
+0074     <span class="keyword">case</span> <span class="string">'k2'</span> <span class="comment">% sextupoles</span>
+0075 
+0076         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomB'</span>)
+0077             error(<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomB'''</span>);
+0078         <span class="keyword">end</span>
+0079         P = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomB'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0080         [P.FieldIndex] = deal({1,3});
+0081         [P.Args]       = deal({});
+0082         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0083             P(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomB(3);
+0084         <span class="keyword">end</span>
+0085 
+0086     <span class="keyword">case</span> <span class="string">'k3'</span> <span class="comment">% Octupoles</span>
+0087         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomB'</span>)
+0088             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomB'''</span>]);
+0089         <span class="keyword">end</span>
+0090         P = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomB'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0091         [P.FieldIndex]=deal({1,4});
+0092         [P.Args]=deal({});
+0093         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0094             P(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomB(4);
+0095         <span class="keyword">end</span>
+0096 
+0097     <span class="keyword">case</span> <span class="string">'tilt'</span>
+0098         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'R1'</span>)
+0099             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''R1'''</span>]);
+0100         <span class="keyword">end</span>
+0101         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'R2'</span>)
+0102             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''R2'''</span>]);
+0103         <span class="keyword">end</span>
+0104 
+0105         P1 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'R1'</span>,<span class="string">'Function'</span>,inline(<span class="string">'mksrollmat(x)'</span>));
+0106         [P1.FieldIndex]=deal({1:6,1:6});
+0107         [P1.Args]=deal({});
+0108 
+0109         P2 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'R2'</span>,<span class="string">'Function'</span>,inline(<span class="string">'mksrollmat(-x)'</span>));
+0110         [P2.FieldIndex]=deal({1:6,1:6});
+0111         [P2.Args]=deal({});
+0112 
+0113         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0114             P1(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.R1;
+0115             P2(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.R2;
+0116         <span class="keyword">end</span>
+0117         P = reshape([P1;P2],1,2*length(P1));
+0118 
+0119     <span class="keyword">case</span> {<span class="string">'k1'</span>,<span class="string">'k'</span>}
+0120         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'K'</span>)
+0121             error(<span class="string">'Element '</span>,int2str(KIDNUM(k)),<span class="string">' does not have field ''K'''</span>);
+0122         <span class="keyword">end</span>
+0123 
+0124         P1 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'K'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0125         [P1.FieldIndex]=deal({1,1});
+0126         [P1.Args]=deal({});
+0127 
+0128         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomB'</span>)
+0129             error(<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomB'''</span>);
+0130         <span class="keyword">end</span>
+0131         P2 = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomB'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0132         [P2.FieldIndex]=deal({1,2});
+0133         [P2.Args]=deal({});
+0134 
+0135         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0136             P1(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.K;
+0137             P2(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomB(2);
+0138         <span class="keyword">end</span>
+0139         P = reshape([P1;P2],1,2*length(P1));
+0140 
+0141     <span class="keyword">case</span> {<span class="string">'s'</span>,<span class="string">'s1'</span>, <span class="string">'ks1'</span>}
+0142         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomA'</span>)
+0143             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomA'''</span>]);
+0144         <span class="keyword">end</span>
+0145         P = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomA'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0146         [P.FieldIndex] = deal({1,2});
+0147         [P.Args]       = deal({});
+0148         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0149             P(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomA(2);
+0150         <span class="keyword">end</span>
+0151 
+0152     <span class="keyword">case</span> <span class="string">'pb1'</span>
+0153         <span class="keyword">if</span> ~isfield(LATTICE{INDEX(KIDNUM(1))},<span class="string">'PolynomB'</span>)
+0154             error([<span class="string">'Element '</span>,int2str(KIDNUM(1)),<span class="string">' does not have field ''PolynomB'''</span>]);
+0155         <span class="keyword">end</span>
+0156         P = struct(<span class="string">'ElemIndex'</span>,num2cell(INDEX(KIDNUM)),<span class="string">'FieldName'</span>,<span class="string">'PolynomB'</span>,<span class="string">'Function'</span>,inline(<span class="string">'x'</span>));
+0157         [P.FieldIndex] = deal({1,2});
+0158         [P.Args]       = deal({});
+0159         <span class="keyword">for</span> k = 1:length(KIDNUM)
+0160             P(k).SavedValue = LATTICE{INDEX(KIDNUM(k))}.PolynomB(2);
+0161         <span class="keyword">end</span>
+0162 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:26:45 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plot_synchrotron_tune</title>
+  <meta name="keywords" content="plot_synchrotron_tune">
+  <meta name="description" content="PLOT_SYNCHROTRON_TUNE M-file for plot_synchrotron_tune.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; plot_synchrotron_tune.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>plot_synchrotron_tune
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>PLOT_SYNCHROTRON_TUNE M-file for plot_synchrotron_tune.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = plot_synchrotron_tune(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> PLOT_SYNCHROTRON_TUNE M-file for plot_synchrotron_tune.fig
+      PLOT_SYNCHROTRON_TUNE, by itself, creates a new PLOT_SYNCHROTRON_TUNE or raises the existing
+      singleton*.
+
+      H = PLOT_SYNCHROTRON_TUNE returns the handle to a new PLOT_SYNCHROTRON_TUNE or the handle to
+      the existing singleton*.
+
+      PLOT_SYNCHROTRON_TUNE('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in PLOT_SYNCHROTRON_TUNE.M with the given input arguments.
+
+      PLOT_SYNCHROTRON_TUNE('Property','Value',...) creates a new PLOT_SYNCHROTRON_TUNE or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before plot_synchrotron_tune_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to plot_synchrotron_tune_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function plot_synchrotron_tune_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = plot_synchrotron_tune_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function pushbutton_run_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function edit_profondeur_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function edit_profondeur_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function edit_decimation_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function edit_decimation_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function edit_adress_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function edit_adress_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function edit_minfreq_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function edit_minfreq_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function edit_maxfreq_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function edit_maxfreq_CreateFcn(hObject, eventdata, handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = plot_synchrotron_tune(varargin)</a>
+0002 <span class="comment">% PLOT_SYNCHROTRON_TUNE M-file for plot_synchrotron_tune.fig</span>
+0003 <span class="comment">%      PLOT_SYNCHROTRON_TUNE, by itself, creates a new PLOT_SYNCHROTRON_TUNE or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = PLOT_SYNCHROTRON_TUNE returns the handle to a new PLOT_SYNCHROTRON_TUNE or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      PLOT_SYNCHROTRON_TUNE('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in PLOT_SYNCHROTRON_TUNE.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      PLOT_SYNCHROTRON_TUNE('Property','Value',...) creates a new PLOT_SYNCHROTRON_TUNE or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before plot_synchrotron_tune_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to plot_synchrotron_tune_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help plot_synchrotron_tune</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 07-May-2008 15:57:55</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction plot_synchrotron_tune_OpeningFcn(hObject, eventdata, handles, varargin)">plot_synchrotron_tune_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = plot_synchrotron_tune_OutputFcn(hObject, eventdata, handles)">plot_synchrotron_tune_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before plot_synchrotron_tune is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function plot_synchrotron_tune_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to plot_synchrotron_tune (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for plot_synchrotron_tune</span>
+0056 handles.output = hObject;
+0057 
+0058 BPM=<span class="string">'ANS-C13/DG/BPM.NOD'</span>;
+0059 
+0060 
+0061 <span class="comment">% get BPM value</span>
+0062 rep = tango_read_attribute2(BPM,<span class="string">'DDBufferSize'</span>);pro=rep.value(1);
+0063 set(handles.edit_profondeur,<span class="string">'String'</span>,num2str(pro))
+0064 rep = tango_read_attribute2(BPM,<span class="string">'DDDecimationFactor'</span>);dec=rep.value(1);
+0065 set(handles.edit_decimation,<span class="string">'String'</span>,num2str(dec))
+0066 rep = tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>);adr=rep.value(1);
+0067 set(handles.edit_adress,<span class="string">'String'</span>,num2str(adr))
+0068 
+0069 handles.bpm=BPM;
+0070 <span class="comment">% Update handles structure</span>
+0071 guidata(hObject, handles);
+0072 
+0073 <span class="comment">% UIWAIT makes plot_synchrotron_tune wait for user response (see UIRESUME)</span>
+0074 <span class="comment">% uiwait(handles.figure1);</span>
+0075 
+0076 
+0077 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0078 <a name="_sub2" href="#_subfunctions" class="code">function varargout = plot_synchrotron_tune_OutputFcn(hObject, eventdata, handles) </a>
+0079 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0080 <span class="comment">% hObject    handle to figure</span>
+0081 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0082 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0083 
+0084 <span class="comment">% Get default command line output from handles structure</span>
+0085 varargout{1} = handles.output;
+0086 
+0087 
+0088 <span class="comment">% --- Executes on button press in pushbutton_run.</span>
+0089 <a name="_sub3" href="#_subfunctions" class="code">function pushbutton_run_Callback(hObject, eventdata, handles)</a>
+0090 <span class="comment">% hObject    handle to pushbutton_run (see GCBO)</span>
+0091 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0092 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0093 
+0094 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of pushbutton_run</span>
+0095 BPM=handles.bpm;
+0096 rep = tango_read_attribute2(BPM,<span class="string">'DDDecimationFactor'</span>);dec=rep.value(1);
+0097 rep = tango_read_attribute2(BPM,<span class="string">'XPosDD'</span>);
+0098 N = length(rep.value);
+0099 
+0100 minfreq=str2double(get(handles.edit_minfreq,<span class="string">'String'</span>));
+0101 maxfreq=str2double(get(handles.edit_maxfreq,<span class="string">'String'</span>));
+0102 
+0103 
+0104 Xvalue = zeros(1,N);
+0105 <span class="keyword">for</span> ik =1:3, <span class="comment">% averaging</span>
+0106     rep = tango_read_attribute2(BPM,<span class="string">'XPosDD'</span>);
+0107     Xvalue = Xvalue + rep.value;
+0108     pause(0.3)
+0109 <span class="keyword">end</span>
+0110 
+0111 Xvalue = Xvalue/3;
+0112 Amp=abs(fft(Xvalue));
+0113 
+0114 frev = getrf/416;
+0115 freq =(1:N)/N*frev*1e6/double(dec);
+0116 len=length(freq);
+0117 
+0118 plot(freq(1:len/2)/1000,Amp(1:len/2))
+0119 xaxis([minfreq maxfreq]); 
+0120 grid on
+0121 xlabel(<span class="string">'Frequency kHz'</span>)
+0122 
+0123 <span class="comment">%[a ind] = max(abs(fft(rep.value)))</span>
+0124 
+0125     
+0126     
+0127 <a name="_sub4" href="#_subfunctions" class="code">function edit_profondeur_Callback(hObject, eventdata, handles)</a>
+0128 <span class="comment">% hObject    handle to edit_profondeur (see GCBO)</span>
+0129 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0130 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0131 
+0132 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_profondeur as text</span>
+0133 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_profondeur as a double</span>
+0134 
+0135 
+0136 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0137 <a name="_sub5" href="#_subfunctions" class="code">function edit_profondeur_CreateFcn(hObject, eventdata, handles)</a>
+0138 <span class="comment">% hObject    handle to edit_profondeur (see GCBO)</span>
+0139 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0140 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0141 
+0142 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0143 <span class="comment">%       See ISPC and COMPUTER.</span>
+0144 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0145     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0146 <span class="keyword">end</span>
+0147 
+0148 
+0149 
+0150 <a name="_sub6" href="#_subfunctions" class="code">function edit_decimation_Callback(hObject, eventdata, handles)</a>
+0151 <span class="comment">% hObject    handle to edit_decimation (see GCBO)</span>
+0152 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0153 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0154 
+0155 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_decimation as text</span>
+0156 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_decimation as a double</span>
+0157 
+0158 
+0159 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0160 <a name="_sub7" href="#_subfunctions" class="code">function edit_decimation_CreateFcn(hObject, eventdata, handles)</a>
+0161 <span class="comment">% hObject    handle to edit_decimation (see GCBO)</span>
+0162 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0163 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0164 
+0165 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0166 <span class="comment">%       See ISPC and COMPUTER.</span>
+0167 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0168     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0169 <span class="keyword">end</span>
+0170 
+0171 
+0172 
+0173 <a name="_sub8" href="#_subfunctions" class="code">function edit_adress_Callback(hObject, eventdata, handles)</a>
+0174 <span class="comment">% hObject    handle to edit_adress (see GCBO)</span>
+0175 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0176 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0177 
+0178 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_adress as text</span>
+0179 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_adress as a double</span>
+0180 
+0181 
+0182 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0183 <a name="_sub9" href="#_subfunctions" class="code">function edit_adress_CreateFcn(hObject, eventdata, handles)</a>
+0184 <span class="comment">% hObject    handle to edit_adress (see GCBO)</span>
+0185 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0186 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0187 
+0188 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0189 <span class="comment">%       See ISPC and COMPUTER.</span>
+0190 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0191     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0192 <span class="keyword">end</span>
+0193 
+0194 
+0195 
+0196 <a name="_sub10" href="#_subfunctions" class="code">function edit_minfreq_Callback(hObject, eventdata, handles)</a>
+0197 <span class="comment">% hObject    handle to edit_minfreq (see GCBO)</span>
+0198 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0199 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0200 
+0201 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_minfreq as text</span>
+0202 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_minfreq as a double</span>
+0203 
+0204 
+0205 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0206 <a name="_sub11" href="#_subfunctions" class="code">function edit_minfreq_CreateFcn(hObject, eventdata, handles)</a>
+0207 <span class="comment">% hObject    handle to edit_minfreq (see GCBO)</span>
+0208 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0209 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0210 
+0211 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0212 <span class="comment">%       See ISPC and COMPUTER.</span>
+0213 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0214     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0215 <span class="keyword">end</span>
+0216 
+0217 
+0218 
+0219 <a name="_sub12" href="#_subfunctions" class="code">function edit_maxfreq_Callback(hObject, eventdata, handles)</a>
+0220 <span class="comment">% hObject    handle to edit_maxfreq (see GCBO)</span>
+0221 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0222 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0223 
+0224 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_maxfreq as text</span>
+0225 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_maxfreq as a double</span>
+0226 
+0227 
+0228 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0229 <a name="_sub13" href="#_subfunctions" class="code">function edit_maxfreq_CreateFcn(hObject, eventdata, handles)</a>
+0230 <span class="comment">% hObject    handle to edit_maxfreq (see GCBO)</span>
+0231 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0232 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0233 
+0234 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0235 <span class="comment">%       See ISPC and COMPUTER.</span>
+0236 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0237     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0238 <span class="keyword">end</span>
+0239 
+0240</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

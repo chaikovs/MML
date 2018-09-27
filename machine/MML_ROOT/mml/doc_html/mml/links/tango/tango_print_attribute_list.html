@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_print_attribute_list</title>
+  <meta name="keywords" content="tango_print_attribute_list">
+  <meta name="description" content="- get attributes info">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_print_attribute_list.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_print_attribute_list
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>- get attributes info</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function tango_print_attribute_list(dev) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">- get attributes info</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function tango_print_attribute_list(dev)</a>
+0002 
+0003 <span class="comment">%- get attributes info</span>
+0004 attr_info_list = tango_attribute_list_query(dev);
+0005 <span class="comment">%- always check error</span>
+0006 <span class="keyword">if</span> (tango_error == -1)
+0007    <span class="comment">%- handle error</span>
+0008    tango_print_error_stack;
+0009    <span class="keyword">return</span>;
+0010 <span class="keyword">end</span>
+0011 <span class="comment">%- attr_info_list is valid</span>
+0012 <span class="comment">%- print info for &lt;operator&gt; attribute</span>
+0013 <span class="keyword">for</span> i = 1:size(attr_info_list,2)
+0014     <span class="keyword">if</span> (attr_info_list(i).disp_level == 0)
+0015       disp(attr_info_list(i));
+0016     <span class="keyword">end</span>
+0017 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

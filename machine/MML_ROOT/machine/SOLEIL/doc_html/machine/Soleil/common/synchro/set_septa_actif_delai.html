@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of set_septa_actif_delai</title>
+  <meta name="keywords" content="set_septa_actif_delai">
+  <meta name="description" content="special delai septum actif boo et ans">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; set_septa_actif_delai.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>set_septa_actif_delai
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>special delai septum actif boo et ans</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> special delai septum actif boo et ans
+ logée l'extraction sur la crete du septa</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% special delai septum actif boo et ans</span>
+0002 <span class="comment">% logée l'extraction sur la crete du septa</span>
+0003 
+0004 septclk=52*184/2; <span class="comment">% = 52 tours booster : max delai sur injection</span>
+0005 <span class="comment">% valeur de tension a basse cadence (soft)</span>
+0006 <span class="comment">%temp=tango_read_attribute2('BOO/SY/LOCAL.Bext.1', 'sep-a.trigStepDelay');     boo=temp.value(2)</span>
+0007 <span class="comment">%temp=tango_read_attribute2('ANS-C01/SY/LOCAL.Ainj.2', 'sep-a.trigStepDelay'); ans=temp.value(2)</span>
+0008 boo=31240305;
+0009 ans=31240316;
+0010 
+0011 nstep=1
+0012 <span class="keyword">try</span>
+0013     tango_write_attribute2(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext'</span>,<span class="string">'voltage'</span>,(boo + nstep*stepclk));
+0014     tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_SEP_A'</span>,<span class="string">'voltage'</span>,    (ans + nstep*stepclk));
+0015 <span class="keyword">catch</span>
+0016     display(<span class="string">'Erreur ajustement tension septa passif'</span>)
+0017 <span class="keyword">end</span>
+0018 
+0019 
+0020 <span class="keyword">return</span>
+0021 <span class="comment">% start value</span>
+0022 
+0023 tango_write_attribute2(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext'</span>,<span class="string">'voltage'</span>,boo);
+0024 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_SEP_A'</span>,<span class="string">'voltage'</span>,ans);</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of LT1setup</title>
+  <meta name="keywords" content="LT1setup">
+  <meta name="description" content="LT1SETUP - GUI for doing LT1 setup">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">LT1</a> &gt; LT1setup.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/LT1&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>LT1setup
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>LT1SETUP - GUI for doing LT1 setup</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function LT1setup </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">LT1SETUP - GUI for doing LT1 setup</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="LT1init.html" class="code" title="function LT1init(OperationalMode)">LT1init</a>	LT1INIT - Contructs an accelerator Object describing LT1</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function LT1setup</a>
+0002 <span class="comment">%LT1SETUP - GUI for doing LT1 setup</span>
+0003 
+0004 <span class="comment">%</span>
+0005 <span class="comment">% Written by Laurent S. Nadolski</span>
+0006 
+0007 AD = getad;
+0008 
+0009 <span class="keyword">if</span> isempty(AD) 
+0010     <a href="LT1init.html" class="code" title="function LT1init(OperationalMode)">LT1init</a>;
+0011 <span class="keyword">elseif</span> ~strcmpi(AD.SubMachine,<span class="string">'LT1'</span>)
+0012     <a href="LT1init.html" class="code" title="function LT1init(OperationalMode)">LT1init</a>;
+0013 <span class="keyword">end</span>
+0014 
+0015 orbfig = findobj(allchild(0),<span class="string">'tag'</span>,<span class="string">'LT1setup'</span>); 
+0016 
+0017 <span class="keyword">if</span> ~isempty(orbfig), delete(orbfig); <span class="keyword">end</span>
+0018 orbfig = findobj(allchild(0),<span class="string">'tag'</span>,<span class="string">'LT1setup'</span>); 
+0019 
+0020 <span class="keyword">if</span> ~isempty(orbfig), delete(orbfig); <span class="keyword">end</span>
+0021 
+0022 kmax = 4; <span class="comment">% button number</span>
+0023 
+0024 height = 10 + kmax*30 + 30; <span class="comment">%670;</span>
+0025 a = figure(<span class="string">'Color'</span>,[0.8 0.8 0.8], <span class="keyword">...</span>
+0026     <span class="string">'Interruptible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span><span class="comment">   </span>
+0027     <span class="string">'HandleVisibility'</span>,<span class="string">'off'</span>, <span class="keyword">...</span>
+0028     <span class="string">'MenuBar'</span>,<span class="string">'none'</span>, <span class="keyword">...</span>
+0029     <span class="string">'Name'</span>, <span class="string">'LT1 Command Launcher'</span>, <span class="keyword">...</span>
+0030     <span class="string">'NumberTitle'</span>,<span class="string">'off'</span>, <span class="keyword">...</span>
+0031     <span class="string">'Units'</span>,<span class="string">'pixels'</span>, <span class="keyword">...</span>
+0032     <span class="string">'Position'</span>,[5 70 210*2 height], <span class="keyword">...</span>
+0033     <span class="string">'Resize'</span>,<span class="string">'off'</span>, <span class="keyword">...</span>
+0034     <span class="string">'Tag'</span>,<span class="string">'LT1setup'</span>);
+0035 
+0036 height = height - 35;
+0037 
+0038 <span class="keyword">for</span> k = 1:kmax,
+0039     b1(k) = uicontrol(<span class="string">'Parent'</span>,a, <span class="keyword">...</span>
+0040         <span class="string">'Position'</span>,[3 height-(k-1)*30 204 27], <span class="keyword">...</span>
+0041         <span class="string">'Interruptible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0042         <span class="string">'Tag'</span>,<span class="string">'button22'</span>);
+0043 <span class="keyword">end</span>
+0044 
+0045 <span class="keyword">for</span> k = 1:kmax,
+0046     b2(k) = uicontrol(<span class="string">'Parent'</span>,a, <span class="keyword">...</span>
+0047         <span class="string">'Position'</span>,[3 + 210 height-(k-1)*30 204 27], <span class="keyword">...</span>
+0048         <span class="string">'Interruptible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0049         <span class="string">'Tag'</span>,<span class="string">'button22'</span>);
+0050 <span class="keyword">end</span>
+0051 
+0052 set(b1(1), <span class="string">'Callback'</span>,<span class="string">'disp([''   LT1init;'']); cd(getenv(''MLROOT'')); setpathsoleil(''LT1'');'</span>, <span class="string">'String'</span>,<span class="string">'LT1init'</span>);
+0053 set(b1(2), <span class="string">'Callback'</span>,<span class="string">'disp([''   Fichiers de Consignes;'']); configgui;;'</span>, <span class="string">'String'</span>,<span class="string">'Fichiers de Consignes'</span>);
+0054 set(b1(3), <span class="string">'Callback'</span>,<span class="string">'disp([''   LT1cycling;'']);LT1cycling'</span>, <span class="string">'String'</span>,<span class="string">'Cyclage'</span>);
+0055 set(b1(4), <span class="string">'Callback'</span>,<span class="string">'disp([''   Timing;'']); synchro_injecteur6;'</span>, <span class="string">'String'</span>,<span class="string">'Synchronisation définitive'</span>);
+0056 set(b2(1), <span class="string">'Callback'</span>,<span class="string">'optics_LT1_LT2;'</span>, <span class="string">'String'</span>,<span class="string">'Optique'</span>);
+0057 set(b2(2), <span class="string">'Callback'</span>,<span class="string">'disp([''   Emittance'']);emittance_v15;'</span>, <span class="string">'String'</span>,<span class="string">'Emittance'</span>);
+0058 set(b2(3), <span class="string">'Callback'</span>,<span class="string">'disp([''   FAE'']); fae_v5'</span>, <span class="string">'String'</span>,<span class="string">'Fente d''analyse'</span>);
+0059 b = uicontrol(<span class="string">'Parent'</span>,a, <span class="keyword">...</span>
+0060     <span class="string">'Callback'</span>,<span class="string">'close all'</span>, <span class="keyword">...</span>
+0061     <span class="string">'String'</span>,<span class="string">'Close All Figures'</span>, <span class="keyword">...</span>
+0062     <span class="string">'Position'</span>,[3 height-kmax*30 204 27], <span class="keyword">...</span>
+0063     <span class="string">'Userdata'</span>,[], <span class="keyword">...</span>
+0064     <span class="string">'Interruptible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span><span class="comment">   </span>
+0065     <span class="string">'Tag'</span>,<span class="string">'button2'</span>);
+0066 
+0067 b = uicontrol(<span class="string">'Parent'</span>,a, <span class="keyword">...</span>
+0068     <span class="string">'Callback'</span>,<span class="string">'diary off; close(get(findobj(gcbf,''Tag'',''button1''),''Userdata''));'</span>, <span class="keyword">...</span>
+0069     <span class="string">'Position'</span>,[3 + 210 height-kmax*30 204 27], <span class="keyword">...</span>
+0070     <span class="string">'String'</span>,<span class="string">'CLOSE'</span>, <span class="keyword">...</span>
+0071     <span class="string">'Userdata'</span>,a, <span class="keyword">...</span>
+0072     <span class="string">'Interruptible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span><span class="comment">   </span>
+0073     <span class="string">'Tag'</span>,<span class="string">'button1'</span>);
+0074</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

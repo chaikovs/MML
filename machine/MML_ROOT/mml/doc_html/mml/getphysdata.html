@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getphysdata</title>
+  <meta name="keywords" content="getphysdata">
+  <meta name="description" content="GETPHYSDATA - Gets physics data">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; getphysdata.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>getphysdata
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>GETPHYSDATA - Gets physics data</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Data, iNotFound] = getphysdata(Family, Field, DeviceList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GETPHYSDATA - Gets physics data
+  Data = getphysdata(Family, Field, DeviceList)
+  Data = getphysdata(Family, Field)
+  Data = getphysdata(DataStruct, Field)
+  Data = getphysdata(Family)
+  Data = getphysdata
+
+  INPUTS
+  1. Family = Family name
+  2. Field  = Field  name ('Offset', 'Gain', etc)
+  3. DeviceList = Device list for that family
+         or 
+  1. DataStruct = Data structure (.FamilyName and .DeviceList fields are used, 
+                                  unless DeviceList is an input)
+  2. Field = Field name ('Offset', 'Gain', etc)
+
+  OUTPUT
+  1. Data = Physics data
+
+  NOTES
+  1. If the inputs are cell arrays, then the output is a cell array
+  2. If Family is a cell array, then DeviceList must also be a cell array,
+     however, Field can either be a cell array array or a string.
+  3. If DeviceList is not an input, then the exact contents of the field is returned
+     If DeviceList exists, then Data is indexed according to DeviceList (vector output)
+     If DeviceList is empty, [], then the entire DeviceList is returned
+
+  EXAMPLES
+  1. getphysdata: return full structure
+  2. getphysdata('BPMx')
+  3. getphysdata('BPMx','golden')
+  4. getphysdata(getx('Struct'),'Golden') returns a structure 
+
+  See Also <a href="setphysdata.html" class="code" title="function setphysdata(varargin)">setphysdata</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>	FAMILY2DEV - Return the device list for a family</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>	GETLIST - Returns Device List for a Family</li><li><a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>	GETPHYSDATA - Gets physics data</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getcrunch.html" class="code" title="function Data = getcrunch(varargin)">getcrunch</a>	GETCRUNCH- Returns the crunch values for a family (radians)</li><li><a href="getgain.html" class="code" title="function Data = getgain(varargin)">getgain</a>	GETGAIN - Returns the gain for a family</li><li><a href="getgolden.html" class="code" title="function Data = getgolden(varargin)">getgolden</a>	GETGOLDEN - Returns the golden values for a family</li><li><a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>	GETOFFSET - Returns the offset values for a family</li><li><a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>	GETPHYSDATA - Gets physics data</li><li><a href="getramprate.html" class="code" title="function RampRate = getramprate(varargin)">getramprate</a>	GETRAMPRATE - Returns the ramp rate for a family</li><li><a href="getroll.html" class="code" title="function Data = getroll(varargin)">getroll</a>	GETROLL - Returns the roll values for a family (radians)</li><li><a href="meascmhysteresis.html" class="code" title="function meascmhysteresis(BPMList, CMFamily, CMList, MaxChange, NSteps)">meascmhysteresis</a>	MEASCMHYSTERESIS - Measure corrector magnet hysteresis</li><li><a href="setphysdata.html" class="code" title="function setphysdata(varargin)">setphysdata</a>	SETPHYSDATA - Set physics data</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function Data = getphysdatalocal</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)</a>
+0002 <span class="comment">%GETPHYSDATA - Gets physics data</span>
+0003 <span class="comment">%  Data = getphysdata(Family, Field, DeviceList)</span>
+0004 <span class="comment">%  Data = getphysdata(Family, Field)</span>
+0005 <span class="comment">%  Data = getphysdata(DataStruct, Field)</span>
+0006 <span class="comment">%  Data = getphysdata(Family)</span>
+0007 <span class="comment">%  Data = getphysdata</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  INPUTS</span>
+0010 <span class="comment">%  1. Family = Family name</span>
+0011 <span class="comment">%  2. Field  = Field  name ('Offset', 'Gain', etc)</span>
+0012 <span class="comment">%  3. DeviceList = Device list for that family</span>
+0013 <span class="comment">%         or</span>
+0014 <span class="comment">%  1. DataStruct = Data structure (.FamilyName and .DeviceList fields are used,</span>
+0015 <span class="comment">%                                  unless DeviceList is an input)</span>
+0016 <span class="comment">%  2. Field = Field name ('Offset', 'Gain', etc)</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%  OUTPUT</span>
+0019 <span class="comment">%  1. Data = Physics data</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">%  NOTES</span>
+0022 <span class="comment">%  1. If the inputs are cell arrays, then the output is a cell array</span>
+0023 <span class="comment">%  2. If Family is a cell array, then DeviceList must also be a cell array,</span>
+0024 <span class="comment">%     however, Field can either be a cell array array or a string.</span>
+0025 <span class="comment">%  3. If DeviceList is not an input, then the exact contents of the field is returned</span>
+0026 <span class="comment">%     If DeviceList exists, then Data is indexed according to DeviceList (vector output)</span>
+0027 <span class="comment">%     If DeviceList is empty, [], then the entire DeviceList is returned</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">%  EXAMPLES</span>
+0030 <span class="comment">%  1. getphysdata: return full structure</span>
+0031 <span class="comment">%  2. getphysdata('BPMx')</span>
+0032 <span class="comment">%  3. getphysdata('BPMx','golden')</span>
+0033 <span class="comment">%  4. getphysdata(getx('Struct'),'Golden') returns a structure</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">%  See Also setphysdata</span>
+0036 
+0037 <span class="comment">%</span>
+0038 <span class="comment">%  Written by Gregory J. Portmann</span>
+0039 
+0040 <span class="keyword">if</span> nargin == 0
+0041     Data = <a href="#_sub1" class="code" title="subfunction Data = getphysdatalocal">getphysdatalocal</a>;
+0042     <span class="keyword">return</span>
+0043 <span class="keyword">end</span>
+0044 
+0045 
+0046 <span class="comment">%%%%%%%%%%%%%%%%%%%%</span>
+0047 <span class="comment">% Cell array input %</span>
+0048 <span class="comment">%%%%%%%%%%%%%%%%%%%%</span>
+0049 <span class="keyword">if</span> iscell(Family)
+0050     <span class="keyword">if</span> nargin &gt;= 2
+0051         <span class="keyword">if</span> iscell(Field)
+0052             <span class="keyword">if</span> length(Family) ~= length(Field)
+0053                 error(<span class="string">'If Field is a cell array, then it must be the same size as Family.'</span>);
+0054             <span class="keyword">end</span>
+0055         <span class="keyword">end</span>
+0056     <span class="keyword">end</span>    
+0057     <span class="keyword">for</span> i = 1:length(Family)
+0058         <span class="keyword">if</span> nargin == 1
+0059             Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i});
+0060         <span class="keyword">elseif</span> nargin == 2
+0061             <span class="keyword">if</span> iscell(Field)
+0062                 Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field{i});
+0063             <span class="keyword">else</span>
+0064                 Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field);
+0065             <span class="keyword">end</span>
+0066         <span class="keyword">else</span>
+0067             <span class="keyword">if</span> iscell(Field)
+0068                 <span class="keyword">if</span> iscell(DeviceList)
+0069                     Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field{i}, DeviceList{i});
+0070                 <span class="keyword">else</span>
+0071                     Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field{i}, DeviceList);
+0072                 <span class="keyword">end</span>                
+0073             <span class="keyword">else</span>
+0074                 <span class="keyword">if</span> iscell(DeviceList)
+0075                     Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field, DeviceList{i});
+0076                 <span class="keyword">else</span>
+0077                     Data{i} = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(Family{i}, Field, DeviceList);
+0078                 <span class="keyword">end</span>                
+0079             <span class="keyword">end</span>
+0080         <span class="keyword">end</span>
+0081     <span class="keyword">end</span>
+0082     <span class="keyword">return</span>    
+0083 <span class="keyword">end</span>  <span class="comment">% End cell inputs</span>
+0084 
+0085 <span class="comment">%%%%%%%%%%%%%%%%</span>
+0086 <span class="comment">% Get the data %</span>
+0087 <span class="comment">%%%%%%%%%%%%%%%%</span>
+0088 <span class="comment">% Load a full PhysData structure</span>
+0089 
+0090 DataStruct = <a href="#_sub1" class="code" title="subfunction Data = getphysdatalocal">getphysdatalocal</a>;
+0091 
+0092 <span class="keyword">if</span> nargin == 1
+0093     <span class="keyword">if</span> isstruct(Family)
+0094         Family = Family.FamilyName;
+0095     <span class="keyword">end</span>
+0096     <span class="keyword">if</span> isfield(DataStruct, Family)
+0097         Data = DataStruct.(Family);
+0098     <span class="keyword">else</span>
+0099         error(sprintf(<span class="string">'%s family not found in the Physics Data Structure'</span>, Family));
+0100     <span class="keyword">end</span>
+0101     <span class="keyword">return</span>
+0102 <span class="keyword">end</span>
+0103 
+0104 <span class="comment">%% STRUCTURE CASE</span>
+0105 
+0106 <span class="keyword">if</span> isstruct(Family)
+0107     <span class="keyword">if</span> nargin &lt; 3
+0108         <span class="comment">% Only override the DeviceList if it is not input</span>
+0109         <span class="keyword">if</span> isfield(Family, <span class="string">'DeviceList'</span>)
+0110             DeviceList = Family.DeviceList;
+0111         <span class="keyword">else</span>
+0112             DeviceList = Family.Monitor.DeviceList;
+0113         <span class="keyword">end</span>
+0114     <span class="keyword">end</span>
+0115     Family = Family.FamilyName;
+0116     StructFlag = 1;
+0117 <span class="keyword">else</span>
+0118     <span class="keyword">if</span> nargin &lt; 3
+0119         DeviceList = [];
+0120     <span class="keyword">end</span>
+0121     StructFlag = 0;
+0122 <span class="keyword">end</span>
+0123 <span class="keyword">if</span> isempty(DeviceList)
+0124     <span class="keyword">try</span>
+0125         DeviceList = <a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>(Family);
+0126     <span class="keyword">catch</span>
+0127         <span class="comment">% Not a family.  Return whatever is there.</span>
+0128     <span class="keyword">end</span>
+0129 <span class="keyword">end</span>
+0130 
+0131 Data = DataStruct.(Family);
+0132 
+0133 <span class="keyword">if</span> isfield(DataStruct.(Family), Field)
+0134     Data = DataStruct.(Family).(Field);  
+0135     
+0136     <span class="keyword">if</span> isstruct(Data)
+0137         <span class="comment">% Data structure is in the data field of PhysData</span>
+0138         <span class="keyword">if</span> nargin &lt; 3 &amp; StructFlag==1
+0139             <span class="comment">% Return the entire structure</span>
+0140             [i, iNotFound] = findrowindex(DeviceList, Data.DeviceList);  
+0141             Data.Data = Data.Data(i);
+0142             Data.DeviceList = Data.DeviceList(i);
+0143             <span class="keyword">if</span> isfield(Data,<span class="string">'Status'</span>)
+0144                 <span class="keyword">if</span> size(Data.Status,1) == size(Data.DeviceList,1)
+0145                     Data.Status = Data.Status(i);
+0146                 <span class="keyword">end</span>
+0147             <span class="keyword">end</span>
+0148             <span class="keyword">return</span>
+0149         <span class="keyword">else</span>
+0150             <span class="comment">% Return the indexed data</span>
+0151             <span class="keyword">if</span> isfield(Data, <span class="string">'DeviceList'</span>)
+0152                 <span class="comment">% Data structure</span>
+0153                 DeviceListTotal = Data.DeviceList;
+0154                 Data = Data.Data;
+0155             <span class="keyword">elseif</span> isfield(Data, <span class="string">'Monitor'</span>)
+0156                 <span class="keyword">if</span> isfield(Data.Monitor, <span class="string">'DeviceList'</span>)
+0157                     <span class="comment">% Response matrix structure (or dispersion)</span>
+0158                     DeviceListTotal = Data.Monitor.DeviceList;
+0159                     Data = Data.Data;
+0160                 <span class="keyword">else</span>
+0161                     error(<span class="string">'Not sure how to index the data structure'</span>);
+0162                 <span class="keyword">end</span>
+0163             <span class="keyword">else</span>
+0164                 error(<span class="string">'Not sure how to index the data structure'</span>);
+0165             <span class="keyword">end</span>
+0166         <span class="keyword">end</span>
+0167         
+0168     <span class="keyword">elseif</span> isempty(DeviceList)
+0169         <span class="keyword">return</span>
+0170     <span class="keyword">else</span>
+0171         <span class="comment">% All data must be stored including bad devices or as a structure</span>
+0172         DeviceListTotal = <a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(Family,0);
+0173     <span class="keyword">end</span>
+0174     
+0175     <span class="comment">% Data vector was saved</span>
+0176     <span class="keyword">if</span> length(Data) == 1
+0177         <span class="comment">% Repeat the one row Data vector as many times as in the rows of DeviceListTotal</span>
+0178         Data = ones(size(DeviceList,1),1) * Data;
+0179     <span class="keyword">else</span>
+0180         [i, iNotFound] = findrowindex(DeviceList, DeviceListTotal);  
+0181         Data = Data(i,:);
+0182 
+0183         <span class="keyword">if</span> ~isempty(iNotFound)
+0184             <span class="keyword">for</span> i = 1:length(iNotFound)
+0185                 fprintf(<span class="string">'   Can''t find %s.%s(%d,%d) in the family DeviceList.\n'</span>, Family, Field, DeviceList(iNotFound(i),1), DeviceList(iNotFound(i),2));
+0186             <span class="keyword">end</span>
+0187             <span class="comment">%error(sprintf('%d Devices not found', length(iNotFound)));</span>
+0188             fprintf(<span class="string">'   Missing data replaced with NaN.\n'</span>);
+0189             <span class="keyword">for</span> j = 1:length(iNotFound)
+0190                 <span class="keyword">if</span> iNotFound(j) == 1
+0191                     Data = [NaN*ones(1,size(Data,2)); Data(1:<span class="keyword">end</span>,:)];
+0192                 <span class="keyword">else</span>
+0193                     Data = [Data(1:iNotFound(j)-1,:); NaN*ones(1,size(Data,2)); Data(iNotFound(j):<span class="keyword">end</span>,:)];
+0194                 <span class="keyword">end</span>
+0195             <span class="keyword">end</span>
+0196         <span class="keyword">end</span>
+0197 
+0198     <span class="keyword">end</span>
+0199 <span class="keyword">else</span>
+0200     error(sprintf(<span class="string">'%s family, %s field not found in the Physics Data Structure'</span>, Family, Field));
+0201 <span class="keyword">end</span>
+0202 
+0203 
+0204 <span class="comment">%% Subfunction</span>
+0205 <span class="comment">%===================================</span>
+0206 <a name="_sub1" href="#_subfunctions" class="code">function Data = getphysdatalocal</a>
+0207 <span class="comment">%===================================</span>
+0208 
+0209 <span class="comment">% Physics data is saved in this file</span>
+0210 FileName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'OpsData'</span>,<span class="string">'PhysDataFile'</span>);
+0211 
+0212 <span class="comment">%FileName = [getfamilydata('Directory','OpsData') getfamilydata('OpsData','PhysDataFile')];</span>
+0213 
+0214 <span class="comment">%Machine = lower(getfamilydata('Machine'));</span>
+0215 <span class="comment">%FileName = which([Machine, 'physdata','.mat']);</span>
+0216 
+0217 <span class="comment">%tmp = load([DirectoryName FileName]);</span>
+0218 tmp = load(FileName);
+0219 
+0220 fname = fieldnames(tmp);
+0221 <span class="keyword">if</span> length(fname) == 1
+0222     Data = tmp.(fname{1});
+0223 <span class="keyword">else</span>
+0224     <span class="keyword">try</span>
+0225         Data = tmp.(<span class="string">'PhysData'</span>);
+0226     <span class="keyword">catch</span>
+0227         error(<span class="string">'More than 2 variables exist in the calibration file %s, and PhysData is not one of them'</span>,FileName);
+0228     <span class="keyword">end</span>
+0229 <span class="keyword">end</span>
+0230</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

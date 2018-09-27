@@ -1,0 +1,2266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of synchro_injecteur2</title>
+  <meta name="keywords" content="synchro_injecteur2">
+  <meta name="description" content="SYNCHRO_INJECTEUR2 M-file for synchro_injecteur2.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; synchro_injecteur2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>synchro_injecteur2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>SYNCHRO_INJECTEUR2 M-file for synchro_injecteur2.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = synchro_injecteur2(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> SYNCHRO_INJECTEUR2 M-file for synchro_injecteur2.fig
+      SYNCHRO_INJECTEUR2, by itself, creates a new SYNCHRO_INJECTEUR2 or raises the existing
+      singleton*.
+
+      H = SYNCHRO_INJECTEUR2 returns the handle to a new SYNCHRO_INJECTEUR2 or the handle to
+      the existing singleton*.
+
+      SYNCHRO_INJECTEUR2('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in SYNCHRO_INJECTEUR2.M with the given input arguments.
+
+      SYNCHRO_INJECTEUR2('Property','Value',...) creates a new SYNCHRO_INJECTEUR2 or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before synchro_injecteur2_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to synchro_injecteur2_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="step.html" class="code" title="">step</a>	reglage delta tune à 110 MeV</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function synchro_injecteur2_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = synchro_injecteur2_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function alim_dipole_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function alim_dipole_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function alim_qf_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function alim_qf_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function alim_qd_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function alim_qd_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function alim_sf_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function alim_sf_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function alim_sd_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function alim_sd_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function boo_rf_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function boo_rf_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function lin_canon_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function lin_canon_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function lt1_emittance_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function lt1_emittance_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function lt1_MC1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function lt1_MC1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function lt1_MC2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function lt1_MC2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function lt1_osc_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function lt1_osc_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function sdc1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function sdc1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function boo_inj_septum_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function boo_inj_septum_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function boo_inj_kicker_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function boo_inj_kicker_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub31" class="code">function boo_bpm_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function boo_bpm_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub33" class="code">function boo_nod_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub34" class="code">function boo_nod_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub35" class="code">function boo_dcct_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub36" class="code">function boo_dcct_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub37" class="code">function boo_hall_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub38" class="code">function boo_hall_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub39" class="code">function pc_address_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub40" class="code">function pc_address_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub41" class="code">function inj_address_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub42" class="code">function inj_address_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub43" class="code">function edit21_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub44" class="code">function edit21_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub45" class="code">function soft_address_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub46" class="code">function soft_address_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub47" class="code">function acquisition1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub48" class="code">function acquisition2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub49" class="code">function soft_button_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub50" class="code">function push_soft_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub51" class="code">function periode_edit_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub52" class="code">function periode_edit_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub53" class="code">function uibuttongroup_SelectionChangeFcn(hObject,eventdata,handles)</a></li><li><a href="#_sub54" class="code">function fonction_alex(arg1,arg2,hObject,eventdata,handles)</a></li><li><a href="#_sub55" class="code">function Closinggui(obj, event, handles, figure1)</a></li><li><a href="#_sub56" class="code">function button_softmoins_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub57" class="code">function button_softplus_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub58" class="code">function button_injmoins_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub59" class="code">function button_injplus_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub60" class="code">function boo_ext_dof_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub61" class="code">function boo_ext_dof_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub62" class="code">function boo_ext_sept_p_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub63" class="code">function boo_ext_sept_p_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub64" class="code">function boo_ext_sept_a_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub65" class="code">function boo_ext_sept_a_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub66" class="code">function boo_ext_kicker_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub67" class="code">function boo_ext_kicker_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub68" class="code">function ans_inj_sept_p_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub69" class="code">function ans_inj_sept_p_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub70" class="code">function ans_inj_sept_a_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub71" class="code">function ans_inj_sept_a_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub72" class="code">function ans_inj_k1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub73" class="code">function ans_inj_k1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub74" class="code">function ans_inj_k2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub75" class="code">function ans_inj_k2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub76" class="code">function ans_inj_k3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub77" class="code">function ans_inj_k3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub78" class="code">function ans_inj_k4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub79" class="code">function ans_inj_k4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub80" class="code">function ans_dcct_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub81" class="code">function ans_dcct_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub82" class="code">function ans_bpm_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub83" class="code">function ans_bpm_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub84" class="code">function ext_address_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub85" class="code">function ext_address_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub86" class="code">function soft_address1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub87" class="code">function soft_address1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub88" class="code">function radiobutton6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub89" class="code">function pushbutton8_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub90" class="code">function pushbutton9_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub91" class="code">function button_extmoins_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub92" class="code">function button_extplus_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub93" class="code">function sdc2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub94" class="code">function sdc2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub95" class="code">function lt2_emittance_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub96" class="code">function lt2_emittance_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub97" class="code">function lt2_bpm_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub98" class="code">function lt2_bpm_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub99" class="code">function lt2_osc_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub100" class="code">function lt2_osc_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub101" class="code">function lin_modulateur_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub102" class="code">function lin_modulateur_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub103" class="code">function inj_offset_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub104" class="code">function inj_offset_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub105" class="code">function ext_offset_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub106" class="code">function ext_offset_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub107" class="code">function Acquisition_address_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub108" class="code">function button_offinj_moins_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub109" class="code">function button_offinj_plus_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub110" class="code">function button_offext_moins_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub111" class="code">function button_offext_plus_Callback(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = synchro_injecteur2(varargin)</a>
+0002 <span class="comment">% SYNCHRO_INJECTEUR2 M-file for synchro_injecteur2.fig</span>
+0003 <span class="comment">%      SYNCHRO_INJECTEUR2, by itself, creates a new SYNCHRO_INJECTEUR2 or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = SYNCHRO_INJECTEUR2 returns the handle to a new SYNCHRO_INJECTEUR2 or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      SYNCHRO_INJECTEUR2('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in SYNCHRO_INJECTEUR2.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      SYNCHRO_INJECTEUR2('Property','Value',...) creates a new SYNCHRO_INJECTEUR2 or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before synchro_injecteur2_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to synchro_injecteur2_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help synchro_injecteur2</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 05-May-2006 20:26:14</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction synchro_injecteur2_OpeningFcn(hObject, eventdata, handles, varargin)">synchro_injecteur2_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = synchro_injecteur2_OutputFcn(hObject, eventdata, handles)">synchro_injecteur2_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before synchro_injecteur2 is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function synchro_injecteur2_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to synchro_injecteur2 (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for synchro_injecteur2</span>
+0056 handles.output = hObject;
+0057 load(<span class="string">'synchro_offset'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>)
+0058 set(handles.inj_offset,<span class="string">'String'</span>,num2str(inj_offset));
+0059 set(handles.ext_offset,<span class="string">'String'</span>,num2str(ext_offset));
+0060 
+0061 <span class="comment">% periode du trigger par defaut = 4/3</span>
+0062 handles.periode = 1.36;
+0063 set(handles.periode_edit,<span class="string">'String'</span>,num2str(handles.periode));
+0064 
+0065 <span class="comment">% Creates timer Infinite loop</span>
+0066 timer1=timer(<span class="string">'StartDelay'</span>,1,<span class="keyword">...</span>
+0067     <span class="string">'ExecutionMode'</span>,<span class="string">'fixedRate'</span>,<span class="string">'Period'</span>,handles.periode,<span class="string">'TasksToExecute'</span>,Inf);
+0068 timer1.TimerFcn = {@<a href="#_sub54" class="code" title="subfunction fonction_alex(arg1,arg2,hObject,eventdata,handles)">fonction_alex</a>, hObject,eventdata, handles};
+0069 setappdata(handles.figure1,<span class="string">'Timer'</span>,timer1);
+0070 
+0071 <span class="comment">% button group sur on/off timer du trigger</span>
+0072 h = uibuttongroup(<span class="string">'visible'</span>,<span class="string">'off'</span>,<span class="string">'Position'</span>,[0.160 0.24 0.10 0.12],<span class="keyword">...</span>
+0073     <span class="string">'Title'</span>,<span class="string">''</span>,<span class="string">'TitlePosition'</span>,<span class="string">'centertop'</span>,<span class="keyword">...</span>
+0074     <span class="string">'BackgroundColor'</span>,[1 0.3 0 ]);
+0075 u1 = uicontrol(<span class="string">'Style'</span>,<span class="string">'Radio'</span>,<span class="string">'String'</span>,<span class="string">'OFF'</span>,<span class="string">'Tag'</span>,<span class="string">'radiobutton1'</span>,<span class="keyword">...</span>
+0076     <span class="string">'pos'</span>,[45 20 40 25],<span class="string">'parent'</span>,h,<span class="string">'HandleVisibility'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0077     <span class="string">'BackgroundColor'</span>,[1 0.3 0  ]);
+0078 u2 = uicontrol(<span class="string">'Style'</span>,<span class="string">'Radio'</span>,<span class="string">'String'</span>,<span class="string">'ON'</span>,<span class="string">'Tag'</span>,<span class="string">'radiobutton2'</span>,<span class="keyword">...</span>
+0079     <span class="string">'pos'</span>,[45 50 40 25],<span class="string">'parent'</span>,h,<span class="string">'HandleVisibility'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0080     <span class="string">'BackgroundColor'</span>,[1 0.3 0 ]);
+0081 set(h,<span class="string">'SelectionChangeFcn'</span>,<span class="keyword">...</span>
+0082     {@<a href="#_sub53" class="code" title="subfunction uibuttongroup_SelectionChangeFcn(hObject,eventdata,handles)">uibuttongroup_SelectionChangeFcn</a>,handles});
+0083 
+0084 handles.off = u1;
+0085 handles.on = u2;
+0086 
+0087 set(h,<span class="string">'SelectedObject'</span>,u1); 
+0088 set(h,<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0089 
+0090 <span class="comment">%% Set closing gui function</span>
+0091 set(handles.figure1,<span class="string">'CloseRequestFcn'</span>,{@<a href="#_sub55" class="code" title="subfunction Closinggui(obj, event, handles, figure1)">Closinggui</a>,timer1,handles.figure1});
+0092 
+0093 <span class="comment">% Update handles structure</span>
+0094 guidata(hObject, handles);
+0095 
+0096 <span class="comment">% UIWAIT makes synchro_injecteur2 wait for user response (see UIRESUME)</span>
+0097 <span class="comment">% uiwait(handles.figure1);</span>
+0098 
+0099 
+0100 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0101 <a name="_sub2" href="#_subfunctions" class="code">function varargout = synchro_injecteur2_OutputFcn(hObject, eventdata, handles) </a>
+0102 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0103 <span class="comment">% hObject    handle to figure</span>
+0104 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0105 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0106 
+0107 <span class="comment">% Get default command line output from handles structure</span>
+0108 varargout{1} = handles.output;
+0109 
+0110 
+0111 
+0112 <a name="_sub3" href="#_subfunctions" class="code">function alim_dipole_Callback(hObject, eventdata, handles)</a>
+0113 <span class="comment">% hObject    handle to alim_dipole (see GCBO)</span>
+0114 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0115 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0116 
+0117 <span class="comment">% Hints: get(hObject,'String') returns contents of alim_dipole as text</span>
+0118 <span class="comment">%        str2double(get(hObject,'String')) returns contents of alim_dipole as a double</span>
+0119 h=gcf
+0120 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0121 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpTimeDelay'</span>,delay);
+0122 
+0123 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0124 <a name="_sub4" href="#_subfunctions" class="code">function alim_dipole_CreateFcn(hObject, eventdata, handles)</a>
+0125 <span class="comment">% hObject    handle to alim_dipole (see GCBO)</span>
+0126 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0127 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0128 
+0129 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0130 <span class="comment">%       See ISPC and COMPUTER.</span>
+0131 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0132     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0133 <span class="keyword">end</span>
+0134 
+0135 
+0136 <a name="_sub5" href="#_subfunctions" class="code">function alim_qf_Callback(hObject, eventdata, handles)</a>
+0137 <span class="comment">% hObject    handle to alim_qf (see GCBO)</span>
+0138 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0139 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0140 
+0141 <span class="comment">% Hints: get(hObject,'String') returns contents of alim_qf as text</span>
+0142 <span class="comment">%        str2double(get(hObject,'String')) returns contents of alim_qf as a double</span>
+0143 
+0144 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0145 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfTimeDelay'</span>,delay);
+0146 
+0147 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0148 <a name="_sub6" href="#_subfunctions" class="code">function alim_qf_CreateFcn(hObject, eventdata, handles)</a>
+0149 <span class="comment">% hObject    handle to alim_qf (see GCBO)</span>
+0150 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0151 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0152 
+0153 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0154 <span class="comment">%       See ISPC and COMPUTER.</span>
+0155 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0156     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0157 <span class="keyword">end</span>
+0158 
+0159 
+0160 
+0161 <a name="_sub7" href="#_subfunctions" class="code">function alim_qd_Callback(hObject, eventdata, handles)</a>
+0162 <span class="comment">% hObject    handle to alim_qd (see GCBO)</span>
+0163 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0164 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0165 
+0166 <span class="comment">% Hints: get(hObject,'String') returns contents of alim_qd as text</span>
+0167 <span class="comment">%        str2double(get(hObject,'String')) returns contents of alim_qd as a double</span>
+0168 
+0169 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0170 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdTimeDelay'</span>,delay);
+0171 
+0172 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0173 <a name="_sub8" href="#_subfunctions" class="code">function alim_qd_CreateFcn(hObject, eventdata, handles)</a>
+0174 <span class="comment">% hObject    handle to alim_qd (see GCBO)</span>
+0175 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0176 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0177 
+0178 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0179 <span class="comment">%       See ISPC and COMPUTER.</span>
+0180 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0181     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0182 <span class="keyword">end</span>
+0183 
+0184 
+0185 
+0186 <a name="_sub9" href="#_subfunctions" class="code">function alim_sf_Callback(hObject, eventdata, handles)</a>
+0187 <span class="comment">% hObject    handle to alim_sf (see GCBO)</span>
+0188 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0189 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0190 
+0191 <span class="comment">% Hints: get(hObject,'String') returns contents of alim_sf as text</span>
+0192 <span class="comment">%        str2double(get(hObject,'String')) returns contents of alim_sf as a double</span>
+0193 
+0194 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0195 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfTimeDelay'</span>,delay);
+0196 
+0197 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0198 <a name="_sub10" href="#_subfunctions" class="code">function alim_sf_CreateFcn(hObject, eventdata, handles)</a>
+0199 <span class="comment">% hObject    handle to alim_sf (see GCBO)</span>
+0200 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0201 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0202 
+0203 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0204 <span class="comment">%       See ISPC and COMPUTER.</span>
+0205 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0206     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0207 <span class="keyword">end</span>
+0208 
+0209 
+0210 
+0211 <a name="_sub11" href="#_subfunctions" class="code">function alim_sd_Callback(hObject, eventdata, handles)</a>
+0212 <span class="comment">% hObject    handle to alim_sd (see GCBO)</span>
+0213 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0214 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0215 
+0216 <span class="comment">% Hints: get(hObject,'String') returns contents of alim_sd as text</span>
+0217 <span class="comment">%        str2double(get(hObject,'String')) returns contents of alim_sd as a double</span>
+0218 
+0219 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0220 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdTimeDelay'</span>,delay);
+0221 
+0222 
+0223 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0224 <a name="_sub12" href="#_subfunctions" class="code">function alim_sd_CreateFcn(hObject, eventdata, handles)</a>
+0225 <span class="comment">% hObject    handle to alim_sd (see GCBO)</span>
+0226 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0227 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0228 
+0229 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0230 <span class="comment">%       See ISPC and COMPUTER.</span>
+0231 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0232     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0233 <span class="keyword">end</span>
+0234 
+0235 
+0236 
+0237 <a name="_sub13" href="#_subfunctions" class="code">function boo_rf_Callback(hObject, eventdata, handles)</a>
+0238 <span class="comment">% hObject    handle to boo_rf (see GCBO)</span>
+0239 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0240 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0241 
+0242 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_rf as text</span>
+0243 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_rf as a double</span>
+0244 
+0245 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0246 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfTimeDelay'</span>,delay);
+0247 
+0248 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0249 <a name="_sub14" href="#_subfunctions" class="code">function boo_rf_CreateFcn(hObject, eventdata, handles)</a>
+0250 <span class="comment">% hObject    handle to boo_rf (see GCBO)</span>
+0251 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0252 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0253 
+0254 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0255 <span class="comment">%       See ISPC and COMPUTER.</span>
+0256 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0257     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0258 <span class="keyword">end</span>
+0259 
+0260 
+0261 
+0262 <a name="_sub15" href="#_subfunctions" class="code">function lin_canon_Callback(hObject, eventdata, handles)</a>
+0263 <span class="comment">% hObject    handle to lin_canon (see GCBO)</span>
+0264 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0265 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0266 
+0267 <span class="comment">% Hints: get(hObject,'String') returns contents of lin_canon as text</span>
+0268 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lin_canon as a double</span>
+0269 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0270 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0271 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmTimeDelay'</span>,delay);
+0272 
+0273 
+0274 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0275 <a name="_sub16" href="#_subfunctions" class="code">function lin_canon_CreateFcn(hObject, eventdata, handles)</a>
+0276 <span class="comment">% hObject    handle to lin_canon (see GCBO)</span>
+0277 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0278 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0279 
+0280 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0281 <span class="comment">%       See ISPC and COMPUTER.</span>
+0282 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0283     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0284 <span class="keyword">end</span>
+0285 
+0286 
+0287 
+0288 <a name="_sub17" href="#_subfunctions" class="code">function lt1_emittance_Callback(hObject, eventdata, handles)</a>
+0289 <span class="comment">% hObject    handle to lt1_emittance (see GCBO)</span>
+0290 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0291 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0292 
+0293 <span class="comment">% Hints: get(hObject,'String') returns contents of lt1_emittance as text</span>
+0294 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt1_emittance as a double</span>
+0295 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0296 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0297 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,delay);
+0298 
+0299 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0300 <a name="_sub18" href="#_subfunctions" class="code">function lt1_emittance_CreateFcn(hObject, eventdata, handles)</a>
+0301 <span class="comment">% hObject    handle to lt1_emittance (see GCBO)</span>
+0302 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0303 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0304 
+0305 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0306 <span class="comment">%       See ISPC and COMPUTER.</span>
+0307 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0308     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0309 <span class="keyword">end</span>
+0310 
+0311 
+0312 
+0313 <a name="_sub19" href="#_subfunctions" class="code">function lt1_MC1_Callback(hObject, eventdata, handles)</a>
+0314 <span class="comment">% hObject    handle to lt1_MC1 (see GCBO)</span>
+0315 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0316 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0317 
+0318 <span class="comment">% Hints: get(hObject,'String') returns contents of lt1_MC1 as text</span>
+0319 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt1_MC1 as a double</span>
+0320 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0321 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0322 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1TimeDelay'</span>,delay);
+0323 
+0324 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0325 <a name="_sub20" href="#_subfunctions" class="code">function lt1_MC1_CreateFcn(hObject, eventdata, handles)</a>
+0326 <span class="comment">% hObject    handle to lt1_MC1 (see GCBO)</span>
+0327 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0328 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0329 
+0330 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0331 <span class="comment">%       See ISPC and COMPUTER.</span>
+0332 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0333     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0334 <span class="keyword">end</span>
+0335 
+0336 
+0337 
+0338 <a name="_sub21" href="#_subfunctions" class="code">function lt1_MC2_Callback(hObject, eventdata, handles)</a>
+0339 <span class="comment">% hObject    handle to lt1_MC2 (see GCBO)</span>
+0340 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0341 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0342 
+0343 <span class="comment">% Hints: get(hObject,'String') returns contents of lt1_MC2 as text</span>
+0344 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt1_MC2 as a double</span>
+0345 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0346 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0347 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2TimeDelay'</span>,delay);
+0348 
+0349 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0350 <a name="_sub22" href="#_subfunctions" class="code">function lt1_MC2_CreateFcn(hObject, eventdata, handles)</a>
+0351 <span class="comment">% hObject    handle to lt1_MC2 (see GCBO)</span>
+0352 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0353 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0354 
+0355 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0356 <span class="comment">%       See ISPC and COMPUTER.</span>
+0357 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0358     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0359 <span class="keyword">end</span>
+0360 
+0361 
+0362 
+0363 <a name="_sub23" href="#_subfunctions" class="code">function lt1_osc_Callback(hObject, eventdata, handles)</a>
+0364 <span class="comment">% hObject    handle to lt1_osc (see GCBO)</span>
+0365 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0366 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0367 
+0368 <span class="comment">% Hints: get(hObject,'String') returns contents of lt1_osc as text</span>
+0369 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt1_osc as a double</span>
+0370 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0371 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0372 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+0373 
+0374 
+0375 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0376 <a name="_sub24" href="#_subfunctions" class="code">function lt1_osc_CreateFcn(hObject, eventdata, handles)</a>
+0377 <span class="comment">% hObject    handle to lt1_osc (see GCBO)</span>
+0378 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0379 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0380 
+0381 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0382 <span class="comment">%       See ISPC and COMPUTER.</span>
+0383 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0384     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0385 <span class="keyword">end</span>
+0386 
+0387 
+0388 
+0389 <a name="_sub25" href="#_subfunctions" class="code">function sdc1_Callback(hObject, eventdata, handles)</a>
+0390 <span class="comment">% hObject    handle to sdc1 (see GCBO)</span>
+0391 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0392 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0393 
+0394 <span class="comment">% Hints: get(hObject,'String') returns contents of sdc1 as text</span>
+0395 <span class="comment">%        str2double(get(hObject,'String')) returns contents of sdc1 as a double</span>
+0396 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0397 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0398 tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+0399 
+0400 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0401 <a name="_sub26" href="#_subfunctions" class="code">function sdc1_CreateFcn(hObject, eventdata, handles)</a>
+0402 <span class="comment">% hObject    handle to sdc1 (see GCBO)</span>
+0403 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0404 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0405 
+0406 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0407 <span class="comment">%       See ISPC and COMPUTER.</span>
+0408 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0409     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0410 <span class="keyword">end</span>
+0411 
+0412 
+0413 
+0414 <a name="_sub27" href="#_subfunctions" class="code">function boo_inj_septum_Callback(hObject, eventdata, handles)</a>
+0415 <span class="comment">% hObject    handle to boo_inj_septum (see GCBO)</span>
+0416 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0417 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0418 
+0419 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_inj_septum as text</span>
+0420 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_inj_septum as a double</span>
+0421 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0422 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0423 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>,delay);
+0424 
+0425 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0426 <a name="_sub28" href="#_subfunctions" class="code">function boo_inj_septum_CreateFcn(hObject, eventdata, handles)</a>
+0427 <span class="comment">% hObject    handle to boo_inj_septum (see GCBO)</span>
+0428 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0429 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0430 
+0431 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0432 <span class="comment">%       See ISPC and COMPUTER.</span>
+0433 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0434     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0435 <span class="keyword">end</span>
+0436 
+0437 
+0438 
+0439 <a name="_sub29" href="#_subfunctions" class="code">function boo_inj_kicker_Callback(hObject, eventdata, handles)</a>
+0440 <span class="comment">% hObject    handle to boo_inj_kicker (see GCBO)</span>
+0441 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0442 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0443 
+0444 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_inj_kicker as text</span>
+0445 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_inj_kicker as a double</span>
+0446 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0447 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0448 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigTimeDelay'</span>,delay);
+0449 
+0450 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0451 <a name="_sub30" href="#_subfunctions" class="code">function boo_inj_kicker_CreateFcn(hObject, eventdata, handles)</a>
+0452 <span class="comment">% hObject    handle to boo_inj_kicker (see GCBO)</span>
+0453 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0454 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0455 
+0456 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0457 <span class="comment">%       See ISPC and COMPUTER.</span>
+0458 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0459     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0460 <span class="keyword">end</span>
+0461 
+0462 
+0463 
+0464 <a name="_sub31" href="#_subfunctions" class="code">function boo_bpm_Callback(hObject, eventdata, handles)</a>
+0465 <span class="comment">% hObject    handle to boo_bpm (see GCBO)</span>
+0466 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0467 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0468 
+0469 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_bpm as text</span>
+0470 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_bpm as a double</span>
+0471 
+0472 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0473 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0474 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigTimeDelay'</span>,delay);
+0475 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigTimeDelay'</span>,delay);
+0476 tango_write_attribute2(<span class="string">'BOO-BTB/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btb.trigTimeDelay'</span>,delay);
+0477 tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btc.trigTimeDelay'</span>,delay);
+0478 
+0479 
+0480 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0481 <a name="_sub32" href="#_subfunctions" class="code">function boo_bpm_CreateFcn(hObject, eventdata, handles)</a>
+0482 <span class="comment">% hObject    handle to boo_bpm (see GCBO)</span>
+0483 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0484 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0485 
+0486 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0487 <span class="comment">%       See ISPC and COMPUTER.</span>
+0488 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0489     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0490 <span class="keyword">end</span>
+0491 
+0492 
+0493 
+0494 <a name="_sub33" href="#_subfunctions" class="code">function boo_nod_Callback(hObject, eventdata, handles)</a>
+0495 <span class="comment">% hObject    handle to boo_nod (see GCBO)</span>
+0496 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0497 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0498 
+0499 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_nod as text</span>
+0500 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_nod as a double</span>
+0501 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0502 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0503 tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigTimeDelay'</span>,delay);
+0504 
+0505 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0506 <a name="_sub34" href="#_subfunctions" class="code">function boo_nod_CreateFcn(hObject, eventdata, handles)</a>
+0507 <span class="comment">% hObject    handle to boo_nod (see GCBO)</span>
+0508 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0509 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0510 
+0511 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0512 <span class="comment">%       See ISPC and COMPUTER.</span>
+0513 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0514     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0515 <span class="keyword">end</span>
+0516 
+0517 
+0518 
+0519 <a name="_sub35" href="#_subfunctions" class="code">function boo_dcct_Callback(hObject, eventdata, handles)</a>
+0520 <span class="comment">% hObject    handle to boo_dcct (see GCBO)</span>
+0521 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0522 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0523 
+0524 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_dcct as text</span>
+0525 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_dcct as a double</span>
+0526 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0527 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+0528 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booTimeDelay'</span>,delay);
+0529 
+0530 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0531 <a name="_sub36" href="#_subfunctions" class="code">function boo_dcct_CreateFcn(hObject, eventdata, handles)</a>
+0532 <span class="comment">% hObject    handle to boo_dcct (see GCBO)</span>
+0533 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0534 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0535 
+0536 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0537 <span class="comment">%       See ISPC and COMPUTER.</span>
+0538 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0539     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0540 <span class="keyword">end</span>
+0541 
+0542 
+0543 
+0544 <a name="_sub37" href="#_subfunctions" class="code">function boo_hall_Callback(hObject, eventdata, handles)</a>
+0545 <span class="comment">% hObject    handle to boo_hall (see GCBO)</span>
+0546 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0547 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0548 
+0549 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_hall as text</span>
+0550 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_hall as a double</span>
+0551 
+0552 
+0553 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0554 <a name="_sub38" href="#_subfunctions" class="code">function boo_hall_CreateFcn(hObject, eventdata, handles)</a>
+0555 <span class="comment">% hObject    handle to boo_hall (see GCBO)</span>
+0556 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0557 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0558 
+0559 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0560 <span class="comment">%       See ISPC and COMPUTER.</span>
+0561 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0562     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0563 <span class="keyword">end</span>
+0564 
+0565 
+0566 
+0567 <a name="_sub39" href="#_subfunctions" class="code">function pc_address_Callback(hObject, eventdata, handles)</a>
+0568 <span class="comment">% hObject    handle to pc_address (see GCBO)</span>
+0569 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0570 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0571 
+0572 <span class="comment">% Hints: get(hObject,'String') returns contents of pc_address as text</span>
+0573 <span class="comment">%        str2double(get(hObject,'String')) returns contents of pc_address as a double</span>
+0574 
+0575 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0576 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>,delay);
+0577 
+0578 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0579 <a name="_sub40" href="#_subfunctions" class="code">function pc_address_CreateFcn(hObject, eventdata, handles)</a>
+0580 <span class="comment">% hObject    handle to pc_address (see GCBO)</span>
+0581 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0582 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0583 
+0584 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0585 <span class="comment">%       See ISPC and COMPUTER.</span>
+0586 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0587     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0588 <span class="keyword">end</span>
+0589 
+0590 
+0591 
+0592 <a name="_sub41" href="#_subfunctions" class="code">function inj_address_Callback(hObject, eventdata, handles)</a>
+0593 <span class="comment">% hObject    handle to inj_address (see GCBO)</span>
+0594 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0595 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0596 
+0597 <span class="comment">% Hints: get(hObject,'String') returns contents of inj_address as text</span>
+0598 <span class="comment">%        str2double(get(hObject,'String')) returns contents of inj_address as a double</span>
+0599 
+0600 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0601 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>,delay);
+0602 
+0603 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0604 <a name="_sub42" href="#_subfunctions" class="code">function inj_address_CreateFcn(hObject, eventdata, handles)</a>
+0605 <span class="comment">% hObject    handle to inj_address (see GCBO)</span>
+0606 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0607 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0608 
+0609 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0610 <span class="comment">%       See ISPC and COMPUTER.</span>
+0611 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0612     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0613 <span class="keyword">end</span>
+0614 
+0615 
+0616 
+0617 <a name="_sub43" href="#_subfunctions" class="code">function edit21_Callback(hObject, eventdata, handles)</a>
+0618 <span class="comment">% hObject    handle to pc_address (see GCBO)</span>
+0619 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0620 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0621 
+0622 <span class="comment">% Hints: get(hObject,'String') returns contents of pc_address as text</span>
+0623 <span class="comment">%        str2double(get(hObject,'String')) returns contents of pc_address as a double</span>
+0624 
+0625 
+0626 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0627 <a name="_sub44" href="#_subfunctions" class="code">function edit21_CreateFcn(hObject, eventdata, handles)</a>
+0628 <span class="comment">% hObject    handle to pc_address (see GCBO)</span>
+0629 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0630 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0631 
+0632 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0633 <span class="comment">%       See ISPC and COMPUTER.</span>
+0634 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0635     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0636 <span class="keyword">end</span>
+0637 
+0638 
+0639 
+0640 <a name="_sub45" href="#_subfunctions" class="code">function soft_address_Callback(hObject, eventdata, handles)</a>
+0641 <span class="comment">% hObject    handle to soft_address (see GCBO)</span>
+0642 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0643 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0644 
+0645 <span class="comment">% Hints: get(hObject,'String') returns contents of soft_address as text</span>
+0646 <span class="comment">%        str2double(get(hObject,'String')) returns contents of soft_address as a double</span>
+0647 
+0648 delay=str2double(get(hObject,<span class="string">'String'</span>));
+0649 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>,delay);
+0650 
+0651 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0652 <a name="_sub46" href="#_subfunctions" class="code">function soft_address_CreateFcn(hObject, eventdata, handles)</a>
+0653 <span class="comment">% hObject    handle to soft_address (see GCBO)</span>
+0654 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0655 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0656 
+0657 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0658 <span class="comment">%       See ISPC and COMPUTER.</span>
+0659 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0660     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0661 <span class="keyword">end</span>
+0662 
+0663 
+0664 <span class="comment">% --- Executes on button press in acquisition1.</span>
+0665 <a name="_sub47" href="#_subfunctions" class="code">function acquisition1_Callback(hObject, eventdata, handles)</a>
+0666 <span class="comment">% hObject    handle to acquisition1 (see GCBO)</span>
+0667 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0668 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0669 
+0670 set(handles.inj_offset,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0671 set(handles.sdc1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0672 set(handles.lin_canon,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0673 set(handles.boo_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0674 set(handles.lt1_emittance,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0675 set(handles.lt1_MC1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0676 set(handles.lt1_MC2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0677 set(handles.lt1_osc,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0678 set(handles.boo_dcct,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0679 set(handles.boo_nod,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0680 set(handles.boo_inj_septum,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0681 set(handles.boo_inj_kicker,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0682 set(handles.alim_dipole,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0683 set(handles.alim_qf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0684 set(handles.alim_qd,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0685 set(handles.alim_sf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0686 set(handles.alim_sd,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0687 set(handles.boo_rf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0688 set(handles.lin_modulateur,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0689 set(handles.ext_offset,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0690 set(handles.boo_ext_dof,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0691 set(handles.boo_ext_sept_p,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0692 set(handles.boo_ext_sept_a,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0693 set(handles.boo_ext_kicker,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0694 set(handles.sdc2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0695 set(handles.lt2_emittance,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0696 set(handles.lt2_osc,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0697 set(handles.lt2_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0698 set(handles.ans_inj_k1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0699 set(handles.ans_inj_k2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0700 set(handles.ans_inj_k3,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0701 set(handles.ans_inj_k4,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0702 set(handles.ans_inj_sept_p,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0703 set(handles.ans_inj_sept_a,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0704 set(handles.ans_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0705 set(handles.ans_dcct,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0706 
+0707 
+0708 
+0709 n=1;
+0710 
+0711 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);
+0712 set(handles.pc_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0713 
+0714 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+0715 set(handles.inj_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0716 
+0717 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+0718 set(handles.soft_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0719 
+0720 temp=tango_read_attribute(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+0721 set(handles.ext_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0722 
+0723 
+0724 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0725 set(handles.sdc1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0726 
+0727 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmTimeDelay'</span>);
+0728 set(handles.lin_canon,<span class="string">'String'</span>,num2str(temp.value(n)));
+0729 
+0730 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigTimeDelay'</span>);
+0731 set(handles.boo_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0732 
+0733 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0734 set(handles.lt1_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+0735 
+0736 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1TimeDelay'</span>);
+0737 set(handles.lt1_MC1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0738 
+0739 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2TimeDelay'</span>);
+0740 set(handles.lt1_MC2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0741 
+0742 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0743 set(handles.lt1_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+0744 
+0745 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booTimeDelay'</span>);
+0746 set(handles.boo_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+0747 
+0748 temp=tango_read_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigTimeDelay'</span>);
+0749 set(handles.boo_nod,<span class="string">'String'</span>,num2str(temp.value(n)));
+0750 
+0751 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0752 set(handles.boo_inj_septum,<span class="string">'String'</span>,num2str(temp.value(n)));
+0753 
+0754 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0755 set(handles.boo_inj_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+0756 
+0757 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpTimeDelay'</span>);
+0758 set(handles.alim_dipole,<span class="string">'String'</span>,num2str(temp.value(n)));
+0759 
+0760 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfTimeDelay'</span>);
+0761 set(handles.alim_qf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0762 
+0763 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdTimeDelay'</span>);
+0764 set(handles.alim_qd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0765 
+0766 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfTimeDelay'</span>);
+0767 set(handles.alim_sf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0768 
+0769 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdTimeDelay'</span>);
+0770 set(handles.alim_sd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0771 
+0772 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfTimeDelay'</span>);
+0773 set(handles.boo_rf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0774 
+0775 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0776 set(handles.lin_modulateur,<span class="string">'String'</span>,num2str(temp.value(n)));
+0777 
+0778 
+0779 
+0780 
+0781 
+0782 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigTimeDelay'</span>);
+0783 set(handles.boo_ext_dof,<span class="string">'String'</span>,num2str(temp.value(n)));
+0784 
+0785 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0786 set(handles.boo_ext_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+0787 
+0788 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+0789 set(handles.boo_ext_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+0790 
+0791 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0792 set(handles.boo_ext_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+0793 
+0794 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0795 set(handles.sdc2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0796 
+0797 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0798 set(handles.lt2_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+0799 
+0800 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0801 set(handles.lt2_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+0802 
+0803 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0804 set(handles.lt2_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0805 
+0806 
+0807 
+0808 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigTimeDelay'</span>);
+0809 set(handles.ans_inj_k1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0810 
+0811 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigTimeDelay'</span>);
+0812 set(handles.ans_inj_k2,<span class="string">'String'</span>,num2str(temp.value(n)));
+0813 
+0814 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigTimeDelay'</span>);
+0815 set(handles.ans_inj_k3,<span class="string">'String'</span>,num2str(temp.value(n)));
+0816 
+0817 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigTimeDelay'</span>);
+0818 set(handles.ans_inj_k4,<span class="string">'String'</span>,num2str(temp.value(n)));
+0819 
+0820 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0821 set(handles.ans_inj_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+0822 
+0823 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+0824 set(handles.ans_inj_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+0825 
+0826 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0827 set(handles.ans_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+0828 
+0829 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctTimeDelay'</span>);
+0830 set(handles.ans_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+0831 
+0832 
+0833 
+0834 <span class="comment">%status soft checked on linac</span>
+0835 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmEvent'</span>);
+0836 <span class="keyword">if</span> (temp.value(n)==2)
+0837     set(handles.soft_button,<span class="string">'Value'</span>,0);
+0838 <span class="keyword">elseif</span> (temp.value(n)==5)
+0839     set(handles.soft_button,<span class="string">'Value'</span>,1);
+0840 <span class="keyword">end</span>
+0841 
+0842 
+0843 <span class="comment">% --- Executes on button press in acquisition2.</span>
+0844 <a name="_sub48" href="#_subfunctions" class="code">function acquisition2_Callback(hObject, eventdata, handles)</a>
+0845 <span class="comment">% hObject    handle to acquisition2 (see GCBO)</span>
+0846 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0847 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0848 
+0849 
+0850 set(handles.inj_offset,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0851 set(handles.sdc1,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0852 set(handles.lin_canon,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0853 set(handles.boo_bpm,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0854 set(handles.lt1_emittance,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0855 set(handles.lt1_MC1,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0856 set(handles.lt1_MC2,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0857 set(handles.lt1_osc,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0858 set(handles.boo_dcct,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0859 set(handles.boo_nod,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0860 set(handles.boo_inj_septum,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0861 set(handles.boo_inj_kicker,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0862 set(handles.alim_dipole,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0863 set(handles.alim_qf,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0864 set(handles.alim_qd,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0865 set(handles.alim_sf,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0866 set(handles.alim_sd,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0867 set(handles.boo_rf,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0868 set(handles.lin_modulateur,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0869 set(handles.ext_offset,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0870 set(handles.boo_ext_dof,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0871 set(handles.boo_ext_sept_p,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0872 set(handles.boo_ext_sept_a,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0873 set(handles.boo_ext_kicker,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0874 set(handles.sdc2,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0875 set(handles.lt2_emittance,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0876 set(handles.lt2_osc,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0877 set(handles.lt2_bpm,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0878 set(handles.ans_inj_k1,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0879 set(handles.ans_inj_k2,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0880 set(handles.ans_inj_k3,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0881 set(handles.ans_inj_k4,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0882 set(handles.ans_inj_sept_p,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0883 set(handles.ans_inj_sept_a,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0884 set(handles.ans_bpm,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0885 set(handles.ans_dcct,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0886 
+0887 n=1;
+0888 
+0889 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);
+0890 set(handles.pc_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0891 
+0892 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+0893 set(handles.inj_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0894 
+0895 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+0896 set(handles.soft_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0897 set(handles.soft_address1,<span class="string">'String'</span>,num2str(temp.value(n)));
+0898 
+0899 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+0900 set(handles.ext_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+0901 
+0902 
+0903 
+0904 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0905 
+0906 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0907 set(handles.sdc1,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0908 
+0909 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmTimeDelay'</span>);
+0910 set(handles.lin_canon,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0911 
+0912 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigTimeDelay'</span>);
+0913 set(handles.boo_bpm,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0914 
+0915 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0916 set(handles.lt1_emittance,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0917 
+0918 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1TimeDelay'</span>);
+0919 set(handles.lt1_MC1,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0920 
+0921 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2TimeDelay'</span>);
+0922 set(handles.lt1_MC2,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0923 
+0924 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0925 set(handles.lt1_osc,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0926 
+0927 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booTimeDelay'</span>);
+0928 set(handles.boo_dcct,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0929 
+0930 temp=tango_read_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigTimeDelay'</span>);
+0931 set(handles.boo_nod,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0932 
+0933 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0934 set(handles.boo_inj_septum,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0935 
+0936 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0937 set(handles.boo_inj_kicker,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0938 
+0939 
+0940 
+0941 
+0942 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpTimeDelay'</span>);
+0943 set(handles.alim_dipole,<span class="string">'String'</span>,num2str(temp.value(n)));
+0944 
+0945 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfTimeDelay'</span>);
+0946 set(handles.alim_qf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0947 
+0948 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdTimeDelay'</span>);
+0949 set(handles.alim_qd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0950 
+0951 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfTimeDelay'</span>);
+0952 set(handles.alim_sf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0953 
+0954 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdTimeDelay'</span>);
+0955 set(handles.alim_sd,<span class="string">'String'</span>,num2str(temp.value(n)));
+0956 
+0957 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfTimeDelay'</span>);
+0958 set(handles.boo_rf,<span class="string">'String'</span>,num2str(temp.value(n)));
+0959 
+0960 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0961 set(handles.lin_modulateur,<span class="string">'String'</span>,num2str(temp.value(n)-inj_offset));
+0962 
+0963 
+0964 
+0965 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+0966 
+0967 
+0968 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigTimeDelay'</span>);
+0969 set(handles.boo_ext_dof,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0970 
+0971 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0972 set(handles.boo_ext_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0973 
+0974 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+0975 set(handles.boo_ext_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0976 
+0977 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0978 set(handles.boo_ext_kicker,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0979 
+0980 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0981 set(handles.sdc2,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0982 
+0983 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0984 set(handles.lt2_emittance,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0985 
+0986 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0987 set(handles.lt2_osc,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0988 
+0989 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0990 set(handles.lt2_bpm,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0991 
+0992 
+0993 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigTimeDelay'</span>);
+0994 set(handles.ans_inj_k1,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0995 
+0996 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigTimeDelay'</span>);
+0997 set(handles.ans_inj_k2,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+0998 
+0999 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigTimeDelay'</span>);
+1000 set(handles.ans_inj_k3,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1001 
+1002 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigTimeDelay'</span>);
+1003 set(handles.ans_inj_k4,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1004 
+1005 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+1006 set(handles.ans_inj_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1007 
+1008 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+1009 set(handles.ans_inj_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1010 
+1011 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+1012 set(handles.ans_bpm,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1013 
+1014 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctTimeDelay'</span>);
+1015 set(handles.ans_dcct,<span class="string">'String'</span>,num2str(temp.value(n)-ext_offset));
+1016 
+1017 
+1018 <span class="comment">%status soft checked on linac</span>
+1019 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmEvent'</span>);
+1020 <span class="keyword">if</span> (temp.value(n)==2)
+1021     set(handles.soft_button,<span class="string">'Value'</span>,0);
+1022 <span class="keyword">elseif</span> (temp.value(n)==5)
+1023     set(handles.soft_button,<span class="string">'Value'</span>,1);
+1024 <span class="keyword">end</span>
+1025 
+1026 
+1027 
+1028 <span class="comment">% --- Executes on button press in soft_button.</span>
+1029 <a name="_sub49" href="#_subfunctions" class="code">function soft_button_Callback(hObject, eventdata, handles)</a>
+1030 <span class="comment">% hObject    handle to soft_button (see GCBO)</span>
+1031 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1032 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1033 
+1034 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of soft_button</span>
+1035 
+1036 etat=get(hObject,<span class="string">'Value'</span>);
+1037 tout=0.5;
+1038 <span class="keyword">if</span> (etat==0)
+1039     event=int32(2) ;<span class="comment">% adresse de l'injection</span>
+1040     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+1041     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmEvent'</span>,event); pause(tout);
+1042     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareEvent'</span>,event); pause(tout);
+1043     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+1044     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+1045     tango_write_attribute2(<span class="string">'BOO-BTB/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+1046     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout); 
+1047     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event); pause(tout);
+1048     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,event); pause(tout);
+1049     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,event); pause(tout);
+1050     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+1051     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,event); pause(tout);
+1052     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+1053     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event); pause(tout);
+1054     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,event);
+1055     event=int32(3) ;<span class="comment">% adresse de l'extraction</span>
+1056     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,event);pause(tout);
+1057     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,event);pause(tout);
+1058     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+1059     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+1060     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,event);pause(tout);
+1061     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1062     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event);pause(tout);
+1063     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event);pause(tout);
+1064     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,event);pause(tout);
+1065     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigEvent'</span>,event);pause(tout);
+1066     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigEvent'</span>,event);pause(tout);
+1067     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigEvent'</span>,event);pause(tout);
+1068     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigEvent'</span>,event);pause(tout);
+1069     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+1070     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+1071     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>,event);pause(tout);
+1072     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1073     tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1074     tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1075     tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1076     tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1077     tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1078     tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1079     tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1080     tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1081     tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1082     tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1083     tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1084     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1085     tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1086     tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1087     tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1088     
+1089 
+1090     <span class="comment">% special modulateur</span>
+1091     inj=str2double(get(handles.inj_address,<span class="string">'String'</span>));
+1092     soft=str2double(get(handles.soft_address,<span class="string">'String'</span>));
+1093     temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+1094     delay=temp.value(1)-(soft)+0.00568;
+1095     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1096     
+1097     
+1098 <span class="keyword">elseif</span> (etat==1)
+1099     event=int32(5) ;<span class="comment">% adresse de l'injection</span>
+1100     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+1101     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmEvent'</span>,event); pause(tout);
+1102     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+1103     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+1104     tango_write_attribute2(<span class="string">'BOO-BTB/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+1105     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout);     
+1106     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event); pause(tout);
+1107     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,event); pause(tout);
+1108     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,event); pause(tout);
+1109     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+1110     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,event); pause(tout);
+1111     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+1112     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event); pause(tout);
+1113     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,event);
+1114     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,event);pause(tout);
+1115     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,event);pause(tout);
+1116     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+1117     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+1118     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,event);pause(tout);
+1119     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1120     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event);pause(tout);
+1121     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event);pause(tout);
+1122     tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,event);pause(tout);
+1123     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigEvent'</span>,event);pause(tout);
+1124     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigEvent'</span>,event);pause(tout);
+1125     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigEvent'</span>,event);pause(tout);
+1126     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigEvent'</span>,event);pause(tout);
+1127     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+1128     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+1129     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>,event);pause(tout);
+1130     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1131     tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1132     tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1133     tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1134     tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1135     tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1136     tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1137     tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1138     tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+1139     tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1140     tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1141     tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1142     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1143     tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1144     tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+1145     tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);     
+1146     
+1147     <span class="comment">% special modulateur</span>
+1148     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareEvent'</span>,int32(1)); pause(tout);
+1149     inj=str2double(get(handles.inj_address,<span class="string">'String'</span>));
+1150     soft=str2double(get(handles.soft_address,<span class="string">'String'</span>));
+1151     temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+1152     delay=temp.value(1)+(soft);
+1153     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1154 <span class="keyword">end</span>
+1155 display(<span class="string">'ok change address'</span>)
+1156 
+1157 
+1158 <span class="comment">% --- Executes on button press in push_soft.</span>
+1159 <a name="_sub50" href="#_subfunctions" class="code">function push_soft_Callback(hObject, eventdata, handles)</a>
+1160 <span class="comment">% hObject    handle to push_soft (see GCBO)</span>
+1161 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1162 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1163 disp(<span class="string">'ça marche !!'</span>)
+1164 tango_command_inout(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'FireSoftEvent'</span>);
+1165 
+1166 
+1167 
+1168 <a name="_sub51" href="#_subfunctions" class="code">function periode_edit_Callback(hObject, eventdata, handles)</a>
+1169 <span class="comment">% hObject    handle to periode_edit (see GCBO)</span>
+1170 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1171 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1172 
+1173 <span class="comment">% Hints: get(hObject,'String') returns contents of periode_edit as text</span>
+1174 <span class="comment">%        str2double(get(hObject,'String')) returns contents of periode_edit as a double</span>
+1175 
+1176 val_multishot = get(handles.on,<span class="string">'Value'</span>);
+1177 
+1178 <span class="keyword">if</span> val_multishot
+1179     errordlg(<span class="string">'positionner le trigger a OFF !'</span>,<span class="string">'Attention'</span>);
+1180     <span class="keyword">return</span>
+1181 <span class="keyword">else</span>
+1182     handles.periode = str2double(get(hObject,<span class="string">'String'</span>));
+1183 
+1184     <span class="comment">% change timer Infinite loop</span>
+1185     timer1=timer(<span class="string">'StartDelay'</span>,1,<span class="keyword">...</span>
+1186         <span class="string">'ExecutionMode'</span>,<span class="string">'fixedRate'</span>,<span class="string">'Period'</span>,handles.periode,<span class="string">'TasksToExecute'</span>,Inf);
+1187     timer1.TimerFcn = {@<a href="#_sub54" class="code" title="subfunction fonction_alex(arg1,arg2,hObject,eventdata,handles)">fonction_alex</a>, hObject,eventdata, handles};
+1188     setappdata(handles.figure1,<span class="string">'Timer'</span>,timer1);
+1189 
+1190     <span class="comment">% Update handles structure</span>
+1191     guidata(hObject, handles);
+1192 <span class="keyword">end</span>
+1193 
+1194 
+1195 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1196 <a name="_sub52" href="#_subfunctions" class="code">function periode_edit_CreateFcn(hObject, eventdata, handles)</a>
+1197 <span class="comment">% hObject    handle to periode_edit (see GCBO)</span>
+1198 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1199 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1200 
+1201 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1202 <span class="comment">%       See ISPC and COMPUTER.</span>
+1203 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1204     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1205 <span class="keyword">end</span>
+1206 
+1207 <a name="_sub53" href="#_subfunctions" class="code">function uibuttongroup_SelectionChangeFcn(hObject,eventdata,handles)</a>
+1208 <span class="comment">% hObject    handle to uipanel1 (see GCBO)</span>
+1209 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1210 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1211 
+1212 timer1 = getappdata(handles.figure1,<span class="string">'Timer'</span>);
+1213 <span class="keyword">switch</span> get(get(hObject,<span class="string">'SelectedObject'</span>),<span class="string">'Tag'</span>)  <span class="comment">% Get Tag of selected object</span>
+1214     <span class="keyword">case</span> <span class="string">'radiobutton1'</span>
+1215         <span class="comment">% démarrage du trigger</span>
+1216         stop(timer1);
+1217        
+1218     <span class="keyword">case</span> <span class="string">'radiobutton2'</span>
+1219         <span class="comment">% stop du trigger</span>
+1220         start(timer1);
+1221         
+1222 <span class="keyword">end</span>
+1223 
+1224 <a name="_sub54" href="#_subfunctions" class="code">function fonction_alex(arg1,arg2,hObject,eventdata,handles)</a>
+1225 <span class="comment">% hObject    handle to uipanel1 (see GCBO)</span>
+1226 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1227 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1228 
+1229 <span class="comment">%%  FONCTION ALEX</span>
+1230 disp(datestr(clock))
+1231 tango_command_inout(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'FireSoftEvent'</span>);
+1232 
+1233 
+1234 
+1235 
+1236 
+1237 
+1238 
+1239 <span class="comment">%% What to do before closing the application</span>
+1240 <a name="_sub55" href="#_subfunctions" class="code">function Closinggui(obj, event, handles, figure1)</a>
+1241 
+1242 <span class="comment">% Get default command line output from handles structure</span>
+1243 answer = questdlg(<span class="string">'Fermer softsynchro ?'</span>,<span class="keyword">...</span>
+1244     <span class="string">'Exit softsynchro'</span>,<span class="keyword">...</span>
+1245     <span class="string">'Yes'</span>,<span class="string">'No'</span>,<span class="string">'Yes'</span>);
+1246 
+1247 <span class="keyword">switch</span> answer
+1248     <span class="keyword">case</span> <span class="string">'Yes'</span>           
+1249         delete(handles); <span class="comment">%Delete Timer</span>
+1250         delete(figure1); <span class="comment">%Close gui</span>
+1251     <span class="keyword">otherwise</span>
+1252         disp(<span class="string">'Closing aborted'</span>)
+1253 <span class="keyword">end</span>
+1254 
+1255 
+1256 
+1257 <span class="comment">% --- Executes on button press in button_softmoins.</span>
+1258 <a name="_sub56" href="#_subfunctions" class="code">function button_softmoins_Callback(hObject, eventdata, handles)</a>
+1259 <span class="comment">% hObject    handle to button_softmoins (see GCBO)</span>
+1260 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1261 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1262 
+1263 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+1264 <a href="step.html" class="code" title="">step</a>=temp.value(1)-0.52243;
+1265 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>,<a href="step.html" class="code" title="">step</a>);
+1266 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+1267 set(handles.soft_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1268 
+1269 <span class="comment">% --- Executes on button press in button_softplus.</span>
+1270 <a name="_sub57" href="#_subfunctions" class="code">function button_softplus_Callback(hObject, eventdata, handles)</a>
+1271 <span class="comment">% hObject    handle to button_softplus (see GCBO)</span>
+1272 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1273 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1274 
+1275 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+1276 <a href="step.html" class="code" title="">step</a>=temp.value(1)+0.52243;
+1277 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>,<a href="step.html" class="code" title="">step</a>);
+1278 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+1279 set(handles.soft_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1280 
+1281 
+1282 <span class="comment">% --- Executes on button press in button_injmoins.</span>
+1283 <a name="_sub58" href="#_subfunctions" class="code">function button_injmoins_Callback(hObject, eventdata, handles)</a>
+1284 <span class="comment">% hObject    handle to button_injmoins (see GCBO)</span>
+1285 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1286 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1287 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+1288 <a href="step.html" class="code" title="">step</a>=temp.value(1)-0.52243;
+1289 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>,<a href="step.html" class="code" title="">step</a>);
+1290 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+1291 set(handles.inj_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1292 
+1293 <span class="comment">% --- Executes on button press in button_injplus.</span>
+1294 <a name="_sub59" href="#_subfunctions" class="code">function button_injplus_Callback(hObject, eventdata, handles)</a>
+1295 <span class="comment">% hObject    handle to button_injplus (see GCBO)</span>
+1296 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1297 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1298 
+1299 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+1300 <a href="step.html" class="code" title="">step</a>=temp.value(1)+0.52243;
+1301 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>,<a href="step.html" class="code" title="">step</a>);
+1302 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+1303 set(handles.inj_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1304 
+1305 
+1306 
+1307 <a name="_sub60" href="#_subfunctions" class="code">function boo_ext_dof_Callback(hObject, eventdata, handles)</a>
+1308 <span class="comment">% hObject    handle to boo_ext_dof (see GCBO)</span>
+1309 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1310 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1311 
+1312 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_ext_dof as text</span>
+1313 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_ext_dof as a double</span>
+1314 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1315 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1316 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigTimeDelay'</span>,delay);
+1317 
+1318 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1319 <a name="_sub61" href="#_subfunctions" class="code">function boo_ext_dof_CreateFcn(hObject, eventdata, handles)</a>
+1320 <span class="comment">% hObject    handle to boo_ext_dof (see GCBO)</span>
+1321 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1322 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1323 
+1324 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1325 <span class="comment">%       See ISPC and COMPUTER.</span>
+1326 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1327     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1328 <span class="keyword">end</span>
+1329 
+1330 
+1331 
+1332 <a name="_sub62" href="#_subfunctions" class="code">function boo_ext_sept_p_Callback(hObject, eventdata, handles)</a>
+1333 <span class="comment">% hObject    handle to boo_ext_sept_p (see GCBO)</span>
+1334 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1335 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1336 
+1337 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_ext_sept_p as text</span>
+1338 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_ext_sept_p as a double</span>
+1339 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1340 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1341 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>,delay);
+1342 
+1343 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1344 <a name="_sub63" href="#_subfunctions" class="code">function boo_ext_sept_p_CreateFcn(hObject, eventdata, handles)</a>
+1345 <span class="comment">% hObject    handle to boo_ext_sept_p (see GCBO)</span>
+1346 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1347 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1348 
+1349 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1350 <span class="comment">%       See ISPC and COMPUTER.</span>
+1351 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1352     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1353 <span class="keyword">end</span>
+1354 
+1355 
+1356 
+1357 <a name="_sub64" href="#_subfunctions" class="code">function boo_ext_sept_a_Callback(hObject, eventdata, handles)</a>
+1358 <span class="comment">% hObject    handle to boo_ext_sept_a (see GCBO)</span>
+1359 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1360 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1361 
+1362 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_ext_sept_a as text</span>
+1363 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_ext_sept_a as a double</span>
+1364 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1365 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1366 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigTimeDelay'</span>,delay);
+1367 
+1368 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1369 <a name="_sub65" href="#_subfunctions" class="code">function boo_ext_sept_a_CreateFcn(hObject, eventdata, handles)</a>
+1370 <span class="comment">% hObject    handle to boo_ext_sept_a (see GCBO)</span>
+1371 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1372 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1373 
+1374 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1375 <span class="comment">%       See ISPC and COMPUTER.</span>
+1376 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1377     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1378 <span class="keyword">end</span>
+1379 
+1380 
+1381 
+1382 <a name="_sub66" href="#_subfunctions" class="code">function boo_ext_kicker_Callback(hObject, eventdata, handles)</a>
+1383 <span class="comment">% hObject    handle to boo_ext_kicker (see GCBO)</span>
+1384 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1385 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1386 
+1387 <span class="comment">% Hints: get(hObject,'String') returns contents of boo_ext_kicker as text</span>
+1388 <span class="comment">%        str2double(get(hObject,'String')) returns contents of boo_ext_kicker as a double</span>
+1389 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1390 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1391 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigTimeDelay'</span>,delay);
+1392 
+1393 
+1394 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1395 <a name="_sub67" href="#_subfunctions" class="code">function boo_ext_kicker_CreateFcn(hObject, eventdata, handles)</a>
+1396 <span class="comment">% hObject    handle to boo_ext_kicker (see GCBO)</span>
+1397 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1398 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1399 
+1400 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1401 <span class="comment">%       See ISPC and COMPUTER.</span>
+1402 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1403     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1404 <span class="keyword">end</span>
+1405 
+1406 
+1407 
+1408 <a name="_sub68" href="#_subfunctions" class="code">function ans_inj_sept_p_Callback(hObject, eventdata, handles)</a>
+1409 <span class="comment">% hObject    handle to ans_inj_sept_p (see GCBO)</span>
+1410 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1411 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1412 
+1413 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_sept_p as text</span>
+1414 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_sept_p as a double</span>
+1415 
+1416 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1417 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1418 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigTimeDelay'</span>,delay);
+1419 
+1420 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1421 <a name="_sub69" href="#_subfunctions" class="code">function ans_inj_sept_p_CreateFcn(hObject, eventdata, handles)</a>
+1422 <span class="comment">% hObject    handle to ans_inj_sept_p (see GCBO)</span>
+1423 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1424 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1425 
+1426 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1427 <span class="comment">%       See ISPC and COMPUTER.</span>
+1428 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1429     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1430 <span class="keyword">end</span>
+1431 
+1432 
+1433 
+1434 <a name="_sub70" href="#_subfunctions" class="code">function ans_inj_sept_a_Callback(hObject, eventdata, handles)</a>
+1435 <span class="comment">% hObject    handle to ans_inj_sept_a (see GCBO)</span>
+1436 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1437 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1438 
+1439 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_sept_a as text</span>
+1440 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_sept_a as a double</span>
+1441 
+1442 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1443 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1444 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigTimeDelay'</span>,delay);
+1445 
+1446 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1447 <a name="_sub71" href="#_subfunctions" class="code">function ans_inj_sept_a_CreateFcn(hObject, eventdata, handles)</a>
+1448 <span class="comment">% hObject    handle to ans_inj_sept_a (see GCBO)</span>
+1449 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1450 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1451 
+1452 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1453 <span class="comment">%       See ISPC and COMPUTER.</span>
+1454 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1455     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1456 <span class="keyword">end</span>
+1457 
+1458 
+1459 
+1460 <a name="_sub72" href="#_subfunctions" class="code">function ans_inj_k1_Callback(hObject, eventdata, handles)</a>
+1461 <span class="comment">% hObject    handle to ans_inj_k1 (see GCBO)</span>
+1462 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1463 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1464 
+1465 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_k1 as text</span>
+1466 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_k1 as a double</span>
+1467 
+1468 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1469 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1470 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigTimeDelay'</span>,delay);
+1471 
+1472 
+1473 
+1474 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1475 <a name="_sub73" href="#_subfunctions" class="code">function ans_inj_k1_CreateFcn(hObject, eventdata, handles)</a>
+1476 <span class="comment">% hObject    handle to ans_inj_k1 (see GCBO)</span>
+1477 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1478 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1479 
+1480 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1481 <span class="comment">%       See ISPC and COMPUTER.</span>
+1482 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1483     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1484 <span class="keyword">end</span>
+1485 
+1486 
+1487 
+1488 <a name="_sub74" href="#_subfunctions" class="code">function ans_inj_k2_Callback(hObject, eventdata, handles)</a>
+1489 <span class="comment">% hObject    handle to ans_inj_k2 (see GCBO)</span>
+1490 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1491 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1492 
+1493 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_k2 as text</span>
+1494 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_k2 as a double</span>
+1495 
+1496 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1497 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1498 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigTimeDelay'</span>,delay);
+1499 
+1500 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1501 <a name="_sub75" href="#_subfunctions" class="code">function ans_inj_k2_CreateFcn(hObject, eventdata, handles)</a>
+1502 <span class="comment">% hObject    handle to ans_inj_k2 (see GCBO)</span>
+1503 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1504 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1505 
+1506 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1507 <span class="comment">%       See ISPC and COMPUTER.</span>
+1508 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1509     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1510 <span class="keyword">end</span>
+1511 
+1512 
+1513 
+1514 <a name="_sub76" href="#_subfunctions" class="code">function ans_inj_k3_Callback(hObject, eventdata, handles)</a>
+1515 <span class="comment">% hObject    handle to ans_inj_k3 (see GCBO)</span>
+1516 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1517 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1518 
+1519 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_k3 as text</span>
+1520 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_k3 as a double</span>
+1521 
+1522 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1523 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1524 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigTimeDelay'</span>,delay);
+1525 
+1526 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1527 <a name="_sub77" href="#_subfunctions" class="code">function ans_inj_k3_CreateFcn(hObject, eventdata, handles)</a>
+1528 <span class="comment">% hObject    handle to ans_inj_k3 (see GCBO)</span>
+1529 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1530 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1531 
+1532 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1533 <span class="comment">%       See ISPC and COMPUTER.</span>
+1534 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1535     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1536 <span class="keyword">end</span>
+1537 
+1538 
+1539 
+1540 <a name="_sub78" href="#_subfunctions" class="code">function ans_inj_k4_Callback(hObject, eventdata, handles)</a>
+1541 <span class="comment">% hObject    handle to ans_inj_k4 (see GCBO)</span>
+1542 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1543 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1544 
+1545 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_inj_k4 as text</span>
+1546 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_inj_k4 as a double</span>
+1547 
+1548 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1549 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1550 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigTimeDelay'</span>,delay);
+1551 
+1552 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1553 <a name="_sub79" href="#_subfunctions" class="code">function ans_inj_k4_CreateFcn(hObject, eventdata, handles)</a>
+1554 <span class="comment">% hObject    handle to ans_inj_k4 (see GCBO)</span>
+1555 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1556 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1557 
+1558 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1559 <span class="comment">%       See ISPC and COMPUTER.</span>
+1560 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1561     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1562 <span class="keyword">end</span>
+1563 
+1564 
+1565 
+1566 <a name="_sub80" href="#_subfunctions" class="code">function ans_dcct_Callback(hObject, eventdata, handles)</a>
+1567 <span class="comment">% hObject    handle to ans_dcct (see GCBO)</span>
+1568 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1569 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1570 
+1571 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_dcct as text</span>
+1572 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_dcct as a double</span>
+1573 
+1574 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1575 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1576 tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctTimeDelay'</span>,delay);
+1577 
+1578 
+1579 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1580 <a name="_sub81" href="#_subfunctions" class="code">function ans_dcct_CreateFcn(hObject, eventdata, handles)</a>
+1581 <span class="comment">% hObject    handle to ans_dcct (see GCBO)</span>
+1582 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1583 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1584 
+1585 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1586 <span class="comment">%       See ISPC and COMPUTER.</span>
+1587 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1588     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1589 <span class="keyword">end</span>
+1590 
+1591 
+1592 
+1593 <a name="_sub82" href="#_subfunctions" class="code">function ans_bpm_Callback(hObject, eventdata, handles)</a>
+1594 <span class="comment">% hObject    handle to ans_bpm (see GCBO)</span>
+1595 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1596 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1597 
+1598 <span class="comment">% Hints: get(hObject,'String') returns contents of ans_bpm as text</span>
+1599 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ans_bpm as a double</span>
+1600 
+1601 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1602 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1603 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1604 tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1605 tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1606 tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1607 tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1608 tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1609 tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1610 tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1611 tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1612 tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1613 tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1614 tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1615 tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1616 tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1617 tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1618 tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1619 
+1620 
+1621 
+1622 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1623 <a name="_sub83" href="#_subfunctions" class="code">function ans_bpm_CreateFcn(hObject, eventdata, handles)</a>
+1624 <span class="comment">% hObject    handle to ans_bpm (see GCBO)</span>
+1625 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1626 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1627 
+1628 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1629 <span class="comment">%       See ISPC and COMPUTER.</span>
+1630 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1631     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1632 <span class="keyword">end</span>
+1633 
+1634 
+1635 
+1636 <a name="_sub84" href="#_subfunctions" class="code">function ext_address_Callback(hObject, eventdata, handles)</a>
+1637 <span class="comment">% hObject    handle to ext_address (see GCBO)</span>
+1638 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1639 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1640 
+1641 <span class="comment">% Hints: get(hObject,'String') returns contents of ext_address as text</span>
+1642 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ext_address as a double</span>
+1643 <span class="comment">%'ANS/SY/CENTRAL', 'ExtractionOffsetTimeValue'</span>
+1644 
+1645 delay=str2double(get(hObject,<span class="string">'String'</span>));
+1646 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>,delay);
+1647 
+1648 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1649 <a name="_sub85" href="#_subfunctions" class="code">function ext_address_CreateFcn(hObject, eventdata, handles)</a>
+1650 <span class="comment">% hObject    handle to ext_address (see GCBO)</span>
+1651 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1652 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1653 
+1654 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1655 <span class="comment">%       See ISPC and COMPUTER.</span>
+1656 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1657     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1658 <span class="keyword">end</span>
+1659 
+1660 
+1661 
+1662 <a name="_sub86" href="#_subfunctions" class="code">function soft_address1_Callback(hObject, eventdata, handles)</a>
+1663 <span class="comment">% hObject    handle to soft_address1 (see GCBO)</span>
+1664 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1665 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1666 
+1667 <span class="comment">% Hints: get(hObject,'String') returns contents of soft_address1 as text</span>
+1668 <span class="comment">%        str2double(get(hObject,'String')) returns contents of soft_address1 as a double</span>
+1669 
+1670 delay=str2double(get(hObject,<span class="string">'String'</span>));
+1671 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>,delay);
+1672 
+1673 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1674 <a name="_sub87" href="#_subfunctions" class="code">function soft_address1_CreateFcn(hObject, eventdata, handles)</a>
+1675 <span class="comment">% hObject    handle to soft_address1 (see GCBO)</span>
+1676 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1677 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1678 
+1679 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1680 <span class="comment">%       See ISPC and COMPUTER.</span>
+1681 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1682     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1683 <span class="keyword">end</span>
+1684 
+1685 
+1686 <span class="comment">% --- Executes on button press in radiobutton6.</span>
+1687 <a name="_sub88" href="#_subfunctions" class="code">function radiobutton6_Callback(hObject, eventdata, handles)</a>
+1688 <span class="comment">% hObject    handle to radiobutton6 (see GCBO)</span>
+1689 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1690 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1691 
+1692 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton6</span>
+1693 
+1694 
+1695 <span class="comment">% --- Executes on button press in pushbutton8.</span>
+1696 <a name="_sub89" href="#_subfunctions" class="code">function pushbutton8_Callback(hObject, eventdata, handles)</a>
+1697 <span class="comment">% hObject    handle to pushbutton8 (see GCBO)</span>
+1698 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1699 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1700 
+1701 
+1702 <span class="comment">% --- Executes on button press in pushbutton9.</span>
+1703 <a name="_sub90" href="#_subfunctions" class="code">function pushbutton9_Callback(hObject, eventdata, handles)</a>
+1704 <span class="comment">% hObject    handle to pushbutton9 (see GCBO)</span>
+1705 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1706 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1707 
+1708 
+1709 <span class="comment">% --- Executes on button press in button_extmoins.</span>
+1710 <a name="_sub91" href="#_subfunctions" class="code">function button_extmoins_Callback(hObject, eventdata, handles)</a>
+1711 <span class="comment">% hObject    handle to button_extmoins (see GCBO)</span>
+1712 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1713 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1714 
+1715 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+1716 <a href="step.html" class="code" title="">step</a>=temp.value(1)-52*0.52243;
+1717 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>,<a href="step.html" class="code" title="">step</a>);
+1718 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'ExtractionOffsetTimeValue'</span>);
+1719 set(handles.ext_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1720 
+1721 <span class="comment">% --- Executes on button press in button_extplus.</span>
+1722 <a name="_sub92" href="#_subfunctions" class="code">function button_extplus_Callback(hObject, eventdata, handles)</a>
+1723 <span class="comment">% hObject    handle to button_extplus (see GCBO)</span>
+1724 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1725 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1726 
+1727 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+1728 <a href="step.html" class="code" title="">step</a>=temp.value(1)+52*0.52243;
+1729 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>,<a href="step.html" class="code" title="">step</a>);
+1730 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'ExtractionOffsetTimeValue'</span>);
+1731 set(handles.ext_address,<span class="string">'String'</span>,num2str(temp.value(1)));
+1732 
+1733 <a name="_sub93" href="#_subfunctions" class="code">function sdc2_Callback(hObject, eventdata, handles)</a>
+1734 <span class="comment">% hObject    handle to sdc2 (see GCBO)</span>
+1735 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1736 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1737 
+1738 <span class="comment">% Hints: get(hObject,'String') returns contents of sdc2 as text</span>
+1739 <span class="comment">%        str2double(get(hObject,'String')) returns contents of sdc2 as a double</span>
+1740 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1741 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1742 tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1743 
+1744 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1745 <a name="_sub94" href="#_subfunctions" class="code">function sdc2_CreateFcn(hObject, eventdata, handles)</a>
+1746 <span class="comment">% hObject    handle to sdc2 (see GCBO)</span>
+1747 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1748 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1749 
+1750 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1751 <span class="comment">%       See ISPC and COMPUTER.</span>
+1752 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1753     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1754 <span class="keyword">end</span>
+1755 
+1756 
+1757 
+1758 <a name="_sub95" href="#_subfunctions" class="code">function lt2_emittance_Callback(hObject, eventdata, handles)</a>
+1759 <span class="comment">% hObject    handle to lt2_emittance (see GCBO)</span>
+1760 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1761 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1762 
+1763 <span class="comment">% Hints: get(hObject,'String') returns contents of lt2_emittance as text</span>
+1764 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt2_emittance as a double</span>
+1765 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1766 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1767 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,delay);
+1768 tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,delay);
+1769 
+1770 
+1771 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1772 <a name="_sub96" href="#_subfunctions" class="code">function lt2_emittance_CreateFcn(hObject, eventdata, handles)</a>
+1773 <span class="comment">% hObject    handle to lt2_emittance (see GCBO)</span>
+1774 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1775 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1776 
+1777 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1778 <span class="comment">%       See ISPC and COMPUTER.</span>
+1779 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1780     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1781 <span class="keyword">end</span>
+1782 
+1783 
+1784 
+1785 <a name="_sub97" href="#_subfunctions" class="code">function lt2_bpm_Callback(hObject, eventdata, handles)</a>
+1786 <span class="comment">% hObject    handle to lt2_bpm (see GCBO)</span>
+1787 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1788 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1789 
+1790 <span class="comment">% Hints: get(hObject,'String') returns contents of lt2_bpm as text</span>
+1791 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt2_bpm as a double</span>
+1792 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1793 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1794 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1795 
+1796 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1797 <a name="_sub98" href="#_subfunctions" class="code">function lt2_bpm_CreateFcn(hObject, eventdata, handles)</a>
+1798 <span class="comment">% hObject    handle to lt2_bpm (see GCBO)</span>
+1799 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1800 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1801 
+1802 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1803 <span class="comment">%       See ISPC and COMPUTER.</span>
+1804 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1805     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1806 <span class="keyword">end</span>
+1807 
+1808 
+1809 
+1810 <a name="_sub99" href="#_subfunctions" class="code">function lt2_osc_Callback(hObject, eventdata, handles)</a>
+1811 <span class="comment">% hObject    handle to lt2_osc (see GCBO)</span>
+1812 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1813 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1814 
+1815 <span class="comment">% Hints: get(hObject,'String') returns contents of lt2_osc as text</span>
+1816 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lt2_osc as a double</span>
+1817 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1818 delay=str2double(get(hObject,<span class="string">'String'</span>))+ext_offset;
+1819 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+1820 
+1821 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1822 <a name="_sub100" href="#_subfunctions" class="code">function lt2_osc_CreateFcn(hObject, eventdata, handles)</a>
+1823 <span class="comment">% hObject    handle to lt2_osc (see GCBO)</span>
+1824 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1825 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1826 
+1827 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1828 <span class="comment">%       See ISPC and COMPUTER.</span>
+1829 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1830     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1831 <span class="keyword">end</span>
+1832 
+1833 
+1834 
+1835 <a name="_sub101" href="#_subfunctions" class="code">function lin_modulateur_Callback(hObject, eventdata, handles)</a>
+1836 <span class="comment">% hObject    handle to lin_modulateur (see GCBO)</span>
+1837 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1838 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1839 
+1840 <span class="comment">% Hints: get(hObject,'String') returns contents of lin_modulateur as text</span>
+1841 <span class="comment">%        str2double(get(hObject,'String')) returns contents of lin_modulateur as a double</span>
+1842 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+1843 delay=str2double(get(hObject,<span class="string">'String'</span>))+inj_offset;
+1844 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1845 
+1846 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1847 <a name="_sub102" href="#_subfunctions" class="code">function lin_modulateur_CreateFcn(hObject, eventdata, handles)</a>
+1848 <span class="comment">% hObject    handle to lin_modulateur (see GCBO)</span>
+1849 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1850 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1851 
+1852 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1853 <span class="comment">%       See ISPC and COMPUTER.</span>
+1854 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1855     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1856 <span class="keyword">end</span>
+1857 
+1858 
+1859 
+1860 <a name="_sub103" href="#_subfunctions" class="code">function inj_offset_Callback(hObject, eventdata, handles)</a>
+1861 <span class="comment">% hObject    handle to inj_offset (see GCBO)</span>
+1862 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1863 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1864 
+1865 <span class="comment">% Hints: get(hObject,'String') returns contents of inj_offset as text</span>
+1866 <span class="comment">%        str2double(get(hObject,'String')) returns contents of inj_offset as a double</span>
+1867 
+1868 inj_offset=str2double(get(hObject,<span class="string">'String'</span>));
+1869 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+1870 save(<span class="string">'synchro_offset'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>)
+1871 
+1872 <span class="comment">%LIN</span>
+1873 delay=str2double(get(handles.lin_canon,<span class="string">'String'</span>))+inj_offset;
+1874 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmTimeDelay'</span>,delay);
+1875 
+1876 delay=str2double(get(handles.lin_modulateur,<span class="string">'String'</span>))+inj_offset;
+1877 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1878 
+1879 delay=str2double(get(handles.sdc1,<span class="string">'String'</span>))+inj_offset;
+1880 tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+1881 
+1882 
+1883 <span class="comment">% LT1</span>
+1884 delay=str2double(get(handles.lt1_MC2,<span class="string">'String'</span>))+inj_offset;
+1885 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2TimeDelay'</span>,delay);
+1886 
+1887 delay=str2double(get(handles.lt1_MC1,<span class="string">'String'</span>))+inj_offset;
+1888 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1TimeDelay'</span>,delay);
+1889 
+1890 delay=str2double(get(handles.lt1_emittance,<span class="string">'String'</span>))+inj_offset;
+1891 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,delay);
+1892 
+1893 delay=str2double(get(handles.lt1_osc,<span class="string">'String'</span>))+inj_offset;
+1894 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+1895 
+1896 
+1897 <span class="comment">% BOO</span>
+1898 delay=str2double(get(handles.boo_inj_septum,<span class="string">'String'</span>))+inj_offset;
+1899 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>,delay);
+1900 
+1901 delay=str2double(get(handles.boo_inj_kicker,<span class="string">'String'</span>))+inj_offset;
+1902 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigTimeDelay'</span>,delay);
+1903 
+1904 delay=str2double(get(handles.boo_bpm,<span class="string">'String'</span>))+inj_offset;
+1905 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigTimeDelay'</span>,delay);
+1906 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigTimeDelay'</span>,delay);
+1907 tango_write_attribute2(<span class="string">'BOO-BTB/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btb.trigTimeDelay'</span>,delay);
+1908 tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btc.trigTimeDelay'</span>,delay);
+1909 
+1910 
+1911 delay=str2double(get(handles.boo_nod,<span class="string">'String'</span>))+inj_offset;
+1912 tango_write_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigTimeDelay'</span>,delay);
+1913 
+1914 delay=str2double(get(handles.boo_dcct,<span class="string">'String'</span>))+inj_offset;
+1915 tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booTimeDelay'</span>,delay);
+1916 
+1917 
+1918 
+1919 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1920 <a name="_sub104" href="#_subfunctions" class="code">function inj_offset_CreateFcn(hObject, eventdata, handles)</a>
+1921 <span class="comment">% hObject    handle to inj_offset (see GCBO)</span>
+1922 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1923 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1924 
+1925 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1926 <span class="comment">%       See ISPC and COMPUTER.</span>
+1927 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1928     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1929 <span class="keyword">end</span>
+1930 
+1931 
+1932 
+1933 <a name="_sub105" href="#_subfunctions" class="code">function ext_offset_Callback(hObject, eventdata, handles)</a>
+1934 <span class="comment">% hObject    handle to ext_offset (see GCBO)</span>
+1935 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1936 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1937 
+1938 <span class="comment">% Hints: get(hObject,'String') returns contents of ext_offset as text</span>
+1939 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ext_offset as a double</span>
+1940 
+1941 ext_offset=str2double(get(hObject,<span class="string">'String'</span>));
+1942 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+1943 save(<span class="string">'synchro_offset'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>)
+1944 
+1945 <span class="comment">%BOO</span>
+1946 delay=str2double(get(handles.boo_ext_dof,<span class="string">'String'</span>))+ext_offset;
+1947 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigTimeDelay'</span>,delay);
+1948 
+1949 delay=str2double(get(handles.boo_ext_sept_p,<span class="string">'String'</span>))+ext_offset;
+1950 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>,delay);
+1951 
+1952 delay=str2double(get(handles.boo_ext_sept_a,<span class="string">'String'</span>))+ext_offset;
+1953 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigTimeDelay'</span>,delay);
+1954 
+1955 delay=str2double(get(handles.boo_ext_kicker,<span class="string">'String'</span>))+ext_offset;
+1956 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigTimeDelay'</span>,delay);
+1957 
+1958 delay=str2double(get(handles.sdc2,<span class="string">'String'</span>))+ext_offset;
+1959 tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+1960 
+1961 <span class="comment">%LT2</span>
+1962 delay=str2double(get(handles.lt2_bpm,<span class="string">'String'</span>))+ext_offset;
+1963 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>,delay);
+1964 
+1965 delay=str2double(get(handles.lt2_osc,<span class="string">'String'</span>))+ext_offset;
+1966 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>,delay);
+1967 
+1968 delay=str2double(get(handles.lt2_emittance,<span class="string">'String'</span>))+ext_offset;
+1969 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>,delay);
+1970 
+1971 
+1972 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1973 <a name="_sub106" href="#_subfunctions" class="code">function ext_offset_CreateFcn(hObject, eventdata, handles)</a>
+1974 <span class="comment">% hObject    handle to ext_offset (see GCBO)</span>
+1975 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1976 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1977 
+1978 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1979 <span class="comment">%       See ISPC and COMPUTER.</span>
+1980 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1981     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1982 <span class="keyword">end</span>
+1983 
+1984 
+1985 <span class="comment">% --- Executes on button press in Acquisition_address.</span>
+1986 <a name="_sub107" href="#_subfunctions" class="code">function Acquisition_address_Callback(hObject, eventdata, handles)</a>
+1987 <span class="comment">% hObject    handle to Acquisition_address (see GCBO)</span>
+1988 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1989 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1990 
+1991 set(handles.inj_offset,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1992 set(handles.sdc1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1993 set(handles.lin_canon,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1994 set(handles.boo_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1995 set(handles.lt1_emittance,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1996 set(handles.lt1_MC1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1997 set(handles.lt1_MC2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1998 set(handles.lt1_osc,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1999 set(handles.boo_dcct,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2000 set(handles.boo_nod,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2001 set(handles.boo_inj_septum,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2002 set(handles.boo_inj_kicker,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2003 set(handles.alim_dipole,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2004 set(handles.alim_qf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2005 set(handles.alim_qd,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2006 set(handles.alim_sf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2007 set(handles.alim_sd,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2008 set(handles.boo_rf,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2009 set(handles.lin_modulateur,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2010 set(handles.ext_offset,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2011 set(handles.boo_ext_dof,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2012 set(handles.boo_ext_sept_p,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2013 set(handles.boo_ext_sept_a,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2014 set(handles.boo_ext_kicker,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2015 set(handles.sdc2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2016 set(handles.lt2_emittance,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2017 set(handles.lt2_osc,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2018 set(handles.lt2_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2019 set(handles.ans_inj_k1,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2020 set(handles.ans_inj_k2,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2021 set(handles.ans_inj_k3,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2022 set(handles.ans_inj_k4,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2023 set(handles.ans_inj_sept_p,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2024 set(handles.ans_inj_sept_a,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2025 set(handles.ans_bpm,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2026 set(handles.ans_dcct,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+2027 
+2028 n=1;
+2029 
+2030 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);
+2031 set(handles.pc_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+2032 
+2033 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+2034 set(handles.inj_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+2035 
+2036 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+2037 set(handles.soft_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+2038 
+2039 temp=tango_read_attribute(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+2040 set(handles.ext_address,<span class="string">'String'</span>,num2str(temp.value(n)));
+2041 
+2042 
+2043 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>);
+2044 set(handles.sdc1,<span class="string">'String'</span>,num2str(temp.value(n)));
+2045 
+2046 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'lpmEvent'</span>);
+2047 set(handles.lin_canon,<span class="string">'String'</span>,num2str(temp.value(n)));
+2048 
+2049 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>);
+2050 set(handles.boo_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+2051 
+2052 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>);
+2053 set(handles.lt1_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+2054 
+2055 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>);
+2056 set(handles.lt1_MC1,<span class="string">'String'</span>,num2str(temp.value(n)));
+2057 
+2058 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>);
+2059 set(handles.lt1_MC2,<span class="string">'String'</span>,num2str(temp.value(n)));
+2060 
+2061 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>);
+2062 set(handles.lt1_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+2063 
+2064 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>);
+2065 set(handles.boo_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+2066 
+2067 temp=tango_read_attribute2(<span class="string">'BOO-BTC/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-onde.trigEvent'</span>);
+2068 set(handles.boo_nod,<span class="string">'String'</span>,num2str(temp.value(n)));
+2069 
+2070 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>);
+2071 set(handles.boo_inj_septum,<span class="string">'String'</span>,num2str(temp.value(n)));
+2072 
+2073 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>);
+2074 set(handles.boo_inj_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+2075 
+2076 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpEvent'</span>);
+2077 set(handles.alim_dipole,<span class="string">'String'</span>,num2str(temp.value(n)));
+2078 
+2079 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfEvent'</span>);
+2080 set(handles.alim_qf,<span class="string">'String'</span>,num2str(temp.value(n)));
+2081 
+2082 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdEvent'</span>);
+2083 set(handles.alim_qd,<span class="string">'String'</span>,num2str(temp.value(n)));
+2084 
+2085 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfEvent'</span>);
+2086 set(handles.alim_sf,<span class="string">'String'</span>,num2str(temp.value(n)));
+2087 
+2088 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdEvent'</span>);
+2089 set(handles.alim_sd,<span class="string">'String'</span>,num2str(temp.value(n)));
+2090 
+2091 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfEvent'</span>);
+2092 set(handles.boo_rf,<span class="string">'String'</span>,num2str(temp.value(n)));
+2093 
+2094 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.LINAC.1'</span>, <span class="string">'spareEvent'</span>);
+2095 set(handles.lin_modulateur,<span class="string">'String'</span>,num2str(temp.value(n)));
+2096 
+2097 
+2098 
+2099 
+2100 
+2101 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>);
+2102 set(handles.boo_ext_dof,<span class="string">'String'</span>,num2str(temp.value(n)));
+2103 
+2104 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>);
+2105 set(handles.boo_ext_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+2106 
+2107 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>);
+2108 set(handles.boo_ext_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+2109 
+2110 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>);
+2111 set(handles.boo_ext_kicker,<span class="string">'String'</span>,num2str(temp.value(n)));
+2112 
+2113 
+2114 
+2115 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>);
+2116 set(handles.sdc2,<span class="string">'String'</span>,num2str(temp.value(n)));
+2117 
+2118 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>);
+2119 set(handles.lt2_emittance,<span class="string">'String'</span>,num2str(temp.value(n)));
+2120 
+2121 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>);
+2122 set(handles.lt2_osc,<span class="string">'String'</span>,num2str(temp.value(n)));
+2123 
+2124 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>);
+2125 set(handles.lt2_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+2126 
+2127 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigEvent'</span>);
+2128 set(handles.ans_inj_k1,<span class="string">'String'</span>,num2str(temp.value(n)));
+2129 
+2130 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigEvent'</span>);
+2131 set(handles.ans_inj_k2,<span class="string">'String'</span>,num2str(temp.value(n)));
+2132 
+2133 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigEvent'</span>);
+2134 set(handles.ans_inj_k3,<span class="string">'String'</span>,num2str(temp.value(n)));
+2135 
+2136 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigEvent'</span>);
+2137 set(handles.ans_inj_k4,<span class="string">'String'</span>,num2str(temp.value(n)));
+2138 
+2139 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigEvent'</span>);
+2140 set(handles.ans_inj_sept_p,<span class="string">'String'</span>,num2str(temp.value(n)));
+2141 
+2142 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigEvent'</span>);
+2143 set(handles.ans_inj_sept_a,<span class="string">'String'</span>,num2str(temp.value(n)));
+2144 
+2145 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>);
+2146 set(handles.ans_dcct,<span class="string">'String'</span>,num2str(temp.value(n)));
+2147 
+2148 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>);
+2149 set(handles.ans_bpm,<span class="string">'String'</span>,num2str(temp.value(n)));
+2150 
+2151 
+2152 
+2153 
+2154 
+2155 
+2156 <span class="comment">% --- Executes on button press in button_offinj_moins.</span>
+2157 <a name="_sub108" href="#_subfunctions" class="code">function button_offinj_moins_Callback(hObject, eventdata, handles)</a>
+2158 <span class="comment">% hObject    handle to button_offinj_moins (see GCBO)</span>
+2159 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+2160 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+2161 
+2162 temp=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+2163 <a href="step.html" class="code" title="">step</a>=temp-52*0.52243;
+2164 set(handles.inj_offset,<span class="string">'String'</span>,<a href="step.html" class="code" title="">step</a>);
+2165 <a href="#_sub103" class="code" title="subfunction inj_offset_Callback(hObject, eventdata, handles)">inj_offset_Callback</a>(handles.inj_offset, eventdata, handles);
+2166 
+2167 <span class="comment">% --- Executes on button press in button_offinj_plus.</span>
+2168 <a name="_sub109" href="#_subfunctions" class="code">function button_offinj_plus_Callback(hObject, eventdata, handles)</a>
+2169 <span class="comment">% hObject    handle to button_offinj_plus (see GCBO)</span>
+2170 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+2171 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+2172 
+2173 temp=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+2174 <a href="step.html" class="code" title="">step</a>=temp+52*0.52243;
+2175 set(handles.inj_offset,<span class="string">'String'</span>,<a href="step.html" class="code" title="">step</a>);
+2176 <a href="#_sub103" class="code" title="subfunction inj_offset_Callback(hObject, eventdata, handles)">inj_offset_Callback</a>(handles.inj_offset, eventdata, handles);
+2177 
+2178 <span class="comment">% --- Executes on button press in button_offext_moins.</span>
+2179 <a name="_sub110" href="#_subfunctions" class="code">function button_offext_moins_Callback(hObject, eventdata, handles)</a>
+2180 <span class="comment">% hObject    handle to button_offext_moins (see GCBO)</span>
+2181 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+2182 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+2183 
+2184 temp=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+2185 <a href="step.html" class="code" title="">step</a>=temp-52*0.52243;
+2186 set(handles.ext_offset,<span class="string">'String'</span>,<a href="step.html" class="code" title="">step</a>);
+2187 <a href="#_sub105" class="code" title="subfunction ext_offset_Callback(hObject, eventdata, handles)">ext_offset_Callback</a>(handles.ext_offset, eventdata, handles);
+2188 
+2189 <span class="comment">% --- Executes on button press in button_offext_plus.</span>
+2190 <a name="_sub111" href="#_subfunctions" class="code">function button_offext_plus_Callback(hObject, eventdata, handles)</a>
+2191 <span class="comment">% hObject    handle to button_offext_plus (see GCBO)</span>
+2192 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+2193 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+2194 
+2195 temp=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+2196 <a href="step.html" class="code" title="">step</a>=temp+52*0.52243;
+2197 set(handles.ext_offset,<span class="string">'String'</span>,<a href="step.html" class="code" title="">step</a>);
+2198 <a href="#_sub105" class="code" title="subfunction ext_offset_Callback(hObject, eventdata, handles)">ext_offset_Callback</a>(handles.ext_offset, eventdata, handles);
+2199</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

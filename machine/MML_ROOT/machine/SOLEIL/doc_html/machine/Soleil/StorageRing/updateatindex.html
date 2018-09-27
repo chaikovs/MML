@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of updateatindex</title>
+  <meta name="keywords" content="updateatindex">
+  <meta name="description" content="UPDATEATINDEX - Updates the AT indices in the MiddleLayer with the present AT lattice (THERING)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; updateatindex.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>updateatindex
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>UPDATEATINDEX - Updates the AT indices in the MiddleLayer with the present AT lattice (THERING)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function updateatindex </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">UPDATEATINDEX - Updates the AT indices in the MiddleLayer with the present AT lattice (THERING)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="setoperationalmode.html" class="code" title="function setoperationalmode(ModeNumber)">setoperationalmode</a>	SETOPERATIONALMODE - Switches between the various operational modes</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function updateatindex</a>
+0002 <span class="comment">%UPDATEATINDEX - Updates the AT indices in the MiddleLayer with the present AT lattice (THERING)</span>
+0003 
+0004 <span class="comment">%</span>
+0005 <span class="comment">% Adapted by Laurent S. Nadolski</span>
+0006 
+0007 <span class="keyword">global</span> THERING
+0008 
+0009 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0010 <span class="comment">% Append Accelerator Toolbox information %</span>
+0011 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0012 
+0013 <span class="comment">% Since changes in the AT model could change the AT indexes, etc,</span>
+0014 <span class="comment">% It's best to regenerate all the model indices whenever a model is loaded</span>
+0015 
+0016 <span class="comment">% Sort by family first (findcells is linear and slow)</span>
+0017 Indices = atindex(THERING);
+0018 
+0019 AO = getao;
+0020 
+0021 <span class="comment">% BPMS</span>
+0022 <span class="keyword">try</span>
+0023     ifam = <span class="string">'BPMx'</span>;
+0024     AO.(ifam).AT.ATType = <span class="string">'X'</span>;
+0025     AO.(ifam).AT.ATIndex = Indices.BPM(:); <span class="comment">% findcells(THERING,'FamName','BPM')';</span>
+0026     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex)';
+0027 
+0028     ifam = <span class="string">'BPMz'</span>;
+0029     AO.(ifam).AT.ATType = <span class="string">'Z'</span>;
+0030     AO.(ifam).AT.ATIndex = Indices.BPM(:); <span class="comment">% findcells(THERING,'FamName','BPM')';</span>
+0031     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex)';
+0032 <span class="keyword">catch</span>
+0033     warning(<span class="string">'BPM family not found in the model.'</span>);
+0034 <span class="keyword">end</span>
+0035 
+0036 
+0037 <span class="comment">% CORRECTORS</span>
+0038 <span class="keyword">try</span>
+0039     ifam = <span class="string">'HCOR'</span>;
+0040     <span class="comment">% Horizontal correctors are at every AT corrector</span>
+0041     AO.(ifam).AT.ATType = ifam;
+0042     AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.COR);
+0043     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0044 
+0045     <span class="comment">% Vertical correctors are at every AT corrector</span>
+0046     ifam = <span class="string">'VCOR'</span>;
+0047     AO.(ifam).AT.ATType = ifam;
+0048     AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.COR);
+0049     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0050 
+0051     <span class="comment">% Fast Horizontal correctors are at every AT corrector</span>
+0052     ifam = <span class="string">'FHCOR'</span>;
+0053     AO.(ifam).AT.ATType = ifam;
+0054     AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.COR);
+0055     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0056 
+0057     <span class="comment">% Fast vertical correctors are at every AT corrector</span>
+0058     ifam = <span class="string">'FVCOR'</span>;
+0059     AO.(ifam).AT.ATType = ifam;
+0060     AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.COR);
+0061     AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0062 <span class="keyword">catch</span>
+0063     warning(<span class="string">'Corrector family not found in the model.'</span>);
+0064 <span class="keyword">end</span>
+0065 
+0066 
+0067 <span class="comment">% QUADRUPOLES</span>
+0068 <span class="keyword">try</span>
+0069     <span class="keyword">for</span> k = 1:10,
+0070         ifam = [<span class="string">'Q'</span> num2str(k)];
+0071         AO.(ifam).AT.ATType = <span class="string">'QUAD'</span>;
+0072         AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.(ifam));
+0073         AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0074     <span class="keyword">end</span>
+0075 <span class="keyword">catch</span>
+0076     warning(<span class="string">'%s family not found in the model.'</span>,ifam);
+0077 <span class="keyword">end</span>
+0078 
+0079 
+0080 <span class="comment">% SEXTUPOLES</span>
+0081 <span class="keyword">try</span>
+0082     <span class="keyword">for</span> k = 1:10,
+0083         ifam = [<span class="string">'S'</span> num2str(k)];
+0084         AO.(ifam).AT.ATType = <span class="string">'SEXT'</span>;
+0085         AO.(ifam).AT.ATIndex = buildatindex(AO.(ifam).FamilyName, Indices.(ifam));
+0086         AO.(ifam).Position = findspos(THERING, AO.(ifam).AT.ATIndex(:,1))';
+0087     <span class="keyword">end</span>
+0088 <span class="keyword">catch</span>
+0089     warning(<span class="string">'Sextupole families not found in the model.'</span>);
+0090 <span class="keyword">end</span>
+0091 
+0092 
+0093 <span class="comment">% BEND</span>
+0094 
+0095 <span class="keyword">try</span>
+0096     <span class="comment">% Combine BEND</span>
+0097     AO.BEND.AT.ATType = <span class="string">'BEND'</span>;
+0098     ATIndex = Indices.BEND(:);
+0099     AO.BEND.AT.ATIndex = buildatindex(AO.BEND.FamilyName, sort(ATIndex));
+0100     AO.BEND.Position = findspos(THERING, AO.BEND.AT.ATIndex(:,1))';
+0101 <span class="keyword">catch</span>
+0102     warning(<span class="string">'BEND family not found in the model.'</span>);
+0103 <span class="keyword">end</span>
+0104 
+0105 <span class="comment">% RF CAVITY</span>
+0106 <span class="keyword">try</span>
+0107     AO.RF.AT.ATType = <span class="string">'RF Cavity'</span>;
+0108     AO.RF.AT.ATIndex = findcells(THERING,<span class="string">'Frequency'</span>)';
+0109     AO.RF.Position = findspos(THERING, AO.RF.AT.ATIndex(:,1))';
+0110 <span class="keyword">catch</span>
+0111     warning(<span class="string">'RF cavity not found in the model.'</span>);
+0112 <span class="keyword">end</span>
+0113 
+0114 setao(AO);
+0115 
+0116 <span class="comment">% Set TwissData at the start of the storage ring</span>
+0117 <span class="keyword">try</span>
+0118 
+0119     <span class="comment">% BTS twiss parameters at the input</span>
+0120     TwissData.alpha = [0 0]';
+0121     TwissData.beta  = [13.8467 2.2582]';
+0122     TwissData.mu    = [0 0]';
+0123     TwissData.ClosedOrbit = [0 0 0 0]';
+0124     TwissData.dP = 0;
+0125     TwissData.dL = 0;
+0126     TwissData.Dispersion  = [.06 0 0 0]';
+0127 
+0128     setpvmodel(<span class="string">'TwissData'</span>, <span class="string">''</span>, TwissData);  <span class="comment">% Same as, THERING{1}.TwissData = TwissData;</span>
+0129 
+0130 <span class="keyword">catch</span>
+0131     warning(<span class="string">'Setting the twiss data parameters in the MML failed.'</span>);
+0132 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

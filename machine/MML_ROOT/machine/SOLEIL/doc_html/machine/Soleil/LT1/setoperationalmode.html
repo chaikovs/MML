@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of setoperationalmode</title>
+  <meta name="keywords" content="setoperationalmode">
+  <meta name="description" content="SETOPERATIONALMODE - Switches between the various operational modes">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">LT1</a> &gt; setoperationalmode.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/LT1&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>setoperationalmode
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>SETOPERATIONALMODE - Switches between the various operational modes</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function setoperationalmode(ModeNumber) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">SETOPERATIONALMODE - Switches between the various operational modes
+  setoperationalmode(ModeNumber)
+
+  INPUTS
+  1. ModeNumber = 1. 110 MeV, multibunch
+                  2. LT1 voie directe
+                  3. 80 MeV, backup Linac
+
+                100. Laurent's Mode
+
+  See also <a href="aoinit.html" class="code" title="function aoinit(SubMachineName)">aoinit</a>, <a href="updateatindex.html" class="code" title="function updateatindex">updateatindex</a>, <a href="LT1init.html" class="code" title="function LT1init(OperationalMode)">LT1init</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="updateatindex.html" class="code" title="function updateatindex">updateatindex</a>	UPDATEATINDEX - Updates the AT indices in the MiddleLayer with the present AT lattice (THERING)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="LT1init.html" class="code" title="function LT1init(OperationalMode)">LT1init</a>	LT1INIT - Contructs an accelerator Object describing LT1</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function setoperationalmode(ModeNumber)</a>
+0002 <span class="comment">%SETOPERATIONALMODE - Switches between the various operational modes</span>
+0003 <span class="comment">%  setoperationalmode(ModeNumber)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. ModeNumber = 1. 110 MeV, multibunch</span>
+0007 <span class="comment">%                  2. LT1 voie directe</span>
+0008 <span class="comment">%                  3. 80 MeV, backup Linac</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">%                100. Laurent's Mode</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%  See also aoinit, updateatindex, LT1init</span>
+0013 
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Written by Laurent S. Nadolski</span>
+0016 
+0017 <span class="keyword">global</span> THERING
+0018 
+0019 <span class="comment">% Check if the AO exists</span>
+0020 checkforao;
+0021 
+0022 
+0023 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0024 <span class="comment">% Accelerator Dependent Modes %</span>
+0025 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0026 <span class="keyword">if</span> nargin &lt; 1
+0027     ModeNumber = [];
+0028 <span class="keyword">end</span>
+0029 <span class="keyword">if</span> isempty(ModeNumber)
+0030     ModeCell = {<span class="string">'110 MeV, multibunch'</span>, <span class="string">'LT1 voie directe'</span>, <span class="string">'80 MeV, backup Linac'</span>, <span class="keyword">...</span>
+0031         <span class="string">'Laurent''s Mode'</span>};
+0032     [ModeNumber, OKFlag] = listdlg(<span class="string">'Name'</span>,<span class="string">'SOLEIL'</span>,<span class="string">'PromptString'</span>,<span class="string">'Select the Operational Mode:'</span>, <span class="string">'SelectionMode'</span>,<span class="string">'single'</span>, <span class="string">'ListString'</span>, ModeCell, <span class="string">'ListSize'</span>, [450 200]);
+0033     <span class="keyword">if</span> OKFlag ~= 1
+0034         fprintf(<span class="string">'   Operational mode not changed\n'</span>);
+0035         <span class="keyword">return</span>
+0036     <span class="keyword">elseif</span> ModeNumber == 4
+0037         ModeNumber = 100;  <span class="comment">% Laurent</span>
+0038     <span class="keyword">end</span>
+0039 <span class="keyword">end</span>
+0040 
+0041 
+0042 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0043 <span class="comment">% Accelerator Data Structure %</span>
+0044 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0045 AD = getad;
+0046 AD.Machine = <span class="string">'SOLEIL'</span>;            <span class="comment">% Will already be defined if setpathmml was used</span>
+0047 AD.MachineType = <span class="string">'StorageRing'</span>;   <span class="comment">% Will already be defined if setpathmml was used</span>
+0048 AD.SubMachine  = <span class="string">'LT1'</span>;           <span class="comment">% Will already be defined if setpathmml was used</span>
+0049 AD.OperationalMode = <span class="string">''</span>;          <span class="comment">% Gets filled in later</span>
+0050 
+0051 
+0052 <span class="comment">% Tune processor delay: delay required to wait</span>
+0053 <span class="comment">% to have a fresh tune measurement after changing</span>
+0054 <span class="comment">% a variable like the RF frequency.  Setpv will wait</span>
+0055 <span class="comment">% 2.2 * TuneDelay to be guaranteed a fresh data point.</span>
+0056 AD.BPMDelay  = 0.25; <span class="comment">% use [N, BPMDelay]=getbpmsaverages (AD.BPMDelay will disappear)</span>
+0057 AD.TuneDelay = 0.1;
+0058 
+0059 
+0060 <span class="comment">% SP-AM Error level</span>
+0061 <span class="comment">% AD.ErrorWarningLevel = 0 -&gt; SP-AM errors are Matlab errors {Default}</span>
+0062 <span class="comment">%                       -1 -&gt; SP-AM errors are Matlab warnings</span>
+0063 <span class="comment">%                       -2 -&gt; SP-AM errors prompt a dialog box</span>
+0064 <span class="comment">%                       -3 -&gt; SP-AM errors are ignored (ErrorFlag=-1 is returned)</span>
+0065 AD.ErrorWarningLevel = 0;
+0066 
+0067 <span class="comment">%%%%%%%%%%%%%%%%%%%%%</span>
+0068 <span class="comment">% Operational Modes %</span>
+0069 <span class="comment">%%%%%%%%%%%%%%%%%%%%%</span>
+0070 
+0071 <span class="comment">% Mode setup variables (mostly path and file names)</span>
+0072 <span class="comment">% AD.OperationalMode - String used in titles</span>
+0073 <span class="comment">% ModeName - String used for mode directory name off DataRoot/MachineName</span>
+0074 <span class="comment">% OpsFileExtension - string add to default file names</span>
+0075 
+0076 <span class="keyword">if</span> ModeNumber == 1
+0077     <span class="comment">% LT1 Nominal Lattice</span>
+0078     AD.OperationalMode = <span class="string">'110 MeV, multibunch'</span>;
+0079     AD.Energy = 0.110; <span class="comment">% Make sure this is the same as bend2gev at the production lattice!</span>
+0080     ModeName = <span class="string">'bareLT1lattice'</span>;
+0081     OpsFileExtension = <span class="string">'_bareLT1lattice'</span>;
+0082 
+0083     <span class="comment">% AT lattice</span>
+0084     AD.ATModel = <span class="string">'bareLT1lattice'</span>;
+0085     eval(AD.ATModel);  <span class="comment">%run model for compilersolamor2linb;</span>
+0086 
+0087     switch2hw;
+0088 
+0089 <span class="keyword">elseif</span> ModeNumber == 2
+0090     <span class="comment">%  LT1 voie directe - ecran emittance=COLL</span>
+0091     AD.OperationalMode = <span class="string">'110 MeV, multibunch'</span>;
+0092     AD.Energy = 0.110; <span class="comment">% Make sure this is the same as bend2gev at the production lattice!</span>
+0093     ModeName = <span class="string">'LT1emittancelattice'</span>;
+0094     OpsFileExtension = <span class="string">'_LT1emittancelattice'</span>;
+0095 
+0096     <span class="comment">% AT lattice</span>
+0097     AD.ATModel = <span class="string">'LT1emittancelattice'</span>;
+0098     eval(AD.ATModel);
+0099 
+0100     switch2hw;
+0101    
+0102 <span class="keyword">elseif</span> ModeNumber == 3
+0103     <span class="comment">% User mode - High Tune, Top Off injection</span>
+0104     error(<span class="string">'To be completed'</span>);
+0105     
+0106 <span class="keyword">elseif</span> ModeNumber == 100
+0107     <span class="comment">% User mode - High Tune, Top Off injection</span>
+0108     error(<span class="string">'To be completed'</span>);    
+0109 
+0110 <span class="keyword">else</span>
+0111     error(<span class="string">'Operational mode unknown'</span>);
+0112 <span class="keyword">end</span>
+0113 
+0114 
+0115 
+0116 <span class="comment">% Set the AD directory path</span>
+0117 setad(AD);
+0118 MMLROOT = setmmldirectories(AD.Machine, AD.SubMachine, ModeName, OpsFileExtension);
+0119 AD = getad;
+0120 
+0121 <span class="comment">% SOLEIL specific path changes</span>
+0122 
+0123  <span class="comment">% Top Level Directories</span>
+0124 
+0125 AD.Directory.DataRoot       = fullfile(MMLROOT, <span class="string">'measdata'</span>, <span class="string">'LT1data'</span>, filesep);
+0126 AD.Directory.OpsData        = fullfile(MMLROOT, <span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'LT1OpsData'</span>, filesep);
+0127 AD.Directory.Lattice        = fullfile(MMLROOT, <span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'LT1'</span>, <span class="string">'Lattices'</span>, filesep);
+0128 
+0129 AD.Directory.FAEData        = fullfile(MMLROOT, <span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'LT1'</span>, <span class="string">'fae'</span>, filesep);
+0130 AD.Directory.EMITData       = fullfile(MMLROOT, <span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'LT1'</span>, <span class="string">'emittance'</span>, filesep); 
+0131 AD.Directory.Timing         = fullfile(MMLROOT, <span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'LT1'</span>, <span class="string">'Timing'</span>, filesep);
+0132 
+0133 AD.Directory.ConfigData     = fullfile(AD.Directory.DataRoot, <span class="string">'MachineConfig'</span>, filesep);
+0134 AD.Directory.Archiving      = fullfile(AD.Directory.DataRoot, <span class="string">'ArchivingData'</span>, filesep);
+0135 
+0136 
+0137 <span class="comment">%Operational Files</span>
+0138 AD.OpsData.LatticeFile       = <span class="string">'GoldenLattice'</span>;     <span class="comment">%Golden Lattice File (setup for users)</span>
+0139 AD.OpsData.PhysDataFile      = <span class="string">'GoldenPhysData'</span>;
+0140 
+0141 <span class="comment">% Circumference</span>
+0142 AD.Circumference = findspos(THERING,length(THERING)+1);
+0143 setad(AD);
+0144 
+0145 <span class="comment">% Updates the AT indices in the MiddleLayer with the present AT lattice</span>
+0146 <a href="updateatindex.html" class="code" title="function updateatindex">updateatindex</a>;
+0147 
+0148 <span class="comment">% Set the model energy</span>
+0149 setenergymodel(AD.Energy);
+0150 
+0151 fprintf(<span class="string">'   lattice files have changed or if the AT lattice has changed.\n'</span>);
+0152 fprintf(<span class="string">'   Middlelayer setup for operational mode: %s\n'</span>, AD.OperationalMode);
+0153 
+0154 setad(orderfields(AD));</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

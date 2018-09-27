@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getmaxsp</title>
+  <meta name="keywords" content="getmaxsp">
+  <meta name="description" content="GETMAXSP - Maximum value of the setpoint">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">common</a> &gt; getmaxsp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>getmaxsp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>GETMAXSP - Maximum value of the setpoint</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function S = getmaxsp(Family, DeviceList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GETMAXSP - Maximum value of the setpoint
+
+  FamilyName/DeviceList Method
+  SPmax = getmaxsp(Family, DeviceList)
+  SPmax = getmaxsp(DataStructure)
+
+  ChannelName Method
+  SPmax = getmaxsp(ChannelNames)
+
+  CommonName Method
+  SPmax = getmaxsp(Family, CommonName)
+
+  INPUTS
+  1. Family = Family Name 
+              Data Structure
+              Accelerator Object
+              Cell Array of Accelerator Objects or Family Names
+              For CommonNames, Family=[] searches all families
+     ChannelName = Channel access channel name
+                   Matrix of channel names
+                   Cell array of channel names
+     CommonName = Common name
+                  Matrix of common names
+                  Cell array of common names
+  2. DeviceList = [Sector Device #] or [element #] list {default or empty list: whole family}
+                   Cell Array of DeviceList
+
+  OUTPUTS
+  1. SPmax = Maximum setpoint of the device
+             Empty if not found
+
+  See also <a href="getminsp.html" class="code" title="function S = getminsp(Family, DeviceList)">getminsp</a>, getfamilydata(Family, Field, 'Range')</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>	GETMAXSP - Maximum value of the setpoint</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>	GETMAXSP - Maximum value of the setpoint</li><li><a href="optics_LT1_LT2.html" class="code" title="function varargout = optics_LT1_LT2(varargin)">optics_LT1_LT2</a>	OPTICS_LT1_LT2 - M-file for optics_LT1_LT2.fig</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function S = getmaxsp(Family, DeviceList)</a>
+0002 <span class="comment">%GETMAXSP - Maximum value of the setpoint</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  FamilyName/DeviceList Method</span>
+0005 <span class="comment">%  SPmax = getmaxsp(Family, DeviceList)</span>
+0006 <span class="comment">%  SPmax = getmaxsp(DataStructure)</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">%  ChannelName Method</span>
+0009 <span class="comment">%  SPmax = getmaxsp(ChannelNames)</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  CommonName Method</span>
+0012 <span class="comment">%  SPmax = getmaxsp(Family, CommonName)</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">%  INPUTS</span>
+0015 <span class="comment">%  1. Family = Family Name</span>
+0016 <span class="comment">%              Data Structure</span>
+0017 <span class="comment">%              Accelerator Object</span>
+0018 <span class="comment">%              Cell Array of Accelerator Objects or Family Names</span>
+0019 <span class="comment">%              For CommonNames, Family=[] searches all families</span>
+0020 <span class="comment">%     ChannelName = Channel access channel name</span>
+0021 <span class="comment">%                   Matrix of channel names</span>
+0022 <span class="comment">%                   Cell array of channel names</span>
+0023 <span class="comment">%     CommonName = Common name</span>
+0024 <span class="comment">%                  Matrix of common names</span>
+0025 <span class="comment">%                  Cell array of common names</span>
+0026 <span class="comment">%  2. DeviceList = [Sector Device #] or [element #] list {default or empty list: whole family}</span>
+0027 <span class="comment">%                   Cell Array of DeviceList</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">%  OUTPUTS</span>
+0030 <span class="comment">%  1. SPmax = Maximum setpoint of the device</span>
+0031 <span class="comment">%             Empty if not found</span>
+0032 <span class="comment">%</span>
+0033 <span class="comment">%  See also getminsp, getfamilydata(Family, Field, 'Range')</span>
+0034 
+0035 <span class="comment">%</span>
+0036 <span class="comment">% Written by Gregory J. Portmann</span>
+0037 <span class="comment">% Modified by Laurent S. Nadolski</span>
+0038 
+0039 S = [];
+0040 
+0041 <span class="keyword">if</span> nargin == 0
+0042     error(<span class="string">'At least one input required'</span>);
+0043 <span class="keyword">end</span>
+0044 
+0045 <span class="keyword">if</span> iscell(Family)
+0046     <span class="keyword">if</span> nargin &gt;= 2
+0047         <span class="keyword">if</span> ~iscell(DeviceList)
+0048             error(<span class="string">'If Family is a cell array, then DeviceList must be a cell array.'</span>);
+0049         <span class="keyword">end</span>
+0050         <span class="keyword">if</span> length(Family) ~= length(DeviceList)
+0051             error(<span class="string">'Family and DeviceList must be the same size cell arrays.'</span>);
+0052         <span class="keyword">end</span>
+0053     <span class="keyword">end</span>
+0054     
+0055     <span class="keyword">for</span> i = 1:length(Family)
+0056         <span class="keyword">if</span> nargin == 1
+0057             S{i} = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(Family{i});
+0058         <span class="keyword">else</span>            
+0059             S{i} = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(Family{i}, DeviceList{i});
+0060         <span class="keyword">end</span>
+0061     <span class="keyword">end</span>
+0062     <span class="keyword">return</span>    
+0063 <span class="keyword">end</span>
+0064 
+0065 <span class="keyword">if</span> isstruct(Family)
+0066     <span class="keyword">if</span> any(size(Family) &gt; 1)
+0067         error(<span class="string">'Only structures of size = [1 1] allowed'</span>)
+0068     <span class="keyword">end</span>                
+0069     <span class="keyword">if</span> isfield(Family,<span class="string">'FamilyName'</span>) &amp; isfield(Family,<span class="string">'Field'</span>)
+0070         <span class="comment">% Data structure</span>
+0071         S = getfamilydata(Family.FamilyName, Family.Field, <span class="string">'Range'</span>, Family.DeviceList); 
+0072         <span class="keyword">if</span> ~isempty(S)
+0073             S = S(:,2);
+0074         <span class="keyword">end</span>
+0075         <span class="keyword">return</span>
+0076     <span class="keyword">else</span>
+0077         <span class="comment">% AO structure</span>
+0078         <span class="keyword">if</span> nargin &lt; 2
+0079             S = Family.Setpoint.Range;
+0080         <span class="keyword">else</span>
+0081             <span class="keyword">if</span> size(DeviceList,2) == 1
+0082                 Index = findrowindex(DeviceList, ElementList);
+0083             <span class="keyword">else</span>
+0084                 Index = findrowindex(DeviceList, Family.DeviceList);
+0085             <span class="keyword">end</span>
+0086             S = Family.Setpoint.Range(Index,2);
+0087         <span class="keyword">end</span>
+0088     <span class="keyword">end</span>
+0089 <span class="keyword">end</span>
+0090 
+0091 
+0092 <span class="keyword">if</span> isempty(Family)
+0093     <span class="comment">% Common names with no family name</span>
+0094     <span class="keyword">if</span> nargin &lt; 2
+0095             error(<span class="string">'If Family=[], 2 inputs are required.'</span>);
+0096     <span class="keyword">end</span>
+0097     CommonNames = DeviceList;
+0098     <span class="keyword">for</span> i = 1:size(CommonNames,1)
+0099         Family = common2family(CommonNames(i,:));
+0100         [FamilyIndex, ACCELERATOR_OBJECT] = isfamily(Family);
+0101         DeviceList = common2dev(CommonNames(i,:), ACCELERATOR_OBJECT);
+0102         <span class="keyword">if</span> isempty(DeviceList) | isempty(DeviceList)
+0103             error(<span class="string">'Common name could not be converted to a Family and DeviceList.'</span>);
+0104         <span class="keyword">end</span>
+0105         S(i,:) = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(Family, DeviceList);
+0106     <span class="keyword">end</span>
+0107     <span class="keyword">return</span>
+0108         
+0109 <span class="keyword">elseif</span> ~isfamily(Family(1,:))
+0110     <span class="comment">% Channel name method</span>
+0111     <span class="comment">% Try to convert to a family and device</span>
+0112     
+0113     ChannelNames = Family;
+0114     <span class="keyword">for</span> i = 1:size(ChannelNames,1)
+0115         Family = channel2family(ChannelNames(i,:));
+0116         [FamilyIndex, ACCELERATOR_OBJECT] = isfamily(Family);
+0117         DeviceList = channel2dev(ChannelNames(i,:), ACCELERATOR_OBJECT);
+0118         <span class="keyword">if</span> isempty(DeviceList) | isempty(DeviceList)
+0119             error(<span class="string">'Channel name could not be converted to a Family and DeviceList.'</span>);
+0120         <span class="keyword">end</span>
+0121         S(i,:) = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(Family, DeviceList);
+0122     <span class="keyword">end</span>
+0123     <span class="keyword">return</span>
+0124 <span class="keyword">end</span>
+0125 
+0126 
+0127 <span class="keyword">if</span> nargin == 1
+0128     S = getfamilydata(Family, <span class="string">'Setpoint'</span>, <span class="string">'Range'</span>, []);
+0129 <span class="keyword">else</span>            
+0130     <span class="comment">% Convert common name to a DeviceList</span>
+0131     <span class="keyword">if</span> isstr(DeviceList)
+0132         DeviceList = common2dev(DeviceList, Family);
+0133     <span class="keyword">end</span>
+0134     S = getfamilydata(Family, <span class="string">'Setpoint'</span>, <span class="string">'Range'</span>, DeviceList);
+0135 <span class="keyword">end</span>
+0136 <span class="keyword">if</span> ~isempty(S)
+0137     S = S(:,2);
+0138 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

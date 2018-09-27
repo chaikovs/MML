@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotchro</title>
+  <meta name="keywords" content="plotchro">
+  <meta name="description" content="PLOTCHRO - Plot the chromaticity function">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; plotchro.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>plotchro
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>PLOTCHRO - Plot the chromaticity function</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [c, FileName] = plotchro(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PLOTCHRO - Plot the chromaticity function
+  c = plotchro(c);
+  c = plotchro(c, 'Hardware');  plots in hardware units [Tune/MHz]
+  c = plotchro(c, 'Physics');   plots in physics  units [Tune/(dp/p)]
+  c = plotchro(FileName);
+  [c, FileName] = plotchro(''); prompts for a file
+
+  INPUTS
+  1. c is the chromacity structure returned by measchro
+  2. PhysicsString is the units 'Hardware' or 'Physics'
+
+  OUTPUTS
+  1. c is the chromacity structure returned by measchro
+
+  NOTES
+  1.'Zeta' can be used instead of 'Physics'
+  2. The default units comes from the structure c.Units
+
+  See Also <a href="measchro.html" class="code" title="function [Chromaticity, FileName] = measchro(varargin)">measchro</a>, <a href="getchro.html" class="code" title="function [Data, FileName] = getchro(varargin)">getchro</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getchro.html" class="code" title="function [Data, FileName] = getchro(varargin)">getchro</a>	GETCHRO - Return the chromaticity function (from file)</li><li><a href="hw2physics.html" class="code" title="function S = hw2physics(Family, Field, value, DeviceList, Energy)">hw2physics</a>	HW2PHYSICS - Converts from 'Hardware' units to 'Physics' units</li><li><a href="physics2hw.html" class="code" title="function S = physics2hw(Family, Field, value, DeviceList, Energy)">physics2hw</a>	PHYSICS2HW - Converts from 'Physics' units to 'Hardware' units</li><li><a href="plotchro.html" class="code" title="function [c, FileName] = plotchro(varargin)">plotchro</a>	PLOTCHRO - Plot the chromaticity function</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="measchro.html" class="code" title="function [Chromaticity, FileName] = measchro(varargin)">measchro</a>	MEASCHRO -  measures the chromaticity function emperically</li><li><a href="plotchro.html" class="code" title="function [c, FileName] = plotchro(varargin)">plotchro</a>	PLOTCHRO - Plot the chromaticity function</li><li><a href="plotorbitdata.html" class="code" title="function [BPMx, BPMy] = plotorbitdata(varargin)">plotorbitdata</a>	PLOTORBITDATA - Plots BPM statistics</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [c, FileName] = plotchro(varargin)</a>
+0002 <span class="comment">%PLOTCHRO - Plot the chromaticity function</span>
+0003 <span class="comment">%  c = plotchro(c);</span>
+0004 <span class="comment">%  c = plotchro(c, 'Hardware');  plots in hardware units [Tune/MHz]</span>
+0005 <span class="comment">%  c = plotchro(c, 'Physics');   plots in physics  units [Tune/(dp/p)]</span>
+0006 <span class="comment">%  c = plotchro(FileName);</span>
+0007 <span class="comment">%  [c, FileName] = plotchro(''); prompts for a file</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  INPUTS</span>
+0010 <span class="comment">%  1. c is the chromacity structure returned by measchro</span>
+0011 <span class="comment">%  2. PhysicsString is the units 'Hardware' or 'Physics'</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">%  OUTPUTS</span>
+0014 <span class="comment">%  1. c is the chromacity structure returned by measchro</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">%  NOTES</span>
+0017 <span class="comment">%  1.'Zeta' can be used instead of 'Physics'</span>
+0018 <span class="comment">%  2. The default units comes from the structure c.Units</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">%  See Also measchro, getchro</span>
+0021 
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  Written by Greg Portmann and Jeff Corbett</span>
+0024 <span class="comment">%  Modified by Laurent S. Nadolski</span>
+0025 
+0026 c = [];
+0027 PhysicsString = <span class="string">''</span>;
+0028 FileName = <span class="string">''</span>;
+0029 
+0030 
+0031 <span class="comment">% Input parsing</span>
+0032 UnitsFlag = {};
+0033 <span class="keyword">for</span> i = length(varargin):-1:1
+0034     <span class="keyword">if</span> isstruct(varargin{i})
+0035         <span class="comment">% Ignor structures</span>
+0036     <span class="keyword">elseif</span> iscell(varargin{i})
+0037         <span class="comment">% Ignor cells</span>
+0038     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Zeta'</span>) || strcmpi(varargin{i},<span class="string">'Physics'</span>)
+0039         UnitsFlag = [UnitsFlag varargin(i)];
+0040         <span class="comment">%if length(varargin) &gt;= i+1         % Not using these inputs at the moment</span>
+0041         <span class="comment">%    if isnumeric(varargin{i+1})</span>
+0042         <span class="comment">%        MCF = varargin{i+1};</span>
+0043         <span class="comment">%        if length(varargin) &gt;= i+2</span>
+0044         <span class="comment">%            if isnumeric(varargin{i+2})</span>
+0045         <span class="comment">%                RF0 = varargin{i+2};</span>
+0046         <span class="comment">%                varargin(i+2) = [];</span>
+0047         <span class="comment">%            end</span>
+0048         <span class="comment">%        end</span>
+0049         <span class="comment">%        varargin(i+1) = [];</span>
+0050         <span class="comment">%    end</span>
+0051         <span class="comment">%end</span>
+0052         varargin(i) = [];    
+0053     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Hardware'</span>)
+0054         UnitsFlag = [UnitsFlag varargin(i)];
+0055         varargin(i) = [];    
+0056     <span class="keyword">end</span>
+0057 <span class="keyword">end</span>
+0058 
+0059 
+0060 <span class="keyword">if</span> length(varargin) &gt;= 1
+0061     <span class="keyword">if</span> isstruct(varargin{1})
+0062         c = varargin{1};
+0063     <span class="keyword">elseif</span> ischar(varargin{1})
+0064         FileName = varargin{1};
+0065     <span class="keyword">end</span>
+0066 <span class="keyword">end</span>
+0067 <span class="keyword">if</span> isempty(c)
+0068     [c, FileName] = <a href="getchro.html" class="code" title="function [Data, FileName] = getchro(varargin)">getchro</a>(FileName, <span class="string">'Struct'</span>, UnitsFlag{:});
+0069 <span class="keyword">end</span>
+0070 <span class="keyword">if</span> ~isstruct(c)  
+0071     error(<span class="string">'Input must be a structure as returned by measchro'</span>);
+0072 <span class="keyword">end</span>
+0073 
+0074 <span class="keyword">if</span> strcmpi(c.Mode,<span class="string">'Model'</span>)
+0075     warning(<span class="string">'Measured taken as Model and not as Simulator. Not implemented'</span>)
+0076 <span class="keyword">end</span>
+0077 
+0078 Chromaticity = c.Data;
+0079 Tune =  c.Tune;
+0080 Units = c.Units;
+0081 UnitsString = c.UnitsString;
+0082 DeltaRF = c.ActuatorDelta;        
+0083 
+0084 <span class="comment">% Override the Units field</span>
+0085 <span class="keyword">if</span> isempty(UnitsFlag)
+0086     PhysicsString = Units;
+0087 <span class="keyword">else</span>
+0088     PhysicsString = UnitsFlag{1};
+0089 <span class="keyword">end</span>
+0090 
+0091 
+0092 <span class="keyword">if</span> strcmpi(Units, <span class="string">'Hardware'</span>)
+0093     <span class="keyword">if</span> strcmpi(PhysicsString,<span class="string">'Physics'</span>)
+0094         <span class="comment">% Change units to physics</span>
+0095         <span class="comment">% MCF = c.MCF;</span>
+0096         <span class="comment">% RF0 = c.Actuator.Data;</span>
+0097         <span class="comment">% p = polyfit(c.dp, Tune(1,:), 2);</span>
+0098         <span class="comment">% c.PolyFit(1,:) = p;</span>
+0099         <span class="comment">% c.Data(1,1) = p(2);</span>
+0100         <span class="comment">% p = polyfit(c.dp, Tune(2,:), 2);</span>
+0101         <span class="comment">% c.PolyFit(2,:) = p;</span>
+0102         <span class="comment">% c.Data(2,1) = p(2);</span>
+0103         <span class="comment">% c.Units = 'Physics';</span>
+0104         <span class="comment">% c.UnitsString = '1/(dp/p)';</span>
+0105         c = <a href="hw2physics.html" class="code" title="function S = hw2physics(Family, Field, value, DeviceList, Energy)">hw2physics</a>(c);
+0106         <a href="plotchro.html" class="code" title="function [c, FileName] = plotchro(varargin)">plotchro</a>(c);
+0107         <span class="keyword">return</span>
+0108     <span class="keyword">end</span>
+0109     
+0110     <span class="comment">%================================================</span>
+0111     <span class="comment">% Tune shift vs. rf frequency</span>
+0112     <span class="comment">%================================================</span>
+0113     x2 = linspace(min(DeltaRF), max(DeltaRF), 1000);
+0114     
+0115     clf reset
+0116     set(gcf,<span class="string">'NumberTitle'</span>,<span class="string">'on'</span>,<span class="string">'Name'</span>,<span class="string">'Tune Shift vs. RF Frequency'</span>);
+0117     subplot(2,1,1);
+0118     <span class="keyword">if</span> strcmpi(c.Actuator.UnitsString,<span class="string">'MHz'</span>)
+0119         <span class="comment">% Hz is easier to view</span>
+0120         plot(1e6*DeltaRF, Tune(1,:), <span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);   <span class="comment">% plot raw tune data</span>
+0121     <span class="keyword">else</span>
+0122         plot(DeltaRF, Tune(1,:), <span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);   <span class="comment">% plot raw tune data</span>
+0123     <span class="keyword">end</span>
+0124     hold on;
+0125     p = c.PolyFit(1,:);
+0126     y = polyval(p, x2);                  <span class="comment">% evaluate polynomial on equispaced points x2</span>
+0127     <span class="keyword">if</span> strcmpi(c.Actuator.UnitsString,<span class="string">'MHz'</span>)
+0128         plot(1e6*x2, y, <span class="string">'-b'</span>);                   <span class="comment">% plot polynomial fit</span>
+0129         xlabel(<span class="string">'RF Frequency Change [Hz]'</span>);
+0130     <span class="keyword">else</span>
+0131         plot(x2, y, <span class="string">'-b'</span>);                   <span class="comment">% plot polynomial fit</span>
+0132         xlabel(sprintf(<span class="string">'RF Frequency Change [%s]'</span>, c.Actuator.UnitsString));
+0133     <span class="keyword">end</span>
+0134     hold off;
+0135     title([num2str(p(1)),<span class="string">' x (drf/rf)^2  + '</span>,num2str(p(2)),<span class="string">' x drf/rf  + '</span>,num2str(p(3))]);
+0136     ylabel(<span class="string">'Horizontal Tune'</span>);
+0137     
+0138     subplot(2,1,2);
+0139     <span class="keyword">if</span> strcmpi(c.Actuator.UnitsString,<span class="string">'MHz'</span>)
+0140         plot(1e6*DeltaRF, Tune(2,:), <span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);   <span class="comment">% plot raw tune data</span>
+0141     <span class="keyword">else</span>
+0142         plot(DeltaRF, Tune(2,:), <span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);       <span class="comment">% plot raw tune data</span>
+0143     <span class="keyword">end</span>
+0144     hold on;
+0145     p = c.PolyFit(2,:);
+0146     y = polyval(p, x2);
+0147     <span class="keyword">if</span> strcmpi(c.Actuator.UnitsString,<span class="string">'MHz'</span>)
+0148         plot(1e6*x2, y, <span class="string">'-b'</span>);                   <span class="comment">% plot polynomial fit</span>
+0149         xlabel(<span class="string">'RF Frequency Change [Hz]'</span>);
+0150     <span class="keyword">else</span>
+0151         plot(x2, y, <span class="string">'-b'</span>);                       <span class="comment">% plot polynomial fit</span>
+0152         xlabel(sprintf(<span class="string">'RF Frequency Change [%s]'</span>, c.Actuator.UnitsString));
+0153     <span class="keyword">end</span>    
+0154     hold off;
+0155     title([num2str(p(1)),<span class="string">' x (drf/rf)^2  + '</span>,num2str(p(2)),<span class="string">' x drf/rf  + '</span>,num2str(p(3))]);
+0156     ylabel(<span class="string">'Vertical Tune'</span>);
+0157     <span class="keyword">if</span> any(strcmpi(c.Monitor.Mode, {<span class="string">'Model'</span>,<span class="string">'Simulator'</span>}))
+0158         addlabel(1,0,sprintf(<span class="string">'%s (Model)'</span>, datestr(c.TimeStamp,0)));
+0159     <span class="keyword">else</span>
+0160         addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(c.TimeStamp,0)));        
+0161     <span class="keyword">end</span>
+0162     orient tall
+0163     
+0164 <span class="keyword">elseif</span> strcmpi(Units, <span class="string">'Physics'</span>)
+0165     <span class="keyword">if</span> strcmpi(PhysicsString,<span class="string">'Hardware'</span>)
+0166         <span class="comment">% Change units to hardware</span>
+0167         <span class="comment">%MCF = c.MCF;</span>
+0168         <span class="comment">%RF0 = c.Actuator.Data;</span>
+0169         <span class="comment">%p = polyfit(DeltaRF, Tune(1,:), 2);</span>
+0170         <span class="comment">%c.PolyFit(1,:) = p;</span>
+0171         <span class="comment">%c.Data(1,1) = p(2);</span>
+0172         <span class="comment">%p = polyfit(DeltaRF, Tune(2,:), 2);</span>
+0173         <span class="comment">%c.PolyFit(2,:) = p;</span>
+0174         <span class="comment">%c.Data(2,1) = p(2);</span>
+0175         <span class="comment">%c.Units = 'Hardware';</span>
+0176         <span class="comment">%c.UnitsString = c.Actuator.UnitsString;</span>
+0177         c = <a href="physics2hw.html" class="code" title="function S = physics2hw(Family, Field, value, DeviceList, Energy)">physics2hw</a>(c);
+0178         
+0179         <a href="plotchro.html" class="code" title="function [c, FileName] = plotchro(varargin)">plotchro</a>(c);
+0180         <span class="keyword">return</span>
+0181     <span class="keyword">end</span>
+0182 
+0183     <span class="comment">%================================================</span>
+0184     <span class="comment">% Tune shift vs. momentum</span>
+0185     <span class="comment">%================================================</span>
+0186     x2 = linspace(min(c.dp), max(c.dp), 1000);     <span class="comment">%create momentum value interval</span>
+0187     
+0188     clf reset
+0189     set(gcf,<span class="string">'NumberTitle'</span>,<span class="string">'on'</span>,<span class="string">'Name'</span>,<span class="string">'Tune Shift vs. Momentum '</span>);
+0190     subplot(2,1,1);
+0191     plot(100*c.dp,Tune(1,:), <span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);   <span class="comment">%raw data</span>
+0192     hold on;
+0193     p = c.PolyFit(1,:);
+0194     y = polyval(p, x2);                          <span class="comment">%evaluate polynomial on equispaced points x2</span>
+0195     plot(100*x2, y, <span class="string">'-b'</span>);                       <span class="comment">%plot polynomial fit</span>
+0196     hold off;
+0197     xlabel(<span class="string">'Momentum Shift, dp/p [%]'</span>)
+0198     title([num2str(p(1)),<span class="string">' (dp/p)^2  + '</span>,num2str(p(2)),<span class="string">' dp/p  + '</span>,num2str(p(3))]);
+0199     ylabel(<span class="string">'Horizontal Tune'</span>);
+0200     
+0201     subplot(2,1,2);
+0202     plot(100*c.dp,Tune(2,:),<span class="string">'ob'</span>,<span class="string">'markersize'</span>,2);
+0203     hold on;
+0204     p = c.PolyFit(2,:);
+0205     y = polyval(p, x2);
+0206     plot(100*x2, y, <span class="string">'-b'</span>);
+0207     hold off;
+0208     
+0209     xlabel(<span class="string">'Momentum Shift, dp/p [%]'</span>)
+0210     title([num2str(p(1)),<span class="string">' (dp/p)^2  + '</span>,num2str(p(2)),<span class="string">' dp/p  + '</span>,num2str(p(3))]);
+0211     ylabel(<span class="string">'Vertical Tune'</span>);
+0212     <span class="keyword">if</span> any(strcmpi(c.Monitor.Mode, {<span class="string">'Model'</span>,<span class="string">'Simulator'</span>}))
+0213         addlabel(1,0,sprintf(<span class="string">'%s (Model)'</span>, datestr(c.TimeStamp,0)));
+0214     <span class="keyword">else</span>
+0215         addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(c.TimeStamp,0)));        
+0216     <span class="keyword">end</span>
+0217     <span class="comment">%addlabel(1,0,sprintf('%s', datestr(c.TimeStamp,0)));</span>
+0218     orient tall
+0219     
+0220 <span class="keyword">else</span>
+0221     error(<span class="string">'UnitsString unknown type'</span>);
+0222 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

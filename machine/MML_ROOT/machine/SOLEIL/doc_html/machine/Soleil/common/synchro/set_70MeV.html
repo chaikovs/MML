@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of set_70MeV</title>
+  <meta name="keywords" content="set_70MeV">
+  <meta name="description" content="SET_70MEV Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; set_70MeV.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>set_70MeV
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>SET_70MEV Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function set_70MeV </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">SET_70MEV Summary of this function goes here
+   Detailed explanation goes here
+ linac fired 5 ms before (70 MeV versus 110 MeV)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function set_70MeV</a>
+0002 <span class="comment">%SET_70MEV Summary of this function goes here</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 <span class="comment">% linac fired 5 ms before (70 MeV versus 110 MeV)</span>
+0005 
+0006 <span class="comment">% % Get initial 110 MeV value</span>
+0007 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'TInjTimeDelay');</span>
+0008 <span class="comment">% TInj0=temp.value(1);</span>
+0009 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'ExtractionOffsetTimeValue');</span>
+0010 <span class="comment">% TExt0=temp.value(1);</span>
+0011 <span class="comment">% save 'initial110MeV.mat'  TInj0  TExt0</span>
+0012 
+0013 
+0014 <span class="comment">% Step by delai Tinj and Text of central</span>
+0015 load <span class="string">'initial110MeV.mat'</span>  TInj0  TExt0
+0016 
+0017 delai=-5000; <span class="comment">% in µs</span>
+0018 TInj=TInj0 + delai;
+0019 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>,TInj);
+0020 
+0021 <span class="comment">%TExt=TExt0 + delai;</span>
+0022 <span class="comment">%tango_write_attribute2('ANS/SY/CENTRAL', 'TSprTimeDelay',TExt);</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

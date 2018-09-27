@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makedoc_html</title>
+  <meta name="keywords" content="makedoc_html">
+  <meta name="description" content="MAKEDOC_HTML - Generate new MML, SOLEIL and AT HTML help files">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; makedoc_html.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>makedoc_html
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MAKEDOC_HTML - Generate new MML, SOLEIL and AT HTML help files</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function makedoc_html(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MAKEDOC_HTML - Generate new MML, SOLEIL and AT HTML help files
+  makedoc_html</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getmmlroot.html" class="code" title="function MMLROOT = getmmlroot(varargin)">getmmlroot</a>	GETMMLROOT - Returns root directory of the Matlab Middle Layer</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makedoc_html(varargin)</a>
+0002 <span class="comment">%MAKEDOC_HTML - Generate new MML, SOLEIL and AT HTML help files</span>
+0003 <span class="comment">%  makedoc_html</span>
+0004 
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  Written by Gregory J Portmann</span>
+0007 <span class="comment">%  Modifed by Laurent S. Nadolski</span>
+0008 
+0009 <span class="comment">% Options = {'htmldir','doc_html', 'recursive','off', 'graph','Off', ...</span>
+0010 <span class="comment">%     'todo', 'on', 'template', 'frame', 'index', 'menu', 'search', 'on'};</span>
+0011 Options = {<span class="string">'htmldir'</span>,<span class="string">'doc_html'</span>, <span class="string">'recursive'</span>,<span class="string">'off'</span>, <span class="string">'graph'</span>,<span class="string">'Off'</span>, <span class="keyword">...</span>
+0012     <span class="string">'todo'</span>, <span class="string">'on'</span>, <span class="string">'search'</span>, <span class="string">'on'</span>};
+0013 
+0014 <span class="keyword">if</span> isempty(varargin)
+0015     ListName = {<span class="string">'AT'</span>, <span class="string">'MML'</span>, <span class="string">'SOLEIL'</span>};
+0016 <span class="keyword">else</span>
+0017     ListName = {};
+0018 <span class="keyword">end</span>
+0019 
+0020 <span class="keyword">for</span> i = length(varargin):-1:1,
+0021     <span class="keyword">if</span> strcmpi(varargin{i},<span class="string">'All'</span>)
+0022         ListName = {<span class="string">'AT'</span>, <span class="string">'MML'</span>, <span class="string">'SOLEIL'</span>};
+0023         varargin(i) = [];
+0024     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'AT'</span>)
+0025         ListName = [ListName, <span class="string">'AT'</span>];
+0026         varargin(i) = [];
+0027     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'MML'</span>)
+0028         ListName = [ListName, <span class="string">'MML'</span>];
+0029         varargin(i) = [];
+0030     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'SOLEIL'</span>)
+0031         ListName = [ListName, <span class="string">'SOLEIL'</span>];
+0032         varargin(i) = [];
+0033     <span class="keyword">else</span>
+0034         varargin(i) = [];
+0035     <span class="keyword">end</span>
+0036 <span class="keyword">end</span>
+0037 
+0038 DirectoryStart = pwd;
+0039 
+0040 <span class="comment">%[DirectoryName, FileName, ExtentionName] = fileparts(mfilename('fullpath'));</span>
+0041 <span class="comment">%cd(DirectoryName);</span>
+0042 
+0043 cd(<a href="getmmlroot.html" class="code" title="function MMLROOT = getmmlroot(varargin)">getmmlroot</a>);
+0044 
+0045 <span class="keyword">for</span> k=1:length(ListName)
+0046     <span class="keyword">switch</span> ListName{k}
+0047         <span class="keyword">case</span> <span class="string">'MML'</span>
+0048             cd mml
+0049 
+0050             <span class="comment">% Delete old directory first</span>
+0051             <span class="keyword">try</span>
+0052                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0053                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0054                 <span class="keyword">end</span>
+0055             <span class="keyword">catch</span>
+0056                 disp(<span class="string">'Delete error'</span>);
+0057             <span class="keyword">end</span>
+0058             cd ..
+0059 
+0060             <span class="keyword">try</span>
+0061                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0062                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0063                 <span class="keyword">end</span>
+0064             <span class="keyword">catch</span>
+0065                 disp(<span class="string">'rmdir error'</span>)
+0066             <span class="keyword">end</span>
+0067 
+0068 
+0069             MMLDirectory = {<span class="keyword">...</span>
+0070                 <span class="string">'mml'</span>, <span class="keyword">...</span>
+0071                 fullfile(<span class="string">'mml'</span>,<span class="string">'at'</span>), <span class="keyword">...</span>
+0072                 fullfile(<span class="string">'mml'</span>,<span class="string">'links'</span>,<span class="string">'tango'</span>) <span class="keyword">...</span>
+0073                 };
+0074 
+0075             m2html(<span class="string">'mfiles'</span>, MMLDirectory, Options{:});
+0076 
+0077             <span class="comment">% Move doc_html directory to MML</span>
+0078             movefile(<span class="string">'doc_html'</span>, <span class="string">'mml'</span>);
+0079 
+0080             cd applications
+0081 
+0082             <span class="comment">% Delete old directory first</span>
+0083             <span class="keyword">try</span>
+0084                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0085                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0086                 <span class="keyword">end</span>
+0087             <span class="keyword">catch</span>
+0088                 disp(<span class="string">'Delete error'</span>);
+0089             <span class="keyword">end</span>
+0090 
+0091             cd ..
+0092 
+0093             <span class="keyword">try</span>
+0094                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0095                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0096                 <span class="keyword">end</span>
+0097             <span class="keyword">catch</span>
+0098                 disp(<span class="string">'rmdir error'</span>)
+0099             <span class="keyword">end</span>
+0100 
+0101 
+0102             MMLDirectory = {<span class="keyword">...</span>
+0103                 fullfile(<span class="string">'applications'</span>,<span class="string">'common'</span>), <span class="keyword">...</span>
+0104                 fullfile(<span class="string">'applications'</span>,<span class="string">'loco'</span>), <span class="keyword">...</span>
+0105                 fullfile(<span class="string">'applications'</span>, <span class="string">'database'</span>, <span class="string">'mysql'</span>), <span class="keyword">...</span>
+0106                 fullfile(<span class="string">'applications'</span>,<span class="string">'mmlviewer'</span>), <span class="keyword">...</span>
+0107                 fullfile(<span class="string">'applications'</span>,<span class="string">'orbit'</span>)
+0108                 };
+0109 
+0110             m2html(<span class="string">'mfiles'</span>, MMLDirectory, Options{:});
+0111 
+0112             <span class="comment">% Move doc_html directory to MML</span>
+0113             movefile(<span class="string">'doc_html'</span>, <span class="string">'applications'</span>);
+0114 
+0115         <span class="keyword">case</span> <span class="string">'AT'</span>
+0116 
+0117             <span class="comment">% Make AT HTML help</span>
+0118             cd at
+0119             <span class="keyword">try</span>
+0120                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0121                     rmdir(<span class="string">'doc_html'</span>,<span class="string">'s'</span>);
+0122                 <span class="keyword">end</span>
+0123             <span class="keyword">catch</span>
+0124                 disp(<span class="string">'rmdir error'</span>)
+0125             <span class="keyword">end</span>
+0126 
+0127             cd ..
+0128             <span class="keyword">try</span>
+0129                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0130                     rmdir(<span class="string">'doc_html'</span>,<span class="string">'s'</span>);
+0131                 <span class="keyword">end</span>
+0132             <span class="keyword">catch</span>
+0133                 disp(<span class="string">'rmdir error'</span>)
+0134             <span class="keyword">end</span>
+0135 
+0136             MMLDirectory = {<span class="keyword">...</span>
+0137                 <span class="string">'at'</span>, <span class="keyword">...</span>
+0138                 fullfile(<span class="string">'at'</span>,<span class="string">'atdemos'</span>), <span class="keyword">...</span>
+0139                 fullfile(<span class="string">'at'</span>,<span class="string">'atgui'</span>), <span class="keyword">...</span>
+0140                 fullfile(<span class="string">'at'</span>,<span class="string">'atphysics'</span>), <span class="keyword">...</span>
+0141                 fullfile(<span class="string">'at'</span>,<span class="string">'lattice'</span>), <span class="keyword">...</span>
+0142                 fullfile(<span class="string">'at'</span>,<span class="string">'simulator'</span>,<span class="string">'element'</span>), <span class="keyword">...</span>
+0143                 fullfile(<span class="string">'at'</span>,<span class="string">'simulator'</span>,<span class="string">'element'</span>,<span class="string">'user'</span>), <span class="keyword">...</span>
+0144                 fullfile(<span class="string">'at'</span>,<span class="string">'simulator'</span>,<span class="string">'track'</span>), <span class="keyword">...</span>
+0145                 };
+0146 
+0147             m2html(<span class="string">'mfiles'</span>, MMLDirectory, Options{:});
+0148 
+0149             <span class="comment">% Move doc_html directory to AT</span>
+0150             movefile(<span class="string">'doc_html'</span>, <span class="string">'at'</span>);
+0151 
+0152         <span class="keyword">case</span> <span class="string">'SOLEIL'</span>
+0153             cd(fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>))
+0154 
+0155             <span class="comment">% Delete old directory first</span>
+0156             <span class="keyword">try</span>
+0157                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0158                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0159                 <span class="keyword">end</span>
+0160             <span class="keyword">catch</span>
+0161                 disp(<span class="string">'Delete error'</span>);
+0162             <span class="keyword">end</span>
+0163 
+0164             cd(fullfile(<span class="string">'..'</span>, <span class="string">'..'</span>));
+0165 
+0166             <span class="keyword">try</span>
+0167                 <span class="keyword">if</span> isdir(<span class="string">'doc_html'</span>)
+0168                     rmdir(<span class="string">'doc_html'</span>, <span class="string">'s'</span>);
+0169                 <span class="keyword">end</span>
+0170             <span class="keyword">catch</span>
+0171                 disp(<span class="string">'rmdir error'</span>)
+0172             <span class="keyword">end</span>
+0173 
+0174             MMLDirectory = {<span class="keyword">...</span>
+0175                 fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>,<span class="string">'LT1'</span>), <span class="keyword">...</span>
+0176                 fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>,<span class="string">'Booster'</span>), <span class="keyword">...</span>
+0177                 fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>,<span class="string">'LT2'</span>), <span class="keyword">...</span>
+0178                 fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>,<span class="string">'StorageRing'</span>), <span class="keyword">...</span>
+0179                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>), <span class="keyword">...</span>
+0180                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'naff'</span>, <span class="string">'naffutils'</span>), <span class="keyword">...</span>
+0181                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'naff'</span>, <span class="string">'naffutils'</span>, <span class="string">'touscheklifetime'</span>), <span class="keyword">...</span>
+0182                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'naff'</span>, <span class="string">'nafflib'</span>), <span class="keyword">...</span>
+0183                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'archiving'</span>), <span class="keyword">...</span>
+0184                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'database'</span>), <span class="keyword">...</span>
+0185                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'synchro'</span>), <span class="keyword">...</span>
+0186                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'plotfamily'</span>), <span class="keyword">...</span>
+0187                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'configurations'</span>), <span class="keyword">...</span>
+0188                 fullfile(<span class="string">'machine'</span>, <span class="string">'Soleil'</span>, <span class="string">'common'</span>, <span class="string">'cycling'</span>)<span class="keyword">...</span>
+0189                 <span class="comment">%fullfile('machine', 'Soleil', 'common', 'diag', 'DserverBPM') ...</span>
+0190                 <span class="comment">%fullfile('mml', 'plotfamily')); % greg version</span>
+0191                 };
+0192 
+0193             m2html(<span class="string">'mfiles'</span>, MMLDirectory, Options{:});
+0194 
+0195             <span class="comment">% Move doc_html directory to MML</span>
+0196             movefile(<span class="string">'doc_html'</span>, fullfile(<span class="string">'machine'</span>,<span class="string">'Soleil'</span>));
+0197             cd ..
+0198     <span class="keyword">end</span>
+0199 <span class="keyword">end</span>
+0200 
+0201 cd(DirectoryStart);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

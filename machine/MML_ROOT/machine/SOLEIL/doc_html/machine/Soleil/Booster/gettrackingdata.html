@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gettrackingdata</title>
+  <meta name="keywords" content="gettrackingdata">
+  <meta name="description" content="GETTRACKING - get measured current on D1 D2 QD and QF">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">Booster</a> &gt; gettrackingdata.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/Booster&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>gettrackingdata
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>GETTRACKING - get measured current on D1 D2 QD and QF</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [D1 D2 QF QD itime] = gettrackingdata(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> GETTRACKING - get measured current on D1 D2 QD and QF
+
+  INPUTS
+
+
+  OUTPUTS
+  1. D1 -  Measured current on Dipole D1  in A
+  2. D2 -  Measured current on Dipole D2 in A
+  3. QF -  Measured current on quadrupole QF in A
+  4. QD -  Measured current on quadrupole QD in A
+  5. itime - Time base in seconds
+
+ NOTES
+ 1. Voltages are between -10 and 10 V and converted into amperes
+ 2/ time base is reconstruced by reading frequency and bufferdepth on
+ dserver tracking</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [D1 D2 QF QD itime] = gettrackingdata(varargin)</a>
+0002 <span class="comment">% GETTRACKING - get measured current on D1 D2 QD and QF</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  OUTPUTS</span>
+0008 <span class="comment">%  1. D1 -  Measured current on Dipole D1  in A</span>
+0009 <span class="comment">%  2. D2 -  Measured current on Dipole D2 in A</span>
+0010 <span class="comment">%  3. QF -  Measured current on quadrupole QF in A</span>
+0011 <span class="comment">%  4. QD -  Measured current on quadrupole QD in A</span>
+0012 <span class="comment">%  5. itime - Time base in seconds</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% NOTES</span>
+0015 <span class="comment">% 1. Voltages are between -10 and 10 V and converted into amperes</span>
+0016 <span class="comment">% 2/ time base is reconstruced by reading frequency and bufferdepth on</span>
+0017 <span class="comment">% dserver tracking</span>
+0018 
+0019 DisplayFlag = 1; 
+0020 
+0021 <span class="comment">% Input parser</span>
+0022 
+0023 <span class="keyword">for</span> i = length(varargin):-1:1
+0024     <span class="keyword">if</span> strcmpi(varargin{i},<span class="string">'Display'</span>)
+0025         DisplayFlag = 1;
+0026         varargin(i) = [];
+0027     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoDisplay'</span>)
+0028         DisplayFlag = 0;
+0029         varargin(i) = [];
+0030     <span class="keyword">end</span>
+0031 <span class="keyword">end</span>
+0032 
+0033 devName = <span class="string">'BOO/AE/tracking'</span>;
+0034 <span class="comment">% use this function to assure synchronous reading</span>
+0035 val = tango_read_attributes(devName, <span class="keyword">...</span>
+0036     {<span class="string">'channel0'</span>,<span class="string">'channel1'</span>,<span class="string">'channel2'</span>,<span class="string">'channel3'</span>,<span class="string">'frequency'</span>,<span class="string">'bufferDepth'</span>});
+0037 
+0038 <span class="keyword">if</span> (tango_error == -1)
+0039     <span class="comment">%- handle error</span>
+0040     tango_print_error_stack;
+0041     <span class="keyword">return</span>
+0042 <span class="keyword">end</span>
+0043 
+0044 
+0045 <span class="comment">% Gets numerical values for current (it is a voltage with is read)</span>
+0046 <span class="comment">% D.1 D.2 QF QD</span>
+0047 
+0048 D1 = val(1).value*-56; <span class="comment">% -55 A/V</span>
+0049 D2 = val(2).value*-56; <span class="comment">% -55 A/V</span>
+0050 QF = val(3).value*-25; <span class="comment">% -25 A/V</span>
+0051 QD = val(4).value*-25;  <span class="comment">% -10 A/V</span>
+0052 
+0053 freq       = val(5).value(1); <span class="comment">% read value</span>
+0054 timeTot = val(6).value(1); <span class="comment">% read value</span>
+0055 
+0056 itime = 0:1/freq:timeTot;
+0057 itime = itime(2:end);
+0058 
+0059 
+0060 <span class="keyword">if</span> DisplayFlag
+0061     subplot(2,1,1)
+0062     plot(itime,(D1+D2)/2,itime,QF,itime,QD);
+0063     grid on
+0064     legend(<span class="string">'(D1+D2)/2'</span>,<span class="string">'QF'</span>,<span class="string">'QD'</span>)
+0065     xlabel(<span class="string">'time (s)'</span>)
+0066 <span class="comment">%     xlim([0.03 0.05])</span>
+0067     hold off
+0068     ylabel(<span class="string">'normalized voltage (-10V to 10 V)'</span>)
+0069     title([<span class="string">'Dipole = '</span> num2str(max(D1+D2)/2) <span class="string">' QF = '</span> num2str(max(QF)) <span class="string">' QD = '</span>  num2str(max(QD))])
+0070     subplot(2,1,2)
+0071     plot(itime,QD./((D1+D2)/2),itime,QF./((D1+D2)/2));
+0072     <span class="comment">%hold off</span>
+0073     xlim([0.0 0.03])
+0074     grid on
+0075     legend(<span class="string">'QD/Dipole'</span>,<span class="string">'QF/Dipole'</span>)
+0076     xlabel(<span class="string">'time (s)'</span>)
+0077     ylabel(<span class="string">'normalized voltage (-10V to 10 V)'</span>)
+0078        
+0079 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

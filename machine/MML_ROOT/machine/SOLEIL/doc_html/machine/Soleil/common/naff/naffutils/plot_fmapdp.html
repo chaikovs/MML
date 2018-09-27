@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plot_fmapdp</title>
+  <meta name="keywords" content="plot_fmapdp">
+  <meta name="description" content="PLOT_FMAPDP - Plot frequency map">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; plot_fmapdp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>plot_fmapdp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>PLOT_FMAPDP - Plot frequency map</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function plot_fmapdp(file) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> PLOT_FMAPDP - Plot frequency map
+ plot_fmapdp('fmapdp.out')
+
+  INPUTS
+  1. file - filename for plotting frequency maps (output file from Tracy
+  II)
+
+  See also <a href="naffgui.html" class="code" title="function varargout = naffgui(varargin)">naffgui</a>, <a href="plot_fmap.html" class="code" title="function plot_fmap(file)">plot_fmap</a>, <a href="resongui.html" class="code" title="function varargout = resongui(varargin)">resongui</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="ind_amplitude.html" class="code" title="function induced_amplitude">ind_amplitude</a>	function induced_amplitude</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="naffgui.html" class="code" title="function varargout = naffgui(varargin)">naffgui</a>	NAFFGUI M-file for naffgui.fig</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plot_fmapdp(file)</a>
+0002 <span class="comment">% PLOT_FMAPDP - Plot frequency map</span>
+0003 <span class="comment">% plot_fmapdp('fmapdp.out')</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. file - filename for plotting frequency maps (output file from Tracy</span>
+0007 <span class="comment">%  II)</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  See also naffgui, plot_fmap, resongui</span>
+0010 
+0011 <span class="comment">%</span>
+0012 <span class="comment">% Written Laurent S. Nadolski, SOLEIL, 03/04</span>
+0013 <span class="comment">% Modifications for R14 compatibility, June'05</span>
+0014 
+0015 <span class="comment">%% grille par defaut</span>
+0016 set(0,<span class="string">'DefaultAxesXgrid'</span>,<span class="string">'on'</span>);
+0017 set(0,<span class="string">'DefaultAxesYgrid'</span>,<span class="string">'on'</span>);
+0018 
+0019 <span class="keyword">if</span> nargin &lt;1
+0020   help (mfilename)
+0021   file =<span class="string">'fmapdp.out'</span>;
+0022 <span class="keyword">end</span>
+0023 
+0024 <span class="keyword">try</span>
+0025     [dp x fx fz dfx dfz] = textread(file,<span class="string">'%f %f %f %f %f %f'</span>,<span class="string">'headerlines'</span>,3);
+0026 <span class="keyword">catch</span>
+0027     error(<span class="string">'Error while opening filename %s'</span>,file)
+0028 <span class="keyword">end</span>
+0029 
+0030 <span class="comment">%% ajoute parties entieres</span>
+0031 fx=18+abs(fx);
+0032 fz=10+abs(fz);
+0033 <span class="comment">%% energie en %</span>
+0034 dp = dp*1e2;
+0035 <span class="comment">%% position en mm</span>
+0036 x = x*1e3;
+0037             
+0038 <span class="comment">% select stable particles</span>
+0039 indx=(fx~=18.0);
+0040 
+0041 <span class="comment">%% carte N&amp;B</span>
+0042 figure(6); clf;
+0043 subplot(2,1,1)
+0044 plot(fx,fz,<span class="string">'.'</span>,<span class="string">'MarkerSize'</span>,0.5)
+0045 xlabel(<span class="string">'\nu_x'</span>); ylabel(<span class="string">'\nu_z'</span>)
+0046 <span class="comment">%axis([18.15 18.27 10.265 10.32])</span>
+0047 
+0048 subplot(2,1,2)
+0049 plot(dp(indx),x(indx),<span class="string">'.'</span>,<span class="string">'MarkerSize'</span>,0.5); hold on
+0050 <a href="ind_amplitude.html" class="code" title="function induced_amplitude">ind_amplitude</a>
+0051 xlabel(<span class="string">'\delta (%)'</span>); ylabel(<span class="string">'x(mm)'</span>)
+0052 addlabel(0,0,datestr(now));
+0053 
+0054 <span class="comment">%% Carte avec diffusion</span>
+0055 figure(7); clf 
+0056 dpgrid = [];
+0057 xgrid = [];
+0058 dfxgrid = [];
+0059 dfzgrid = [];
+0060 fxgrid = [];
+0061 fzgrid = [];
+0062 
+0063 <span class="comment">%% Calcul automatique de la taille des donnees</span>
+0064 nx = sum(dp==dp(1));
+0065 ndp = size(dp,1)/nx;
+0066 
+0067 xgrid = reshape(x,nx,ndp);
+0068 dpgrid = reshape(dp,nx,ndp);
+0069 fxgrid = reshape(fx,nx,ndp);
+0070 fzgrid = reshape(fz,nx,ndp);
+0071 dfxgrid = reshape(dfx,nx,ndp);
+0072 dfzgrid = reshape(dfz,nx,ndp);
+0073 
+0074 <span class="comment">%% Diffusion</span>
+0075 temp = sqrt(dfxgrid.*dfxgrid+dfzgrid.*dfzgrid);
+0076 nonzero = (temp ~= 0);
+0077 diffu = NaN*ones(size(temp));
+0078 diffu(nonzero) = log10(temp(nonzero));
+0079 clear nonzero temp;
+0080 
+0081 <span class="comment">% diffu = log10(sqrt(dfxgrid.*dfxgrid+dfzgrid.*dfzgrid));</span>
+0082 
+0083 <span class="comment">%% saturation</span>
+0084 <span class="comment">% ind = isinf(diffu);</span>
+0085 <span class="comment">% diffu(ind) = NaN;</span>
+0086 diffumax = -2; diffumin = -10;
+0087 diffu(diffu&lt; diffumin) = diffumin; <span class="comment">% very stable</span>
+0088 diffu(diffu&gt; diffumax) = diffumax; <span class="comment">%chaotic</span>
+0089 diffu(end)    = diffumin;
+0090 diffu(end-1) = diffumax;
+0091 
+0092 <span class="comment">%% fmap</span>
+0093 h1=subplot(2,1,1);
+0094 
+0095 <span class="comment">% Get Matlab version</span>
+0096 v = ver(<span class="string">'matlab'</span>);
+0097 
+0098 <span class="keyword">if</span> strcmp(v.Release,<span class="string">'(R13SP1)'</span>)
+0099     mesh(fxgrid,fzgrid,diffu,<span class="string">'LineStyle'</span>,<span class="string">'.'</span>,<span class="string">'MarkerSize'</span>,5.0,<span class="string">'FaceColor'</span>,<span class="string">'none'</span>);
+0100 <span class="keyword">else</span> <span class="comment">% For Release R14 and later</span>
+0101     mesh(fxgrid,fzgrid,diffu,<span class="string">'Marker'</span>,<span class="string">'.'</span>,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,5.0,<span class="string">'FaceColor'</span>,<span class="string">'none'</span>);
+0102 <span class="keyword">end</span>
+0103 
+0104 caxis([-10 -2]); <span class="comment">% Echelle absolue</span>
+0105 <span class="comment">%axis([18.15 18.27 10.26 10.32])</span>
+0106 <span class="comment">% axis([18.195 18.27 s10.26 10.32])</span>
+0107 set(gca,<span class="string">'View'</span>,[0 90]);
+0108 hold on
+0109 shading flat
+0110 hp=colorbar(<span class="string">'horiz'</span>);
+0111 xlabel(<span class="string">'\nu_x'</span>)
+0112 ylabel(<span class="string">'\nu_z'</span>)
+0113 
+0114 <span class="comment">%% DA</span>
+0115 h2=subplot(2,1,2);
+0116 <span class="comment">%% colorbar position</span>
+0117 p1 = get(h1,<span class="string">'position'</span>); p2 = get(h2,<span class="string">'position'</span>); p0 = get(hp,<span class="string">'position'</span>);
+0118 set(hp,<span class="string">'position'</span>,[p0(1) p1(2) - 1.2*(p1(2)-p2(2)-p2(4))/2 p0(3:4)]);
+0119 
+0120 pcolor(dpgrid,xgrid,diffu); hold on
+0121 caxis([-10 -2]); <span class="comment">% Echelle absolue</span>
+0122 shading flat
+0123 xlabel(<span class="string">'dp (%)'</span>)
+0124 ylabel(<span class="string">'x(mm)'</span>)
+0125 <a href="ind_amplitude.html" class="code" title="function induced_amplitude">ind_amplitude</a>
+0126 
+0127 <span class="comment">% addlabel(0,0,datestr(now))</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

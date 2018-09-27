@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of synchro_mode_tests</title>
+  <meta name="keywords" content="synchro_mode_tests">
+  <meta name="description" content="SYNCHRO_MODE_TESTS M-file for synchro_mode_tests.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; synchro_mode_tests.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>synchro_mode_tests
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>SYNCHRO_MODE_TESTS M-file for synchro_mode_tests.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = synchro_mode_tests(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> SYNCHRO_MODE_TESTS M-file for synchro_mode_tests.fig
+      SYNCHRO_MODE_TESTS, by itself, creates a new SYNCHRO_MODE_TESTS or raises the existing
+      singleton*.
+
+      H = SYNCHRO_MODE_TESTS returns the handle to a new SYNCHRO_MODE_TESTS or the handle to
+      the existing singleton*.
+
+      SYNCHRO_MODE_TESTS('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in SYNCHRO_MODE_TESTS.M with the given input arguments.
+
+      SYNCHRO_MODE_TESTS('Property','Value',...) creates a new SYNCHRO_MODE_TESTS or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before synchro_mode_tests_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to synchro_mode_tests_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function synchro_mode_tests_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = synchro_mode_tests_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function pushbutton_linac_3Hz_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function pushbutton_linac_soft_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function pushbutton_linac_Off_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function pushbutton_boo_3Hz_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function pushbutton_boo_soft_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function pushbutton_boo_off_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function pushbutton_ans_3hz_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function pushbutton_ans_soft_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function pushbutton_ans_off_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function edit_etat_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function edit_etat_CreateFcn(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = synchro_mode_tests(varargin)</a>
+0002 <span class="comment">% SYNCHRO_MODE_TESTS M-file for synchro_mode_tests.fig</span>
+0003 <span class="comment">%      SYNCHRO_MODE_TESTS, by itself, creates a new SYNCHRO_MODE_TESTS or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = SYNCHRO_MODE_TESTS returns the handle to a new SYNCHRO_MODE_TESTS or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      SYNCHRO_MODE_TESTS('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in SYNCHRO_MODE_TESTS.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      SYNCHRO_MODE_TESTS('Property','Value',...) creates a new SYNCHRO_MODE_TESTS or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before synchro_mode_tests_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to synchro_mode_tests_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help synchro_mode_tests</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 22-Feb-2007 16:58:02</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction synchro_mode_tests_OpeningFcn(hObject, eventdata, handles, varargin)">synchro_mode_tests_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = synchro_mode_tests_OutputFcn(hObject, eventdata, handles)">synchro_mode_tests_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before synchro_mode_tests is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function synchro_mode_tests_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to synchro_mode_tests (see VARARGIN)</span>
+0054 
+0055 
+0056 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'??'</span>);
+0057 <span class="comment">% Choose default command line output for synchro_mode_tests</span>
+0058 handles.output = hObject;
+0059 
+0060 <span class="comment">% Choix des events</span>
+0061 handles.event0 =int32(0);
+0062 handles.event00=int32(100);  <span class="comment">%Spéciale EP</span>
+0063 
+0064 <span class="comment">% Update handles structure</span>
+0065 guidata(hObject, handles);
+0066 
+0067 <span class="comment">% UIWAIT makes synchro_mode_tests wait for user response (see UIRESUME)</span>
+0068 <span class="comment">% uiwait(handles.figure1);</span>
+0069 
+0070 
+0071 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0072 <a name="_sub2" href="#_subfunctions" class="code">function varargout = synchro_mode_tests_OutputFcn(hObject, eventdata, handles) </a>
+0073 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0074 <span class="comment">% hObject    handle to figure</span>
+0075 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0076 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0077 
+0078 <span class="comment">% Get default command line output from handles structure</span>
+0079 varargout{1} = handles.output;
+0080 
+0081 
+0082 <span class="comment">% --- Executes on button press in pushbutton_linac_3Hz.</span>
+0083 <a name="_sub3" href="#_subfunctions" class="code">function pushbutton_linac_3Hz_Callback(hObject, eventdata, handles)</a>
+0084 <span class="comment">% hObject    handle to pushbutton_linac_3Hz (see GCBO)</span>
+0085 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0086 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0087 
+0088 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0089 tout=0.;
+0090 event0=handles.event0;
+0091 
+0092     <span class="comment">% switch to 3Hz</span>
+0093         event=int32(2) ;<span class="comment">% adresse de l'injection</span>
+0094         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,     event0); pause(tout);
+0095         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,event0); pause(tout);
+0096         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,   event); pause(tout);
+0097         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event); pause(tout);
+0098         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,     event); pause(tout);
+0099         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,     event); pause(tout);
+0100         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,      event); pause(tout);
+0101         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>, event); pause(tout);
+0102         
+0103     <span class="comment">% special modulateur</span>
+0104         delay=inj_offset+0;
+0105         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0106         display(<span class="string">'ok change soft to 3Hz'</span>)
+0107         
+0108 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC = 3Hz'</span>);
+0109 
+0110 
+0111 <span class="comment">% --- Executes on button press in pushbutton_linac_soft.</span>
+0112 <a name="_sub4" href="#_subfunctions" class="code">function pushbutton_linac_soft_Callback(hObject, eventdata, handles)</a>
+0113 <span class="comment">% hObject    handle to pushbutton_linac_soft (see GCBO)</span>
+0114 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0115 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0116 
+0117 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0118 tout=0.;
+0119 event0=handles.event0;
+0120 
+0121     <span class="comment">% switch to soft</span>
+0122         event=int32(5) ;<span class="comment">% adresse de l'injection</span>
+0123         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,      event0); pause(tout);
+0124         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>, event0); pause(tout);
+0125         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,    int32(1)); pause(tout);
+0126         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>, event); pause(tout);
+0127         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,      event); pause(tout);
+0128         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,      event); pause(tout);
+0129         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,       event); pause(tout);
+0130         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,  event); pause(tout);
+0131         
+0132     <span class="comment">% special modulateur</span>
+0133         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);pc=temp.value(1);
+0134         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);soft=temp.value(1);
+0135         delay=inj_offset+soft-pc;
+0136         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0137         display(<span class="string">'ok change 3Hz to soft'</span>)
+0138 
+0139 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC = Soft'</span>);
+0140 
+0141 <span class="comment">% --- Executes on button press in pushbutton_linac_Off.</span>
+0142 <a name="_sub5" href="#_subfunctions" class="code">function pushbutton_linac_Off_Callback(hObject, eventdata, handles)</a>
+0143 <span class="comment">% hObject    handle to pushbutton_linac_Off (see GCBO)</span>
+0144 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0145 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0146 
+0147 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0148 tout=0.;
+0149 event0=handles.event0;
+0150 
+0151     <span class="comment">% switch to Off</span>
+0152         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,     event0); pause(tout);
+0153         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,event0); pause(tout);
+0154         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,   event0); pause(tout);
+0155         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event0); pause(tout);
+0156         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,     event0); pause(tout);
+0157         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,     event0); pause(tout);
+0158         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,      event0); pause(tout);
+0159         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>, event0); pause(tout);
+0160 
+0161 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC = Off'</span>);
+0162 
+0163 
+0164 <span class="comment">% --- Executes on button press in pushbutton_boo_3Hz.</span>
+0165 <a name="_sub6" href="#_subfunctions" class="code">function pushbutton_boo_3Hz_Callback(hObject, eventdata, handles)</a>
+0166 <span class="comment">% hObject    handle to pushbutton_boo_3Hz (see GCBO)</span>
+0167 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0168 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0169 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0170 tout=0.;
+0171 event0=handles.event0;
+0172 event00=handles.event00;
+0173 
+0174     <span class="comment">% switch to 3Hz</span>
+0175         event=int32(2) ;<span class="comment">% adresse de l'injection</span>
+0176         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,        event); pause(tout);
+0177         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,        event0); pause(tout);
+0178         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,   event0); pause(tout);
+0179         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,      event); pause(tout);
+0180         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+0181         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+0182         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+0183         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout); 
+0184         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,   event); pause(tout);
+0185         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,        event); pause(tout);
+0186         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,        event); pause(tout);
+0187         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,         event); pause(tout);
+0188         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,    event); pause(tout);
+0189         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+0190         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>, event); pause(tout);
+0191         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,    event);
+0192         <span class="comment">% pas d'extraction</span>
+0193         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,      event0);pause(tout);
+0194         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,  event0);pause(tout);
+0195         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event0);pause(tout);
+0196         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event0);pause(tout);
+0197         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,    event0);pause(tout);
+0198         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,    event0);pause(tout);
+0199         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>,     event0);pause(tout);
+0200         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>,        event0);pause(tout);
+0201         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,   event0);pause(tout);
+0202         arg.svalue={<span class="string">'k1.trig'</span>,<span class="string">'k2.trig'</span>,<span class="string">'k3.trig'</span>,<span class="string">'k4.trig'</span>}; arg.lvalue=int32([1 1 1 1])*event00; 
+0203         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0204         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'Update'</span>);
+0205         
+0206         arg.svalue={<span class="string">'sep-p.trig'</span>,<span class="string">'sep-a.trig'</span>}; arg.lvalue=int32([1 1])*event00; 
+0207         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0208         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'Update'</span>);
+0209         
+0210      <span class="comment">% special modulateur</span>
+0211         delay=inj_offset+0;
+0212         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0213         display(<span class="string">'ok change soft to 3Hz'</span>)
+0214 
+0215 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO = 3Hz'</span>);
+0216 
+0217 
+0218 <span class="comment">% --- Executes on button press in pushbutton_boo_soft.</span>
+0219 <a name="_sub7" href="#_subfunctions" class="code">function pushbutton_boo_soft_Callback(hObject, eventdata, handles)</a>
+0220 <span class="comment">% hObject    handle to pushbutton_boo_soft (see GCBO)</span>
+0221 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0222 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0223 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0224 tout=0.;
+0225 event0=handles.event0;
+0226 event00=handles.event00;
+0227 
+0228     <span class="comment">% switch to soft</span>
+0229         event=int32(5) ;<span class="comment">% adresse de l'injection</span>
+0230         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,        event); pause(tout);
+0231         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,        event0); pause(tout);
+0232         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,   event0); pause(tout);
+0233         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,      int32(1)); pause(tout);
+0234         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+0235         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+0236         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+0237         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout); 
+0238         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,   event); pause(tout);
+0239         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,        event); pause(tout);
+0240         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,        event); pause(tout);
+0241         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,         event); pause(tout);
+0242         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,    event); pause(tout);
+0243         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+0244         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>, event); pause(tout);
+0245         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,    event);
+0246         <span class="comment">% Pas d'extraction</span>
+0247         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,      event0);pause(tout);
+0248         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,  event0);pause(tout);
+0249         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event0);pause(tout);
+0250         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event0);pause(tout);
+0251         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,    event0);pause(tout);
+0252         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,    event0);pause(tout);
+0253         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>,     event0);pause(tout);
+0254         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>,        event0);pause(tout);
+0255         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,   event0);pause(tout);
+0256         arg.svalue={<span class="string">'k1.trig'</span>,<span class="string">'k2.trig'</span>,<span class="string">'k3.trig'</span>,<span class="string">'k4.trig'</span>}; arg.lvalue=int32([1 1 1 1])*event00; 
+0257         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0258         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'Update'</span>);
+0259         
+0260         arg.svalue={<span class="string">'sep-p.trig'</span>,<span class="string">'sep-a.trig'</span>}; arg.lvalue=int32([1 1])*event00; 
+0261         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0262         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'Update'</span>);
+0263 
+0264         
+0265     <span class="comment">% special modulateur</span>
+0266         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);pc=temp.value(1);
+0267         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);soft=temp.value(1);
+0268         delay=inj_offset+soft-pc;
+0269         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0270         
+0271 
+0272 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO = Soft'</span>);
+0273 
+0274 
+0275 <span class="comment">% --- Executes on button press in pushbutton_boo_off.</span>
+0276 <a name="_sub8" href="#_subfunctions" class="code">function pushbutton_boo_off_Callback(hObject, eventdata, handles)</a>
+0277 <span class="comment">% hObject    handle to pushbutton_boo_off (see GCBO)</span>
+0278 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0279 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0280 
+0281 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0282 tout=0.;
+0283 event0=handles.event0;
+0284 event00=handles.event00;
+0285 
+0286     <span class="comment">% switch to Off</span>
+0287         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,        event0); pause(tout);
+0288         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,        event0); pause(tout);
+0289         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,   event0); pause(tout);
+0290         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,      event0); pause(tout);
+0291         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event0); pause(tout);
+0292         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event0); pause(tout);
+0293         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event0); pause(tout);
+0294         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event0); pause(tout);     
+0295         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,   event0); pause(tout);
+0296         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,        event0); pause(tout);
+0297         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,        event0); pause(tout);
+0298         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,         event0); pause(tout);
+0299         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,    event0); pause(tout);
+0300         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event0); pause(tout);
+0301         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event0); pause(tout);
+0302         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,    event0); pause(tout);
+0303         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,      event0);pause(tout);
+0304         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,  event0);pause(tout);
+0305         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event0);pause(tout);
+0306         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event0);pause(tout);
+0307         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,    event0);pause(tout);
+0308         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,    event);pause(tout);
+0309         
+0310 
+0311 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO = Off'</span>);
+0312 
+0313 
+0314 <span class="comment">% --- Executes on button press in pushbutton_ans_3hz.</span>
+0315 <a name="_sub9" href="#_subfunctions" class="code">function pushbutton_ans_3hz_Callback(hObject, eventdata, handles)</a>
+0316 <span class="comment">% hObject    handle to pushbutton_ans_3hz (see GCBO)</span>
+0317 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0318 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0319 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0320 tout=0.;
+0321 event0=handles.event0;
+0322 event00=handles.event00;
+0323 
+0324     <span class="comment">% switch to 3Hz</span>
+0325         event=int32(2) ;<span class="comment">% adresse de l'injection</span>
+0326         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,        event); pause(tout);
+0327         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,        event0); pause(tout);
+0328         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,   event0); pause(tout);
+0329         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,      eint32(1)); pause(tout);
+0330         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+0331         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+0332         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+0333         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout); 
+0334         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,   event); pause(tout);
+0335         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,        event); pause(tout);
+0336         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,        event); pause(tout);
+0337         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,         event); pause(tout);
+0338         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,    event); pause(tout);
+0339         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+0340         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>, event); pause(tout);
+0341         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,     event);
+0342         event=int32(3) ;<span class="comment">% adresse de extraction</span>
+0343         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,      event);pause(tout);
+0344         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,  event);pause(tout);
+0345         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+0346         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+0347         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,    event);pause(tout);
+0348         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,    event);pause(tout);
+0349         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>,     event);pause(tout);
+0350         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>,        event);pause(tout);
+0351         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,   event);pause(tout);
+0352         
+0353         arg.svalue={<span class="string">'k1.trig'</span>,<span class="string">'k2.trig'</span>,<span class="string">'k3.trig'</span>,<span class="string">'k4.trig'</span>}; arg.lvalue=int32([3 3 3 3]); 
+0354         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0355        
+0356         arg.svalue={<span class="string">'sep-p.trig'</span>,<span class="string">'sep-a.trig'</span>}; arg.lvalue=int32([3 3]); 
+0357         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0358         
+0359         tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>,    event);pause(tout);
+0360         tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0361         tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0362         tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0363         tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0364         tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0365         tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0366         tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0367         tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0368         tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0369         tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0370         tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0371         tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0372         tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0373         tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0374         tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0375         tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0376     
+0377     <span class="comment">% special modulateur</span>
+0378         delay=inj_offset+0;
+0379         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0380         display(<span class="string">'ok change soft to 3Hz'</span>)
+0381         
+0382     <span class="comment">% special septum actif boo et ans</span>
+0383         r=(1+0.0004);
+0384         boo=readattribute(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext/voltage'</span>); boo=boo*r;
+0385         writeattribute(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext/voltage,'</span>,boo);
+0386         ans=readattribute(<span class="string">'ANS-C01/EP/AL_SEP_A/voltage'</span>); ans=ans*r;
+0387         writeattribute(<span class="string">'ANS-C01/EP/AL_SEP_A/voltage,'</span>,ans);     
+0388 
+0389 display(<span class="string">'ok change address'</span>)
+0390 
+0391 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO + ANS = 3Hz'</span>);
+0392 
+0393 
+0394 <span class="comment">% --- Executes on button press in pushbutton_ans_soft.</span>
+0395 <a name="_sub10" href="#_subfunctions" class="code">function pushbutton_ans_soft_Callback(hObject, eventdata, handles)</a>
+0396 <span class="comment">% hObject    handle to pushbutton_ans_soft (see GCBO)</span>
+0397 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0398 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0399 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0400 tout=0.;
+0401 event0=handles.event0;
+0402 event00=handles.event00;
+0403 
+0404     <span class="comment">% switch to soft</span>
+0405         event=int32(5) ;<span class="comment">% adresse de l'injection</span>
+0406         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,        event); pause(tout);
+0407         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,        event0); pause(tout);
+0408         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,   event0); pause(tout);
+0409         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,      int32(1)); pause(tout);
+0410         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,event); pause(tout);
+0411         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,event); pause(tout);
+0412         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,event); pause(tout);
+0413         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,event); pause(tout); 
+0414         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,   event); pause(tout);
+0415         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,        event); pause(tout);
+0416         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,        event); pause(tout);
+0417         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,         event); pause(tout);
+0418         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,    event); pause(tout);
+0419         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,event);pause(tout);
+0420         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>, event); pause(tout);
+0421         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,     event);
+0422  
+0423         tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,      event);pause(tout);
+0424         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,  event);pause(tout);
+0425         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,event);pause(tout);
+0426         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,event);pause(tout);
+0427         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,    event);pause(tout);
+0428         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,    event);pause(tout);
+0429         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>,     event);pause(tout);
+0430         tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>,        event);pause(tout);
+0431         tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,   event);pause(tout);
+0432         arg.svalue={<span class="string">'k1.trig'</span>,<span class="string">'k2.trig'</span>,<span class="string">'k3.trig'</span>,<span class="string">'k4.trig'</span>}; arg.lvalue=int32([5 5 5 5]); 
+0433         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé addresses sans update</span>
+0434         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'Update'</span>);
+0435         
+0436         arg.svalue={<span class="string">'sep-p.trig'</span>,<span class="string">'sep-a.trig'</span>}; arg.lvalue=int32([5 5]); 
+0437         tango_command_inout(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupé address sans update</span>
+0438         tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'Update'</span>);
+0439         
+0440         tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>,    int32(3));pause(tout);
+0441         tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0442         tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0443         tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0444         tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0445         tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0446         tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0447         tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0448         tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0449         tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);
+0450         tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0451         tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0452         tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0453         tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0454         tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0455         tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);  
+0456         tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,event);pause(tout);    
+0457         
+0458     <span class="comment">% special modulateur</span>
+0459         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);pc=temp.value(1);
+0460         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);soft=temp.value(1);
+0461         delay=inj_offset+soft-pc;
+0462         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0463 
+0464         
+0465      <span class="comment">% special septum actif boo et ans</span>
+0466         r=(1-0.0004);
+0467         boo=readattribute(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext/voltage'</span>); boo=boo*r;
+0468         writeattribute(<span class="string">'BOO-C12/EP/AL_SEP_A.Ext/voltage,'</span>,boo);
+0469         ans=readattribute(<span class="string">'ANS-C01/EP/AL_SEP_A/voltage'</span>); ans=ans*r;
+0470         writeattribute(<span class="string">'ANS-C01/EP/AL_SEP_A/voltage,'</span>,ans);     
+0471 
+0472 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO + ANS = Soft'</span>);
+0473 
+0474 
+0475 
+0476 
+0477 <span class="comment">% --- Executes on button press in pushbutton_ans_off.</span>
+0478 <a name="_sub11" href="#_subfunctions" class="code">function pushbutton_ans_off_Callback(hObject, eventdata, handles)</a>
+0479 <span class="comment">% hObject    handle to pushbutton_ans_off (see GCBO)</span>
+0480 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0481 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0482 
+0483 set(handles.edit_etat, <span class="string">'String'</span>,<span class="string">'LINAC + BOO + ANS = Off'</span>);
+0484 
+0485 <a name="_sub12" href="#_subfunctions" class="code">function edit_etat_Callback(hObject, eventdata, handles)</a>
+0486 <span class="comment">% hObject    handle to edit_etat (see GCBO)</span>
+0487 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0488 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0489 
+0490 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_etat as text</span>
+0491 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_etat as a double</span>
+0492 
+0493 
+0494 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0495 <a name="_sub13" href="#_subfunctions" class="code">function edit_etat_CreateFcn(hObject, eventdata, handles)</a>
+0496 <span class="comment">% hObject    handle to edit_etat (see GCBO)</span>
+0497 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0498 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0499 
+0500 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0501 <span class="comment">%       See ISPC and COMPUTER.</span>
+0502 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0503     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0504 <span class="keyword">end</span>
+0505 
+0506</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

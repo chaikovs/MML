@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_group_command_inout2</title>
+  <meta name="keywords" content="tango_group_command_inout2">
+  <meta name="description" content="tango_group_command_inout Executes asynchronously the TANGO command <cmd_name> on the specified group.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_group_command_inout2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_group_command_inout2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>tango_group_command_inout Executes asynchronously the TANGO command <cmd_name> on the specified group.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function argout = tango_group_command_inout2 (grp_id, cmd_name, forget, forward, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">tango_group_command_inout Executes asynchronously the TANGO command &lt;cmd_name&gt; on the specified group.
+
+ See also TANGO_GROUP_COMMAND_INOUT_ASYNCH, TANGO_GROUP_COMMAND_argout.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function argout = tango_group_command_inout2 (grp_id, cmd_name, forget, forward, varargin)</a>
+0002 <span class="comment">%tango_group_command_inout Executes asynchronously the TANGO command &lt;cmd_name&gt; on the specified group.</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% See also TANGO_GROUP_COMMAND_INOUT_ASYNCH, TANGO_GROUP_COMMAND_argout.</span>
+0005 <span class="comment">%</span>
+0006 
+0007 argout = tango_group_command_inout(grp_id, cmd_name, forget, forward, varargin);
+0008 <span class="comment">% Error parsing for group command</span>
+0009 <span class="keyword">if</span> (argout.has_failed)
+0010     <span class="keyword">for</span> k=1:length(argout.replies)
+0011         <span class="keyword">if</span> argout.replies(k).has_failed
+0012             <span class="keyword">for</span> k1 = 1:length(argout.replies(k).error)
+0013                 argout.replies(k).error(k1)
+0014             <span class="keyword">end</span>
+0015         <span class="keyword">end</span>
+0016     <span class="keyword">end</span>
+0017 <span class="keyword">end</span>
+0018</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

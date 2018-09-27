@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of modelnonlindisp</title>
+  <meta name="keywords" content="modelnonlindisp">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; modelnonlindisp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>modelnonlindisp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function modelnonlindisp </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+% Written by Laurent S. Nadolski</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function modelnonlindisp</a>
+0002 
+0003 <span class="comment">%</span>
+0004 <span class="comment">%% Written by Laurent S. Nadolski</span>
+0005 
+0006 kmax = 50;
+0007 deltaRF = 50e-6; <span class="comment">% Hz</span>
+0008 alpha1 = modelmcf;
+0009 
+0010 hMat(:,:) = zeros((2*kmax+1),length(getx));
+0011 vMat(:,:) = hMat(:,:);
+0012 rfVect = zeros((2*kmax+1),1);
+0013 
+0014 
+0015 steprf(-deltaRF*(kmax+1));
+0016     
+0017 <span class="keyword">for</span> k=1:(2*kmax+1),
+0018     steprf(deltaRF)
+0019     hMat(k,:) = getx;
+0020     vMat(k,:) = getz;
+0021     rfVect(k) = getrf;
+0022 <span class="keyword">end</span>
+0023 
+0024 steprf(-deltaRF*kmax);
+0025 
+0026 <span class="comment">%%</span>
+0027 plot((rfVect-rfVect(kmax+1))*1e6, hMat(:,1)*alpha1*getrf/(2*deltaRF),<span class="string">'.-'</span>); 
+0028 grid on
+0029 
+0030 <span class="comment">%%</span>
+0031 
+0032 refreshthering;
+0033 <span class="keyword">global</span> THERING;
+0034 
+0035 [CavityState, PassMethod, iCavity] = getcavity;
+0036 
+0037 kmax = 50;
+0038 deltaRF = 40; <span class="comment">% Hz</span>
+0039 clear hMat rfVect vMat 
+0040 hMat(:,:) = zeros((2*kmax+1),length(THERING)+1);
+0041 vMat(:,:) = hMat(:,:);
+0042 rfVect = zeros((2*kmax+1),1);
+0043 
+0044 CavityFrequency = THERING{iCavity(1)}.Frequency;
+0045 
+0046 <span class="keyword">for</span> k=1:(2*kmax+1),
+0047     <span class="keyword">for</span> kk = 1:length(iCavity)
+0048         THERING{iCavity(kk)}.Frequency = CavityFrequency + deltaRF*(k - (kmax +1));
+0049     <span class="keyword">end</span>
+0050     rep  = findorbit6(THERING, 1:length(THERING)+1);
+0051     hMat(k,:) = rep(1,:);
+0052     vMat(k,:) = rep(3,:);
+0053     rfVect(k) = deltaRF*(k - (kmax +1));
+0054 <span class="keyword">end</span>
+0055 
+0056 <span class="keyword">for</span> kk = 1:length(iCavity)
+0057     THERING{iCavity(kk)}.Frequency = CavityFrequency;
+0058 <span class="keyword">end</span>
+0059 
+0060 <span class="comment">% for k=1:kmax,</span>
+0061 <span class="comment">%   deltahOrbit(k,:) = hMat(end-(k+1),:) - hMat(k,:);</span>
+0062 <span class="comment">%   deltaRFVect(k) =   rfVect(end-(k+1)) - rfVect(k);</span>
+0063 <span class="comment">% end</span>
+0064     
+0065 <span class="comment">%%</span>
+0066 order = 4;
+0067 order4 = order-3; 
+0068 order3 = order-2;
+0069 order2 = order-1;
+0070 order1 = order;
+0071 
+0072 spos = findspos(THERING,1:length(THERING)+1);
+0073 figure;
+0074 plot(rfVect, hMat(:,1),<span class="string">'.'</span>);
+0075 
+0076 clear p;
+0077 <span class="keyword">for</span> k = 1:length(THERING)+1,
+0078     p(k,:) = polyfit(rfVect, hMat(:,k), order);
+0079 <span class="keyword">end</span>
+0080 <span class="comment">%%</span>
+0081 
+0082 pdelta = -p*alpha1*CavityFrequency;
+0083 
+0084 figure;
+0085 subplot(4,1,1)
+0086 plot(spos, pdelta(:,order1))
+0087 subplot(4,1,2)
+0088 plot(spos, pdelta(:,order2))
+0089 subplot(4,1,3)
+0090 plot(spos, pdelta(:,order3))
+0091 <span class="comment">% subplot(4,1,4)</span>
+0092 <span class="comment">% plot(spos, pdelta(:,order4))</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

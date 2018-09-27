@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getbpmrawdata_mat</title>
+  <meta name="keywords" content="getbpmrawdata_mat">
+  <meta name="description" content="GETBPMRAWDATA - Gets turn by turn data for  BPM">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; getbpmrawdata_mat.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>getbpmrawdata_mat
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>GETBPMRAWDATA - Gets turn by turn data for  BPM</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = getbpmrawdata_mat(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> GETBPMRAWDATA - Gets turn by turn data for  BPM
+
+  INPUTS
+  1. num - bpm number (scalar or vector) list ([] means all valid BPM)
+
+  Optional input arguments
+  2. Optional display
+     'Display'   - Plot BPM data X,Z, Sum, Q 
+     'NoDisplay' - No plotting
+  3. 'NoArchive' - No file archive {Default}
+     'Archive'   - Save a dispersion data structure to \&lt;Directory.BPMData&gt;\&lt;DispArchiveFile&gt;&lt;Date&gt;&lt;Time&gt;.mat
+                   To change the filename, included the filename after the 'Archive', '' to browse
+                   Structure output  is forced
+  4. 'Struct'    - Return out as a structure
+  5. 'Freezing'  - Buffer freezing mechanism 
+     'NoFreezing'
+
+  OUTPUTS
+  structure output if 'Struct' precised
+  AM
+
+  vector output
+  1. X - Horizontal data
+  2. Z - Vertical data
+  3. Sum - Sum signal data
+  4. Q  - Quadrupole signal data
+  5. Va - electrode data
+  6. Vb - electrode data
+  7. Vc - electrode data
+  8. Vd - electrode data
+
+  EXAMPLES
+  1. Display BPM 18
+      getbpmrawdata(18)
+  2. Display all valid BPM and output data as a structure
+      getbpmrawdata([],'Struct');
+  3. Output all valid BPM data
+      [X Z Sum Q Va Vb Vc Vd] = getbpmrawdata([],'NoDisplay');
+  4. Archives BPM 17 and 18 w/o displaying
+     getbpmrawdata([17 18],'Archive','NoDisplay');
+  5. Archives BPM 17 and 18 w/o displaying w/ buffer freezing mechanism
+     getbpmrawdata([17 18],'Archive','NoDisplay','Freezing');
+
+ See Also anabpmfirstturn</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getbpmrawdata_mat.html" class="code" title="function varargout = getbpmrawdata_mat(varargin)">getbpmrawdata_mat</a>	GETBPMRAWDATA - Gets turn by turn data for  BPM</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getbpmrawdata_mat.html" class="code" title="function varargout = getbpmrawdata_mat(varargin)">getbpmrawdata_mat</a>	GETBPMRAWDATA - Gets turn by turn data for  BPM</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = getbpmrawdata_mat(varargin)</a>
+0002 <span class="comment">% GETBPMRAWDATA - Gets turn by turn data for  BPM</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. num - bpm number (scalar or vector) list ([] means all valid BPM)</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  Optional input arguments</span>
+0008 <span class="comment">%  2. Optional display</span>
+0009 <span class="comment">%     'Display'   - Plot BPM data X,Z, Sum, Q</span>
+0010 <span class="comment">%     'NoDisplay' - No plotting</span>
+0011 <span class="comment">%  3. 'NoArchive' - No file archive {Default}</span>
+0012 <span class="comment">%     'Archive'   - Save a dispersion data structure to \&lt;Directory.BPMData&gt;\&lt;DispArchiveFile&gt;&lt;Date&gt;&lt;Time&gt;.mat</span>
+0013 <span class="comment">%                   To change the filename, included the filename after the 'Archive', '' to browse</span>
+0014 <span class="comment">%                   Structure output  is forced</span>
+0015 <span class="comment">%  4. 'Struct'    - Return out as a structure</span>
+0016 <span class="comment">%  5. 'Freezing'  - Buffer freezing mechanism</span>
+0017 <span class="comment">%     'NoFreezing'</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  OUTPUTS</span>
+0020 <span class="comment">%  structure output if 'Struct' precised</span>
+0021 <span class="comment">%  AM</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  vector output</span>
+0024 <span class="comment">%  1. X - Horizontal data</span>
+0025 <span class="comment">%  2. Z - Vertical data</span>
+0026 <span class="comment">%  3. Sum - Sum signal data</span>
+0027 <span class="comment">%  4. Q  - Quadrupole signal data</span>
+0028 <span class="comment">%  5. Va - electrode data</span>
+0029 <span class="comment">%  6. Vb - electrode data</span>
+0030 <span class="comment">%  7. Vc - electrode data</span>
+0031 <span class="comment">%  8. Vd - electrode data</span>
+0032 <span class="comment">%</span>
+0033 <span class="comment">%  EXAMPLES</span>
+0034 <span class="comment">%  1. Display BPM 18</span>
+0035 <span class="comment">%      getbpmrawdata(18)</span>
+0036 <span class="comment">%  2. Display all valid BPM and output data as a structure</span>
+0037 <span class="comment">%      getbpmrawdata([],'Struct');</span>
+0038 <span class="comment">%  3. Output all valid BPM data</span>
+0039 <span class="comment">%      [X Z Sum Q Va Vb Vc Vd] = getbpmrawdata([],'NoDisplay');</span>
+0040 <span class="comment">%  4. Archives BPM 17 and 18 w/o displaying</span>
+0041 <span class="comment">%     getbpmrawdata([17 18],'Archive','NoDisplay');</span>
+0042 <span class="comment">%  5. Archives BPM 17 and 18 w/o displaying w/ buffer freezing mechanism</span>
+0043 <span class="comment">%     getbpmrawdata([17 18],'Archive','NoDisplay','Freezing');</span>
+0044 <span class="comment">%</span>
+0045 <span class="comment">% See Also anabpmfirstturn</span>
+0046 
+0047 <span class="comment">%</span>
+0048 <span class="comment">% Written by Laurent S. Nadolski</span>
+0049 
+0050 <span class="comment">% TODO freezing mechanism: introduce group</span>
+0051 
+0052 DisplayFlag = 1;
+0053 ArchiveFlag = 0;
+0054 StructureFlag = 0;
+0055 FreezingFlag = 0;
+0056 FileName=<span class="string">''</span>;
+0057 varargin2 = {};
+0058 
+0059 <span class="keyword">if</span> ~exist(<span class="string">'DeviceName'</span>,<span class="string">'var'</span>)
+0060     DeviceName = [];
+0061 <span class="keyword">end</span>
+0062 
+0063 <span class="keyword">for</span> i = length(varargin):-1:1
+0064     <span class="keyword">if</span> strcmpi(varargin{i},<span class="string">'Display'</span>)
+0065         DisplayFlag = 1;
+0066         varargin2 = {varargin2{:} varargin{i}};
+0067         varargin(i) = [];
+0068     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoDisplay'</span>)
+0069         DisplayFlag = 0;
+0070         varargin2 = {varargin2{:} varargin{i}};
+0071         varargin(i) = [];
+0072     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Archive'</span>)
+0073         ArchiveFlag = 1;
+0074         StructureFlag = 1;
+0075 <span class="comment">%        varargin2 = {varargin2{:} varargin{i}};</span>
+0076         varargin(i) = [];
+0077     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoArchive'</span>)
+0078         ArchiveFlag = 0;
+0079 <span class="comment">%        varargin2 = {varargin2{:} varargin{i}};</span>
+0080         varargin(i) = [];
+0081     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Struct'</span>)
+0082         StructureFlag = 1;
+0083         varargin2 = {varargin2{:} varargin{i}};
+0084         varargin(i) = [];
+0085     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Freezing'</span>)
+0086         FreezingFlag = 1;
+0087         varargin(i) = [];
+0088     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoFreezing'</span>)
+0089         FreezingFlag = 0;
+0090         varargin(i) = [];
+0091     <span class="keyword">end</span>
+0092 <span class="keyword">end</span>
+0093 
+0094 AO = getfamilydata(<span class="string">'BPMx'</span>);
+0095 <span class="comment">% if empty select all valid BPM</span>
+0096 
+0097 <span class="keyword">if</span> isempty(varargin)
+0098     num = 1:length(AO.DeviceName);
+0099 <span class="keyword">else</span>
+0100     num = varargin{1};
+0101     <span class="keyword">if</span> isempty(num)
+0102         num = 1:length(AO.DeviceName);
+0103     <span class="keyword">end</span>
+0104 <span class="keyword">end</span>
+0105 
+0106 <span class="comment">% Status one devices</span>
+0107 valid  = find(AO.Status);
+0108 num    = intersect(num,valid);
+0109 
+0110 <span class="keyword">if</span> isempty(num)
+0111     disp(<span class="string">'All BPM not valid'</span>)
+0112     <span class="keyword">return</span>;
+0113 <span class="keyword">end</span>
+0114 
+0115 <span class="comment">%</span>
+0116 <span class="comment">% % read BPM number of samples</span>
+0117 <span class="comment">% % If all not the same stop program and ask action to user</span>
+0118 <span class="comment">% for k = 1:length(num)</span>
+0119 <span class="comment">%     modestr{k} = char(readattribute([AO.DeviceName{num(k)} '/Mode']));</span>
+0120 <span class="comment">% end</span>
+0121 <span class="comment">%</span>
+0122 <span class="comment">% for k = 1:length(num)</span>
+0123 <span class="comment">%     sampleNumber(k) = readattribute([AO.DeviceName{num(k)} '/NumSamples']);</span>
+0124 <span class="comment">% end</span>
+0125 <span class="comment">%</span>
+0126 <span class="comment">% notTheSame = sampleNumber-sampleNumber(1);</span>
+0127 <span class="comment">%</span>
+0128 <span class="comment">% if ~all(strcmp(modestr,modestr{1}))</span>
+0129 <span class="comment">%    disp([mfilename ' STOP!']);</span>
+0130 <span class="comment">%    error('Not all BPM in the same mode')</span>
+0131 <span class="comment">%    return;</span>
+0132 <span class="comment">% end</span>
+0133 <span class="comment">%</span>
+0134 <span class="comment">% if (sum(notTheSame) ~= 0)</span>
+0135 <span class="comment">%    disp([mfilename ' STOP!']);</span>
+0136 <span class="comment">%    error('Not all BPM with the same number of samples')</span>
+0137 <span class="comment">%    return;</span>
+0138 <span class="comment">% end</span>
+0139 
+0140 <span class="comment">%% Buffer freezing</span>
+0141 <span class="comment">% Enable freezing mechanism</span>
+0142 <span class="keyword">if</span> (FreezingFlag)
+0143 <span class="comment">%     hh = warndlg('BPMmanager must be stop and BPM mode be FT or TT');</span>
+0144 <span class="comment">%     uiwait(hh);</span>
+0145     disp([mfilename <span class="string">': Enabling freezing mecanism'</span>]);
+0146     <span class="keyword">for</span> k = 1:length(num)
+0147         tango_command_inout2(AO.DeviceName{num(k)},<span class="string">'EnableBufferFreezing'</span>);
+0148     <span class="keyword">end</span>
+0149     disp([mfilename <span class="string">': Freezing BPM: pseudo synchronism'</span>]);
+0150     <span class="keyword">for</span> k = 1:length(num)
+0151         tango_command_inout2(AO.DeviceName{num(k)},<span class="string">'UnFreezeBuffer'</span>);
+0152     <span class="keyword">end</span>    
+0153 <span class="keyword">end</span>
+0154 
+0155 <span class="comment">%% loop of bpm list</span>
+0156 <span class="keyword">if</span> length(num) &gt; 1
+0157     AM.DeviceList=[];
+0158     <span class="keyword">for</span> k = 1:length(num)   
+0159         
+0160         AM0 = <a href="getbpmrawdata_mat.html" class="code" title="function varargout = getbpmrawdata_mat(varargin)">getbpmrawdata_mat</a>(num(k),varargin2{:},<span class="string">'Struct'</span>);
+0161         <span class="keyword">try</span>
+0162             AM.DeviceName{k} = AM0.DeviceName{:};
+0163             AM.Data.X(k,:) = AM0.Data.X(:); AM.Data.Z(k,:) = AM0.Data.Z(:);
+0164             AM.Data.Sum(k,:) = AM0.Data.Sum(:); AM.Data.Q(k,:) = AM0.Data.Q(:);
+0165             AM.Data.Va(k,:) = AM0.Data.Va(:); AM.Data.Vb(k,:) = AM0.Data.Vb(:);
+0166             AM.Data.Vc(k,:) = AM0.Data.Vc(:); AM.Data.Vd(k,:) = AM0.Data.Vd(:);
+0167             AM.TimeStamp = datestr(now);
+0168             AM.DataDescriptor = [<span class="string">'Turn by turn data for '</span> getfamilydata(<span class="string">'Machine'</span>)];
+0169             AM.CreatedBy = mfilename;
+0170             AM.DeviceList = [AM.DeviceList; AM0.DeviceList];
+0171         <span class="keyword">catch</span>
+0172             <span class="keyword">switch</span> lasterr
+0173                 <span class="keyword">case</span> <span class="string">'Subscripted assignment dimension mismatch.'</span>
+0174                     error(<span class="string">'BPM do not have the same number of samples !!!'</span>)
+0175             <span class="keyword">end</span>
+0176         <span class="keyword">end</span>
+0177     <span class="keyword">end</span>
+0178 
+0179     <span class="comment">% Disable freezing mechanism</span>
+0180     <span class="keyword">if</span> (FreezingFlag)
+0181         disp([mfilename <span class="string">': disabling buffer freezing for BPM'</span>])
+0182         <span class="keyword">for</span> k = 1:length(num)
+0183             tango_command_inout2(AO.DeviceName{num(k)},<span class="string">'DisableBufferFreezing'</span>);
+0184         <span class="keyword">end</span>
+0185     <span class="keyword">end</span>
+0186 
+0187 <span class="keyword">else</span>
+0188     <span class="comment">%% Loop for one BPM</span>
+0189     AO = getfamilydata(<span class="string">'BPMx'</span>);
+0190     AO.DeviceName;
+0191 
+0192     attr_name = <span class="keyword">...</span>
+0193         {<span class="string">'XPosDD'</span>,<span class="string">'ZPosDD'</span>, <span class="string">'QuadDD'</span>, <span class="string">'SumDD'</span>, <span class="keyword">...</span>
+0194         <span class="string">'VaDD'</span>, <span class="string">'VbDD'</span>, <span class="string">'VcDD'</span>, <span class="string">'VdDD'</span>};
+0195     
+0196         
+0197     rep = tango_read_attributes2(AO.DeviceName{num},attr_name);
+0198 
+0199     X   = rep(1).value;
+0200     Z   = rep(2).value;
+0201     Q   = rep(3).value;
+0202     Sum = rep(4).value;
+0203     Va  = rep(5).value;
+0204     Vb  = rep(6).value;
+0205     Vc  = rep(7).value;
+0206     Vd  = rep(8).value;
+0207 
+0208     <span class="comment">%% Display part</span>
+0209 
+0210     <span class="keyword">if</span> DisplayFlag
+0211         figure
+0212         subplot(2,2,1)
+0213         plot(X)
+0214         ylabel(<span class="string">'X (mm)'</span>)
+0215         grid on
+0216 
+0217         subplot(2,2,2)
+0218         plot(Z)
+0219         ylabel(<span class="string">'Z (mm)'</span>)
+0220         grid on
+0221 
+0222         subplot(2,2,3)
+0223         plot(Sum)
+0224         ylabel(<span class="string">'SUM'</span>)
+0225         xlabel(<span class="string">'turn number'</span>)
+0226         grid on
+0227 
+0228         subplot(2,2,4)
+0229         plot(Q)
+0230         ylabel(<span class="string">'Q'</span>)
+0231         xlabel(<span class="string">'turn number'</span>)
+0232         grid on
+0233         addlabel(1,0,datestr(clock));
+0234         suptitle(sprintf(<span class="string">'Turn by turn data for %s'</span>,AO.DeviceName{num}))
+0235     <span class="keyword">end</span>
+0236 
+0237     <span class="keyword">if</span> StructureFlag
+0238         AM.DeviceName = AO.DeviceName(num);
+0239         AM.Data.X   = X;
+0240         AM.Data.Z   = Z;
+0241         AM.Data.Sum = Sum;
+0242         AM.Data.Q   = Q;
+0243         AM.Data.Va  = Va;
+0244         AM.Data.Vb  = Vb;
+0245         AM.Data.Vc  = Vc;
+0246         AM.Data.Vd  = Vd;
+0247         <span class="comment">%time stamp of recording</span>
+0248         AM.TimeStamp = datestr(now);
+0249         AM.DataDescriptor = [<span class="string">'Turn by turn data for '</span> getfamilydata(<span class="string">'Machine'</span>)];
+0250         AM.CreatedBy = mfilename;
+0251         AM.DeviceList = tango2dev(AO.Monitor.TangoNames{num});
+0252     <span class="keyword">end</span>
+0253 
+0254 <span class="keyword">end</span>
+0255 
+0256 <span class="keyword">if</span> ArchiveFlag
+0257     <span class="comment">% filling up data</span>
+0258     <span class="comment">% Archive data structure</span>
+0259     <span class="keyword">if</span> isempty(FileName)
+0260         FileName = appendtimestamp(getfamilydata(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>));
+0261         DirectoryName = getfamilydata(<span class="string">'Directory'</span>,<span class="string">'BPMData'</span>);
+0262         <span class="keyword">if</span> isempty(DirectoryName)
+0263             DirectoryName = [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>) <span class="string">'BPM'</span>, filesep];
+0264         <span class="keyword">else</span>
+0265             <span class="comment">% Make sure default directory exists</span>
+0266             DirStart = pwd;
+0267             [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0268             cd(DirStart);
+0269         <span class="keyword">end</span>
+0270         [DirectoryName FileName]
+0271         [FileName, DirectoryName] = uiputfile(<span class="string">'*.mat'</span>, <span class="string">'Select Dispersion File'</span>, [DirectoryName FileName]);
+0272         <span class="keyword">if</span> FileName == 0
+0273             ArchiveFlag = 0;
+0274             disp(<span class="string">'   BPM measurement canceled.'</span>);
+0275             FileName=<span class="string">''</span>;
+0276             <span class="keyword">return</span>
+0277         <span class="keyword">end</span>
+0278         FileName = [DirectoryName, FileName];
+0279     <span class="keyword">elseif</span> FileName == -1
+0280         FileName = appendtimestamp(getfamilydata(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>));
+0281         DirectoryName = getfamilydata(<span class="string">'Directory'</span>,<span class="string">'BPMData'</span>);
+0282         <span class="keyword">if</span> isempty(DirectoryName)
+0283             DirectoryName = [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>) <span class="string">'BPM'</span>, filesep];
+0284         <span class="keyword">end</span>
+0285         FileName = [DirectoryName, FileName];
+0286     <span class="keyword">end</span>
+0287 
+0288     save(FileName,<span class="string">'AM'</span>);
+0289 
+0290 <span class="keyword">end</span>
+0291 
+0292 <span class="keyword">if</span> StructureFlag
+0293     varargout{1} = AM;
+0294 <span class="keyword">else</span>
+0295     <span class="keyword">if</span> exist(<span class="string">'AM'</span>,<span class="string">'var'</span>) <span class="comment">% not nice but it works</span>
+0296         varargout{1} = AM.Data.X; varargout{2} =   AM.Data.Z;
+0297         varargout{3} = AM.Data.Sum; varargout{4} =  AM.Data.Q;
+0298         varargout{5} = AM.Data.Va; varargout{6} =  AM.Data.Vb;
+0299         varargout{7} = AM.Data.Vc; varargout{8} =  AM.Data.Vd;
+0300     <span class="keyword">else</span>
+0301         varargout{1} = X;   varargout{2} =   Z;
+0302         varargout{3} = Sum; varargout{4} =  Q;
+0303         varargout{5} = Va;  varargout{6} =  Vb;
+0304         varargout{7} = Vc;  varargout{8} =  Vd;
+0305     <span class="keyword">end</span>
+0306 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

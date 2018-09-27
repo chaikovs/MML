@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of LT1cycling</title>
+  <meta name="keywords" content="LT1cycling">
+  <meta name="description" content="LT1CYCLING M-file for LT1cycling.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">LT1</a> &gt; LT1cycling.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/LT1&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>LT1cycling
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>LT1CYCLING M-file for LT1cycling.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = LT1cycling(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> LT1CYCLING M-file for LT1cycling.fig
+      LT1CYCLING, by itself, creates a new LT1CYCLING or raises the existing
+      singleton*.
+
+      H = LT1CYCLING returns the handle to a new LT1CYCLING or the handle to
+      the existing singleton*.
+
+      LT1CYCLING('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in LT1CYCLING.M with the given input arguments.
+
+      LT1CYCLING('Property','Value',...) creates a new LT1CYCLING or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before LT1cycling_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to LT1cycling_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function LT1cycling_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = LT1cycling_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function checkbox_none_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function checkbox_all_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function checkbox_BEND_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function checkbox_QP_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function checkbox_CH_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function checkbox_CV_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function pushbutton_apply_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function cyclemagnet_local(command,handles)</a></li><li><a href="#_sub11" class="code">function popupmenu_command_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function popupmenu_command_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function popupmenu_type_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function popupmenu_type_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function popupmenu_file_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function popupmenu_file_CreateFcn(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = LT1cycling(varargin)</a>
+0002 <span class="comment">% LT1CYCLING M-file for LT1cycling.fig</span>
+0003 <span class="comment">%      LT1CYCLING, by itself, creates a new LT1CYCLING or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = LT1CYCLING returns the handle to a new LT1CYCLING or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      LT1CYCLING('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in LT1CYCLING.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      LT1CYCLING('Property','Value',...) creates a new LT1CYCLING or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before LT1cycling_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to LT1cycling_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help LT1cycling</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 04-Apr-2005 17:56:04</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction LT1cycling_OpeningFcn(hObject, eventdata, handles, varargin)">LT1cycling_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = LT1cycling_OutputFcn(hObject, eventdata, handles)">LT1cycling_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before LT1cycling is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function LT1cycling_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to LT1cycling (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for LT1cycling</span>
+0056 handles.output = hObject;
+0057 
+0058 <span class="comment">% Update handles structure</span>
+0059 guidata(hObject, handles);
+0060 
+0061 <span class="comment">% UIWAIT makes LT1cycling wait for user response (see UIRESUME)</span>
+0062 <span class="comment">% uiwait(handles.figure1);</span>
+0063 list = {<span class="string">'Present'</span>, <span class="string">'Golden'</span>, <span class="string">'UserSelect'</span>};
+0064 set(handles.popupmenu_file,<span class="string">'String'</span>,list);
+0065 
+0066 list = {<span class="string">'Simple'</span>, <span class="string">'Full'</span>, <span class="string">'startup'</span>};
+0067 set(handles.popupmenu_type,<span class="string">'String'</span>,list);
+0068 
+0069 list = {<span class="string">'Load cycling curve'</span>,<span class="string">'Start'</span>, <span class="string">'Stop'</span>, <span class="string">'Pause'</span>, <span class="string">'Resume'</span>, <span class="string">'Init'</span>};
+0070 set(handles.popupmenu_command,<span class="string">'String'</span>,list);
+0071 
+0072 Machine = getfamilydata(<span class="string">'SubMachine'</span>);
+0073 
+0074 <span class="keyword">if</span> isempty(Machine)
+0075     error(<span class="string">'Exiting .. first load a machine!'</span>);
+0076     <span class="keyword">return</span>;
+0077 <span class="keyword">else</span>
+0078     <span class="keyword">switch</span> Machine
+0079         <span class="keyword">case</span> {<span class="string">'LT1'</span>,<span class="string">'LT2'</span>}            
+0080             set(handles.figure1,<span class="string">'Name'</span>, [Machine <span class="string">'cycling'</span>]);
+0081         <span class="keyword">otherwise</span>
+0082             error(<span class="string">'Exiting .. first load LT1 or LT2!'</span>);
+0083             <span class="keyword">return</span>;
+0084     <span class="keyword">end</span>
+0085 <span class="keyword">end</span>
+0086 
+0087 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0088 <a name="_sub2" href="#_subfunctions" class="code">function varargout = LT1cycling_OutputFcn(hObject, eventdata, handles) </a>
+0089 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0090 <span class="comment">% hObject    handle to figure</span>
+0091 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0092 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0093 
+0094 <span class="comment">% Get default command line output from handles structure</span>
+0095 varargout{1} = handles.output;
+0096 
+0097 
+0098 <span class="comment">% --- Executes on button press in checkbox_none.</span>
+0099 <a name="_sub3" href="#_subfunctions" class="code">function checkbox_none_Callback(hObject, eventdata, handles)</a>
+0100 <span class="comment">% hObject    handle to checkbox_none (see GCBO)</span>
+0101 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0102 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0103 
+0104 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_none</span>
+0105 val = get(hObject,<span class="string">'Value'</span>);
+0106 
+0107 <span class="keyword">if</span> val
+0108     set(handles.checkbox_BEND,<span class="string">'Value'</span>,0);
+0109     set(handles.checkbox_QP,<span class="string">'Value'</span>,0);
+0110     set(handles.checkbox_CH,<span class="string">'Value'</span>,0);
+0111     set(handles.checkbox_CV,<span class="string">'Value'</span>,0);
+0112     set(handles.checkbox_all,<span class="string">'Value'</span>,0);
+0113 <span class="keyword">end</span>
+0114 
+0115 <span class="comment">% --- Executes on button press in checkbox_all.</span>
+0116 <a name="_sub4" href="#_subfunctions" class="code">function checkbox_all_Callback(hObject, eventdata, handles)</a>
+0117 <span class="comment">% hObject    handle to checkbox_all (see GCBO)</span>
+0118 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0119 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0120 
+0121 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_all</span>
+0122 val = get(hObject,<span class="string">'Value'</span>);
+0123 
+0124 <span class="keyword">if</span> val
+0125     set(handles.checkbox_BEND,<span class="string">'Value'</span>,1);
+0126     set(handles.checkbox_QP,<span class="string">'Value'</span>,1);
+0127     set(handles.checkbox_CH,<span class="string">'Value'</span>,1);
+0128     set(handles.checkbox_CV,<span class="string">'Value'</span>,1);
+0129     set(handles.checkbox_none,<span class="string">'Value'</span>,0);
+0130 <span class="keyword">end</span>
+0131 
+0132 
+0133 <span class="comment">% --- Executes on button press in checkbox_BEND.</span>
+0134 <a name="_sub5" href="#_subfunctions" class="code">function checkbox_BEND_Callback(hObject, eventdata, handles)</a>
+0135 <span class="comment">% hObject    handle to checkbox_BEND (see GCBO)</span>
+0136 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0137 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0138 
+0139 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_BEND</span>
+0140 
+0141 set(handles.checkbox_all,<span class="string">'Value'</span>,0);
+0142 set(handles.checkbox_none,<span class="string">'Value'</span>,0);
+0143 
+0144 <span class="comment">% --- Executes on button press in checkbox_QP.</span>
+0145 <a name="_sub6" href="#_subfunctions" class="code">function checkbox_QP_Callback(hObject, eventdata, handles)</a>
+0146 <span class="comment">% hObject    handle to checkbox_QP (see GCBO)</span>
+0147 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0148 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0149 
+0150 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_QP</span>
+0151 
+0152 set(handles.checkbox_all,<span class="string">'Value'</span>,0);
+0153 set(handles.checkbox_none,<span class="string">'Value'</span>,0);
+0154 
+0155 <span class="comment">% --- Executes on button press in checkbox_CH.</span>
+0156 <a name="_sub7" href="#_subfunctions" class="code">function checkbox_CH_Callback(hObject, eventdata, handles)</a>
+0157 <span class="comment">% hObject    handle to checkbox_CH (see GCBO)</span>
+0158 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0159 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0160 
+0161 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_CH</span>
+0162 
+0163 set(handles.checkbox_all,<span class="string">'Value'</span>,0);
+0164 set(handles.checkbox_none,<span class="string">'Value'</span>,0);
+0165 
+0166 <span class="comment">% --- Executes on button press in checkbox_CV.</span>
+0167 <a name="_sub8" href="#_subfunctions" class="code">function checkbox_CV_Callback(hObject, eventdata, handles)</a>
+0168 <span class="comment">% hObject    handle to checkbox_CV (see GCBO)</span>
+0169 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0170 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0171 
+0172 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_CV</span>
+0173 
+0174 set(handles.checkbox_all,<span class="string">'Value'</span>,0);
+0175 set(handles.checkbox_none,<span class="string">'Value'</span>,0);
+0176 
+0177 <span class="comment">% --- Executes on button press in pushbutton_apply.</span>
+0178 <a name="_sub9" href="#_subfunctions" class="code">function pushbutton_apply_Callback(hObject, eventdata, handles)</a>
+0179 <span class="comment">% hObject    handle to pushbutton_apply (see GCBO)</span>
+0180 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0181 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0182 
+0183 contents = get(handles.popupmenu_command,<span class="string">'String'</span>);
+0184 command  = contents{get(handles.popupmenu_command,<span class="string">'Value'</span>)};
+0185 
+0186 <span class="keyword">switch</span> command
+0187     <span class="keyword">case</span> {<span class="string">'Start'</span>,<span class="string">'Stop'</span>,<span class="string">'Init'</span>,<span class="string">'Pause'</span>,<span class="string">'Resume'</span>, <span class="string">'Load cycling curve'</span>}
+0188         <a href="#_sub10" class="code" title="subfunction cyclemagnet_local(command,handles)">cyclemagnet_local</a>(command,handles);
+0189     <span class="keyword">otherwise</span>
+0190         error(<span class="string">'Unknown ommand name: %s '</span>, command);
+0191 <span class="keyword">end</span>
+0192 
+0193 <a name="_sub10" href="#_subfunctions" class="code">function cyclemagnet_local(command,handles)</a>
+0194 
+0195 <span class="comment">%     [CycleIndex, CycleAO] = isfamily(CycleFamily);</span>
+0196 <span class="comment">%</span>
+0197 <span class="comment">%     rep = tango_group_command_inout2(CycleAO.GroupId,'State',1,0);</span>
+0198 
+0199 Family = {<span class="string">'BEND'</span>,<span class="string">'QP'</span>,<span class="string">'CH'</span>,<span class="string">'CV'</span>};    
+0200     
+0201 Families = {};
+0202 <span class="keyword">for</span> k = 1:length(Family),
+0203     <span class="keyword">if</span> get(handles.([<span class="string">'checkbox_'</span>,Family{k}]),<span class="string">'Value'</span>)
+0204         Families = {Families{:}, Family{k}};
+0205     <span class="keyword">end</span>
+0206 <span class="keyword">end</span>
+0207 
+0208 <span class="keyword">switch</span> command
+0209     <span class="keyword">case</span> {<span class="string">'Start'</span>}
+0210         <span class="comment">% get cycling file</span>
+0211         contents = get(handles.popupmenu_file,<span class="string">'String'</span>);
+0212         file = contents{get(handles.popupmenu_file,<span class="string">'Value'</span>)};
+0213 
+0214         <span class="comment">% get cycling file</span>
+0215         contents = get(handles.popupmenu_type,<span class="string">'String'</span>);
+0216         type = contents{get(handles.popupmenu_type,<span class="string">'Value'</span>)};
+0217 
+0218         magnetcycle(type,file,Families,<span class="string">'NoDisplay'</span>,<span class="string">'NoConfig'</span>);
+0219         
+0220     <span class="keyword">case</span> {<span class="string">'Load cycling curve'</span>}
+0221         <span class="comment">% get cycling file</span>
+0222         contents = get(handles.popupmenu_file,<span class="string">'String'</span>);
+0223         file = contents{get(handles.popupmenu_file,<span class="string">'Value'</span>)};
+0224 
+0225         <span class="comment">% get cycling file</span>
+0226         contents = get(handles.popupmenu_type,<span class="string">'String'</span>);
+0227         type = contents{get(handles.popupmenu_type,<span class="string">'Value'</span>)};
+0228 
+0229         magnetcycle(type,file,Families,<span class="string">'NoDisplay'</span>,<span class="string">'NoConfig'</span>, <span class="string">'NoApply'</span>);
+0230         
+0231     <span class="keyword">case</span> {<span class="string">'Stop'</span>,<span class="string">'Init'</span>,<span class="string">'Pause'</span>,<span class="string">'Resume'</span>}
+0232         <span class="keyword">for</span> k =1:length(Families)
+0233             CycleFamily = [<span class="string">'Cycle'</span> Families{k}];
+0234             cyclingcommand(CycleFamily,command);
+0235         <span class="keyword">end</span>
+0236 <span class="keyword">end</span>
+0237 
+0238 <span class="comment">% --- Executes on selection change in popupmenu_command.</span>
+0239 <a name="_sub11" href="#_subfunctions" class="code">function popupmenu_command_Callback(hObject, eventdata, handles)</a>
+0240 <span class="comment">% hObject    handle to popupmenu_command (see GCBO)</span>
+0241 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0242 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0243 
+0244 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_command contents as cell array</span>
+0245 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_command</span>
+0246 
+0247 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0248 <a name="_sub12" href="#_subfunctions" class="code">function popupmenu_command_CreateFcn(hObject, eventdata, handles)</a>
+0249 <span class="comment">% hObject    handle to popupmenu_command (see GCBO)</span>
+0250 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0251 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0252 
+0253 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0254 <span class="comment">%       See ISPC and COMPUTER.</span>
+0255 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0256     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0257 <span class="keyword">end</span>
+0258 
+0259 
+0260 <span class="comment">% --- Executes on selection change in popupmenu_type.</span>
+0261 <a name="_sub13" href="#_subfunctions" class="code">function popupmenu_type_Callback(hObject, eventdata, handles)</a>
+0262 <span class="comment">% hObject    handle to popupmenu_type (see GCBO)</span>
+0263 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0264 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0265 
+0266 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_type contents as cell array</span>
+0267 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_type</span>
+0268 
+0269 
+0270 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0271 <a name="_sub14" href="#_subfunctions" class="code">function popupmenu_type_CreateFcn(hObject, eventdata, handles)</a>
+0272 <span class="comment">% hObject    handle to popupmenu_type (see GCBO)</span>
+0273 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0274 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0275 
+0276 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0277 <span class="comment">%       See ISPC and COMPUTER.</span>
+0278 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0279     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0280 <span class="keyword">end</span>
+0281 
+0282 
+0283 <span class="comment">% --- Executes on selection change in popupmenu_file.</span>
+0284 <a name="_sub15" href="#_subfunctions" class="code">function popupmenu_file_Callback(hObject, eventdata, handles)</a>
+0285 <span class="comment">% hObject    handle to popupmenu_file (see GCBO)</span>
+0286 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0287 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0288 
+0289 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_file contents as cell array</span>
+0290 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_file</span>
+0291 
+0292 
+0293 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0294 <a name="_sub16" href="#_subfunctions" class="code">function popupmenu_file_CreateFcn(hObject, eventdata, handles)</a>
+0295 <span class="comment">% hObject    handle to popupmenu_file (see GCBO)</span>
+0296 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0297 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0298 
+0299 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0300 <span class="comment">%       See ISPC and COMPUTER.</span>
+0301 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0302     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0303 <span class="keyword">end</span>
+0304 
+0305</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

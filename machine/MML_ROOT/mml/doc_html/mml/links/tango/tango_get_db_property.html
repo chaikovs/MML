@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_get_db_property</title>
+  <meta name="keywords" content="tango_get_db_property">
+  <meta name="description" content="TANGO_GET_DG_PROPERTY - Queries for a Database property">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_get_db_property.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_get_db_property
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TANGO_GET_DG_PROPERTY - Queries for a Database property</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function prop=tango_get_db_property(groupname,propertyname,dbserver) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TANGO_GET_DG_PROPERTY - Queries for a Database property
+
+  [prop]=tango_get_db_Property(groupname,propertyname,dbserver)
+
+ INPUTS
+ 1. groupname -  name of the group in the property tree in Tango DB
+ 2. propertyname - property requested in the groupname 
+ 3. dbserver - TANGO database device serve  'sys/database/dbds' by default
+  
+ OUTPUTS
+  1. prop cell array of strings with the system property 
+
+ EXEMPLES
+  prop = tango_get_db_property('anneau','tracy_bpm_mapping')
+  
+ See also <a href="tango_set_db_property.html" class="code" title="function prop=tango_set_db_property(groupname,propertyname,prop,dbserver)">tango_set_db_property</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="tango_get_db_property.html" class="code" title="function prop=tango_get_db_property(groupname,propertyname,dbserver)">tango_get_db_property</a>	TANGO_GET_DG_PROPERTY - Queries for a Database property</li><li><a href="tango_get_dbname.html" class="code" title="function dbname = tango_get_dbname(varargin)">tango_get_dbname</a>	TANGO_GET_DBNAME - Returns tango database name</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="get_device_name.html" class="code" title="function [devicelist commonlist] = get_device_name(machine,property,magnet)">get_device_name</a>	GET_DEVICE_NAME - Gets device list from mapping read in tango database</li><li><a href="tango_get_db_property.html" class="code" title="function prop=tango_get_db_property(groupname,propertyname,dbserver)">tango_get_db_property</a>	TANGO_GET_DG_PROPERTY - Queries for a Database property</li><li><a href="tango_set_db_property.html" class="code" title="function prop=tango_set_db_property(groupname,propertyname,prop,dbserver)">tango_set_db_property</a>	TANGO_GET_DG_PROPERTY - Queries for a Database property</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function prop=tango_get_db_property(groupname,propertyname,dbserver)</a>
+0002 <span class="comment">%TANGO_GET_DG_PROPERTY - Queries for a Database property</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  [prop]=tango_get_db_Property(groupname,propertyname,dbserver)</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% INPUTS</span>
+0007 <span class="comment">% 1. groupname -  name of the group in the property tree in Tango DB</span>
+0008 <span class="comment">% 2. propertyname - property requested in the groupname</span>
+0009 <span class="comment">% 3. dbserver - TANGO database device serve  'sys/database/dbds' by default</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">% OUTPUTS</span>
+0012 <span class="comment">%  1. prop cell array of strings with the system property</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% EXEMPLES</span>
+0015 <span class="comment">%  prop = tango_get_db_property('anneau','tracy_bpm_mapping')</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">% See also tango_set_db_property</span>
+0018 
+0019 <span class="comment">%</span>
+0020 <span class="comment">% Modified By Laurent S. Nadolski</span>
+0021 
+0022 <span class="keyword">if</span> (nargin &lt; 2)
+0023     help <a href="tango_get_db_property.html" class="code" title="function prop=tango_get_db_property(groupname,propertyname,dbserver)">tango_get_db_property</a>
+0024     <span class="keyword">return</span>;
+0025 <span class="keyword">elseif</span> nargin &lt; 3
+0026   dbserver = <a href="tango_get_dbname.html" class="code" title="function dbname = tango_get_dbname(varargin)">tango_get_dbname</a>;
+0027 <span class="keyword">end</span>
+0028 
+0029 argin = {groupname,propertyname};
+0030 res = tango_command_inout(dbserver,<span class="string">'DbGetProperty'</span>,argin);
+0031 
+0032 <span class="keyword">if</span> (tango_error == -1)
+0033   <span class="comment">%- handle error</span>
+0034    tango_print_error_stack;
+0035    <span class="keyword">return</span>
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="comment">%% Overhead 4 lines</span>
+0039 dim = 4;
+0040 nb = str2num(char(res(dim)));
+0041 
+0042 <span class="comment">%% return cell array of string</span>
+0043 prop = res(dim+1:dim+nb);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of meascmhysteresis</title>
+  <meta name="keywords" content="meascmhysteresis">
+  <meta name="description" content="MEASCMHYSTERESIS - Measure corrector magnet hysteresis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; meascmhysteresis.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>meascmhysteresis
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MEASCMHYSTERESIS - Measure corrector magnet hysteresis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function meascmhysteresis(BPMList, CMFamily, CMList, MaxChange, NSteps) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MEASCMHYSTERESIS - Measure corrector magnet hysteresis
+
+  meascmhysteresis(BPMList, MaxChange, NSteps)
+
+  INPUTS
+  1. BPMList   - BPM list 
+  2. CMFamily  - Corrector family
+  3. CMList    - Corrector device list
+  4. MaxChange - Maximum vertical change from the starting point
+  5. NSteps    - Number of step from starting point to the maximum
+
+  NOTES
+  1. This function looks for a bump coefficient file corresponding to BPM list.  
+     For instance, VerticalBumpCoef-7_8-6_1 is the vertical file for [7 8;6 1].
+     If you don't want to use this file, delete it and a new new will be created.
+     All files are stored in &lt;DataRoot&gt;&lt;aperturescan&gt;</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>	GETAM - Gets monitor channels</li><li><a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>	GETBPMRESP - Returns the BPM response matrix in the horizontal and vertical planes</li><li><a href="getdcct.html" class="code" title="function [DCCT, tout, DataTime, ErrorFlag] = getdcct(varargin)">getdcct</a>	GETDCCT - returns the beam current</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>	GETHBPMFAMILY - Return the default horizontal BPM family</li><li><a href="gethcmfamily.html" class="code" title="function Family = gethcmfamily">gethcmfamily</a>	GETHCMFAMILY - Returns the default horizontal corrector family</li><li><a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>	GETLIST - Returns Device List for a Family</li><li><a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>	GETOFFSET - Returns the offset values for a family</li><li><a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>	GETPHYSDATA - Gets physics data</li><li><a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>	GETSP - Gets setpoint channels</li><li><a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>	GETVBPMFAMILY - Return the default vertical BPM family</li><li><a href="getvcmfamily.html" class="code" title="function Family = getvcmfamily">getvcmfamily</a>	GETVCMFAMILY - Returns the default vertical corrector family</li><li><a href="getx.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getx(varargin)">getx</a>	GETX - Returns the horizontal orbit</li><li><a href="setorbitbump.html" class="code" title="function [OCS, OCS0, V, S, ErrorFlag] = setorbitbump(varargin)">setorbitbump</a>	SETORBITBUMP - Local bump program (uses setorbit)</li><li><a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>	SETSP - Makes an absolute setpoint change to the 'Setpoint' field</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function meascmhysteresis(BPMList, CMFamily, CMList, MaxChange, NSteps)</a>
+0002 <span class="comment">%MEASCMHYSTERESIS - Measure corrector magnet hysteresis</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  meascmhysteresis(BPMList, MaxChange, NSteps)</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  INPUTS</span>
+0007 <span class="comment">%  1. BPMList   - BPM list</span>
+0008 <span class="comment">%  2. CMFamily  - Corrector family</span>
+0009 <span class="comment">%  3. CMList    - Corrector device list</span>
+0010 <span class="comment">%  4. MaxChange - Maximum vertical change from the starting point</span>
+0011 <span class="comment">%  5. NSteps    - Number of step from starting point to the maximum</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">%  NOTES</span>
+0014 <span class="comment">%  1. This function looks for a bump coefficient file corresponding to BPM list.</span>
+0015 <span class="comment">%     For instance, VerticalBumpCoef-7_8-6_1 is the vertical file for [7 8;6 1].</span>
+0016 <span class="comment">%     If you don't want to use this file, delete it and a new new will be created.</span>
+0017 <span class="comment">%     All files are stored in &lt;DataRoot&gt;&lt;aperturescan&gt;</span>
+0018 
+0019 <span class="comment">%</span>
+0020 <span class="comment">%  Written by Gregory J. Portmann</span>
+0021 <span class="comment">%  Adapted by Laurent S. Nadolski</span>
+0022 
+0023 BPMxFamily = <a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>; 
+0024 BPMyFamily = <a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>;
+0025 HCMFamily  = <a href="gethcmfamily.html" class="code" title="function Family = gethcmfamily">gethcmfamily</a>;
+0026 VCMFamily  = <a href="getvcmfamily.html" class="code" title="function Family = getvcmfamily">getvcmfamily</a>;
+0027 
+0028 
+0029 <span class="comment">%%%%%%%%%%%%%%%%%%</span>
+0030 <span class="comment">% Input checking %</span>
+0031 <span class="comment">%%%%%%%%%%%%%%%%%%</span>
+0032 <span class="keyword">if</span> nargin &lt; 1
+0033     BPMList = [7 6; 8 1];
+0034 <span class="keyword">end</span>
+0035 <span class="keyword">if</span> nargin &lt; 2
+0036     CMFamily = VCMFamily;
+0037 <span class="keyword">end</span>
+0038 <span class="keyword">if</span> nargin &lt; 3
+0039     <span class="keyword">if</span> size(BPMList,1) == 1
+0040         CMList = [4 4];
+0041     <span class="keyword">else</span>
+0042         CMList = [-4 -3 -2 -1 1 2 3 4];
+0043     <span class="keyword">end</span>
+0044 <span class="keyword">end</span>
+0045 <span class="keyword">if</span> nargin &lt; 4
+0046     MaxChange = 1.5;
+0047 <span class="keyword">end</span>
+0048 <span class="keyword">if</span> nargin &lt; 5
+0049     NSteps = 5;     <span class="comment">% Steps from 0 to MaxChange</span>
+0050 <span class="keyword">end</span>
+0051 
+0052 
+0053 <span class="comment">% Corrector starting points</span>
+0054 HCM0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(HCMFamily); 
+0055 VCM0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(VCMFamily);
+0056 
+0057 
+0058 <span class="comment">% Offset</span>
+0059 Xoffset = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMxFamily, BPMList);
+0060 Yoffset = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMyFamily, BPMList);
+0061 
+0062 <span class="comment">% Gain</span>
+0063 Xgain = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(BPMxFamily, <span class="string">'Gain'</span>, BPMList);
+0064 Ygain = <a href="getphysdata.html" class="code" title="function [Data, iNotFound] = getphysdata(Family, Field, DeviceList)">getphysdata</a>(BPMyFamily, <span class="string">'Gain'</span>, BPMList);
+0065 
+0066 
+0067 BPMxIndex = findrowindex(BPMList, <a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>(BPMxFamily));
+0068 BPMyIndex = findrowindex(BPMList, <a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>(BPMyFamily));
+0069 
+0070 BPMxList = <a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>(BPMxFamily);
+0071 BPMyList = <a href="getlist.html" class="code" title="function DeviceList = getlist(varargin)">getlist</a>(BPMyFamily);
+0072 
+0073 FileNumberString =  sprintf(<span class="string">'-%d_%d'</span>, BPMList');
+0074 DirectoryName = [fullfile(<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>),<span class="string">'aperturescan'</span>),filesep];
+0075 
+0076 
+0077 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0078 <span class="comment">% Compute corrector coefficients %</span>
+0079 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0080 BPMWeight = 40;
+0081 SVDIndex = 1e-3;
+0082 
+0083 <span class="keyword">if</span> strcmpi(CMFamily, HCMFamily)
+0084     HorizontalBumpFile = sprintf(<span class="string">'%sHorizontalBumpCoef%s'</span>, DirectoryName, FileNumberString);
+0085     <span class="keyword">if</span> size(BPMList,1) == 1 &amp;&amp; isempty(CMList)
+0086         <span class="comment">% For single BPM just use one corrector</span>
+0087         <span class="comment">% Pick the corrector based on the response matrix</span>
+0088         R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'Struct'</span>);
+0089         [i, iNotFound] = findrowindex(BPMList, R(1,1).Monitor.DeviceList);
+0090         m = R(1,1).Data(i,:);
+0091         [MaxValue, j] = max(abs(m));
+0092         HCMDeviceList = R(1,1).Actuator.DeviceList(j,:);
+0093         <span class="comment">%DeltaHCM = (1/m(j)) ./ Xgain;  % Amps/mm  (at the BPM BPMList)</span>
+0094         DeltaHCM = (1/max(abs(m))) ./ Xgain;  <span class="comment">% Amps/mm  (maximum at many BPM)</span>
+0095         
+0096     <span class="keyword">elseif</span> size(CMList,1) == 1 &amp;&amp; size(CMList,2) &lt;= 2
+0097         <span class="comment">% For single corrector</span>
+0098         R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'Struct'</span>);
+0099         [i, iNotFound] = findrowindex(BPMList, R(1,1).Monitor.DeviceList);
+0100         [j, jNotFound] = findrowindex(CMList,  R(1,1).Actuator.DeviceList);
+0101         m = R(1,1).Data(i,j);
+0102         DeltaHCM = (1/m) ./ Xgain;  <span class="comment">% Amps/mm</span>
+0103         
+0104     <span class="keyword">elseif</span> exist([HorizontalBumpFile,<span class="string">'.mat'</span>], <span class="string">'file'</span>)
+0105         fprintf(<span class="string">'   Loading horizontal corrector magnet bump coefficients from %s\n'</span>, <span class="keyword">...</span>
+0106             HorizontalBumpFile);
+0107         load(HorizontalBumpFile);
+0108         
+0109     <span class="keyword">else</span>
+0110         <span class="comment">% Set the hysteresis</span>
+0111         fprintf(<span class="string">'   Finding horizontal corrector magnet bump coefficients\n'</span>);
+0112         DeltaX = [.2;.2] ./ Xgain;
+0113         x0 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMxFamily, BPMList);
+0114         <span class="comment">%[HOCS, RF, HOCS0] = setorbitbump(BPMxFamily, BPMList, DeltaX, HCMFamily, CMList, 1, SVDIndex, BPMWeight, 'Inc', 'NoDisplay');</span>
+0115         HOCS0 = <a href="setorbitbump.html" class="code" title="function [OCS, OCS0, V, S, ErrorFlag] = setorbitbump(varargin)">setorbitbump</a>(BPMxFamily, BPMList, DeltaX, HCMFamily, CMList, 1, <span class="keyword">...</span>
+0116             BPMWeight, <span class="string">'Inc'</span>, <span class="string">'NoDisplay'</span>);
+0117         x1 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMxFamily, BPMList);
+0118         
+0119         <span class="comment">% Get a clean bump</span>
+0120         figure(1);
+0121         clf reset
+0122         x2 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMxFamily, BPMList);
+0123         <span class="comment">%[HOCS, RF, HOCS0] = setorbitbump(BPMxFamily, BPMList, DeltaX, HCMFamily, CMList, 1, SVDIndex, BPMWeight, 'Inc', 'NoDisplay');</span>
+0124         HOCS = <a href="setorbitbump.html" class="code" title="function [OCS, OCS0, V, S, ErrorFlag] = setorbitbump(varargin)">setorbitbump</a>(BPMxFamily, BPMList, DeltaX, HCMFamily, CMList, 1, <span class="keyword">...</span>
+0125             BPMWeight, <span class="string">'Inc'</span>, <span class="string">'NoDisplay'</span>);
+0126         x3 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMxFamily, BPMList);
+0127         drawnow;
+0128         DeltaHCM = (HOCS.CM.Data - HOCS0.CM.Data)/.2;  <span class="comment">% amps/mm  (real units)</span>
+0129         BPMDeviceList = HOCS.BPM.DeviceList;
+0130         HCMDeviceList = HOCS.CM.DeviceList;
+0131         <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(HCMFamily, HCM0);
+0132         save(HorizontalBumpFile, <span class="string">'DeltaHCM'</span>, <span class="string">'HCMDeviceList'</span>, <span class="string">'BPMDeviceList'</span>, <span class="string">'HOCS'</span>, <span class="string">'HOCS0'</span>);
+0133     <span class="keyword">end</span>
+0134     
+0135     <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0136     <span class="comment">% Linearity and hystersis check %</span>
+0137     <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0138     
+0139     <span class="comment">% Starting corrector values</span>
+0140     hcm0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(HCMFamily, HCMDeviceList);
+0141     
+0142     <span class="comment">% Set hysteresis in an upward direction</span>
+0143     <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(HCMFamily, hcm0 - MaxChange * DeltaHCM, HCMDeviceList, -2);
+0144     <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(HCMFamily, hcm0, HCMDeviceList);
+0145     
+0146     <span class="comment">% Build loop</span>
+0147     Loop = [linspace(0,MaxChange,NSteps+1) linspace(MaxChange-MaxChange/NSteps,-MaxChange,2*NSteps) linspace(-MaxChange+MaxChange/NSteps,0,NSteps)];
+0148     LoopTotal = [Loop Loop(2:end)];
+0149     
+0150     i = 0;
+0151     <span class="keyword">for</span> y = LoopTotal
+0152         i = i + 1;
+0153         <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(HCMFamily, hcm0 + y * DeltaHCM, HCMDeviceList, -2);
+0154         DCCT(i) = <a href="getdcct.html" class="code" title="function [DCCT, tout, DataTime, ErrorFlag] = getdcct(varargin)">getdcct</a>;
+0155         HCMsp(:,i) = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(HCMFamily, HCMDeviceList);
+0156         HCMam(:,i) = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(HCMFamily, HCMDeviceList);
+0157         <span class="comment">%BPMx(:,i) = raw2real(BPMxFamily, getx);</span>
+0158         <span class="comment">%BPMy(:,i) = raw2real(BPMyFamily, getz);</span>
+0159         BPMx(:,i) = <a href="getx.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getx(varargin)">getx</a>;
+0160         BPMy(:,i) = getz;
+0161     <span class="keyword">end</span>
+0162     
+0163     <span class="comment">% Reset correctors</span>
+0164     <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(HCMFamily, HCM0);
+0165     
+0166 <span class="keyword">elseif</span> strcmpi(CMFamily, VCMFamily)
+0167     VerticalBumpFile = sprintf(<span class="string">'VerticalBumpCoef%s'</span>, FileNumberString);
+0168     <span class="keyword">if</span> size(BPMList,1) == 1 &amp;&amp; isempty(CMList)
+0169         <span class="comment">% For single BPM just use one corrector</span>
+0170         <span class="comment">% Pick the corrector based on the response matrix</span>
+0171         R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'Struct'</span>);
+0172         [i, iNotFound] = findrowindex(BPMList, R(2,2).Monitor.DeviceList);
+0173         m = R(2,2).Data(i,:);
+0174         [MaxValue, j] = max(abs(m));
+0175         VCMDeviceList = R(2,2).Actuator.DeviceList(j,:);
+0176         <span class="comment">%DeltaVCM = (1/m(j)) ./ Ygain;  % Amps/mm  (at the BPM BPMList)</span>
+0177         DeltaVCM = (1/max(abs(m))) ./ Ygain;  <span class="comment">% Amps/mm  (maximum at many BPM)</span>
+0178         
+0179     <span class="keyword">elseif</span> size(CMList,1) == 1 &amp;&amp; size(CMList,2) &lt;= 2
+0180         <span class="comment">% For single corrector</span>
+0181         R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'Struct'</span>);
+0182         [i, iNotFound] = findrowindex(BPMList, R(2,2).Monitor.DeviceList);
+0183         [j, jNotFound] = findrowindex(CMList,  R(2,2).Actuator.DeviceList);
+0184         m = R(2,2).Data(i,j);
+0185         DeltaVCM = (1/m) ./ Ygain;  <span class="comment">% Amps/mm</span>
+0186         VCMDeviceList = CMList;
+0187         
+0188     <span class="keyword">elseif</span> exist([VerticalBumpFile,<span class="string">'.mat'</span>], <span class="string">'file'</span>)
+0189         fprintf(<span class="string">'   Loading vertical corrector magnet bump coefficients from %s\n'</span>, VerticalBumpFile);
+0190         load(VerticalBumpFile);
+0191     <span class="keyword">else</span>
+0192         <span class="comment">% Set the hysteresis</span>
+0193         fprintf(<span class="string">'   Finding vertical corrector magnet bump coefficients\n'</span>);
+0194         DeltaY = [.2;.2] ./ Ygain;
+0195         y0 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMyFamily, BPMList);
+0196         <span class="comment">%[VOCS, RF, VOCS0] = setorbitbump(BPMyFamily, BPMList, DeltaY, VCMFamily, CMList, 1, SVDIndex, BPMWeight, 'Inc', 'NoDisplay');</span>
+0197         <span class="comment">% in one iteration</span>
+0198         VOCS0 = <a href="setorbitbump.html" class="code" title="function [OCS, OCS0, V, S, ErrorFlag] = setorbitbump(varargin)">setorbitbump</a>(BPMyFamily, BPMList, DeltaY, VCMFamily, CMList, <span class="keyword">...</span>
+0199             1, BPMWeight, <span class="string">'Inc'</span>, <span class="string">'NoDisplay'</span>);
+0200         y1 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMyFamily, BPMList);
+0201         
+0202         <span class="comment">% Get a clean bump</span>
+0203         <span class="comment">%vcm0= getsp(VCMFamily, VOCS.CM.DeviceList);</span>
+0204         figure(1);
+0205         clf reset
+0206         y2 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMyFamily, BPMList);
+0207         VOCS = <a href="setorbitbump.html" class="code" title="function [OCS, OCS0, V, S, ErrorFlag] = setorbitbump(varargin)">setorbitbump</a>(BPMyFamily, BPMList, DeltaY, VCMFamily, CMList, <span class="keyword">...</span>
+0208             5,  BPMWeight, <span class="string">'Inc'</span>, <span class="string">'NoDisplay'</span>);
+0209 <span class="comment">%        [VOCS, RF, VOCS0] = setorbitbump(BPMyFamily, BPMList, DeltaY, VCMFamily, CMList, 5, SVDIndex, BPMWeight, 'Inc', 'NoDisplay');</span>
+0210         y3 = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMyFamily, BPMList);
+0211         drawnow;
+0212         <span class="comment">%vcm1= getsp(VCMFamily, VOCS.CM.DeviceList);</span>
+0213         DeltaVCM = (VOCS.CM.Data - VOCS0.CM.Data) / .2;  <span class="comment">% amps/mm  (real units)</span>
+0214         BPMDeviceList = VOCS.BPM.DeviceList;
+0215         VCMDeviceList = VOCS.CM.DeviceList;
+0216         <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(VCMFamily, VCM0);
+0217         save(VerticalBumpFile, <span class="string">'DeltaVCM'</span>, <span class="string">'VCMDeviceList'</span>, <span class="string">'BPMDeviceList'</span>, <span class="string">'VOCS'</span>, <span class="string">'VOCS0'</span>);
+0218     <span class="keyword">end</span>
+0219     
+0220     
+0221     <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0222     <span class="comment">% Linearity and hystersis check %</span>
+0223     <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0224     
+0225     <span class="comment">% Starting corrector values</span>
+0226     vcm0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(VCMFamily, VCMDeviceList);
+0227     
+0228     <span class="comment">% Set hysteresis in an upward direction</span>
+0229     <span class="comment">%setsp(VCMFamily, vcm0 - MaxChange * DeltaVCM, VCMDeviceList, -2);</span>
+0230     <span class="comment">%setsp(VCMFamily, vcm0, VCMDeviceList);</span>
+0231     
+0232     <span class="comment">% Build loop</span>
+0233     Loop = [linspace(0,MaxChange,NSteps+1) <span class="keyword">...</span>
+0234         linspace(MaxChange-MaxChange/NSteps,-MaxChange,2*NSteps) <span class="keyword">...</span>
+0235         linspace(-MaxChange+MaxChange/NSteps,0,NSteps)];
+0236     LoopTotal = [Loop Loop(2:end)];
+0237     
+0238     i = 0;
+0239     <span class="keyword">for</span> y = LoopTotal
+0240         i = i + 1;
+0241         <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(VCMFamily, vcm0 + y * DeltaVCM, VCMDeviceList, -2);
+0242         DCCT(i) = <a href="getdcct.html" class="code" title="function [DCCT, tout, DataTime, ErrorFlag] = getdcct(varargin)">getdcct</a>;
+0243         VCMsp(:,i) = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(VCMFamily, VCMDeviceList);
+0244         VCMam(:,i) = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(VCMFamily, VCMDeviceList);
+0245         <span class="comment">%BPMx(:,i) = raw2real(BPMxFamily, getx);</span>
+0246         <span class="comment">%BPMy(:,i) = raw2real(BPMyFamily, getz);</span>
+0247         BPMx(:,i) = <a href="getx.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getx(varargin)">getx</a>;
+0248         BPMy(:,i) = getz;
+0249         
+0250     <span class="keyword">end</span>
+0251     
+0252     <span class="comment">% Reset correctors</span>
+0253     <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(VCMFamily, VCM0);
+0254     
+0255 <span class="keyword">else</span>
+0256     error(<span class="string">'Corrector magnet family unknown'</span>);
+0257 <span class="keyword">end</span>
+0258 
+0259 
+0260 <span class="comment">% Save data</span>
+0261 HysteresisFilename = sprintf(<span class="string">'Hysteresis%s'</span>, FileNumberString);
+0262 HysteresisFilename = appendtimestamp(HysteresisFilename);
+0263 save(HysteresisFilename);
+0264 fprintf(<span class="string">'   Hysteresis data saved to %s.mat\n'</span>, HysteresisFilename);
+0265 
+0266 
+0267 <span class="comment">% Plot results</span>
+0268 clf reset
+0269 LineType = <span class="string">'.-b'</span>;
+0270 <span class="keyword">if</span> size(BPMList,1) == 1    
+0271     
+0272     subplot(2,1,1);
+0273     plot(LoopTotal, BPMy(BPMyIndex(1),:),LineType);
+0274     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0275     ylabel(sprintf(<span class="string">'%s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0276     
+0277     subplot(2,1,2);
+0278     plot(LoopTotal, BPMy(BPMyIndex(1),:)-LoopTotal,LineType);
+0279     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0280     ylabel(sprintf(<span class="string">'%s(%d,%d) Error [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0281     title(<span class="string">'Hysteresis Loops'</span>);
+0282     
+0283 <span class="keyword">else</span>
+0284     
+0285     subplot(2,2,1);
+0286     plot(LoopTotal, BPMy(BPMyIndex(1),:),LineType);
+0287     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0288     ylabel(sprintf(<span class="string">'%s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0289     grid on;
+0290 
+0291     subplot(2,2,3);
+0292     plot(LoopTotal, BPMy(BPMyIndex(1),:)-LoopTotal,LineType);
+0293     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0294     ylabel(sprintf(<span class="string">'%s(%d,%d) Error [mm]'</span>, BPMyFamily, BPMList(1,:)));
+0295     grid on;
+0296     
+0297     subplot(2,2,2);
+0298     plot(LoopTotal, BPMy(BPMyIndex(2),:),LineType);
+0299     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(2,:)));
+0300     ylabel(sprintf(<span class="string">'%s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(2,:)));
+0301     grid on;
+0302     
+0303     subplot(2,2,4);
+0304     plot(LoopTotal, BPMy(BPMyIndex(2),:)-LoopTotal,LineType);
+0305     xlabel(sprintf(<span class="string">'Goal Orbit at %s(%d,%d) [mm]'</span>, BPMyFamily, BPMList(2,:)));
+0306     ylabel(sprintf(<span class="string">'%s(%d,%d) Error [mm]'</span>, BPMyFamily, BPMList(2,:)));
+0307     grid on;
+0308     
+0309     h = addlabel(.5, 1, <span class="string">'Hysteresis Loops'</span>);
+0310     set(h, <span class="string">'Fontsize'</span>, 12);
+0311     orient tall
+0312     
+0313 <span class="keyword">end</span>
+0314</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

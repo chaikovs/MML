@@ -1,0 +1,598 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of measidfftable</title>
+  <meta name="keywords" content="measidfftable">
+  <meta name="description" content="FFGETTBL - Measures an insertion device feed forward table for the vertical gap">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; measidfftable.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>measidfftable
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>FFGETTBL - Measures an insertion device feed forward table for the vertical gap</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function ffgettbl(Sector, BPMFlag) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">FFGETTBL - Measures an insertion device feed forward table for the vertical gap 
+  ffgettbl(Sector, BPMFlag (0=Bergoz BPMs, else=All BPMs))
+
+  This function generates the feed forward tables necessary for insertion device compensation.
+
+  This function is under development</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="dev2elem.html" class="code" title="function Output = dev2elem(Family, DevList)">dev2elem</a>	DEV2ELEM - Converts an element list to a device list</li><li><a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>	GETAM - Gets monitor channels</li><li><a href="getenergy.html" class="code" title="function [Energy, HCMEnergy] = getenergy(varargin)">getenergy</a>	GETENERGY - Returns the beam energy base on the bend magnet</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getproductionlattice.html" class="code" title="function [ConfigSetpoint, ConfigMonitor, FileName] = getproductionlattice(varargin)">getproductionlattice</a>	GETPRODUCTIONLATTICE - Read the Golden lattice from file GoldenLattice</li><li><a href="getpv.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getpv(varargin)">getpv</a>	GETPV - Returns a variable from the online system or the model</li><li><a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>	GETSP - Gets setpoint channels</li><li><a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>	GETSPOS - Returns the longitudinal position in meters</li><li><a href="gettuneresp.html" class="code" title="function [TuneMatrix, FileName] = gettuneresp(varargin)">gettuneresp</a>	GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families</li><li><a href="measidfftable.html" class="code" title="function ffgettbl(Sector, BPMFlag)">measidfftable</a>	FFGETTBL - Measures an insertion device feed forward table for the vertical gap</li><li><a href="plotidfftable.html" class="code" title="function FigureHandles = plotidfftable(Sector, GeV)">plotidfftable</a>	PLOTIDFFTABLE - Plots various information about the feed forward tables</li><li><a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>	SETPV - Setpoint change of the online system or model</li><li><a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>	SETSP - Makes an absolute setpoint change to the 'Setpoint' field</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="measidfftable.html" class="code" title="function ffgettbl(Sector, BPMFlag)">measidfftable</a>	FFGETTBL - Measures an insertion device feed forward table for the vertical gap</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function ffgettbl(Sector, BPMFlag)</a>
+0002 <span class="comment">%FFGETTBL - Measures an insertion device feed forward table for the vertical gap</span>
+0003 <span class="comment">%  ffgettbl(Sector, BPMFlag (0=Bergoz BPMs, else=All BPMs))</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  This function generates the feed forward tables necessary for insertion device compensation.</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  This function is under development</span>
+0008 
+0009 
+0010 <span class="comment">% 2002-04-05    T.Scarvie</span>
+0011 <span class="comment">%         modified to perform a tune FF correction after each move and prior to each orbit correction</span>
+0012 <span class="comment">%               to produce FF tables that are more accurate while running orbit FB</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% 2003-04-25   C. Steier</span>
+0015 <span class="comment">%        IDBPMs in sectors 1 and 3 are not used anymore since they are noisy at low beam current</span>
+0016 <span class="comment">%        and therefore compromise the FF tables.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">% 2004-07-06    T.Scarvie</span>
+0019 <span class="comment">%         made tune FF correction active for 5W as well as other gaps because 5W FF table no longer</span>
+0020 <span class="comment">%        includes quadrupoles - all tune FF is handled by orbit feedback</span>
+0021 <span class="comment">%</span>
+0022 <span class="comment">% 2004-10-18 T. Scarvie</span>
+0023 <span class="comment">%      removed quad generation option from routine - tune compensation is handled by orbit feedback algorithm now</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">% 2005-02-06 G. Portmann</span>
+0026 <span class="comment">%            Upgrate to new middlelayer format</span>
+0027 <span class="comment">%     To do: 1. Slow/fast correctors?</span>
+0028 <span class="comment">%            2. Use FF channels?</span>
+0029 <span class="comment">%            3. Use center chicane BPMs and correctors?</span>
+0030 
+0031 
+0032 <span class="comment">% Initialization</span>
+0033 
+0034 <span class="comment">% Need to change this to a question dialog to allow for local tune compensation; hard-coded for now - 2004-07-06, T.Scarvie</span>
+0035 FFTypeFlag = <span class="string">'Global'</span>;
+0036 
+0037 <span class="keyword">if</span> nargin &lt; 2
+0038    BPMFlag = [];
+0039 <span class="keyword">end</span>
+0040 <span class="keyword">if</span> isempty(BPMFlag)
+0041    BPMFlag = 0;  <span class="comment">% menu1('Which BPM family to use for table generation?','96 arc sector BPMs only.','Straight section IDBPMs only.','Exit program.');</span>
+0042 <span class="keyword">end</span>
+0043 
+0044 
+0045 
+0046 IDFF.GapVelocity = 3.33;
+0047 IDFF.GeV = <a href="getenergy.html" class="code" title="function [Energy, HCMEnergy] = getenergy(varargin)">getenergy</a>;
+0048 
+0049 
+0050 disp([<span class="string">' '</span>]); disp(<span class="string">' '</span>); 
+0051 disp([<span class="string">'        INSERTION DEVICE FEED FORWARD TABLE GENERATION APPLICATION'</span>]);
+0052 disp([<span class="string">' '</span>]);
+0053 disp([<span class="string">'   This program will generate a feed forward table at '</span>,num2str(IDFF.GeV), <span class="string">' GeV.'</span>]);
+0054 disp(<span class="string">'   Before continuing, make sure the following conditions are true.  '</span>);
+0055 disp(<span class="string">'                     1.  Multi-bunch mode.'</span>);
+0056 disp(<span class="string">'                     2.  FF disabled.'</span>);
+0057 disp(<span class="string">'                     3.  Gap Control disabled.'</span>);
+0058 disp(<span class="string">'                     4.  Current range: typically 35-45 mAmps, but any current should be OK.'</span>);
+0059 disp(<span class="string">'                     5.  Production corrector magnet set.'</span>);
+0060 disp(<span class="string">'                     6.  Bumps off and BTS 3 and 4 set to zero current.'</span>);
+0061 disp(<span class="string">'                     7.  Set the insertion device Velocity Profiling off (0) (just for speed).'</span>);
+0062 disp(<span class="string">'                     8.  Slow orbit feedback off.'</span>);
+0063 <span class="keyword">if</span> BPMFlag
+0064 disp(<span class="string">'                     9.  BPMs calibrated.'</span>);
+0065 <span class="keyword">end</span>
+0066 
+0067 
+0068 <span class="keyword">if</span> nargin &lt; 1
+0069    SectorIn = menu(str2mat(sprintf(<span class="string">'%.1f GeV Feed Forward Generation'</span>,IDFF.GeV),<span class="string">'Feed forward must be off!'</span>,<span class="string">' '</span>,<span class="string">'Which insertion device?'</span>),<span class="string">'4-vertical'</span>,<span class="string">'4-longitudinal'</span>,<span class="string">'5'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>,<span class="string">'10'</span>,<span class="string">'11-vertical'</span>,<span class="string">'11-longitudinal'</span>,<span class="string">'12'</span>,<span class="string">'Cancel'</span>);   
+0070    <span class="keyword">if</span> SectorIn == 1
+0071       <span class="comment">% Sector 4 vertical using new feedforward method</span>
+0072       Sector = 4;
+0073       ffgettblepugap(Sector);
+0074       <span class="keyword">return</span>
+0075    <span class="keyword">elseif</span> SectorIn == 2
+0076       <span class="comment">% Sector 4 longitudinal using new feedforward method</span>
+0077       Sector = 4;
+0078       ffgettblepushift(Sector);
+0079       <span class="comment">%ffgettblepu;  % old method</span>
+0080       <span class="keyword">return</span>
+0081    <span class="keyword">elseif</span> SectorIn == 3
+0082       Sector = 5;
+0083    <span class="keyword">elseif</span> SectorIn == 4
+0084       Sector = 7;
+0085    <span class="keyword">elseif</span> SectorIn == 5
+0086       Sector = 8;
+0087    <span class="keyword">elseif</span> SectorIn == 6
+0088       Sector = 9;
+0089    <span class="keyword">elseif</span> SectorIn == 7
+0090       Sector = 10;
+0091    <span class="keyword">elseif</span> SectorIn == 8
+0092       <span class="comment">% Sector 11 vertical using new feedforward method</span>
+0093       Sector = 11;
+0094       ffgettblepugap(Sector);
+0095       <span class="keyword">return</span>
+0096    <span class="keyword">elseif</span> SectorIn == 9
+0097       <span class="comment">% Sector 11 longitudinal using new feedforward method</span>
+0098       Sector = 11;
+0099       ffgettblepushift(Sector);
+0100       <span class="keyword">return</span>
+0101    <span class="keyword">elseif</span> SectorIn == 10
+0102       Sector = 12;
+0103    <span class="keyword">elseif</span> SectorIn == 11
+0104       disp(<span class="string">'   ffgettbl aborted.  No changes to correctors or insertion device.'</span>);
+0105          <span class="keyword">return</span>
+0106     <span class="keyword">end</span>
+0107 <span class="keyword">end</span>
+0108 disp(<span class="string">' '</span>);
+0109 <span class="keyword">if</span> Sector == 0
+0110    disp(<span class="string">'   ffgettbl aborted.  No changes to correctors or insertion device.'</span>);
+0111    <span class="keyword">return</span>;
+0112 <span class="keyword">end</span>
+0113 
+0114 
+0115 
+0116 <span class="comment">%%%%%%%%%%%%%</span>
+0117 <span class="comment">% BPM Setup %</span>
+0118 <span class="comment">%%%%%%%%%%%%%</span>
+0119 IDFF.BPMxFamily = <span class="string">'BPMx'</span>;
+0120 IDFF.BPMyFamily = <span class="string">'BPMy'</span>;
+0121 
+0122 <span class="keyword">if</span> BPMFlag
+0123     <span class="comment">% Use all BPMs</span>
+0124     BPMTol = .005;
+0125     BPMIter = 5;
+0126     IDFF.BPMxList = getbpmlist(<span class="string">'x'</span>);
+0127     IDFF.BPMyList = getbpmlist(<span class="string">'y'</span>);
+0128 <span class="keyword">else</span>
+0129     <span class="comment">% Only use Bergoz BPMs</span>
+0130     BPMTol = .0003;
+0131     BPMIter = 5;
+0132     IDFF.BPMxList = getbpmlist(<span class="string">'x'</span>, <span class="string">'Bergoz'</span>, <span class="string">'1 2 3 4 5 6 7 8 9 10'</span>);  <span class="comment">% 11 12 ???</span>
+0133     IDFF.BPMyList = getbpmlist(<span class="string">'y'</span>, <span class="string">'Bergoz'</span>, <span class="string">'1 2 3 4 5 6 7 8 9 10'</span>);
+0134 <span class="keyword">end</span>
+0135 
+0136 <span class="comment">% Remove the BPMs in the sector where the ID is located</span>
+0137 iRemove = findrowindex([Sector-1 10; Sector-1 11; Sector-1 12; Sector 1], IDFF.BPMxList);
+0138 IDFF.BPMxList(iRemove,:) = [];
+0139 
+0140 iRemove = findrowindex([Sector-1 10; Sector-1 11; Sector-1 12; Sector 1], IDFF.BPMyList);
+0141 IDFF.BPMyList(iRemove,:) = [];
+0142 
+0143 <span class="comment">% % Remove the BPMs in sectors 1 and 3 which are noisy at low current).</span>
+0144 <span class="comment">% iRemove = findrowindex([12 9; 1 2], BPMlist);</span>
+0145 <span class="comment">% BPMlist(iRemove,:) = [];</span>
+0146 
+0147 
+0148 <span class="comment">%%%%%%%%%%%%%%%%%%%</span>
+0149 <span class="comment">% Corrector Setup %</span>
+0150 <span class="comment">%%%%%%%%%%%%%%%%%%%</span>
+0151 IDFF.HCMFamily = <span class="string">'HCM'</span>;
+0152 IDFF.VCMFamily = <span class="string">'VCM'</span>;
+0153 
+0154 
+0155 <span class="comment">% Corrector magnet and BPM lists</span>
+0156 <span class="keyword">if</span> Sector == 6 &amp; IDDeviceList(1,2) == 1  <span class="comment">% ???</span>
+0157     IDFF.HCMList = [Sector-1  8;
+0158                     Sector-1 10];
+0159     IDFF.VCMList = [Sector-1  8;
+0160                     Sector-1 10];
+0161 <span class="keyword">else</span>
+0162     IDFF.HCMList = [Sector-1 8;
+0163                     Sector   1];
+0164     IDFF.VCMList = [Sector-1 8;
+0165                     Sector   1];
+0166 <span class="keyword">end</span>
+0167 
+0168 
+0169 <span class="comment">% Fast setpoints</span>
+0170 HCMRampRate0 = <a href="getpv.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getpv(varargin)">getpv</a>(IDFF.HCMFamily, <span class="string">'RampRate'</span>, IDFF.HCMList);
+0171 VCMRampRate0 = <a href="getpv.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getpv(varargin)">getpv</a>(IDFF.VCMFamily, <span class="string">'RampRate'</span>, IDFF.VCMList);
+0172 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(IDFF.HCMFamily, <span class="string">'RampRate'</span>, 1000, IDFF.HCMList, 0);
+0173 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(IDFF.VCMFamily, <span class="string">'RampRate'</span>, 1000, IDFF.VCMList, 0);
+0174 
+0175 
+0176 <span class="comment">%%%%%%%%%%%%%%%%%</span>
+0177 <span class="comment">% End ALS Setup %</span>
+0178 <span class="comment">%%%%%%%%%%%%%%%%%</span>
+0179 
+0180 
+0181 
+0182 <span class="comment">% Multiple FF-tables</span>
+0183 <span class="keyword">if</span> size(Sector,1) ~= 1
+0184     <span class="keyword">for</span> iSector = 1:size(Sector,1)
+0185         <a href="measidfftable.html" class="code" title="function ffgettbl(Sector, BPMFlag)">measidfftable</a>(Sector(iSector,:), BPMFlag);
+0186     <span class="keyword">end</span>
+0187     <span class="keyword">return</span>;
+0188 <span class="keyword">end</span>
+0189 
+0190 
+0191 <span class="comment">% Minimum and maximum gap</span>
+0192 [IDFF.GAPmin, IDFF.GAPmax] = gaplimit(Sector);
+0193 
+0194 
+0195 disp([<span class="string">'   The insertion device for sector '</span>,num2str(Sector),<span class="string">' has been selected.'</span>]);
+0196 disp([<span class="string">'                     Maximum Gap = '</span>,num2str(IDFF.GAPmax),<span class="string">' mm'</span>]);
+0197 disp([<span class="string">'                     Mimimum Gap = '</span>,num2str(IDFF.GAPmin),<span class="string">' mm'</span>]);
+0198 
+0199 
+0200 disp([<span class="string">'   Data collection started.  Figures 1 and 2 show the difference orbits between the maximum'</span>]);
+0201 disp([<span class="string">'   gap and the current gap position after the feed forward correction has been applied.'</span>]);
+0202 disp([<span class="string">'   Ideally, these plots should be a straight line thru zero, however, due to orbit drift, BPM'</span>]);
+0203 disp([<span class="string">'   noise, and feed forward imperfections one can expect 10 or 20 microns of combined errors'</span>]);
+0204 disp([<span class="string">'   to accumulate before minimum gap is reached (hopefully not any more than that).'</span>]);
+0205 disp([<span class="string">'  '</span>]);
+0206 
+0207 
+0208 <span class="comment">% Setup figures</span>
+0209 Buffer = .01;
+0210 HeightBuffer = .05;
+0211 
+0212 h1 = gcf;
+0213 set(h1,<span class="string">'units'</span>,<span class="string">'normal'</span>,<span class="string">'position'</span>,[.0+Buffer .5+Buffer .5-2*Buffer .5-2*Buffer-HeightBuffer]);
+0214 
+0215 
+0216 <span class="comment">% Set gap to maximum, set velocity to maximum, velocity profile off, FF off,</span>
+0217 setff([], 0, 0);
+0218 setid(Sector, IDFF.GAPmax, IDFF.GapVelocity, 1, 0);
+0219 
+0220 
+0221 <span class="comment">% Load and set QF and QD setpoints from the golden lattice</span>
+0222 ConfigSetpoint = <a href="getproductionlattice.html" class="code" title="function [ConfigSetpoint, ConfigMonitor, FileName] = getproductionlattice(varargin)">getproductionlattice</a>;
+0223 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QF.Setpoint);
+0224 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QD.Setpoint);  
+0225 QFsp = ConfigSetpoint.QF.Setpoint.Data;
+0226 QDsp = ConfigSetpoint.QD.Setpoint.Data;
+0227 
+0228 
+0229 <span class="comment">% Setbumps w/o sextupole correctors</span>
+0230 setbumps(Sector, 1);
+0231 
+0232 
+0233 <span class="comment">% Starting orbit and corrector magnet</span>
+0234 IDFF.Xmax = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMxFamily, IDFF.BPMxList, <span class="string">'Struct'</span>);
+0235 IDFF.Ymax = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMyFamily, IDFF.BPMyList, <span class="string">'Struct'</span>);
+0236 BPMxs = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(IDFF.Xmax);
+0237 BPMys = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(IDFF.Ymax);
+0238 
+0239 IDFF.HCM = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.HCMFamily, IDFF.HCMList, <span class="string">'Struct'</span>);
+0240 IDFF.VCM = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.VCMFamily, IDFF.VCMList, <span class="string">'Struct'</span>);
+0241 HCM0 = IDFF.HCM.Data;
+0242 VCM0 = IDFF.VCM.Data;
+0243 QF0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(<span class="string">'QF'</span>);
+0244 QD0 = <a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(<span class="string">'QD'</span>);
+0245 
+0246 
+0247 <span class="comment">% Main loop</span>
+0248 i=1;
+0249 IDFF.GapMonitor(i,1) = getid(Sector);
+0250 hcm(i,:) = (<a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.HCMFamily, IDFF.HCMList)-HCM0)'; <span class="comment">% First entry is zero</span>
+0251 vcm(i,:) = (<a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.VCMFamily, IDFF.VCMList)-VCM0)';
+0252 
+0253 X(:,i) = IDFF.Xmax.Data;
+0254 Y(:,i) = IDFF.Ymax.Data;
+0255 Xrms(i) = std(IDFF.Xmax.Data - X(:,i));
+0256 Yrms(i) = std(IDFF.Ymax.Data - Y(:,i));
+0257 IterOut(i) = 1;
+0258 
+0259 
+0260 <span class="keyword">if</span> IDFF.GAPmin &lt; 14
+0261    Gaps = [(IDFF.GAPmax-10):-10:60 56:-4:36 34.5:-1.5:19.5 19:-.5:15 14.75:-.25:IDFF.GAPmin];
+0262 <span class="keyword">elseif</span> IDFF.GAPmin &lt; 17
+0263    Gaps = [(IDFF.GAPmax-10):-10:60 56:-4:36 34.5:-1.5:19.5 19:-.5:IDFF.GAPmin];
+0264 <span class="keyword">elseif</span> IDFF.GAPmin &lt; 34
+0265    Gaps = [(IDFF.GAPmax-10):-10:60 56:-4:36 34.5:-1.5:IDFF.GAPmin];
+0266 <span class="keyword">elseif</span> IDFF.GAPmin &lt; 55
+0267    Gaps = [(IDFF.GAPmax-10):-10:60 56:-4:IDFF.GAPmin];   
+0268 <span class="keyword">else</span>
+0269    Gaps = [(IDFF.GAPmax-10):-10:IDFF.GAPmin];   
+0270 <span class="keyword">end</span>
+0271 
+0272 <span class="keyword">if</span> Gaps(length(Gaps)) &gt; IDFF.GAPmin
+0273     Gaps = [Gaps IDFF.GAPmin];
+0274 <span class="keyword">end</span>
+0275 
+0276 TUNEresp = <a href="gettuneresp.html" class="code" title="function [TuneMatrix, FileName] = gettuneresp(varargin)">gettuneresp</a>;
+0277 
+0278 <span class="keyword">for</span> i = 2:length(Gaps)+1
+0279    g = Gaps(i-1);
+0280    
+0281    <span class="comment">% Set gap</span>
+0282    setid(Sector, g, IDFF.GapVelocity);
+0283    
+0284    <span class="comment">% Set to old table first</span>
+0285    <span class="comment">%setsp(IDFF.HCMFamily, HCM0+Xtableold(i,2:3)', IDFF.HCMList);  % this does not seem to be a good idea</span>
+0286    <span class="comment">%setsp(IDFF.VCMFamily, VCM0+Ytableold(i,2:3)', IDFF.VCMList);  % need to linear fit the data if you do use this???</span>
+0287 
+0288    <span class="comment">% Change Quads via Tune FF to simulate conditions during production</span>
+0289    <span class="comment">% using tune feed forward code from orbit feedback</span>
+0290    
+0291    <span class="comment">% Change in tune and [QF;QD] from maximum gap</span>
+0292    <span class="keyword">if</span> strcmpi(<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'OperationalMode'</span>), <span class="string">'1.9 GeV, High Tune'</span>)
+0293       <span class="keyword">if</span> i==2
+0294          fprintf(<span class="string">'   Generating feedforward table for %s mode\n'</span>, <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'OperationalMode'</span>));
+0295       <span class="keyword">end</span>
+0296       
+0297       
+0298       <span class="keyword">if</span> strcmp(FFTypeFlag,<span class="string">'Local'</span>)
+0299          disp(<span class="string">'   Using local tune compensation.'</span>);
+0300          
+0301          addQFsp = zeros(24,1);
+0302          addQDsp = zeros(24,1);
+0303          
+0304          <span class="comment">% Change in tune and [QF;QD] from maximum gap</span>
+0305          actualgap = getid(Sector);
+0306          <span class="keyword">if</span> actualgap &lt; (IDFF.GAPmin-1)
+0307             actualgap = IDFF.GAPmax;
+0308          <span class="keyword">end</span>  
+0309          DeltaNuY = gap2tune(Sector, actualgap);
+0310          fraccorr = 1.15*DeltaNuY./gap2tune(5,13.23,1.9);               
+0311          
+0312          <span class="comment">% Find which quads to change</span>
+0313          QuadList = [Sector-1 1;Sector-1 2;Sector 1;Sector 2];
+0314          QuadElem = <a href="dev2elem.html" class="code" title="function Output = dev2elem(Family, DevList)">dev2elem</a>(<span class="string">'QF'</span>,QuadList);
+0315          
+0316          <span class="keyword">if</span> (Sector==7) | (Sector==10) | (Sector==11)
+0317             QFfac=(fraccorr.*([2.227520/2.237111;2.239570/2.237111;2.239570/2.237111;2.227520/2.237111]-1));               
+0318             QDfac=(fraccorr.*([2.432264/2.511045;2.543089/2.511045;2.54308/2.511045;2.432264/2.511045]-1));
+0319          <span class="keyword">elseif</span> (Sector==5) | (Sector==9)
+0320             QFfac=(fraccorr.*([2.208418/2.219784;2.225926/2.219784;2.231777/2.237111;2.233775/2.237111]-1));               
+0321             QDfac=(fraccorr.*([2.386512/2.483259;2.545907/2.483259;2.474571/2.511045;2.491079/2.511045]-1));
+0322          <span class="keyword">elseif</span> (Sector==4) | (Sector==8) | (Sector==12)
+0323             QFfac=(fraccorr.*([2.233775/2.237111;2.231777/2.237111;2.225926/2.219784;2.208418/2.219784]-1));               
+0324             QDfac=(fraccorr.*([2.491079/2.511045;2.474571/2.511045;2.545907/2.483259;2.386512/2.483259]-1));
+0325          <span class="keyword">else</span>
+0326             QFfac=zeros(4,1);               
+0327             QDfac=zeros(4,1);
+0328          <span class="keyword">end</span>
+0329          
+0330          addQFsp(QuadElem) = addQFsp(QuadElem)+QFfac.*QFsp(QuadElem);
+0331          addQDsp(QuadElem) = addQDsp(QuadElem)+QDfac.*QDsp(QuadElem);                              
+0332          
+0333       <span class="keyword">elseif</span> strcmp(FFTypeFlag,<span class="string">'Global'</span>)
+0334          
+0335          addQFsp = zeros(24,1);
+0336          addQDsp = zeros(24,1);
+0337          
+0338          <span class="comment">% Change in tune and [QF;QD] from maximum gap</span>
+0339          actualgap = getid(Sector);
+0340          <span class="keyword">if</span> actualgap &lt; (IDFF.GAPmin-1)
+0341             actualgap = IDFF.GAPmax;
+0342          <span class="keyword">end</span>
+0343          DeltaNuY = gap2tune(Sector, actualgap);
+0344          DeltaNuX = 0;
+0345          fraccorr = DeltaNuY./gap2tune(5,13.23,1.9);               
+0346          
+0347          <span class="comment">% Find which quads to change</span>
+0348          QuadList = [Sector-1 2;Sector 1];
+0349          QuadElem = <a href="dev2elem.html" class="code" title="function Output = dev2elem(Family, DevList)">dev2elem</a>(<span class="string">'QF'</span>,QuadList);
+0350          
+0351          DeltaAmps = inv(TUNEresp) * [(fraccorr*6.23e-4)-DeltaNuX;fraccorr*(-0.05301)];    <span class="comment">%  DelAmps =  [QF; QD];</span>
+0352          addQFsp = addQFsp+DeltaAmps(1,1);
+0353          addQDsp = addQDsp+DeltaAmps(2,1);
+0354          
+0355          <span class="keyword">if</span> (Sector==7) | (Sector==10) | (Sector==11)
+0356             QFfac=(fraccorr.*([2.243127/2.237111;2.243127/2.237111]-1));               
+0357             QDfac=(fraccorr.*([2.556392/2.511045;2.556392/2.511045]-1));
+0358          <span class="keyword">elseif</span> (Sector==5) | (Sector==9)
+0359             QFfac=(fraccorr.*([2.225965/2.219784;2.243096/2.237111]-1));               
+0360             QDfac=(fraccorr.*([2.528950/2.483259;2.556345/2.511045]-1));
+0361          <span class="keyword">elseif</span> (Sector==4) | (Sector==8) | (Sector==12)
+0362             QFfac=(fraccorr.*([2.243096/2.237111;2.225965/2.219784]-1));               
+0363             QDfac=(fraccorr.*([2.556345/2.511045;2.528950/2.483259]-1));
+0364          <span class="keyword">else</span>
+0365             QFfac=zeros(4,1);               
+0366             QDfac=zeros(4,1);
+0367          <span class="keyword">end</span>
+0368          
+0369          addQFsp(QuadElem) = addQFsp(QuadElem)+QFfac.*QFsp(QuadElem);
+0370          addQDsp(QuadElem) = addQDsp(QuadElem)+QDfac.*QDsp(QuadElem);                              
+0371          
+0372       <span class="keyword">else</span>
+0373          error(<span class="string">'Unknown type selected for tune FF'</span>);
+0374       <span class="keyword">end</span>
+0375       
+0376       AmpsQF = QFsp+addQFsp;
+0377       AmpsQD = QDsp+addQDsp;
+0378       
+0379       <span class="comment">% Set quadrupoles</span>
+0380       <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(<span class="string">'QF'</span>, AmpsQF,[], 0);
+0381       <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(<span class="string">'QD'</span>, AmpsQD,[], 0);
+0382       
+0383       
+0384    <span class="keyword">else</span>
+0385       
+0386       <span class="comment">% Change in tune and [QF;QD] from maximum gap</span>
+0387       actualgap = getid(Sector);
+0388       <span class="keyword">if</span> actualgap &lt; (IDFF.GAPmin-1)
+0389          actualgap = IDFF.GAPmax;
+0390       <span class="keyword">end</span>  
+0391       DeltaNuY = gap2tune(Sector, actualgap);
+0392       
+0393       <span class="keyword">if</span> (Sector==7) | (Sector==10) | (Sector==11)
+0394          DeltaAmps = inv(TUNEresp/12) * [0; -DeltaNuY];    <span class="comment">%  DelAmps =  [QF; QD];</span>
+0395          DeltaAmpsQF=[DeltaAmps(1,1);DeltaAmps(1,1)];
+0396          DeltaAmpsQD=[DeltaAmps(2,1);DeltaAmps(2,1)];
+0397       <span class="keyword">elseif</span> (Sector==5) | (Sector==9)
+0398          DeltaAmpsQF=DeltaNuY/0.0181*0.37*[-1.0637;-0.5132];
+0399          DeltaAmpsQD=DeltaNuY/0.0181*0.37*[-6.6328;-3.3434];
+0400       <span class="keyword">elseif</span> (Sector==4) | (Sector==8) | (Sector==12)
+0401          DeltaAmpsQF=DeltaNuY/0.0181*0.37*[-0.5132;-1.0637];
+0402          DeltaAmpsQD=DeltaNuY/0.0181*0.37*[-3.3434;-6.6328];
+0403       <span class="keyword">else</span>
+0404          DeltaAmpsQF=[0;0];
+0405          DeltaAmpsQD=[0;0];
+0406       <span class="keyword">end</span>
+0407       
+0408       <span class="comment">% Find which quads to change</span>
+0409       QuadList = [Sector-1 1;Sector 2];
+0410       QuadElem = <a href="dev2elem.html" class="code" title="function Output = dev2elem(Family, DevList)">dev2elem</a>(<span class="string">'QF'</span>,QuadList);
+0411       AmpsQF = QFsp(QuadElem) + DeltaAmpsQF; 
+0412       AmpsQD = QDsp(QuadElem) + DeltaAmpsQD; 
+0413       
+0414       <span class="comment">% Set quadrupoles</span>
+0415       <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(<span class="string">'QF'</span>, AmpsQF, QuadList, 0);
+0416       <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(<span class="string">'QD'</span>, AmpsQD, QuadList, 0);
+0417       
+0418    <span class="keyword">end</span>
+0419    
+0420    
+0421    pause(1);
+0422 
+0423 
+0424    <span class="comment">% Correct orbit</span>
+0425    [STDfinal, IterOut(i,1)] = setbpm(IDFF.HCMFamily, IDFF.Xmax.Data, IDFF.HCMList, IDFF.BPMxList, <span class="keyword">...</span>
+0426                                      IDFF.VCMFamily, IDFF.Ymax.Data, IDFF.VCMList, IDFF.BPMyList, BPMIter, BPMTol);
+0427 
+0428    <span class="comment">% Record the gap AM</span>
+0429    IDFF.GapMonitor(i,1) = getid(Sector);
+0430    
+0431 
+0432    <span class="comment">% Record data</span>
+0433    hcm(i,:) = (<a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.HCMFamily, IDFF.HCMList)-HCM0)';
+0434    vcm(i,:) = (<a href="getsp.html" class="code" title="function [SP, tout, DataTime, ErrorFlag] = getsp(Family, varargin)">getsp</a>(IDFF.VCMFamily, IDFF.VCMList)-VCM0)';
+0435    X(:,i) = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMxFamily, IDFF.BPMxList);
+0436    Y(:,i) = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMyFamily, IDFF.BPMyList);
+0437 
+0438 
+0439    <span class="comment">% Statistics</span>
+0440    Xrms(i) = std(IDFF.Xmax.Data - X(:,i));
+0441    Yrms(i) = std(IDFF.Ymax.Data - Y(:,i));
+0442 
+0443    
+0444    <span class="comment">% plot results</span>
+0445    figure(h1);
+0446    plot(BPMxs,(X(:,i)-IDFF.Xmax.Data)*1000,<span class="string">'r'</span>, BPMys,(Y(:,i)-IDFF.Ymax.Data)*1000,<span class="string">'g'</span>);
+0447    title([<span class="string">'BPM Orbit Error at a '</span>, num2str(IDFF.GapMonitor(i,1)),<span class="string">' mm Gap'</span>]);
+0448    ylabel(<span class="string">'X (red), Y (grn) Error [microns]'</span>);  
+0449    xlabel(<span class="string">'BPM Position [meters]'</span>);
+0450    pause(0);
+0451 <span class="keyword">end</span>
+0452 
+0453 
+0454 <span class="comment">% Minimum gap orbits</span>
+0455 IDFF.Xmin = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMxFamily, IDFF.BPMxList, <span class="string">'Struct'</span>);
+0456 IDFF.Ymin = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMyFamily, IDFF.BPMyList, <span class="string">'Struct'</span>);
+0457 
+0458 
+0459 <span class="comment">% Make the FF-tables</span>
+0460 Xtable = [IDFF.GapMonitor hcm(:,1)-hcm(1,1) hcm(:,2)-hcm(1,2)];
+0461 Ytable = [IDFF.GapMonitor vcm(:,1)-vcm(1,1) vcm(:,2)-vcm(1,2)];
+0462 tableQ = [];
+0463 
+0464 
+0465 <span class="comment">% Go to max gap</span>
+0466 disp(<span class="string">'   The insertion device gap, quads, and correctors are being reset.'</span>); 
+0467 setid(Sector, IDFF.GAPmax, IDFF.GapVelocity);
+0468 
+0469 <span class="comment">% Reset to maximum gap values</span>
+0470 <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(IDFF.HCMFamily, HCM0, IDFF.HCMList, 0);
+0471 <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(IDFF.VCMFamily, VCM0, IDFF.VCMList, 0);
+0472 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QF.Setpoint, 0);
+0473 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QD.Setpoint, 0);  
+0474 
+0475 <span class="comment">% Then wait on setpoints</span>
+0476 <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(IDFF.HCMFamily, HCM0, IDFF.HCMList, -1);
+0477 <a href="setsp.html" class="code" title="function ErrorFlag = setsp(Family, varargin)">setsp</a>(IDFF.VCMFamily, VCM0, IDFF.VCMList, -1);
+0478 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QF.Setpoint, -1);
+0479 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(ConfigSetpoint.QD.Setpoint, -1);  
+0480 
+0481 
+0482 <span class="comment">% Ending orbits</span>
+0483 IDFF.XmaxEnd = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMxFamily, IDFF.BPMxList, <span class="string">'Struct'</span>);
+0484 IDFF.YmaxEnd = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(IDFF.BPMyFamily, IDFF.BPMyList, <span class="string">'Struct'</span>);
+0485 
+0486 
+0487 <span class="comment">% Structure output</span>
+0488 IDFF.Sector = Sector;
+0489 IDFF.Gaps = Gaps;
+0490 IDFF.Xtable = Xtable;
+0491 IDFF.Ytable = Ytable;
+0492 IDFF.tableQ = tableQ;
+0493 IDFF.BPMFlag = BPMFlag;
+0494 IDFF.Xrms = Xrms;
+0495 IDFF.Yrms = Yrms;
+0496 IDFF.IterOut = IterOut;
+0497 IDFF.TimeStamp = clock;
+0498 IDFF.GeV = <a href="getenergy.html" class="code" title="function [Energy, HCMEnergy] = getenergy(varargin)">getenergy</a>;
+0499 IDFF.DataDescriptor = <span class="string">'ID Feed Forward Table'</span>;
+0500 IDFF.CreatedBy = <span class="string">'measidfftable'</span>;
+0501 
+0502 
+0503         
+0504 <span class="comment">% Change to DataRoot/ID/FeedForward directory</span>
+0505 DirStart = pwd;
+0506 DataRoot = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>);
+0507 DirectoryName = [DataRoot, <span class="string">'ID'</span>, filesep, <span class="string">'FeedForward'</span>, filesep];
+0508 [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0509 FileName = sprintf(<span class="string">'id%02de%2.0f'</span>, Sector, 10*<a href="getenergy.html" class="code" title="function [Energy, HCMEnergy] = getenergy(varargin)">getenergy</a>);
+0510 FileName = appendtimestamp(FileName);
+0511 save(FileName, <span class="string">'IDFF'</span>);
+0512 fprintf(<span class="string">'   Insertion device feed forward table saved to %s.mat\n'</span>, [DirectoryName FileName]);
+0513 <span class="keyword">if</span> ErrorFlag
+0514     fprintf(<span class="string">'   Warning: %s was not the desired directory\n'</span>, DirectoryName);
+0515 <span class="keyword">end</span>
+0516 FileName = [DirectoryName FileName];
+0517 cd(DirStart);
+0518 
+0519 
+0520 <span class="comment">% Close figures</span>
+0521 close(h1); 
+0522 FigureHandles = <a href="plotidfftable.html" class="code" title="function FigureHandles = plotidfftable(Sector, GeV)">plotidfftable</a>(FileName);
+0523 
+0524 fprintf(<span class="string">'   Measurement complete.  The gap position and correctors have been set back to their original setpoints.'</span>);
+0525 fprintf(<span class="string">'   A new table has been generated and saved to directory %s\n'</span>, FileName);
+0526 fprintf(<span class="string">'            Figure '</span>, num2str(FigureHandles(1)),<span class="string">'  -&gt;  Corrector strength verses gap position.'</span>);
+0527 fprintf(<span class="string">'            Figure '</span>, num2str(FigureHandles(2)),<span class="string">'  -&gt;  RMS orbit distortion verses gap position.'</span>);
+0528 fprintf(<span class="string">'                                                   -&gt;  Orbit drift during table generation verses BPM position.'</span>);
+0529 fprintf(<span class="string">'            Figure '</span>, num2str(FigureHandles(3)),<span class="string">'  -&gt;  Rate of Change of the Corrector Magnets.'</span>);
+0530 fprintf(<span class="string">'   Insertion device feedforward table generation complete.\n'</span>);
+0531 
+0532 
+0533 <span class="comment">% ALS resets</span>
+0534 
+0535 CPTableFlag = questdlg(sprintf(<span class="string">'Copy %.1f GeV Table to the IOC?'</span>,IDFF.GeV),<span class="string">'Feed Forward Table Complete'</span>,<span class="string">'Yes'</span>,<span class="string">'No'</span>,<span class="string">'No'</span>);
+0536 <span class="keyword">if</span> strcmp(CPTableFlag,<span class="string">'No'</span>)
+0537    fprintf(<span class="string">'  Use ffcopy(%d,%.1f) to copy the table over to the feed forward program.\n'</span>, Sector, IDFF.GeV);
+0538    fprintf(<span class="string">'  Use ffread(%d) (or the &quot;Undulator Server&quot; application) to force the IOC to read the new table.\n'</span>, Sector);
+0539 <span class="keyword">else</span>
+0540    ffcopy(textfn1);
+0541    fprintf(<span class="string">'  For the IOC to read the new table use the &quot;Undulator Server&quot;\n'</span>);
+0542    fprintf(<span class="string">'  application or run ffread(%d) from Matlab.\n'</span>, Sector);
+0543 <span class="keyword">end</span>
+0544 
+0545 <span class="comment">% Switch correctors to slow mode</span>
+0546 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(IDFF.HCMFamily, <span class="string">'RampRate'</span>, HCMRampRate0, IDFF.HCMList, 0);
+0547 <a href="setpv.html" class="code" title="function ErrorFlag = setpv(varargin)">setpv</a>(IDFF.VCMFamily, <span class="string">'RampRate'</span>, VCMRampRate0, IDFF.VCMList, 0);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

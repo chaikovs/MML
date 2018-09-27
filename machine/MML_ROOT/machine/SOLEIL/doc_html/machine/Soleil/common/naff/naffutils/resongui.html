@@ -1,0 +1,772 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of resongui</title>
+  <meta name="keywords" content="resongui">
+  <meta name="description" content="RESONGUI M-file for resongui.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; resongui.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>resongui
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>RESONGUI M-file for resongui.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = resongui(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> RESONGUI M-file for resongui.fig
+      RESONGUI, by itself, creates a new RESONGUI or raises the existing
+      singleton*.
+
+      H = RESONGUI returns the handle to a new RESONGUI or the handle to
+      the existing singleton*.
+
+      RESONGUI('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in RESONGUI.M with the given input arguments.
+
+      RESONGUI('Property','Value',...) creates a new RESONGUI or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before resongui_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to resongui_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="plusprochereson.html" class="code" title="function str = plusprochereson(pt,tab)">plusprochereson</a>	function str = plusprochereson(pt,tab)</li><li><a href="showresongui.html" class="code" title="function varargout = showresongui(varargin)">showresongui</a>	SHOWRESONGUI M-file for showresongui.fig</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function resongui_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = resongui_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function loaddata(hObject,handles)</a></li><li><a href="#_sub4" class="code">function pushbutton_replot_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function plotdata(handles)</a></li><li><a href="#_sub6" class="code">function bouton_resonid_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function identifier(xi,yi,handles)</a></li><li><a href="#_sub8" class="code">function print_value(handles,x1,x2,f1,f2)</a></li><li><a href="#_sub9" class="code">function edit_color_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function edit_color_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function increaseV_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function increaseH_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function decreaseV_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function decreaseH_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function zoomshift(handles,prop,fac)</a></li><li><a href="#_sub16" class="code">function edit_zoom_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function edit_zoom_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function radiobutton2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function mutual_exclude(off)</a></li><li><a href="#_sub21" class="code">function edit_shift_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function edit_shift_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function resetfmap_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function souris_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function Untitled_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function pushbutton_reson_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function resonance_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function LoadDataFile_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function handles = getdata(handles);</a></li><li><a href="#_sub31" class="code">function LoadDataInduced_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function toggle_IA_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub33" class="code">function toogle_color_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub34" class="code">function popupmenu_typemap_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub35" class="code">function popupmenu_typemap_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub36" class="code">function menu_popup_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub37" class="code">function menu_popup1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub38" class="code">function menu_popup2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub39" class="code">function menu_popup12_Callback(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = resongui(varargin)</a>
+0002 <span class="comment">% RESONGUI M-file for resongui.fig</span>
+0003 <span class="comment">%      RESONGUI, by itself, creates a new RESONGUI or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = RESONGUI returns the handle to a new RESONGUI or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      RESONGUI('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in RESONGUI.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      RESONGUI('Property','Value',...) creates a new RESONGUI or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before resongui_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to resongui_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help resongui</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 23-Mar-2004 18:09:35</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030     <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031     <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction resongui_OpeningFcn(hObject, eventdata, handles, varargin)">resongui_OpeningFcn</a>, <span class="keyword">...</span>
+0032     <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = resongui_OutputFcn(hObject, eventdata, handles)">resongui_OutputFcn</a>, <span class="keyword">...</span>
+0033     <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034     <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp; isstr(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before resongui is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function resongui_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to resongui (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for resongui</span>
+0056 handles.output = hObject;
+0057 
+0058 <span class="comment">%Met la barre d'outil (zoom)</span>
+0059 set(hObject,<span class="string">'ToolBar'</span>,<span class="string">'figure'</span>);
+0060 
+0061 <span class="comment">% Update handles structure</span>
+0062 guidata(hObject, handles);
+0063 
+0064 <span class="comment">%% Lit les donnees</span>
+0065 handles.pathname = pwd; <span class="comment">%chemin de lancement</span>
+0066 handles.dataname = <span class="string">'fmap.out'</span>; <span class="comment">% carte par defaut</span>
+0067 handles.color=<span class="string">'off'</span>; <span class="comment">% carte en couleur avec diffusion</span>
+0068 handles.maptype = <span class="string">'fmap'</span>; <span class="comment">%% fmap or fmapdp</span>
+0069 handles.data_inducedamplitude = fullfile(pwd,<span class="string">'induced_amplitude.out'</span>);
+0070 
+0071 <a href="#_sub3" class="code" title="subfunction loaddata(hObject,handles)">loaddata</a>(hObject,handles); <span class="comment">%% charge les donnees</span>
+0072 <span class="comment">% OBLIGATOIRE car la fonction loaddata a modifier handles et</span>
+0073 <span class="comment">% travailler sur une copie de handles</span>
+0074 handles = guidata(hObject); 
+0075 handles.str=<span class="string">''</span>;
+0076 
+0077 <span class="comment">%% Couleur de depart pour identifiactaion point a point</span>
+0078 handles.couleurs=[1 0 0];
+0079 <span class="comment">%% zoom</span>
+0080 handles.type=<span class="string">'shift'</span>;
+0081 set(handles.edit_shift,<span class="string">'String'</span>,<span class="string">'0.05'</span>);
+0082 handles.shiftaxis = str2double(get(handles.edit_shift,<span class="string">'String'</span>));
+0083 handles.zoomaxis= str2double(get(handles.edit_zoom,<span class="string">'String'</span>));
+0084 
+0085 <span class="comment">%%% Variable pour echange avec autres gui</span>
+0086 setappdata(handles.figure1, <span class="string">'Tab'</span>,[]);
+0087 guidata(hObject, handles);
+0088 
+0089 set(handles.edit_color,<span class="string">'BackgroundColor'</span>,handles.couleurs);
+0090 <span class="comment">%%% Affiche le point de fonctionnement</span>
+0091 <a href="#_sub8" class="code" title="subfunction print_value(handles,x1,x2,f1,f2)">print_value</a>(handles,handles.x1(1),handles.x2(1),handles.f1(1),handles.f2(1));
+0092 <span class="comment">%%%% dessine les donnees</span>
+0093 <a href="#_sub5" class="code" title="subfunction plotdata(handles)">plotdata</a>(handles);
+0094 
+0095 <span class="comment">%%% axes par defaut</span>
+0096 <span class="comment">%set(handles.fmap,'Xlim',[18.1 18.3],'Ylim',[10.20 10.4]);</span>
+0097 
+0098 <span class="comment">% UIWAIT makes resongui wait for user response (see UIRESUME)</span>
+0099 <span class="comment">% uiwait(handles.figure1);</span>
+0100 
+0101 
+0102 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0103 <a name="_sub2" href="#_subfunctions" class="code">function varargout = resongui_OutputFcn(hObject, eventdata, handles)</a>
+0104 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0105 <span class="comment">% hObject    handle to figure</span>
+0106 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0107 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0108 
+0109 <span class="comment">% Get default command line output from handles structure</span>
+0110 varargout{1} = handles.output;
+0111 
+0112 <a name="_sub3" href="#_subfunctions" class="code">function loaddata(hObject,handles)</a>
+0113 
+0114 <span class="keyword">while</span> (1)
+0115     fname = fullfile(handles.pathname, handles.dataname)
+0116     <span class="keyword">try</span>
+0117         [header data]=hdrload(fname);
+0118         <span class="keyword">break</span>;
+0119     <span class="keyword">catch</span>
+0120         <span class="comment">%     error('Error while opening filename %s ',fname)</span>
+0121         uiwait(errordlg(<span class="string">'No input data found'</span>));    
+0122         handles = <a href="#_sub30" class="code" title="subfunction handles = getdata(handles);">getdata</a>(handles);
+0123     <span class="keyword">end</span>
+0124 <span class="keyword">end</span>
+0125 
+0126 z = data(:,2)*1e3;
+0127 <span class="keyword">switch</span> handles.maptype
+0128     <span class="keyword">case</span> <span class="string">'fmap'</span>
+0129         x = data(:,1)*1e3; <span class="comment">%% z in mm</span>
+0130     <span class="keyword">case</span> <span class="string">'fmapdp'</span>
+0131         x = data(:,1)*1e2; <span class="comment">%% energy in %</span>
+0132 <span class="keyword">end</span>
+0133 
+0134 fx=18+abs(data(:,3));
+0135 fz=10+abs(data(:,4));
+0136 
+0137 <span class="keyword">if</span> size(data,2) == 6;
+0138     <span class="comment">%%% Data for color printing</span>
+0139     nz = sum(x==x(1));
+0140     nx = size(x,1)/nz;
+0141     dfx=data(:,5);
+0142     dfz=data(:,6);
+0143     
+0144     xgrid = reshape(x,nz,nx);
+0145     zgrid = reshape(z,nz,nx);
+0146     fxgrid = reshape(fx,nz,nx);
+0147     fzgrid = reshape(fz,nz,nx);
+0148     dfxgrid = reshape(dfx,nz,nx);
+0149     dfzgrid = reshape(dfz,nz,nx);
+0150     diffusion = 1;
+0151     diffu = log10(sqrt(dfxgrid.*dfxgrid+dfzgrid.*dfzgrid));
+0152     <span class="comment">%% saturation</span>
+0153     ind = isinf(diffu); 
+0154     diffu(ind) = NaN;
+0155     diffumax = -2; diffumin = -10;
+0156     diffu(diffu&lt; diffumin) = diffumin; <span class="comment">% very stable</span>
+0157     diffu(diffu&gt; diffumax) = diffumax; <span class="comment">%chaotic</span>
+0158     <span class="comment">%%  pour affichage couleur</span>
+0159     handles.diffu = diffu;
+0160     handles.fxgrid=fxgrid;
+0161     handles.fzgrid=fzgrid;
+0162     handles.xgrid=xgrid;
+0163     handles.zgrid=zgrid;
+0164 <span class="keyword">end</span>
+0165 <span class="comment">%% pour affichage noir et blanc</span>
+0166 indx=(fx~=18.0);
+0167 handles.f1=fx(indx);
+0168 handles.f2=fz(indx);
+0169 handles.x1=x(indx);
+0170 handles.x2=z(indx);    
+0171 
+0172 guidata(hObject,handles);
+0173 <span class="comment">% select stable particles</span>
+0174 
+0175 
+0176 <span class="comment">% --- Executes on button press in pushbutton_replot.</span>
+0177 <a name="_sub4" href="#_subfunctions" class="code">function pushbutton_replot_Callback(hObject, eventdata, handles)</a>
+0178 <span class="comment">% hObject    handle to pushbutton_replot (see GCBO)</span>
+0179 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0180 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0181 <span class="comment">%Efface figure et redessine les donnees brutes</span>
+0182 children=get(handles.fmap,<span class="string">'Children'</span>);
+0183 <span class="comment">%children=findobj(handles.axes,'Children','Type','Line'))</span>
+0184 <span class="comment">%child=findobj(handles.axes,'Children','Tag','fmap'))</span>
+0185 <span class="comment">%children(children==child)=[];</span>
+0186 <span class="comment">%delete(children mais pas child)</span>
+0187 cla(handles.fmap);
+0188 cla(handles.da);
+0189 <a href="#_sub5" class="code" title="subfunction plotdata(handles)">plotdata</a>(handles);
+0190 getappdata(handles.figure1,<span class="string">'Tab'</span>);
+0191 
+0192 <a name="_sub5" href="#_subfunctions" class="code">function plotdata(handles)</a>
+0193 
+0194 <span class="keyword">switch</span> handles.color
+0195     <span class="keyword">case</span> <span class="string">'off'</span>
+0196         axes(handles.fmap); <span class="comment">%  hold on;</span>
+0197         get(handles.fmap,<span class="string">'Children'</span>)
+0198         <span class="comment">%         if ~isempty(get(handles.fmap,'Children'))</span>
+0199         <span class="comment">%             delete(findobj(get(handles.fmap,'Children'),'Tag','fspace'));</span>
+0200         <span class="comment">%         end</span>
+0201         plot(handles.f1,handles.f2,<span class="string">'kd'</span>,<span class="string">'MarkerSize'</span>,0.5,<span class="string">'MarkerFaceColor'</span>,<span class="string">'k'</span>,<span class="string">'Tag'</span>,<span class="string">'fspace'</span>);
+0202         grid on; hold on;
+0203         <span class="comment">%         xlabel('fx');  ylabel('fz');</span>
+0204         <span class="comment">%axis([18.15 18.27 10.265 10.32])</span>
+0205         axes(handles.da); hold off;        
+0206         <span class="comment">%%% Choix des axes</span>
+0207         <span class="keyword">switch</span> handles.maptype
+0208             <span class="keyword">case</span> <span class="string">'fmap'</span>
+0209                 strx = <span class="string">'x(mm)'</span>;
+0210                 stry = <span class="string">'z(mm)'</span>;
+0211             <span class="keyword">case</span> <span class="string">'fmapdp'</span>
+0212                 strx = <span class="string">'dp (%)'</span>;
+0213                 stry = <span class="string">'x (mm)'</span>;
+0214         <span class="keyword">end</span>
+0215         plot(handles.x1,handles.x2,<span class="string">'kd'</span>,<span class="string">'MarkerSize'</span>,2.0,<span class="string">'MarkerFaceColor'</span>,<span class="string">'k'</span>,<span class="string">'Tag'</span>,<span class="string">'cspace'</span>);
+0216         xlabel(strx); ylabel(stry);
+0217         grid on;  hold on;
+0218     <span class="keyword">case</span> <span class="string">'on'</span>
+0219         axes(handles.fmap);  <span class="comment">%hold on</span>
+0220         get(handles.fmap,<span class="string">'Children'</span>)
+0221         mesh(handles.fxgrid,handles.fzgrid, handles.diffu,<span class="string">'LineStyle'</span>,<span class="string">'.'</span>,<span class="string">'MarkerSize'</span>,5.0,<span class="string">'FaceColor'</span>,<span class="string">'none'</span>,<span class="string">'Tag'</span>,<span class="string">'fspace'</span>)
+0222         <span class="comment">%         if ~isempty(get(handles.fmap,'Children'))</span>
+0223         <span class="comment">%             delete(findobj(get(handles.fmap,'Children'),'Tag','fspace'));</span>
+0224         <span class="comment">%         end</span>
+0225         <span class="comment">%image(cat(3,handles.diffu,handles.diffu,handles.diffu)/-10,'Tag','fspace');</span>
+0226         view(2); grid on; hold on
+0227         xlabel(<span class="string">'fx'</span>); ylabel(<span class="string">'fz'</span>)
+0228         axes(handles.da);
+0229         mesh(handles.xgrid,handles.zgrid,handles.diffu,<span class="string">'LineStyle'</span>,<span class="string">'.'</span>,<span class="string">'MarkerSize'</span>,5.0,<span class="string">'FaceColor'</span>,<span class="string">'none'</span>,<span class="string">'Tag'</span>,<span class="string">'cspace'</span>);
+0230         <span class="comment">%image(reshape(handles.xgrid,1,prod(size(handles.xgrid))), ...</span>
+0231 <span class="comment">%             reshape(handles.zgrid,1 ,prod(size(handles.zgrid))), ...</span>
+0232 <span class="comment">%             cat(3,handles.diffu,handles.diffu,handles.diffu)/-10);</span>
+0233         view(2); grid on; hold on        
+0234 <span class="keyword">end</span>
+0235 
+0236 
+0237 <span class="comment">%datalabel on</span>
+0238 
+0239 <span class="comment">% hc=uicontextmenu;</span>
+0240 <span class="comment">% hm=uimenu('parent',hc);</span>
+0241 <span class="comment">% set(h,'UIContextMenu',hc);</span>
+0242 <span class="comment">% hha=findobj(get(handles.da,'Children'),'Type','axes');</span>
+0243 <span class="comment">% set(get(handles.da,'Parent'),'WindowButtonDownFcn', ...</span>
+0244 <span class="comment">%     'pt=get(gca,''CurrentPoint'' ); disp(pt); disp(hm); set(hm,''Label'',[num2str(pt(1,1)) '', '' num2str(pt(1,2))])' )</span>
+0245 
+0246 
+0247 <span class="comment">%%% Affiche le point de fonctionnement</span>
+0248 <a href="#_sub8" class="code" title="subfunction print_value(handles,x1,x2,f1,f2)">print_value</a>(handles,handles.x1(1),handles.x2(1),handles.f1(1),handles.f2(1));
+0249 
+0250 <span class="comment">% --- Executes on button press in bouton_resonid.</span>
+0251 <a name="_sub6" href="#_subfunctions" class="code">function bouton_resonid_Callback(hObject, eventdata, handles)</a>
+0252 <span class="comment">% hObject    handle to bouton_resonid (see GCBO)</span>
+0253 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0254 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0255 
+0256 <span class="comment">% Loop, picking up the points.</span>
+0257 disp(<span class="string">'Left mouse button picks points.'</span>)
+0258 disp(<span class="string">'Right mouse button picks last point.'</span>)
+0259 hold on
+0260 button = 1;
+0261 n=0;
+0262 <span class="keyword">while</span> button == 1
+0263     [xi,yi,button] = ginput(1);
+0264     <span class="comment">%    plot(xi,yi,'o','Color',handles.couleurs,2.0,'MarkerFaceColor',handles.couleurs)</span>
+0265     n = n+1;
+0266     <a href="#_sub7" class="code" title="subfunction identifier(xi,yi,handles)">identifier</a>(xi,yi,handles)    
+0267 <span class="keyword">end</span>
+0268 
+0269 <a name="_sub7" href="#_subfunctions" class="code">function identifier(xi,yi,handles)</a>
+0270 
+0271 <span class="comment">%%% cherche le point le plus proche au sens de la norme 2</span>
+0272 [dp1, i1]=min((handles.f1-xi).^2+(handles.f2-yi).^2);
+0273 [dp2, i2]=min((handles.x1-xi).^2+(handles.x2-yi).^2);
+0274 
+0275 <span class="comment">%selectionne la bonne figure sur laquelle on a clique</span>
+0276 <span class="keyword">if</span> (dp1 &lt; dp2)
+0277     i3 = i1;
+0278 <span class="keyword">else</span>
+0279     i3 =i2;
+0280 <span class="keyword">end</span>
+0281 
+0282 <span class="comment">%%% affiche le point selectionne</span>
+0283 axes(handles.da);
+0284 plot(handles.x1(i3),handles.x2(i3),<span class="string">'o'</span>,<span class="string">'Color'</span>,handles.couleurs);
+0285 axes(handles.fmap);
+0286 plot(handles.f1(i3),handles.f2(i3),<span class="string">'o'</span>,<span class="string">'Color'</span>,handles.couleurs);
+0287 
+0288 <a href="#_sub8" class="code" title="subfunction print_value(handles,x1,x2,f1,f2)">print_value</a>(handles,handles.x1(i3),handles.x2(i3),handles.f1(i3),handles.f2(i3));
+0289 
+0290 <a name="_sub8" href="#_subfunctions" class="code">function print_value(handles,x1,x2,f1,f2)</a>
+0291 <span class="comment">%%% Met a jour les valeurs selectionnees</span>
+0292 formatda=<span class="string">'% 6.4f'</span>;
+0293 formatfmap=<span class="string">'% 8.5f'</span>;
+0294 
+0295 <span class="keyword">switch</span> handles.maptype
+0296     <span class="keyword">case</span> <span class="string">'fmap'</span>
+0297         strx =<span class="string">'x  ='</span>;
+0298         stry =<span class="string">'z  ='</span>;
+0299     <span class="keyword">case</span> <span class="string">'fmapdp'</span>
+0300         strx =<span class="string">'dp ='</span>;
+0301         stry =<span class="string">'x  ='</span>;
+0302 <span class="keyword">end</span>
+0303 string=sprintf([strx,formatda],x1);
+0304 set(handles.text_x,<span class="string">'String'</span>,string);
+0305 string=sprintf([stry,formatda],x2);
+0306 set(handles.text_z,<span class="string">'String'</span>,string);
+0307 string=sprintf([<span class="string">'fx = '</span>,formatfmap],f1);
+0308 set(handles.text_fx,<span class="string">'String'</span>,string);
+0309 string=sprintf([<span class="string">'fz = '</span>,formatfmap],f2);
+0310 set(handles.text_fz,<span class="string">'String'</span>,string);
+0311 
+0312 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0313 <a name="_sub9" href="#_subfunctions" class="code">function edit_color_CreateFcn(hObject, eventdata, handles)</a>
+0314 <span class="comment">% hObject    handle to edit_color (see GCBO)</span>
+0315 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0316 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0317 
+0318 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0319 <span class="comment">%       See ISPC and COMPUTER.</span>
+0320 <span class="keyword">if</span> ispc
+0321     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0322 <span class="keyword">else</span>
+0323     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0324 <span class="keyword">end</span>
+0325 
+0326 <a name="_sub10" href="#_subfunctions" class="code">function edit_color_Callback(hObject, eventdata, handles)</a>
+0327 <span class="comment">% hObject    handle to edit_color (see GCBO)</span>
+0328 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0329 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0330 
+0331 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_color as text</span>
+0332 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_color as a double</span>
+0333 h = uisetcolor;
+0334 <span class="keyword">if</span> (size(h,2) ~=1) 
+0335     handles.couleurs = h;
+0336     guidata(hObject, handles);
+0337     set(handles.edit_color,<span class="string">'BackgroundColor'</span>,handles.couleurs);
+0338 <span class="keyword">end</span>
+0339 
+0340 
+0341 <span class="comment">% --- Executes on button press in increaseV.</span>
+0342 <a name="_sub11" href="#_subfunctions" class="code">function increaseV_Callback(hObject, eventdata, handles)</a>
+0343 <span class="comment">% hObject    handle to increaseV (see GCBO)</span>
+0344 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0345 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0346 prop =<span class="string">'Ylim'</span>;
+0347 <a href="#_sub15" class="code" title="subfunction zoomshift(handles,prop,fac)">zoomshift</a>(handles,prop,1);
+0348 
+0349 
+0350 <span class="comment">% --- Executes on button press in increaseH.</span>
+0351 <a name="_sub12" href="#_subfunctions" class="code">function increaseH_Callback(hObject, eventdata, handles)</a>
+0352 <span class="comment">% hObject    handle to increaseH (see GCBO)</span>
+0353 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0354 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0355 prop =<span class="string">'Xlim'</span>;
+0356 <a href="#_sub15" class="code" title="subfunction zoomshift(handles,prop,fac)">zoomshift</a>(handles,prop,1);
+0357 
+0358 <span class="comment">% --- Executes on button press in decreaseV.</span>
+0359 <a name="_sub13" href="#_subfunctions" class="code">function decreaseV_Callback(hObject, eventdata, handles)</a>
+0360 <span class="comment">% hObject    handle to decreaseV (see GCBO)</span>
+0361 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0362 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0363 prop =<span class="string">'Ylim'</span>;
+0364 <a href="#_sub15" class="code" title="subfunction zoomshift(handles,prop,fac)">zoomshift</a>(handles,prop,-1);
+0365 
+0366 
+0367 <span class="comment">% --- Executes on button press in decreaseH.</span>
+0368 <a name="_sub14" href="#_subfunctions" class="code">function decreaseH_Callback(hObject, eventdata, handles)</a>
+0369 <span class="comment">% hObject    handle to decreaseH (see GCBO)</span>
+0370 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0371 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0372 prop =<span class="string">'Xlim'</span>;
+0373 <a href="#_sub15" class="code" title="subfunction zoomshift(handles,prop,fac)">zoomshift</a>(handles,prop,-1);
+0374 
+0375 <a name="_sub15" href="#_subfunctions" class="code">function zoomshift(handles,prop,fac)</a>
+0376 <span class="comment">%% Fonction qui gere zoom et deplacement d'axe</span>
+0377 
+0378 scale = get(handles.fmap,prop);
+0379 
+0380 <span class="keyword">switch</span> handles.type
+0381     <span class="keyword">case</span> <span class="string">'shift'</span>
+0382         set(handles.fmap,prop,scale+fac*handles.shiftaxis);        
+0383     <span class="keyword">case</span> <span class="string">'zoom'</span>
+0384         w = scale(2)-scale(1);
+0385         mid=scale(1) + w/2;
+0386         <span class="keyword">if</span> fac ==-1
+0387             newscale = mid + [-1 1]*0.5*w*handles.zoomaxis;
+0388         <span class="keyword">else</span>
+0389             newscale = mid + [-1 1]*0.5*w/handles.zoomaxis;
+0390         <span class="keyword">end</span>
+0391         set(handles.fmap,prop,newscale);
+0392 <span class="keyword">end</span>
+0393 axes(handles.fmap);
+0394 setappdata(handles.figure1, <span class="string">'fen'</span>,axis);
+0395 
+0396 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0397 <a name="_sub16" href="#_subfunctions" class="code">function edit_zoom_CreateFcn(hObject, eventdata, handles)</a>
+0398 <span class="comment">% hObject    handle to edit_zoom (see GCBO)</span>
+0399 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0400 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0401 
+0402 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0403 <span class="comment">%       See ISPC and COMPUTER.</span>
+0404 <span class="keyword">if</span> ispc
+0405     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0406 <span class="keyword">else</span>
+0407     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0408 <span class="keyword">end</span>
+0409 
+0410 <a name="_sub17" href="#_subfunctions" class="code">function edit_zoom_Callback(hObject, eventdata, handles)</a>
+0411 <span class="comment">% hObject    handle to edit_zoom (see GCBO)</span>
+0412 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0413 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0414 
+0415 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_zoom as text</span>
+0416 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_zoom as a double</span>
+0417 handles.zoomaxis= str2double(get(hObject,<span class="string">'String'</span>));
+0418 guidata(hObject, handles);
+0419 
+0420 
+0421 <span class="comment">% --- Executes on button press in radiobutton1.</span>
+0422 <a name="_sub18" href="#_subfunctions" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a>
+0423 <span class="comment">% hObject    handle to radiobutton1 (see GCBO)</span>
+0424 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0425 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0426 
+0427 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton1</span>
+0428 <a href="#_sub20" class="code" title="subfunction mutual_exclude(off)">mutual_exclude</a>(handles.radiobutton2);
+0429 handles.type=<span class="string">'zoom'</span>;
+0430 guidata(hObject, handles);
+0431 
+0432 <span class="comment">% --- Executes on button press in radiobutton2.</span>
+0433 <a name="_sub19" href="#_subfunctions" class="code">function radiobutton2_Callback(hObject, eventdata, handles)</a>
+0434 <span class="comment">% hObject    handle to radiobutton2 (see GCBO)</span>
+0435 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0436 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0437 
+0438 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton2</span>
+0439 <a href="#_sub20" class="code" title="subfunction mutual_exclude(off)">mutual_exclude</a>(handles.radiobutton1);
+0440 handles.type=<span class="string">'shift'</span>;
+0441 guidata(hObject, handles);
+0442 
+0443 <span class="comment">%%% fonction pour faire des radioboutons</span>
+0444 <a name="_sub20" href="#_subfunctions" class="code">function mutual_exclude(off)</a>
+0445 set(off,<span class="string">'Value'</span>,0);
+0446 
+0447 
+0448 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0449 <a name="_sub21" href="#_subfunctions" class="code">function edit_shift_CreateFcn(hObject, eventdata, handles)</a>
+0450 <span class="comment">% hObject    handle to edit_shift (see GCBO)</span>
+0451 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0452 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0453 
+0454 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0455 <span class="comment">%       See ISPC and COMPUTER.</span>
+0456 <span class="keyword">if</span> ispc
+0457     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0458 <span class="keyword">else</span>
+0459     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0460 <span class="keyword">end</span>
+0461 
+0462 <a name="_sub22" href="#_subfunctions" class="code">function edit_shift_Callback(hObject, eventdata, handles)</a>
+0463 <span class="comment">% hObject    handle to edit_shift (see GCBO)</span>
+0464 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0465 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0466 
+0467 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_shift as text</span>
+0468 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_shift as a double</span>
+0469 handles.shiftaxis= str2double(get(hObject,<span class="string">'String'</span>));
+0470 guidata(hObject, handles);
+0471 
+0472 
+0473 <span class="comment">% --- Executes on button press in resetfmap.</span>
+0474 <a name="_sub23" href="#_subfunctions" class="code">function resetfmap_Callback(hObject, eventdata, handles)</a>
+0475 <span class="comment">% hObject    handle to pushbutton_replot (see GCBO)</span>
+0476 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0477 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0478 set(handles.fmap,<span class="string">'XLimMode'</span>,<span class="string">'auto'</span>,<span class="string">'YLimMode'</span>,<span class="string">'auto'</span>);
+0479 pause(0.1);
+0480 set(handles.fmap,<span class="string">'XLimMode'</span>,<span class="string">'manual'</span>,<span class="string">'YLimMode'</span>,<span class="string">'manual'</span>);
+0481 
+0482 
+0483 <span class="comment">% --------------------------------------------------------------------</span>
+0484 <a name="_sub24" href="#_subfunctions" class="code">function souris_Callback(hObject, eventdata, handles)</a>
+0485 <span class="comment">% hObject    handle to souris (see GCBO)</span>
+0486 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0487 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0488 pt=get(gca,<span class="string">'CurrentPoint'</span>);
+0489 tab = getappdata(handles.figure1,<span class="string">'Tab'</span>);
+0490 handles.str = <a href="plusprochereson.html" class="code" title="function str = plusprochereson(pt,tab)">plusprochereson</a>([pt(1,1), pt(1,2)],tab);
+0491 set(handles.resonance,<span class="string">'Label'</span>, handles.str);
+0492 guidata(hObject,handles); <span class="comment">%% mise a jour donnees</span>
+0493 
+0494 <span class="comment">% --------------------------------------------------------------------</span>
+0495 <a name="_sub25" href="#_subfunctions" class="code">function Untitled_3_Callback(hObject, eventdata, handles)</a>
+0496 <span class="comment">% hObject    handle to Untitled_3 (see GCBO)</span>
+0497 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0498 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0499 
+0500 
+0501 <span class="comment">% --- Executes on button press in pushbutton_reson.</span>
+0502 <a name="_sub26" href="#_subfunctions" class="code">function pushbutton_reson_Callback(hObject, eventdata, handles)</a>
+0503 <span class="comment">% hObject    handle to pushbutton_reson (see GCBO)</span>
+0504 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0505 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0506 setappdata(handles.figure1, <span class="string">'where2plot'</span>,handles.fmap);
+0507 axes(handles.fmap);
+0508 setappdata(handles.figure1, <span class="string">'fen'</span>,axis);
+0509 <span class="comment">% if ~isfield(handles,'showreson')</span>
+0510 handles.showreson=<a href="showresongui.html" class="code" title="function varargout = showresongui(varargin)">showresongui</a>(handles);
+0511 guidata(hObject,handles);
+0512 <span class="comment">% end</span>
+0513 <span class="comment">% showresongui('where2plot',handles.fmap,'fen',axis);</span>
+0514 
+0515 
+0516 <span class="comment">% --------------------------------------------------------------------</span>
+0517 <a name="_sub27" href="#_subfunctions" class="code">function resonance_Callback(hObject, eventdata, handles)</a>
+0518 <span class="comment">% hObject    handle to resonance (see GCBO)</span>
+0519 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0520 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0521 disp(handles.str)
+0522 
+0523 
+0524 <span class="comment">% --------------------------------------------------------------------</span>
+0525 <a name="_sub28" href="#_subfunctions" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a>
+0526 <span class="comment">% hObject    handle to Untitled_1 (see GCBO)</span>
+0527 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0528 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0529 
+0530 
+0531 <span class="comment">% --------------------------------------------------------------------</span>
+0532 <a name="_sub29" href="#_subfunctions" class="code">function LoadDataFile_Callback(hObject, eventdata, handles)</a>
+0533 <span class="comment">% hObject    handle to LoadDataFile (see GCBO)</span>
+0534 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0535 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0536 
+0537 handles = <a href="#_sub30" class="code" title="subfunction handles = getdata(handles);">getdata</a>(handles);
+0538 guidata(hObject,handles);
+0539 <a href="#_sub3" class="code" title="subfunction loaddata(hObject,handles)">loaddata</a>(hObject, handles);
+0540 handles=guidata(hObject); <span class="comment">% mis a jour des modification dans loaddata</span>
+0541 
+0542 
+0543 <span class="comment">% --------------------------------------------------------------------</span>
+0544 <a name="_sub30" href="#_subfunctions" class="code">function handles = getdata(handles);</a>
+0545 <span class="comment">% fonction pour ouvrir un fichier de donnees</span>
+0546 <span class="comment">% utilise l'interface graphique</span>
+0547 <span class="comment">% ne rend la main que si un fichier a ete correctement choisi!</span>
+0548 
+0549 [filename, pathname] = uigetfile(<span class="string">'*.out'</span>, <span class="string">'Pick an data file'</span>);
+0550 
+0551 <span class="keyword">if</span> isequal(filename,0) | isequal(pathname,0)
+0552     disp(<span class="string">'User pressed cancel'</span>)
+0553 <span class="keyword">else</span>
+0554     disp([<span class="string">'User selected '</span>, fullfile(pathname, filename)])
+0555     handles.dataname = filename;
+0556     handles.pathname = pathname;
+0557 <span class="keyword">end</span>
+0558 
+0559 <span class="comment">% --------------------------------------------------------------------</span>
+0560 <a name="_sub31" href="#_subfunctions" class="code">function LoadDataInduced_Callback(hObject, eventdata, handles)</a>
+0561 <span class="comment">% hObject    handle to LoadDataInduced (see GCBO)</span>
+0562 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0563 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0564 
+0565 
+0566 <span class="comment">% --- Executes on button press in toggle_IA.</span>
+0567 <a name="_sub32" href="#_subfunctions" class="code">function toggle_IA_Callback(hObject, eventdata, handles)</a>
+0568 <span class="comment">% hObject    handle to toggle_IA (see GCBO)</span>
+0569 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0570 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0571 
+0572 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of toggle_IA</span>
+0573 val = get(hObject,<span class="string">'Value'</span>)
+0574 <span class="keyword">switch</span> val
+0575     <span class="keyword">case</span> 1
+0576         fname = handles.data_inducedamplitude;
+0577         <span class="keyword">if</span> exist(fname)
+0578             axes(handles.da);
+0579             A = load(fname);
+0580             plot(A(:,1)*10,sqrt(A(:,5)*10.2)*1e3,<span class="string">'r-'</span>,<span class="string">'Tag'</span>,<span class="string">'IA'</span>);
+0581         <span class="keyword">else</span>
+0582             warning(<span class="string">'Filname %s not found\n'</span>,fname);
+0583             set(handles.toggle_IA,<span class="string">'Value'</span>,0);
+0584         <span class="keyword">end</span>
+0585     <span class="keyword">otherwise</span>
+0586         delete(findobj(get(handles.da,<span class="string">'Children'</span>),<span class="string">'Tag'</span>,<span class="string">'IA'</span>))        
+0587 <span class="keyword">end</span>
+0588 
+0589 <span class="comment">% --- Executes on button press in toogle_color.</span>
+0590 <a name="_sub33" href="#_subfunctions" class="code">function toogle_color_Callback(hObject, eventdata, handles)</a>
+0591 <span class="comment">% hObject    handle to toogle_color (see GCBO)</span>
+0592 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0593 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0594 
+0595 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of toogle_color</span>
+0596 val = get(hObject,<span class="string">'Value'</span>);
+0597 <span class="keyword">switch</span> val
+0598     <span class="keyword">case</span> 0
+0599         handles.color = <span class="string">'off'</span>;
+0600     <span class="keyword">case</span> 1
+0601         <span class="keyword">if</span> isfield(handles,<span class="string">'diffu'</span>)
+0602             handles.color = <span class="string">'on'</span>;
+0603         <span class="keyword">else</span>
+0604             set(hObject,<span class="string">'Value'</span>,0);
+0605         <span class="keyword">end</span>        
+0606 <span class="keyword">end</span>
+0607 guidata(hObject,handles);
+0608 
+0609 
+0610 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0611 <a name="_sub34" href="#_subfunctions" class="code">function popupmenu_typemap_CreateFcn(hObject, eventdata, handles)</a>
+0612 <span class="comment">% hObject    handle to popupmenu_typemap (see GCBO)</span>
+0613 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0614 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0615 
+0616 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0617 <span class="comment">%       See ISPC and COMPUTER.</span>
+0618 <span class="keyword">if</span> ispc
+0619     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0620 <span class="keyword">else</span>
+0621     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0622 <span class="keyword">end</span>
+0623 
+0624 
+0625 <span class="comment">% --- Executes on selection change in popupmenu_typemap.</span>
+0626 <a name="_sub35" href="#_subfunctions" class="code">function popupmenu_typemap_Callback(hObject, eventdata, handles)</a>
+0627 <span class="comment">% hObject    handle to popupmenu_typemap (see GCBO)</span>
+0628 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0629 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0630 
+0631 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_typemap contents as cell array</span>
+0632 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_typemap</span>
+0633 
+0634 contents = get(hObject,<span class="string">'String'</span>);
+0635 val = contents{get(hObject,<span class="string">'Value'</span>)};
+0636 <span class="keyword">switch</span> val
+0637     <span class="keyword">case</span> <span class="string">'fmap'</span>
+0638         handles.maptype = <span class="string">'fmap'</span>;
+0639         xlabel(<span class="string">'x (mm)'</span>); ylabel(<span class="string">'z (mm)'</span>);
+0640     <span class="keyword">case</span> <span class="string">'fmapdp'</span>
+0641         handles.maptype = <span class="string">'fmapdp'</span>;
+0642         xlabel(<span class="string">'dp (%)'</span>); ylabel(<span class="string">'x (mm)'</span>);
+0643 <span class="keyword">end</span>
+0644 guidata(hObject,handles);
+0645 
+0646 
+0647 <span class="comment">% --------------------------------------------------------------------</span>
+0648 <a name="_sub36" href="#_subfunctions" class="code">function menu_popup_Callback(hObject, eventdata, handles)</a>
+0649 <span class="comment">% hObject    handle to menu_popup (see GCBO)</span>
+0650 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0651 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0652 
+0653 
+0654 <span class="comment">% --------------------------------------------------------------------</span>
+0655 <a name="_sub37" href="#_subfunctions" class="code">function menu_popup1_Callback(hObject, eventdata, handles)</a>
+0656 <span class="comment">% hObject    handle to menu_popup1 (see GCBO)</span>
+0657 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0658 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0659 a = figure;
+0660 b = copyobj(handles.fmap, a); 
+0661 <span class="comment">% set(b, 'Position', [0.1300    0.5811    0.7750    0.3439]);</span>
+0662 set(b, <span class="string">'Position'</span>, get(0,<span class="string">'FactoryAxesPosition'</span>));
+0663 <span class="comment">% set(b, 'ButtonDownFcn','');</span>
+0664 
+0665 <span class="comment">% --------------------------------------------------------------------</span>
+0666 <a name="_sub38" href="#_subfunctions" class="code">function menu_popup2_Callback(hObject, eventdata, handles)</a>
+0667 <span class="comment">% hObject    handle to menu_popup2 (see GCBO)</span>
+0668 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0669 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0670 a = figure;
+0671 b = copyobj(handles.da, a); 
+0672 <span class="comment">% set(b, 'Position', [0.1300    0.5811    0.7750    0.3439]);</span>
+0673 set(b, <span class="string">'Position'</span>, get(0,<span class="string">'FactoryAxesPosition'</span>));
+0674 set(b, <span class="string">'ButtonDownFcn'</span>,<span class="string">''</span>);
+0675 
+0676 <span class="comment">% --------------------------------------------------------------------</span>
+0677 <a name="_sub39" href="#_subfunctions" class="code">function menu_popup12_Callback(hObject, eventdata, handles)</a>
+0678 <span class="comment">% hObject    handle to menu_popup12 (see GCBO)</span>
+0679 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0680 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0681 
+0682 a = figure;
+0683 b = copyobj(handles.fmap, a); 
+0684 set(b, <span class="string">'Position'</span>, [0.1300    0.5811    0.7750    0.3439]);
+0685 set(b, <span class="string">'ButtonDownFcn'</span>,<span class="string">''</span>);
+0686 <span class="comment">% if strcmpi(get(handles.('AddPlot1_Lattice'),'Checked'),'On')</span>
+0687 <span class="comment">%     b = copyobj(handles.('Graph3'), a);</span>
+0688 <span class="comment">%     set(b, 'Position', [0.1300    0.5811    0.7750    0.3439]);</span>
+0689 <span class="comment">% end</span>
+0690 
+0691 b = copyobj(handles.da, a); 
+0692 set(b, <span class="string">'Position'</span>, [0.1300    0.1100    0.7750    0.3439]);
+0693 set(b, <span class="string">'ButtonDownFcn'</span>,<span class="string">''</span>);
+0694 <span class="comment">% if strcmpi(get(handles.('AddPlot2_Lattice'),'Checked'),'On')</span>
+0695 <span class="comment">%     b = copyobj(handles.('Graph4'), a);</span>
+0696 <span class="comment">%     set(b, 'Position', [0.1300    0.1100    0.7750    0.3439]);</span>
+0697 <span class="comment">% end</span>
+0698 xlabel(<span class="string">'Position [meters]'</span>);
+0699 
+0700 Data = getappdata(gcbf, <span class="string">'RawY'</span>);
+0701 <span class="keyword">if</span> isfield(Data, <span class="string">'TimeStamp'</span>)
+0702     addlabel(1,0,datestr(Data.TimeStamp,21));
+0703 <span class="keyword">end</span>
+0704 orient tall
+0705</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of set_bump_test7_2009</title>
+  <meta name="keywords" content="set_bump_test7_2009">
+  <meta name="description" content="deuxième optimisation du bump">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; set_bump_test7_2009.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>set_bump_test7_2009
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>deuxième optimisation du bump</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function set_bump_test7_2009 </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> deuxième optimisation du bump</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function set_bump_test7_2009</a>
+0002 
+0003 <span class="comment">% deuxième optimisation du bump</span>
+0004 
+0005 <span class="comment">% standard run 2</span>
+0006 fprintf(<span class="string">'Kicker delay read\n'</span>)
+0007 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>); <span class="comment">% 5621670</span>
+0008 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>); <span class="comment">% 5621673</span>
+0009 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>); <span class="comment">% 5621674</span>
+0010 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>); <span class="comment">% 5621670</span>
+0011 
+0012 fprintf(<span class="string">'Kicker voltage read\n'</span>)
+0013 temp=tango_read_attribute2(<span class="string">'ANS-C01/EP/AL_K.1'</span>, <span class="string">'voltage'</span>);  <span class="comment">% 5.8064e+03</span>
+0014 fprintf(<span class="string">'K1=%10.1f\n'</span>,temp.value(2))
+0015 temp=tango_read_attribute2(<span class="string">'ANS-C01/EP/AL_K.2'</span>, <span class="string">'voltage'</span>);  <span class="comment">% 5.8685e+03</span>
+0016 fprintf(<span class="string">'K2=%10.1f\n'</span>,temp.value(2))
+0017 temp=tango_read_attribute2(<span class="string">'ANS-C01/EP/AL_K.3'</span>, <span class="string">'voltage'</span>);  <span class="comment">% 5.8153e+03</span>
+0018 fprintf(<span class="string">'K3=%10.1f\n'</span>,temp.value(2))
+0019 temp=tango_read_attribute2(<span class="string">'ANS-C01/EP/AL_K.4'</span>, <span class="string">'voltage'</span>);  <span class="comment">% 5.8034e+03</span>
+0020 fprintf(<span class="string">'K4=%10.1f\n'</span>,temp.value(2))
+0021 
+0022 
+0023 
+0024 <span class="comment">% New values</span>
+0025 delai0 =5621670-40;
+0026 r=1.02;    <span class="comment">% ratio global</span>
+0027 r1=1.0 ;   <span class="comment">% ratio 2 derniers kicker</span>
+0028 k=-0;
+0029 
+0030 <span class="comment">%</span>
+0031 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>,delai0 -1    + k);
+0032 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>,delai0 +6    + k);
+0033 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>,delai0 -2    + k);
+0034 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>,delai0 +2    + k);
+0035 
+0036 <span class="comment">%</span>
+0037 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.1'</span>, <span class="string">'voltage'</span>,(5566)*r);
+0038 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.2'</span>, <span class="string">'voltage'</span>,(5644 )*r); 
+0039 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.3'</span>, <span class="string">'voltage'</span>,(5543 )*r);
+0040 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.4'</span>, <span class="string">'voltage'</span>,(5619)*r); 
+0041 
+0042 
+0043 
+0044 
+0045</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

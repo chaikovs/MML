@@ -1,0 +1,1299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of timinggui_div</title>
+  <meta name="keywords" content="timinggui_div">
+  <meta name="description" content="TIMINGGUI_DIV M-file for timinggui_div.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; timinggui_div.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>timinggui_div
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>TIMINGGUI_DIV M-file for timinggui_div.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = timinggui_div(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> TIMINGGUI_DIV M-file for timinggui_div.fig
+      TIMINGGUI_DIV, by itself, creates a new TIMINGGUI_DIV or raises the existing
+      singleton*.
+
+      H = TIMINGGUI_DIV returns the handle to a new TIMINGGUI_DIV or the handle to
+      the existing singleton*.
+
+      TIMINGGUI_DIV('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in TIMINGGUI_DIV.M with the given input arguments.
+
+      TIMINGGUI_DIV('Property','Value',...) creates a new TIMINGGUI_DIV or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before timinggui_div_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to timinggui_div_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function timinggui_div_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = timinggui_div_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function edit_carte1_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function edit_carte1_5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function edit_carte1_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function edit_carte1_4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function edit_carte1_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function edit_carte1_3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function edit_carte1_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function edit_carte1_2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function edit_carte1_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function edit_carte1_1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function edit_carte1_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function edit_carte1_0_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function edit_carte2_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function edit_carte2_5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function edit_carte2_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function edit_carte2_4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function edit_carte2_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function edit_carte2_3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function edit_carte2_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function edit_carte2_2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function edit_carte2_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function edit_carte2_1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function edit_carte2_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function edit_carte2_0_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function edit_carte2_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function edit_carte2_7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function edit_carte2_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function edit_carte2_6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub31" class="code">function edit_carte3_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function edit_carte3_5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub33" class="code">function edit_carte3_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub34" class="code">function edit_carte3_4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub35" class="code">function edit_carte3_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub36" class="code">function edit_carte3_3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub37" class="code">function edit_carte3_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub38" class="code">function edit_carte3_2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub39" class="code">function edit_carte3_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub40" class="code">function edit_carte3_1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub41" class="code">function edit_carte3_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub42" class="code">function edit_carte3_0_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub43" class="code">function edit_carte3_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub44" class="code">function edit_carte3_7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub45" class="code">function edit_carte3_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub46" class="code">function edit_carte3_6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub47" class="code">function pushbutton_acquisition_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub48" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub49" class="code">function edit_carte1_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub50" class="code">function edit_carte1_6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub51" class="code">function edit_carte1_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub52" class="code">function edit_carte1_7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub53" class="code">function checkbox_carte1_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub54" class="code">function checkbox_carte1_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub55" class="code">function checkbox_carte1_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub56" class="code">function checkbox_carte1_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub57" class="code">function checkbox_carte1_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub58" class="code">function checkbox_carte1_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub59" class="code">function checkbox_carte1_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub60" class="code">function checkbox_carte1_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub61" class="code">function checkbox_carte2_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub62" class="code">function checkbox_carte2_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub63" class="code">function checkbox_carte2_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub64" class="code">function checkbox_carte2_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub65" class="code">function checkbox_carte2_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub66" class="code">function checkbox_carte2_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub67" class="code">function checkbox_carte2_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub68" class="code">function checkbox_carte2_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub69" class="code">function checkbox_carte3_0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub70" class="code">function checkbox_carte3_2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub71" class="code">function checkbox_carte3_3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub72" class="code">function checkbox_carte3_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub73" class="code">function checkbox_carte3_5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub74" class="code">function checkbox_carte3_6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub75" class="code">function checkbox_carte3_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub76" class="code">function checkbox_carte3_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub77" class="code">function setdelay(hObject, handles)</a></li><li><a href="#_sub78" class="code">function setoutput(hObject, handles)</a></li><li><a href="#_sub79" class="code">function menu_save_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub80" class="code">function menu_load_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub81" class="code">function pushbutton_start_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub82" class="code">function pushbutton_stop_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub83" class="code">function checkbox_status1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub84" class="code">function checkbox_status2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub85" class="code">function checkbox_status3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub86" class="code">function pushbutton_reset_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub87" class="code">function edit_div_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub88" class="code">function edit_div_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub89" class="code">function checkbox_div_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub90" class="code">function checkbox_status4_Callback(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = timinggui_div(varargin)</a>
+0002 <span class="comment">% TIMINGGUI_DIV M-file for timinggui_div.fig</span>
+0003 <span class="comment">%      TIMINGGUI_DIV, by itself, creates a new TIMINGGUI_DIV or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = TIMINGGUI_DIV returns the handle to a new TIMINGGUI_DIV or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      TIMINGGUI_DIV('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in TIMINGGUI_DIV.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      TIMINGGUI_DIV('Property','Value',...) creates a new TIMINGGUI_DIV or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before timinggui_div_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to timinggui_div_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Copyright 2002-2003 The MathWorks, Inc.</span>
+0024 
+0025 <span class="comment">% Edit the above text to modify the response to help timinggui_div</span>
+0026 
+0027 <span class="comment">% Last Modified by GUIDE v2.5 03-Apr-2006 18:40:04</span>
+0028 
+0029 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0030 gui_Singleton = 1;
+0031 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0032                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0033                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction timinggui_div_OpeningFcn(hObject, eventdata, handles, varargin)">timinggui_div_OpeningFcn</a>, <span class="keyword">...</span>
+0034                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = timinggui_div_OutputFcn(hObject, eventdata, handles)">timinggui_div_OutputFcn</a>, <span class="keyword">...</span>
+0035                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0036                    <span class="string">'gui_Callback'</span>,   []);
+0037 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0038     gui_State.gui_Callback = str2func(varargin{1});
+0039 <span class="keyword">end</span>
+0040 
+0041 <span class="keyword">if</span> nargout
+0042     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">else</span>
+0044     gui_mainfcn(gui_State, varargin{:});
+0045 <span class="keyword">end</span>
+0046 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0047 
+0048 
+0049 <span class="comment">% --- Executes just before timinggui_div is made visible.</span>
+0050 <a name="_sub1" href="#_subfunctions" class="code">function timinggui_div_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0051 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0052 <span class="comment">% hObject    handle to figure</span>
+0053 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0054 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0055 <span class="comment">% varargin   command line arguments to timinggui_div (see VARARGIN)</span>
+0056 
+0057 <span class="comment">% Choose default command line output for timinggui_div</span>
+0058 handles.output = hObject;
+0059 
+0060 <span class="comment">% Update handles structure</span>
+0061 guidata(hObject, handles);
+0062 
+0063 <span class="comment">% UIWAIT makes timinggui_div wait for user response (see UIRESUME)</span>
+0064 <span class="comment">% uiwait(handles.figure1);</span>
+0065 
+0066 handles.device_carte1 =<span class="string">'BOO/SY/CPT.1'</span>;
+0067 handles.device_carte2 =<span class="string">'LT1/SY/CPT.1'</span>;
+0068 handles.device_carte3 =<span class="string">'BOO/SY/CPT.2'</span>;
+0069 handles.device_carte4 =<span class="string">'LIN/SY/FREQDIV'</span>;
+0070 
+0071 str1 = {<span class="string">'delayCounter0'</span>, <span class="string">'delayCounter1'</span>, <span class="string">'delayCounter2'</span>, <span class="keyword">...</span>
+0072     <span class="string">'delayCounter3'</span>, <span class="string">'delayCounter4'</span>, <span class="string">'delayCounter5'</span>, <span class="string">'delayCounter6'</span>, <span class="string">'delayCounter7'</span>};
+0073 
+0074 str2 = {<span class="string">'counter0Enable'</span>, <span class="string">'counter1Enable'</span>, <span class="string">'counter2Enable'</span>, <span class="keyword">...</span>
+0075     <span class="string">'counter3Enable'</span>, <span class="string">'counter4Enable'</span>, <span class="string">'counter5Enable'</span>, <span class="string">'counter6Enable'</span>, <span class="keyword">...</span>
+0076     <span class="string">'counter7Enable'</span>};
+0077 
+0078 str3 ={<span class="string">'divisionCounter0'</span>, <span class="string">'divisionCounter1'</span>, <span class="string">'divisionCounter2'</span>, <span class="keyword">...</span>
+0079     <span class="string">'divisionCounter3'</span>, <span class="string">'divisionCounter4'</span>, <span class="string">'divisionCounter5'</span>, <span class="string">'divisionCounter6'</span>, <span class="string">'divisionCounter7'</span>};
+0080 
+0081 nb = length(str1);
+0082 handles.delayname1 = [repmat(handles.device_carte1,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str1')];
+0083 handles.delayname2 = [repmat(handles.device_carte2,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str1')];
+0084 handles.delayname3 = [repmat(handles.device_carte3,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str1')];
+0085 handles.divisionname4 = [repmat(handles.device_carte4,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str3')];
+0086 
+0087 handles.enablename1 = [repmat(handles.device_carte1,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str2')];
+0088 handles.enablename2 = [repmat(handles.device_carte2,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str2')];
+0089 handles.enablename3 = [repmat(handles.device_carte3,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str2')];
+0090 handles.enablename4 = [repmat(handles.device_carte4,nb,1) repmat(<span class="string">'/'</span>,nb,1) cell2mat(str2')];
+0091 
+0092 <span class="comment">% Reads all delays for card #1, 2</span>
+0093 handles.delayvalue1 = readattribute(handles.delayname1);
+0094 handles.delayvalue2 = readattribute(handles.delayname2);
+0095 handles.delayvalue3 = readattribute(handles.delayname3);
+0096 
+0097 <span class="comment">% Reads all division for card #4</span>
+0098 handles.divisionvalue4 = readattribute(handles.divisionname4);
+0099 
+0100 <span class="comment">% Update handles structure</span>
+0101 guidata(hObject, handles);
+0102 
+0103 <span class="comment">%pushbutton_acquisition_Callback(handles.pushbutton_acquisition,eventdata,handles);</span>
+0104 
+0105 
+0106 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0107 <a name="_sub2" href="#_subfunctions" class="code">function varargout = timinggui_div_OutputFcn(hObject, eventdata, handles) </a>
+0108 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0109 <span class="comment">% hObject    handle to figure</span>
+0110 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0111 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0112 
+0113 <span class="comment">% Get default command line output from handles structure</span>
+0114 varargout{1} = handles.output;
+0115 
+0116 
+0117 
+0118 <a name="_sub3" href="#_subfunctions" class="code">function edit_carte1_5_Callback(hObject, eventdata, handles)</a>
+0119 <span class="comment">% hObject    handle to edit_carte1_5 (see GCBO)</span>
+0120 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0121 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0122 
+0123 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_5 as text</span>
+0124 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_5 as a double</span>
+0125 
+0126 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0127 
+0128 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0129 <a name="_sub4" href="#_subfunctions" class="code">function edit_carte1_5_CreateFcn(hObject, eventdata, handles)</a>
+0130 <span class="comment">% hObject    handle to edit_carte1_5 (see GCBO)</span>
+0131 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0132 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0133 
+0134 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0135 <span class="comment">%       See ISPC and COMPUTER.</span>
+0136 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0137     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0138 <span class="keyword">end</span>
+0139 
+0140 
+0141 
+0142 <a name="_sub5" href="#_subfunctions" class="code">function edit_carte1_4_Callback(hObject, eventdata, handles)</a>
+0143 <span class="comment">% hObject    handle to edit_carte1_4 (see GCBO)</span>
+0144 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0145 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0146 
+0147 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_4 as text</span>
+0148 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_4 as a double</span>
+0149 
+0150 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0151 
+0152 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0153 <a name="_sub6" href="#_subfunctions" class="code">function edit_carte1_4_CreateFcn(hObject, eventdata, handles)</a>
+0154 <span class="comment">% hObject    handle to edit_carte1_4 (see GCBO)</span>
+0155 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0156 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0157 
+0158 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0159 <span class="comment">%       See ISPC and COMPUTER.</span>
+0160 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0161     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0162 <span class="keyword">end</span>
+0163 
+0164 
+0165 
+0166 <a name="_sub7" href="#_subfunctions" class="code">function edit_carte1_3_Callback(hObject, eventdata, handles)</a>
+0167 <span class="comment">% hObject    handle to edit_carte1_3 (see GCBO)</span>
+0168 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0169 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0170 
+0171 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_3 as text</span>
+0172 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_3 as a double</span>
+0173 
+0174 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0175 
+0176 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0177 <a name="_sub8" href="#_subfunctions" class="code">function edit_carte1_3_CreateFcn(hObject, eventdata, handles)</a>
+0178 <span class="comment">% hObject    handle to edit_carte1_3 (see GCBO)</span>
+0179 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0180 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0181 
+0182 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0183 <span class="comment">%       See ISPC and COMPUTER.</span>
+0184 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0185     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0186 <span class="keyword">end</span>
+0187 
+0188 
+0189 
+0190 <a name="_sub9" href="#_subfunctions" class="code">function edit_carte1_2_Callback(hObject, eventdata, handles)</a>
+0191 <span class="comment">% hObject    handle to edit_carte1_2 (see GCBO)</span>
+0192 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0193 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0194 
+0195 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_2 as text</span>
+0196 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_2 as a double</span>
+0197 
+0198 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0199 
+0200 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0201 <a name="_sub10" href="#_subfunctions" class="code">function edit_carte1_2_CreateFcn(hObject, eventdata, handles)</a>
+0202 <span class="comment">% hObject    handle to edit_carte1_2 (see GCBO)</span>
+0203 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0204 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0205 
+0206 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0207 <span class="comment">%       See ISPC and COMPUTER.</span>
+0208 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0209     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0210 <span class="keyword">end</span>
+0211 
+0212 
+0213 
+0214 <a name="_sub11" href="#_subfunctions" class="code">function edit_carte1_1_Callback(hObject, eventdata, handles)</a>
+0215 <span class="comment">% hObject    handle to edit_carte1_1 (see GCBO)</span>
+0216 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0217 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0218 
+0219 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_1 as text</span>
+0220 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_1 as a double</span>
+0221 
+0222 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0223 
+0224 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0225 <a name="_sub12" href="#_subfunctions" class="code">function edit_carte1_1_CreateFcn(hObject, eventdata, handles)</a>
+0226 <span class="comment">% hObject    handle to edit_carte1_1 (see GCBO)</span>
+0227 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0228 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0229 
+0230 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0231 <span class="comment">%       See ISPC and COMPUTER.</span>
+0232 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0233     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0234 <span class="keyword">end</span>
+0235 
+0236 
+0237 <a name="_sub13" href="#_subfunctions" class="code">function edit_carte1_0_Callback(hObject, eventdata, handles)</a>
+0238 <span class="comment">% hObject    handle to edit_carte1_0 (see GCBO)</span>
+0239 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0240 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0241 
+0242 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_0 as text</span>
+0243 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_0 as a double</span>
+0244 
+0245 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0246 
+0247 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0248 <a name="_sub14" href="#_subfunctions" class="code">function edit_carte1_0_CreateFcn(hObject, eventdata, handles)</a>
+0249 <span class="comment">% hObject    handle to edit_carte1_0 (see GCBO)</span>
+0250 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0251 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0252 
+0253 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0254 <span class="comment">%       See ISPC and COMPUTER.</span>
+0255 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0256     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0257 <span class="keyword">end</span>
+0258 
+0259 
+0260 
+0261 <a name="_sub15" href="#_subfunctions" class="code">function edit_carte2_5_Callback(hObject, eventdata, handles)</a>
+0262 <span class="comment">% hObject    handle to edit_carte2_5 (see GCBO)</span>
+0263 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0264 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0265 
+0266 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_5 as text</span>
+0267 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_5 as a double</span>
+0268 
+0269 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0270 
+0271 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0272 <a name="_sub16" href="#_subfunctions" class="code">function edit_carte2_5_CreateFcn(hObject, eventdata, handles)</a>
+0273 <span class="comment">% hObject    handle to edit_carte2_5 (see GCBO)</span>
+0274 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0275 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0276 
+0277 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0278 <span class="comment">%       See ISPC and COMPUTER.</span>
+0279 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0280     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0281 <span class="keyword">end</span>
+0282 
+0283 
+0284 
+0285 <a name="_sub17" href="#_subfunctions" class="code">function edit_carte2_4_Callback(hObject, eventdata, handles)</a>
+0286 <span class="comment">% hObject    handle to edit_carte2_4 (see GCBO)</span>
+0287 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0288 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0289 
+0290 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_4 as text</span>
+0291 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_4 as a double</span>
+0292 
+0293 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0294 
+0295 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0296 <a name="_sub18" href="#_subfunctions" class="code">function edit_carte2_4_CreateFcn(hObject, eventdata, handles)</a>
+0297 <span class="comment">% hObject    handle to edit_carte2_4 (see GCBO)</span>
+0298 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0299 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0300 
+0301 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0302 <span class="comment">%       See ISPC and COMPUTER.</span>
+0303 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0304     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0305 <span class="keyword">end</span>
+0306 
+0307 
+0308 
+0309 <a name="_sub19" href="#_subfunctions" class="code">function edit_carte2_3_Callback(hObject, eventdata, handles)</a>
+0310 <span class="comment">% hObject    handle to edit_carte2_3 (see GCBO)</span>
+0311 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0312 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0313 
+0314 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_3 as text</span>
+0315 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_3 as a double</span>
+0316 
+0317 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0318 
+0319 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0320 <a name="_sub20" href="#_subfunctions" class="code">function edit_carte2_3_CreateFcn(hObject, eventdata, handles)</a>
+0321 <span class="comment">% hObject    handle to edit_carte2_3 (see GCBO)</span>
+0322 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0323 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0324 
+0325 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0326 <span class="comment">%       See ISPC and COMPUTER.</span>
+0327 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0328     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0329 <span class="keyword">end</span>
+0330 
+0331 
+0332 
+0333 <a name="_sub21" href="#_subfunctions" class="code">function edit_carte2_2_Callback(hObject, eventdata, handles)</a>
+0334 <span class="comment">% hObject    handle to edit_carte2_2 (see GCBO)</span>
+0335 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0336 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0337 
+0338 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_2 as text</span>
+0339 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_2 as a double</span>
+0340 
+0341 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0342 
+0343 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0344 <a name="_sub22" href="#_subfunctions" class="code">function edit_carte2_2_CreateFcn(hObject, eventdata, handles)</a>
+0345 <span class="comment">% hObject    handle to edit_carte2_2 (see GCBO)</span>
+0346 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0347 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0348 
+0349 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0350 <span class="comment">%       See ISPC and COMPUTER.</span>
+0351 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0352     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0353 <span class="keyword">end</span>
+0354 
+0355 
+0356 
+0357 <a name="_sub23" href="#_subfunctions" class="code">function edit_carte2_1_Callback(hObject, eventdata, handles)</a>
+0358 <span class="comment">% hObject    handle to edit_carte2_1 (see GCBO)</span>
+0359 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0360 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0361 
+0362 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_1 as text</span>
+0363 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_1 as a double</span>
+0364 
+0365 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0366 
+0367 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0368 <a name="_sub24" href="#_subfunctions" class="code">function edit_carte2_1_CreateFcn(hObject, eventdata, handles)</a>
+0369 <span class="comment">% hObject    handle to edit_carte2_1 (see GCBO)</span>
+0370 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0371 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0372 
+0373 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0374 <span class="comment">%       See ISPC and COMPUTER.</span>
+0375 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0376     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0377 <span class="keyword">end</span>
+0378 
+0379 
+0380 
+0381 <a name="_sub25" href="#_subfunctions" class="code">function edit_carte2_0_Callback(hObject, eventdata, handles)</a>
+0382 <span class="comment">% hObject    handle to edit_carte2_0 (see GCBO)</span>
+0383 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0384 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0385 
+0386 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_0 as text</span>
+0387 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_0 as a double</span>
+0388 
+0389 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0390 
+0391 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0392 <a name="_sub26" href="#_subfunctions" class="code">function edit_carte2_0_CreateFcn(hObject, eventdata, handles)</a>
+0393 <span class="comment">% hObject    handle to edit_carte2_0 (see GCBO)</span>
+0394 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0395 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0396 
+0397 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0398 <span class="comment">%       See ISPC and COMPUTER.</span>
+0399 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0400     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0401 <span class="keyword">end</span>
+0402 
+0403 <a name="_sub27" href="#_subfunctions" class="code">function edit_carte2_7_Callback(hObject, eventdata, handles)</a>
+0404 <span class="comment">% hObject    handle to edit_carte2_7 (see GCBO)</span>
+0405 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0406 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0407 
+0408 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_7 as text</span>
+0409 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_7 as a double</span>
+0410 
+0411 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0412 
+0413 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0414 <a name="_sub28" href="#_subfunctions" class="code">function edit_carte2_7_CreateFcn(hObject, eventdata, handles)</a>
+0415 <span class="comment">% hObject    handle to edit_carte2_7 (see GCBO)</span>
+0416 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0417 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0418 
+0419 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0420 <span class="comment">%       See ISPC and COMPUTER.</span>
+0421 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0422     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0423 <span class="keyword">end</span>
+0424 
+0425 
+0426 
+0427 <a name="_sub29" href="#_subfunctions" class="code">function edit_carte2_6_Callback(hObject, eventdata, handles)</a>
+0428 <span class="comment">% hObject    handle to edit_carte2_6 (see GCBO)</span>
+0429 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0430 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0431 
+0432 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte2_6 as text</span>
+0433 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte2_6 as a double</span>
+0434 
+0435 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0436 
+0437 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0438 <a name="_sub30" href="#_subfunctions" class="code">function edit_carte2_6_CreateFcn(hObject, eventdata, handles)</a>
+0439 <span class="comment">% hObject    handle to edit_carte2_6 (see GCBO)</span>
+0440 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0441 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0442 
+0443 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0444 <span class="comment">%       See ISPC and COMPUTER.</span>
+0445 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0446     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0447 <span class="keyword">end</span>
+0448 
+0449 
+0450 
+0451 <a name="_sub31" href="#_subfunctions" class="code">function edit_carte3_5_Callback(hObject, eventdata, handles)</a>
+0452 <span class="comment">% hObject    handle to edit_carte3_5 (see GCBO)</span>
+0453 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0454 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0455 
+0456 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_5 as text</span>
+0457 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_5 as a double</span>
+0458 
+0459 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0460 
+0461 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0462 <a name="_sub32" href="#_subfunctions" class="code">function edit_carte3_5_CreateFcn(hObject, eventdata, handles)</a>
+0463 <span class="comment">% hObject    handle to edit_carte3_5 (see GCBO)</span>
+0464 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0465 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0466 
+0467 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0468 <span class="comment">%       See ISPC and COMPUTER.</span>
+0469 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0470     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0471 <span class="keyword">end</span>
+0472 
+0473 
+0474 
+0475 <a name="_sub33" href="#_subfunctions" class="code">function edit_carte3_4_Callback(hObject, eventdata, handles)</a>
+0476 <span class="comment">% hObject    handle to edit_carte3_4 (see GCBO)</span>
+0477 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0478 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0479 
+0480 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_4 as text</span>
+0481 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_4 as a double</span>
+0482 
+0483 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0484 
+0485 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0486 <a name="_sub34" href="#_subfunctions" class="code">function edit_carte3_4_CreateFcn(hObject, eventdata, handles)</a>
+0487 <span class="comment">% hObject    handle to edit_carte3_4 (see GCBO)</span>
+0488 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0489 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0490 
+0491 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0492 <span class="comment">%       See ISPC and COMPUTER.</span>
+0493 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0494     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0495 <span class="keyword">end</span>
+0496 
+0497 
+0498 
+0499 <a name="_sub35" href="#_subfunctions" class="code">function edit_carte3_3_Callback(hObject, eventdata, handles)</a>
+0500 <span class="comment">% hObject    handle to edit_carte3_3 (see GCBO)</span>
+0501 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0502 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0503 
+0504 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_3 as text</span>
+0505 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_3 as a double</span>
+0506 
+0507 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0508 
+0509 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0510 <a name="_sub36" href="#_subfunctions" class="code">function edit_carte3_3_CreateFcn(hObject, eventdata, handles)</a>
+0511 <span class="comment">% hObject    handle to edit_carte3_3 (see GCBO)</span>
+0512 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0513 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0514 
+0515 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0516 <span class="comment">%       See ISPC and COMPUTER.</span>
+0517 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0518     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0519 <span class="keyword">end</span>
+0520 
+0521 
+0522 
+0523 <a name="_sub37" href="#_subfunctions" class="code">function edit_carte3_2_Callback(hObject, eventdata, handles)</a>
+0524 <span class="comment">% hObject    handle to edit_carte3_2 (see GCBO)</span>
+0525 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0526 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0527 
+0528 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_2 as text</span>
+0529 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_2 as a double</span>
+0530 
+0531 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0532 
+0533 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0534 <a name="_sub38" href="#_subfunctions" class="code">function edit_carte3_2_CreateFcn(hObject, eventdata, handles)</a>
+0535 <span class="comment">% hObject    handle to edit_carte3_2 (see GCBO)</span>
+0536 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0537 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0538 
+0539 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0540 <span class="comment">%       See ISPC and COMPUTER.</span>
+0541 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0542     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0543 <span class="keyword">end</span>
+0544 
+0545 
+0546 
+0547 <a name="_sub39" href="#_subfunctions" class="code">function edit_carte3_1_Callback(hObject, eventdata, handles)</a>
+0548 <span class="comment">% hObject    handle to edit_carte3_1 (see GCBO)</span>
+0549 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0550 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0551 
+0552 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_1 as text</span>
+0553 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_1 as a double</span>
+0554 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0555 
+0556 
+0557 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0558 <a name="_sub40" href="#_subfunctions" class="code">function edit_carte3_1_CreateFcn(hObject, eventdata, handles)</a>
+0559 <span class="comment">% hObject    handle to edit_carte3_1 (see GCBO)</span>
+0560 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0561 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0562 
+0563 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0564 <span class="comment">%       See ISPC and COMPUTER.</span>
+0565 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0566     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0567 <span class="keyword">end</span>
+0568 
+0569 
+0570 <a name="_sub41" href="#_subfunctions" class="code">function edit_carte3_0_Callback(hObject, eventdata, handles)</a>
+0571 <span class="comment">% hObject    handle to edit_carte3_0 (see GCBO)</span>
+0572 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0573 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0574 
+0575 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_0 as text</span>
+0576 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_0 as a double</span>
+0577 
+0578 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0579 
+0580 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0581 <a name="_sub42" href="#_subfunctions" class="code">function edit_carte3_0_CreateFcn(hObject, eventdata, handles)</a>
+0582 <span class="comment">% hObject    handle to edit_carte3_0 (see GCBO)</span>
+0583 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0584 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0585 
+0586 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0587 <span class="comment">%       See ISPC and COMPUTER.</span>
+0588 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0589     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0590 <span class="keyword">end</span>
+0591 
+0592 
+0593 
+0594 <a name="_sub43" href="#_subfunctions" class="code">function edit_carte3_7_Callback(hObject, eventdata, handles)</a>
+0595 <span class="comment">% hObject    handle to edit_carte3_7 (see GCBO)</span>
+0596 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0597 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0598 
+0599 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_7 as text</span>
+0600 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_7 as a double</span>
+0601 
+0602 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0603 
+0604 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0605 <a name="_sub44" href="#_subfunctions" class="code">function edit_carte3_7_CreateFcn(hObject, eventdata, handles)</a>
+0606 <span class="comment">% hObject    handle to edit_carte3_7 (see GCBO)</span>
+0607 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0608 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0609 
+0610 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0611 <span class="comment">%       See ISPC and COMPUTER.</span>
+0612 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0613     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0614 <span class="keyword">end</span>
+0615 
+0616 
+0617 
+0618 <a name="_sub45" href="#_subfunctions" class="code">function edit_carte3_6_Callback(hObject, eventdata, handles)</a>
+0619 <span class="comment">% hObject    handle to edit_carte3_6 (see GCBO)</span>
+0620 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0621 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0622 
+0623 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte3_6 as text</span>
+0624 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte3_6 as a double</span>
+0625 
+0626 
+0627 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0628 <a name="_sub46" href="#_subfunctions" class="code">function edit_carte3_6_CreateFcn(hObject, eventdata, handles)</a>
+0629 <span class="comment">% hObject    handle to edit_carte3_6 (see GCBO)</span>
+0630 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0631 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0632 
+0633 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0634 <span class="comment">%       See ISPC and COMPUTER.</span>
+0635 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0636     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0637 <span class="keyword">end</span>
+0638 
+0639 
+0640 <span class="comment">% --- Executes on button press in pushbutton_acquisition.</span>
+0641 <a name="_sub47" href="#_subfunctions" class="code">function pushbutton_acquisition_Callback(hObject, eventdata, handles)</a>
+0642 <span class="comment">% hObject    handle to pushbutton_acquisition (see GCBO)</span>
+0643 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0644 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0645 
+0646 <span class="comment">% Reads all delays for card #1, 2</span>
+0647 handles.delayvalue1 = readattribute(handles.delayname1);
+0648 handles.delayvalue2 = readattribute(handles.delayname2);
+0649 handles.delayvalue3 = readattribute(handles.delayname3);
+0650 handles.enablevalue1 = readattribute(handles.enablename1);
+0651 handles.enablevalue2 = readattribute(handles.enablename2);
+0652 handles.enablevalue3 = readattribute(handles.enablename3);
+0653 handles.enablevalue4 = readattribute(handles.enablename4);
+0654 <span class="comment">% Reads all division for card #4</span>
+0655 handles.divisionvalue4 = readattribute(handles.divisionname4);
+0656 
+0657 <span class="comment">% Update handles structure</span>
+0658 guidata(hObject, handles);
+0659 
+0660 nb = length(handles.delayvalue1);
+0661 
+0662 <span class="comment">% update display for Card1</span>
+0663 <span class="keyword">for</span> k = 1:nb,
+0664     set(handles.([<span class="string">'edit_carte1_'</span> num2str(k-1)]),<span class="string">'String'</span>,num2str(handles.delayvalue1(k),7));
+0665     set(handles.([<span class="string">'checkbox_carte1_'</span> num2str(k-1)]),<span class="string">'Value'</span>,handles.enablevalue1(k));
+0666 <span class="keyword">end</span>
+0667 
+0668 <span class="comment">% update display for Card2</span>
+0669 <span class="keyword">for</span> k = 1:nb,
+0670     set(handles.([<span class="string">'edit_carte2_'</span> num2str(k-1)]),<span class="string">'String'</span>,num2str(handles.delayvalue2(k),7));
+0671     set(handles.([<span class="string">'checkbox_carte2_'</span> num2str(k-1)]),<span class="string">'Value'</span>,handles.enablevalue2(k));
+0672 <span class="keyword">end</span>
+0673 
+0674 <span class="comment">% update display for Card3</span>
+0675 <span class="keyword">for</span> k = 1:nb,
+0676     set(handles.([<span class="string">'edit_carte3_'</span> num2str(k-1)]),<span class="string">'String'</span>,num2str(handles.delayvalue3(k),7));
+0677     set(handles.([<span class="string">'checkbox_carte3_'</span> num2str(k-1)]),<span class="string">'Value'</span>,handles.enablevalue3(k));
+0678 <span class="keyword">end</span>
+0679 
+0680 <span class="comment">% update display for Card4</span>
+0681 <span class="keyword">for</span> k = 1:1,
+0682     set(handles.([<span class="string">'edit_div'</span>]),<span class="string">'String'</span>,num2str(handles.divisionvalue4(k),7));
+0683     set(handles.([<span class="string">'checkbox_div'</span>]),<span class="string">'Value'</span>,handles.enablevalue4(k));
+0684 <span class="keyword">end</span>
+0685 
+0686 
+0687 
+0688 <span class="comment">% get state of the 3 counter cards</span>
+0689 set(handles.checkbox_status1,<span class="string">'String'</span>,tango_command_inout2(handles.device_carte1,<span class="string">'State'</span>))
+0690 set(handles.checkbox_status2,<span class="string">'String'</span>,tango_command_inout2(handles.device_carte2,<span class="string">'State'</span>))
+0691 set(handles.checkbox_status3,<span class="string">'String'</span>,tango_command_inout2(handles.device_carte3,<span class="string">'State'</span>))
+0692 set(handles.checkbox_status4,<span class="string">'String'</span>,tango_command_inout2(handles.device_carte4,<span class="string">'State'</span>))
+0693 
+0694 
+0695 <span class="comment">% --------------------------------------------------------------------</span>
+0696 <a name="_sub48" href="#_subfunctions" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a>
+0697 <span class="comment">% hObject    handle to Untitled_1 (see GCBO)</span>
+0698 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0699 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0700 
+0701 
+0702 
+0703 <a name="_sub49" href="#_subfunctions" class="code">function edit_carte1_6_Callback(hObject, eventdata, handles)</a>
+0704 <span class="comment">% hObject    handle to edit_carte1_6 (see GCBO)</span>
+0705 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0706 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0707 
+0708 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_6 as text</span>
+0709 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_6 as a double</span>
+0710 
+0711 
+0712 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0713 <a name="_sub50" href="#_subfunctions" class="code">function edit_carte1_6_CreateFcn(hObject, eventdata, handles)</a>
+0714 <span class="comment">% hObject    handle to edit_carte1_6 (see GCBO)</span>
+0715 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0716 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0717 
+0718 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0719 <span class="comment">%       See ISPC and COMPUTER.</span>
+0720 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0721     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0722 <span class="keyword">end</span>
+0723 
+0724 
+0725 
+0726 <a name="_sub51" href="#_subfunctions" class="code">function edit_carte1_7_Callback(hObject, eventdata, handles)</a>
+0727 <span class="comment">% hObject    handle to edit_carte1_7 (see GCBO)</span>
+0728 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0729 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0730 
+0731 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_carte1_7 as text</span>
+0732 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_carte1_7 as a double</span>
+0733 
+0734 <a href="#_sub77" class="code" title="subfunction setdelay(hObject, handles)">setdelay</a>(hObject, handles);
+0735 
+0736 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0737 <a name="_sub52" href="#_subfunctions" class="code">function edit_carte1_7_CreateFcn(hObject, eventdata, handles)</a>
+0738 <span class="comment">% hObject    handle to edit_carte1_7 (see GCBO)</span>
+0739 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0740 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0741 
+0742 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0743 <span class="comment">%       See ISPC and COMPUTER.</span>
+0744 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0745     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0746 <span class="keyword">end</span>
+0747 
+0748 
+0749 <span class="comment">% --- Executes on button press in checkbox_carte1_0.</span>
+0750 <a name="_sub53" href="#_subfunctions" class="code">function checkbox_carte1_0_Callback(hObject, eventdata, handles)</a>
+0751 <span class="comment">% hObject    handle to checkbox_carte1_0 (see GCBO)</span>
+0752 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0753 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0754 
+0755 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_0</span>
+0756 
+0757 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0758 
+0759 <span class="comment">% --- Executes on button press in checkbox_carte1_2.</span>
+0760 <a name="_sub54" href="#_subfunctions" class="code">function checkbox_carte1_2_Callback(hObject, eventdata, handles)</a>
+0761 <span class="comment">% hObject    handle to checkbox_carte1_2 (see GCBO)</span>
+0762 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0763 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0764 
+0765 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_2</span>
+0766 
+0767 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0768 
+0769 <span class="comment">% --- Executes on button press in checkbox_carte1_3.</span>
+0770 <a name="_sub55" href="#_subfunctions" class="code">function checkbox_carte1_3_Callback(hObject, eventdata, handles)</a>
+0771 <span class="comment">% hObject    handle to checkbox_carte1_3 (see GCBO)</span>
+0772 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0773 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0774 
+0775 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_3</span>
+0776 
+0777 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0778 
+0779 <span class="comment">% --- Executes on button press in checkbox_carte1_4.</span>
+0780 <a name="_sub56" href="#_subfunctions" class="code">function checkbox_carte1_4_Callback(hObject, eventdata, handles)</a>
+0781 <span class="comment">% hObject    handle to checkbox_carte1_4 (see GCBO)</span>
+0782 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0783 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0784 
+0785 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_4</span>
+0786 
+0787 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0788 
+0789 <span class="comment">% --- Executes on button press in checkbox_carte1_5.</span>
+0790 <a name="_sub57" href="#_subfunctions" class="code">function checkbox_carte1_5_Callback(hObject, eventdata, handles)</a>
+0791 <span class="comment">% hObject    handle to checkbox_carte1_5 (see GCBO)</span>
+0792 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0793 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0794 
+0795 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_5</span>
+0796 
+0797 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0798 
+0799 <span class="comment">% --- Executes on button press in checkbox_carte1_6.</span>
+0800 <a name="_sub58" href="#_subfunctions" class="code">function checkbox_carte1_6_Callback(hObject, eventdata, handles)</a>
+0801 <span class="comment">% hObject    handle to checkbox_carte1_6 (see GCBO)</span>
+0802 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0803 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0804 
+0805 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_6</span>
+0806 
+0807 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0808 
+0809 <span class="comment">% --- Executes on button press in checkbox_carte1_7.</span>
+0810 <a name="_sub59" href="#_subfunctions" class="code">function checkbox_carte1_7_Callback(hObject, eventdata, handles)</a>
+0811 <span class="comment">% hObject    handle to checkbox_carte1_7 (see GCBO)</span>
+0812 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0813 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0814 
+0815 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_7</span>
+0816 
+0817 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0818 
+0819 <span class="comment">% --- Executes on button press in checkbox_carte1_1.</span>
+0820 <a name="_sub60" href="#_subfunctions" class="code">function checkbox_carte1_1_Callback(hObject, eventdata, handles)</a>
+0821 <span class="comment">% hObject    handle to checkbox_carte1_1 (see GCBO)</span>
+0822 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0823 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0824 
+0825 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte1_1</span>
+0826 
+0827 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0828 
+0829 <span class="comment">% --- Executes on button press in checkbox_carte2_0.</span>
+0830 <a name="_sub61" href="#_subfunctions" class="code">function checkbox_carte2_0_Callback(hObject, eventdata, handles)</a>
+0831 <span class="comment">% hObject    handle to checkbox_carte2_0 (see GCBO)</span>
+0832 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0833 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0834 
+0835 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_0</span>
+0836 
+0837 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0838 
+0839 <span class="comment">% --- Executes on button press in checkbox_carte2_2.</span>
+0840 <a name="_sub62" href="#_subfunctions" class="code">function checkbox_carte2_2_Callback(hObject, eventdata, handles)</a>
+0841 <span class="comment">% hObject    handle to checkbox_carte2_2 (see GCBO)</span>
+0842 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0843 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0844 
+0845 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_2</span>
+0846 
+0847 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0848 
+0849 <span class="comment">% --- Executes on button press in checkbox_carte2_3.</span>
+0850 <a name="_sub63" href="#_subfunctions" class="code">function checkbox_carte2_3_Callback(hObject, eventdata, handles)</a>
+0851 <span class="comment">% hObject    handle to checkbox_carte2_3 (see GCBO)</span>
+0852 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0853 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0854 
+0855 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_3</span>
+0856 
+0857 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0858 
+0859 <span class="comment">% --- Executes on button press in checkbox_carte2_4.</span>
+0860 <a name="_sub64" href="#_subfunctions" class="code">function checkbox_carte2_4_Callback(hObject, eventdata, handles)</a>
+0861 <span class="comment">% hObject    handle to checkbox_carte2_4 (see GCBO)</span>
+0862 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0863 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0864 
+0865 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_4</span>
+0866 
+0867 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0868 
+0869 <span class="comment">% --- Executes on button press in checkbox_carte2_5.</span>
+0870 <a name="_sub65" href="#_subfunctions" class="code">function checkbox_carte2_5_Callback(hObject, eventdata, handles)</a>
+0871 <span class="comment">% hObject    handle to checkbox_carte2_5 (see GCBO)</span>
+0872 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0873 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0874 
+0875 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_5</span>
+0876 
+0877 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0878 
+0879 <span class="comment">% --- Executes on button press in checkbox_carte2_6.</span>
+0880 <a name="_sub66" href="#_subfunctions" class="code">function checkbox_carte2_6_Callback(hObject, eventdata, handles)</a>
+0881 <span class="comment">% hObject    handle to checkbox_carte2_6 (see GCBO)</span>
+0882 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0883 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0884 
+0885 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_6</span>
+0886 
+0887 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0888 
+0889 <span class="comment">% --- Executes on button press in checkbox_carte2_7.</span>
+0890 <a name="_sub67" href="#_subfunctions" class="code">function checkbox_carte2_7_Callback(hObject, eventdata, handles)</a>
+0891 <span class="comment">% hObject    handle to checkbox_carte2_7 (see GCBO)</span>
+0892 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0893 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0894 
+0895 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_7</span>
+0896 
+0897 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0898 
+0899 <span class="comment">% --- Executes on button press in checkbox_carte2_1.</span>
+0900 <a name="_sub68" href="#_subfunctions" class="code">function checkbox_carte2_1_Callback(hObject, eventdata, handles)</a>
+0901 <span class="comment">% hObject    handle to checkbox_carte2_1 (see GCBO)</span>
+0902 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0903 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0904 
+0905 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte2_1</span>
+0906 
+0907 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0908 
+0909 
+0910 <span class="comment">% --- Executes on button press in checkbox_carte3_0.</span>
+0911 <a name="_sub69" href="#_subfunctions" class="code">function checkbox_carte3_0_Callback(hObject, eventdata, handles)</a>
+0912 <span class="comment">% hObject    handle to checkbox_carte3_0 (see GCBO)</span>
+0913 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0914 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0915 
+0916 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_0</span>
+0917 
+0918 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0919 
+0920 
+0921 <span class="comment">% --- Executes on button press in checkbox_carte3_2.</span>
+0922 <a name="_sub70" href="#_subfunctions" class="code">function checkbox_carte3_2_Callback(hObject, eventdata, handles)</a>
+0923 <span class="comment">% hObject    handle to checkbox_carte3_2 (see GCBO)</span>
+0924 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0925 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0926 
+0927 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_2</span>
+0928 
+0929 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0930 
+0931 
+0932 <span class="comment">% --- Executes on button press in checkbox_carte3_3.</span>
+0933 <a name="_sub71" href="#_subfunctions" class="code">function checkbox_carte3_3_Callback(hObject, eventdata, handles)</a>
+0934 <span class="comment">% hObject    handle to checkbox_carte3_3 (see GCBO)</span>
+0935 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0936 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0937 
+0938 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_3</span>
+0939 
+0940 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0941 
+0942 
+0943 <span class="comment">% --- Executes on button press in checkbox_carte3_4.</span>
+0944 <a name="_sub72" href="#_subfunctions" class="code">function checkbox_carte3_4_Callback(hObject, eventdata, handles)</a>
+0945 <span class="comment">% hObject    handle to checkbox_carte3_4 (see GCBO)</span>
+0946 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0947 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0948 
+0949 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_4</span>
+0950 
+0951 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0952 
+0953 
+0954 <span class="comment">% --- Executes on button press in checkbox_carte3_5.</span>
+0955 <a name="_sub73" href="#_subfunctions" class="code">function checkbox_carte3_5_Callback(hObject, eventdata, handles)</a>
+0956 <span class="comment">% hObject    handle to checkbox_carte3_5 (see GCBO)</span>
+0957 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0958 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0959 
+0960 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_5</span>
+0961 
+0962 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0963 
+0964 
+0965 <span class="comment">% --- Executes on button press in checkbox_carte3_6.</span>
+0966 <a name="_sub74" href="#_subfunctions" class="code">function checkbox_carte3_6_Callback(hObject, eventdata, handles)</a>
+0967 <span class="comment">% hObject    handle to checkbox_carte3_6 (see GCBO)</span>
+0968 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0969 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0970 
+0971 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_6</span>
+0972 
+0973 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0974 
+0975 <span class="comment">% --- Executes on button press in checkbox_carte3_7.</span>
+0976 <a name="_sub75" href="#_subfunctions" class="code">function checkbox_carte3_7_Callback(hObject, eventdata, handles)</a>
+0977 <span class="comment">% hObject    handle to checkbox_carte3_7 (see GCBO)</span>
+0978 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0979 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0980 
+0981 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_7</span>
+0982 
+0983 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0984 
+0985 <span class="comment">% --- Executes on button press in checkbox_carte3_1.</span>
+0986 <a name="_sub76" href="#_subfunctions" class="code">function checkbox_carte3_1_Callback(hObject, eventdata, handles)</a>
+0987 <span class="comment">% hObject    handle to checkbox_carte3_1 (see GCBO)</span>
+0988 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0989 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0990 
+0991 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_carte3_1</span>
+0992 
+0993 <a href="#_sub78" class="code" title="subfunction setoutput(hObject, handles)">setoutput</a>(hObject, handles)
+0994 
+0995 <span class="comment">% Generic function to set delays</span>
+0996 <a name="_sub77" href="#_subfunctions" class="code">function setdelay(hObject, handles)</a>
+0997 
+0998 val = str2double(get(hObject,<span class="string">'String'</span>));
+0999 tag = get(hObject,<span class="string">'Tag'</span>);
+1000 id = regexpi(tag,<span class="string">'carte'</span>);
+1001 
+1002 cardnum = tag(id+5);
+1003 outputnum = str2double(tag(id+7));
+1004 
+1005 writeattribute(handles.([<span class="string">'delayname'</span> cardnum])(outputnum+1,:),val);    
+1006 
+1007 <span class="comment">% Generic function to enable/disable output</span>
+1008 <a name="_sub78" href="#_subfunctions" class="code">function setoutput(hObject, handles)</a>
+1009 
+1010 val = get(hObject,<span class="string">'Value'</span>);
+1011 tag = get(hObject,<span class="string">'Tag'</span>);
+1012 id = regexpi(tag,<span class="string">'carte'</span>);
+1013 
+1014 cardnum = tag(id+5);
+1015 outputnum = str2double(tag(id+7));
+1016 
+1017 writeattribute(handles.([<span class="string">'enablename'</span> cardnum])(outputnum+1,:),uint8(val));    
+1018 
+1019 <span class="comment">% --------------------------------------------------------------------</span>
+1020 <a name="_sub79" href="#_subfunctions" class="code">function menu_save_Callback(hObject, eventdata, handles)</a>
+1021 <span class="comment">% hObject    handle to menu_save (see GCBO)</span>
+1022 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1023 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1024 
+1025 delayvalue1 = readattribute(handles.delayname1);
+1026 delayvalue2 = readattribute(handles.delayname2);
+1027 delayvalue3 = readattribute(handles.delayname3);
+1028 enablevalue1 = readattribute(handles.enablename1);
+1029 enablevalue2 = readattribute(handles.enablename2);
+1030 enablevalue3 = readattribute(handles.enablename3);
+1031 
+1032 FileName = <span class="string">'synchro'</span>;
+1033 DirectoryName = getfamilydata(<span class="string">'Directory'</span>,<span class="string">'Timing'</span>);
+1034 FileName = appendtimestamp(FileName, clock);
+1035 [FileName, DirectoryName] = uiputfile(<span class="string">'*.mat'</span>,<span class="string">'Save Lattice to ...'</span>, [DirectoryName FileName]);
+1036 <span class="keyword">if</span> FileName == 0
+1037     fprintf(<span class="string">'   File not saved \n'</span>);
+1038     <span class="keyword">return</span>;
+1039 <span class="keyword">end</span>
+1040 
+1041 <span class="comment">% Save all data in structure to file</span>
+1042 DirStart = pwd;
+1043 [DirectoryName, DirectoryErrorFlag] = gotodirectory(DirectoryName);
+1044 <span class="keyword">try</span>
+1045     save(FileName, <span class="string">'delayvalue1'</span>, <span class="string">'delayvalue2'</span>, <span class="string">'delayvalue3'</span>,<span class="keyword">...</span>
+1046                    <span class="string">'enablevalue1'</span>, <span class="string">'enablevalue2'</span>, <span class="string">'enablevalue3'</span>);
+1047 <span class="keyword">catch</span>
+1048     cd(DirStart);
+1049     <span class="keyword">return</span>
+1050 <span class="keyword">end</span>
+1051 cd(DirStart);
+1052 
+1053 <span class="comment">% --------------------------------------------------------------------</span>
+1054 <a name="_sub80" href="#_subfunctions" class="code">function menu_load_Callback(hObject, eventdata, handles)</a>
+1055 <span class="comment">% hObject    handle to menu_load (see GCBO)</span>
+1056 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1057 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1058 
+1059 DirSpec   =  getfamilydata(<span class="string">'Directory'</span>,<span class="string">'Timing'</span>);           <span class="comment">%default to Configuration data directory</span>
+1060 FileName  =  [];                                <span class="comment">%no default file</span>
+1061 [FileName, DirSpec,FilterIndex]=uigetfile(<span class="string">'*.mat'</span>,<span class="string">'Select Configuration File'</span>,[DirSpec FileName]);
+1062 FileSpec=[DirSpec FileName];
+1063 
+1064 <span class="keyword">try</span>
+1065     cnf=load([DirSpec FileName]);          <span class="comment">%load configuration from archive</span>
+1066 <span class="keyword">catch</span>
+1067     <span class="keyword">return</span>
+1068 <span class="keyword">end</span>
+1069 
+1070 writeattribute(handles.delayname1, cnf.delayvalue1);
+1071 writeattribute(handles.delayname2, cnf.delayvalue2);
+1072 writeattribute(handles.delayname3, cnf.delayvalue3);
+1073 writeattribute(handles.enablename1, cnf.enablevalue1, <span class="string">'uint8'</span>);
+1074 writeattribute(handles.enablename2, cnf.enablevalue2, <span class="string">'uint8'</span>);
+1075 writeattribute(handles.enablename3, cnf.enablevalue3, <span class="string">'uint8'</span>);
+1076 
+1077 <span class="comment">%refresh data in GUI</span>
+1078 <a href="#_sub47" class="code" title="subfunction pushbutton_acquisition_Callback(hObject, eventdata, handles)">pushbutton_acquisition_Callback</a>(handles.pushbutton_acquisition,eventdata,handles);
+1079 
+1080 
+1081 <span class="comment">% --- Executes on button press in pushbutton_start.</span>
+1082 <a name="_sub81" href="#_subfunctions" class="code">function pushbutton_start_Callback(hObject, eventdata, handles)</a>
+1083 <span class="comment">% hObject    handle to pushbutton_start (see GCBO)</span>
+1084 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1085 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1086 
+1087 <span class="keyword">if</span> get(handles.checkbox_status1,<span class="string">'Value'</span>) == 1
+1088     tango_command_inout2(handles.device_carte1,<span class="string">'Start'</span>);
+1089 <span class="keyword">end</span>
+1090 
+1091 <span class="keyword">if</span> get(handles.checkbox_status2,<span class="string">'Value'</span>) == 1
+1092     tango_command_inout2(handles.device_carte2,<span class="string">'Start'</span>);
+1093 <span class="keyword">end</span>
+1094 
+1095 <span class="keyword">if</span> get(handles.checkbox_status3,<span class="string">'Value'</span>) == 1
+1096     tango_command_inout2(handles.device_carte3,<span class="string">'Start'</span>);
+1097 <span class="keyword">end</span>
+1098 
+1099 <span class="keyword">if</span> get(handles.checkbox_status4,<span class="string">'Value'</span>) == 1
+1100     tango_command_inout2(handles.device_carte4,<span class="string">'Start'</span>);
+1101 <span class="keyword">end</span>
+1102 
+1103 <a href="#_sub47" class="code" title="subfunction pushbutton_acquisition_Callback(hObject, eventdata, handles)">pushbutton_acquisition_Callback</a>(handles.pushbutton_acquisition, eventdata, handles)
+1104 
+1105 <span class="comment">% --- Executes on button press in pushbutton_stop.</span>
+1106 <a name="_sub82" href="#_subfunctions" class="code">function pushbutton_stop_Callback(hObject, eventdata, handles)</a>
+1107 <span class="comment">% hObject    handle to pushbutton_stop (see GCBO)</span>
+1108 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1109 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1110 
+1111 <span class="keyword">if</span> get(handles.checkbox_status1,<span class="string">'Value'</span>) == 1
+1112     tango_command_inout2(handles.device_carte1,<span class="string">'Stop'</span>);
+1113 <span class="keyword">end</span>
+1114 
+1115 <span class="keyword">if</span> get(handles.checkbox_status2,<span class="string">'Value'</span>) == 1
+1116     tango_command_inout2(handles.device_carte2,<span class="string">'Stop'</span>);
+1117 <span class="keyword">end</span>
+1118 
+1119 <span class="keyword">if</span> get(handles.checkbox_status3,<span class="string">'Value'</span>) == 1
+1120     tango_command_inout2(handles.device_carte3,<span class="string">'Stop'</span>);
+1121 <span class="keyword">end</span>
+1122 
+1123 <span class="keyword">if</span> get(handles.checkbox_status4,<span class="string">'Value'</span>) == 1
+1124     tango_command_inout2(handles.device_carte4,<span class="string">'Stop'</span>);
+1125 <span class="keyword">end</span>
+1126 
+1127 <a href="#_sub47" class="code" title="subfunction pushbutton_acquisition_Callback(hObject, eventdata, handles)">pushbutton_acquisition_Callback</a>(handles.pushbutton_acquisition, eventdata, handles)
+1128 
+1129 <span class="comment">% --- Executes on button press in checkbox_status1.</span>
+1130 <a name="_sub83" href="#_subfunctions" class="code">function checkbox_status1_Callback(hObject, eventdata, handles)</a>
+1131 <span class="comment">% hObject    handle to checkbox_status1 (see GCBO)</span>
+1132 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1133 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1134 
+1135 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_status1</span>
+1136 
+1137 
+1138 <span class="comment">% --- Executes on button press in checkbox_status2.</span>
+1139 <a name="_sub84" href="#_subfunctions" class="code">function checkbox_status2_Callback(hObject, eventdata, handles)</a>
+1140 <span class="comment">% hObject    handle to checkbox_status2 (see GCBO)</span>
+1141 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1142 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1143 
+1144 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_status2</span>
+1145 
+1146 
+1147 <span class="comment">% --- Executes on button press in checkbox_status3.</span>
+1148 <a name="_sub85" href="#_subfunctions" class="code">function checkbox_status3_Callback(hObject, eventdata, handles)</a>
+1149 <span class="comment">% hObject    handle to checkbox_status3 (see GCBO)</span>
+1150 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1151 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1152 
+1153 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_status3</span>
+1154 
+1155 
+1156 <span class="comment">% --- Executes on button press in pushbutton_reset.</span>
+1157 <a name="_sub86" href="#_subfunctions" class="code">function pushbutton_reset_Callback(hObject, eventdata, handles)</a>
+1158 <span class="comment">% hObject    handle to pushbutton_reset (see GCBO)</span>
+1159 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1160 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1161 
+1162 cmd = <span class="string">'Init'</span>;
+1163 
+1164 <span class="keyword">if</span> get(handles.checkbox_status1,<span class="string">'Value'</span>) == 1
+1165     tango_command_inout2(handles.device_carte1,cmd);
+1166 <span class="keyword">end</span>
+1167 
+1168 <span class="keyword">if</span> get(handles.checkbox_status2,<span class="string">'Value'</span>) == 1
+1169     tango_command_inout2(handles.device_carte2,cmd);
+1170 <span class="keyword">end</span>
+1171 
+1172 <span class="keyword">if</span> get(handles.checkbox_status3,<span class="string">'Value'</span>) == 1
+1173     tango_command_inout2(handles.device_carte3,cmd);
+1174 <span class="keyword">end</span>
+1175 
+1176 <span class="keyword">if</span> get(handles.checkbox_status4,<span class="string">'Value'</span>) == 1
+1177     tango_command_inout2(handles.device_carte4,cmd);
+1178 <span class="keyword">end</span>
+1179 
+1180 <a href="#_sub47" class="code" title="subfunction pushbutton_acquisition_Callback(hObject, eventdata, handles)">pushbutton_acquisition_Callback</a>(handles.pushbutton_acquisition, eventdata, handles)
+1181 
+1182 
+1183 
+1184 <a name="_sub87" href="#_subfunctions" class="code">function edit_div_Callback(hObject, eventdata, handles)</a>
+1185 <span class="comment">% hObject    handle to edit_div (see GCBO)</span>
+1186 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1187 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1188 
+1189 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_div as text</span>
+1190 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_div as a double</span>
+1191 
+1192 val = int32(str2double(get(hObject,<span class="string">'String'</span>)));
+1193 <span class="keyword">if</span> val &lt; 4
+1194     warndlg(<span class="string">'Not applied: minimum is 4'</span>)
+1195 <span class="keyword">else</span>
+1196     tango_write_attribute2(handles.device_carte4,[<span class="string">'divisionCounter'</span> num2str(0)],val);
+1197 <span class="keyword">end</span>
+1198 
+1199 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1200 <a name="_sub88" href="#_subfunctions" class="code">function edit_div_CreateFcn(hObject, eventdata, handles)</a>
+1201 <span class="comment">% hObject    handle to edit_div (see GCBO)</span>
+1202 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1203 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1204 
+1205 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1206 <span class="comment">%       See ISPC and COMPUTER.</span>
+1207 <span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1208     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1209 <span class="keyword">end</span>
+1210 
+1211 
+1212 <span class="comment">% --- Executes on button press in checkbox_div.</span>
+1213 <a name="_sub89" href="#_subfunctions" class="code">function checkbox_div_Callback(hObject, eventdata, handles)</a>
+1214 <span class="comment">% hObject    handle to checkbox_div (see GCBO)</span>
+1215 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1216 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1217 
+1218 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_div</span>
+1219 
+1220 val = uint8(get(hObject,<span class="string">'Value'</span>));
+1221  tango_write_attribute2(handles.device_carte4,[<span class="string">'counter'</span> num2str(0) <span class="string">'Enable'</span>],val);
+1222 
+1223 
+1224 <span class="comment">% --- Executes on button press in checkbox_status4.</span>
+1225 <a name="_sub90" href="#_subfunctions" class="code">function checkbox_status4_Callback(hObject, eventdata, handles)</a>
+1226 <span class="comment">% hObject    handle to checkbox_status4 (see GCBO)</span>
+1227 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1228 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1229 
+1230 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox_status4</span>
+1231 
+1232</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>
