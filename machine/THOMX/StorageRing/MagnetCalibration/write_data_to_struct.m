@@ -124,3 +124,11 @@ xlabel(' Current [A]')
 ylabel('Inegrated gradient [T]')
 title('Magnetic calibration for 34 QUADS')
 % print('quad_all_raw.png','-dpng','-r300')
+
+%% SEXT
+
+
+
+
+
+

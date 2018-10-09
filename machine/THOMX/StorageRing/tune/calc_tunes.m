@@ -11,39 +11,64 @@ thomx_ring=ThomX_017_064_r56_02_chro00;
 Z0=[0.001 0.0 0.0001 0 0 0]';
 Z1=[0.001 0 0.0001 0 0 0]';
 
-[OUT_thomx,lost_thomx]=ringpass(thomx_ring,Z0,1000); %(X, PX, Y, PY, DP, CT2 ) 
-[OUT_thomxV,lost_thomxV]=ringpass(thomx_ring,Z1,1000); %(X, PX, Y, PY, DP, CT2 ) 
+[X1,lost_thomx]=ringpass(thomx_ring,Z0,1024); %(X, PX, Y, PY, DP, CT2 ) 
+BPMindex = family2atindex('BPMx',getlist('BPMx'));
+X2 = linepass(thomx_ring, X1, BPMindex);
+BPMx = reshape(X2(1,:), 1024, length(BPMindex));
+BPMy = reshape(X2(3,:), 1024, length(BPMindex));
 
+%  X = OUT_thomx(1,:);
+%  PX= OUT_thomx(2,:);
+%  Y= OUT_thomx(3,:);
+%  PY= OUT_thomx(4,:);
+%  DP= OUT_thomx(5,:);
+%  CT= OUT_thomx(6,:);
+ 
+% BPMindex = family2atindex('BPMx');
+% spos = getspos('BPMx');
 
- X = OUT_thomx(1,:);
- PX= OUT_thomx(2,:);
- Y= OUT_thomx(3,:);
- PY= OUT_thomx(4,:);
- DP= OUT_thomx(5,:);
- CT= OUT_thomx(6,:);
- 
-%  X_V = OUT_thomxV(1,:);
-%  PX_V= OUT_thomxV(2,:);
-%  Y_V= OUT_thomxV(3,:);
-%  PY_V= OUT_thomxV(4,:);
-%  DP_V= OUT_thomxV(5,:);
-%  CT_V= OUT_thomxV(6,:);
- 
+% OUT_thomx2 = linepass(thomx_ring, Z0, 1:length(thomx_ring)+1);
+%   X1 = OUT_thomx2(1,BPMindex)*1e3;
+%   Y1 = OUT_thomx2(3,BPMindex)*1e3;
+
+%%
+%buildatindex(Family, FamName)
+
+% X1 = ringpass(thomx_ring, Z0, 1024);
+% size(X1)
+% %  Track coordinates for every turn along the ring (to all BPMs)
+%     BPMindex = family2atindex('BPMx',getlist('BPMx'));
+% 	BPM = findorbit4(thomx_ring, 0.0, BPMindex);
+% 	X2 = linepass(thomx_ring, X1, BPMindex);
+% 	size(X2)
+% %  Recover matrix structure (turns x BPM#):
+% 	BPMx = reshape(X2(1,:), 1024, length(BPMindex));
+% 	size(BPMx)
+% 	BPMy = reshape(X2(3,:), 1024, length(BPMindex));
+
 %% BPM turn-by-turn and its FFT
 
 figure
 subplot 211
-plot(X,'b.')
+plot(BPMx(:,1),'b.')
+hold on
+plot(BPMx(:,2),'r.')
+hold off
 subplot 212
-plot(Y,'b.')
+plot(BPMy(:,1),'b.')
+hold on
+plot(BPMy(:,2),'r.')
+hold off
 xlabel('Turn number');
 ylabel('COD [m]');
 
 % figure
 % subplot 211
-% plot(X_V,'b.')
+% plot(X1*1e3,'b.')
 % subplot 212
-% plot(Y_V,'b.')
+% plot(Y1*1e3,'r.')
+% xlabel('Turn number');
+% ylabel('COD [m]');
 
 %%
 
@@ -62,7 +87,7 @@ tuneyfreq_fraq = tunes_fraq(2)/revTime;
 
 %%
 
-fftx=abs(fft(X));
+fftx=abs(fft(BPMx(:,1)));
 f = [1:length(fftx)]/length(fftx);
 
 [tuneFFT_ampl tuneFFT_ind] = max(fftx);
@@ -77,18 +102,20 @@ title(['Tune \nu_x = ' num2str(tuneFFT) ' ( Model ' num2str(tunes_fraq(1)) ' ) \
 
 
 %%
-lpad = 2*length(X);
-fftx_zpadding=abs(fft(X, lpad));
+
+lpad = 2*length(BPMx(:,1));
+fftx_zpadding=abs(fft(BPMx(:,1), lpad));
 f = [1:length(fftx_zpadding)]/length(fftx_zpadding);
 
 [tuneFFT_zpadding_ampl tuneFFT_zpadding_ind] = max(fftx_zpadding);
 tuneFFT_zpadding  = f(tuneFFT_zpadding_ind)
+
 %%
 Fs = 1/revTime;                   
-N = length(X);            
+N = length(BPMx(:,1));            
 dF = Fs/N;                
 
-XX = fft(X,N);
+XX = fft(BPMx(:,1),N);
 XX = XX(1:N/2);
 mx = abs(XX);
 freq = (0:N/2-1)*Fs/N;
@@ -104,44 +131,31 @@ title(['Betatron frequency f_x = ' num2str(1e-3*BetaFreqFFT) ' kHz ' '( Model ' 
 
 %% NAFF
 
-[nux] = calcnaff(X,PX,1);
-[nuy] = calcnaff(Y,zeros(length(Y),1)',1);
+[nux] = calcnaff(BPMx(:,1),zeros(length(BPMx),1));
+[nuy] = calcnaff(BPMy(:,1),zeros(length(BPMy),1),1);
 
 nux = abs(nux)/(2*pi)
 nuy = abs(nuy)/(2*pi)
 
 %% FFT using the FFT with sine window and interpolation
 
-[nu2]=findfreq(X',X')
-[nu2y]=findfreq(Y',Y')
+[nu2]=findfreq(BPMx(:,1),BPMx(:,1))
+[nu2y]=findfreq(BPMy(:,1),BPMy(:,1))
 
-%% precise tune determination
-nu = pi-3;
-nturn = 100;
-x = sin(2*pi*nu*(1:nturn));
 
-[nu1, amp1] = naff(x');
-nu1 - nu
-
-[nu2]=findfreq(x',x');
-
-%[tmp, nu3]=ipfaw(x);
-
-fprintf('Naff  findfreq ipfaw:  %d turns\n', nturn)
-[nu1; nu2] - nu
 %% add noise
 
-X = X + 0.02*randn(size(X));
-[nu1, amp1] = naff(X');
+X = BPMx(:,1) + 0.002*randn(size(BPMx(:,1)));
+[nu1, amp1] = naff(X);
 
-[nu2]=findfreq(X',X');
+[nu2]=findfreq(X,X);
 
 %[tmp, nu3]=ipfaw(x);
 
-[nu1; nu2] - nu
+[nu1; nu2] - tunes_fraq(1)
 
 %%
-Nturns = 200:100:2100;
+Nturns = 200:1000:21000;
 
 for iturn = 1:length(Nturns)
 
@@ -176,16 +190,23 @@ end
 figure
 plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko','DisplayName', 'fft')
 hold on
-plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo','DisplayName', 'fft zero padding')
+%plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo','DisplayName', 'fft zero padding')
 plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro','DisplayName', 'NAFF')
-plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'go','DisplayName', 'findfreq')
-plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'k*','DisplayName', 'NAFF+noise')
+plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'bo','DisplayName', 'findfreq')
+plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'r*','DisplayName', 'NAFF+noise')
 plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*','DisplayName', 'findfreq+noise')
-plot(Nturns, 1./Nturns,'k--')
+plot(Nturns, 1./Nturns,'k--','DisplayName', '1/N')
+%plot(Nturns, 1./Nturns.^2,'r--','DisplayName', '1/N^2')
 hold off
 set(gca, 'YScale', 'log')
+set(gca, 'XScale', 'log')
 u = legend('show','Location','NorthEast');
 set(u,'FontSize',14)
+xlabel('Turn number');
+ylabel('Tune error');
 
 %%
+
+
+
 
