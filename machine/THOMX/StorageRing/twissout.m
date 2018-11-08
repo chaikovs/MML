@@ -1,10 +1,10 @@
-sp3v81f
+
 global THERING
-Optics = GetTwiss(THERING,0.0);
-indx=ATIndex(THERING);
-icor=indx.COR;
-ibpm=indx.BPM;
-ikick=indx.KICKER;
+Optics = gettwiss(THERING,0.0);
+indx=atindex(THERING);
+icor=indx.HCOR;
+ibpm=indx.BPMx;
+ikick=indx.SEPT;
 indx=sort([icor ibpm ikick]);
 
 disp('name    phix   phiy   betax   betay')

@@ -112,28 +112,28 @@ set(u,'Location','NorthEast')
 %% Linear, Polynomial fit and spline
 
 % % Try just using spline for all data points.
-% B_spline = spline(I8,B8,xx8); %pchip
-% B_linear = f81;
+B_spline = spline(I8,B8,xx8); %pchip
+B_linear = f81;
 % 
-% figure;
-% subplot(2,1,1);
-% plot(I8,B8,'-ro',xx8, B_spline,'k',xx8,B_linear,'b',xx8,f8,'m','MarkerSize',4);
-% u=legend('Data,','Spline','Linear fit','Polynom fit');
-% set(u,'Location','NorthWest')
-% xlabel(' Current [A]')
-% ylabel('Inegrated gradient [T]')
-% subplot(2,1,2);
-% % plot(I8,(interp1(xx8,B_spline,I8) - B8)./B8,'ro-',...
-% %      I8,(interp1(xx8,B_linear,I8) - B8)./B8,'bo-',...
-% %      I8,(interp1(xx8,f8,I8) - B8)./B8,'mo-');
-% plot(I8,(spline(xx8,B_spline,I8) - B8)./B8,'ro-',...
-%      I8,(polyval(p81,I8) - B8)./B8,'bo-',...
-%      I8,(polyval(p8,I8) - B8)./B8,'mo-');
-% u = legend('(Spline - Data)/Data','(Linear fit - Data)/Data','(Polynom fit - Data)/Data');
-% set(u,'Location','NorthEast')
-% xlabel(' Current [A]')
-% ylabel('Magnetic Field difference')
-% title('% difference between curve and data');
+figure;
+subplot(2,1,1);
+plot(I8,B8,'-ro',xx8, B_spline,'k',xx8,B_linear,'b',xx8,f8,'m','MarkerSize',4);
+u=legend('Data,','Spline','Linear fit','Polynom fit');
+set(u,'Location','NorthWest')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+subplot(2,1,2);
+% plot(I8,(interp1(xx8,B_spline,I8) - B8)./B8,'ro-',...
+%      I8,(interp1(xx8,B_linear,I8) - B8)./B8,'bo-',...
+%      I8,(interp1(xx8,f8,I8) - B8)./B8,'mo-');
+plot(I8,(spline(xx8,B_spline,I8) - B8)./B8,'ro-',...
+     I8,(polyval(p81,I8) - B8)./B8,'bo-',...
+     I8,(polyval(p8,I8) - B8)./B8,'mo-');
+u = legend('(Spline - Data)/Data','(Linear fit - Data)/Data','(Polynom fit - Data)/Data');
+set(u,'Location','NorthEast')
+xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+title('% difference between curve and data');
 
 %%
 

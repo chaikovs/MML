@@ -19,8 +19,8 @@ ylabel('Z (mm)')
 
 h3 = subplot(5,1,3);
 drawlattice
-% xaxis([1 getcircumference]);
-xaxis([42 82]);
+ xaxis([1 getcircumference]);
+%xaxis([42 82]);
     
 
 linkaxes([h1 h2 h3],'x')

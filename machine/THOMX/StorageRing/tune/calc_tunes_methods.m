@@ -54,6 +54,7 @@ plot(BPMx(:,1),'b.')
 hold on
 plot(BPMx(:,2),'r.')
 hold off
+ylabel('COD [m]');
 subplot 212
 plot(BPMy(:,1),'b.')
 hold on
@@ -111,23 +112,23 @@ f = [1:length(fftx_zpadding)]/length(fftx_zpadding);
 tuneFFT_zpadding  = f(tuneFFT_zpadding_ind)
 
 %%
-Fs = 1/revTime;                   
-N = length(BPMx(:,1));            
-dF = Fs/N;                
-
-XX = fft(BPMx(:,1),N);
-XX = XX(1:N/2);
-mx = abs(XX);
-freq = (0:N/2-1)*Fs/N;
-
-[BetaFreqFFT_ampl BetaFreqFFT_ind] = max(mx);
-BetaFreqFFT  = freq(BetaFreqFFT_ind);
-
-figure;
-plot(freq, mx);
-xlabel('Frequency [Hz]');
-ylabel('fft(x)');
-title(['Betatron frequency f_x = ' num2str(1e-3*BetaFreqFFT) ' kHz ' '( Model ' num2str(1e-3*tunexfreq_fraq) ' kHz' ' ) f_x - f_{x0} = ' num2str(1e-3*(BetaFreqFFT-tunexfreq_fraq)) ' kHz'])
+% Fs = 1/revTime;                   
+% N = length(BPMx(:,1));            
+% dF = Fs/N;                
+% 
+% XX = fft(BPMx(:,1),N);
+% XX = XX(1:N/2);
+% mx = abs(XX);
+% freq = (0:N/2-1)*Fs/N;
+% 
+% [BetaFreqFFT_ampl BetaFreqFFT_ind] = max(mx);
+% BetaFreqFFT  = freq(BetaFreqFFT_ind);
+% 
+% figure;
+% plot(freq, mx);
+% xlabel('Frequency [Hz]');
+% ylabel('fft(x)');
+% title(['Betatron frequency f_x = ' num2str(1e-3*BetaFreqFFT) ' kHz ' '( Model ' num2str(1e-3*tunexfreq_fraq) ' kHz' ' ) f_x - f_{x0} = ' num2str(1e-3*(BetaFreqFFT-tunexfreq_fraq)) ' kHz'])
 
 %% NAFF
 
@@ -155,7 +156,7 @@ X = BPMx(:,1) + 0.002*randn(size(BPMx(:,1)));
 [nu1; nu2] - tunes_fraq(1)
 
 %%
-Nturns = 200:1000:21000;
+Nturns = 200:500:10000;%200:1000:21000;
 
 for iturn = 1:length(Nturns)
 
@@ -192,14 +193,14 @@ plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko','DisplayName', 'fft')
 hold on
 %plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo','DisplayName', 'fft zero padding')
 plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro','DisplayName', 'NAFF')
-plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'bo','DisplayName', 'findfreq')
+%plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'bo','DisplayName', 'findfreq')
 plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'r*','DisplayName', 'NAFF+noise')
-plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*','DisplayName', 'findfreq+noise')
+%plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*','DisplayName', 'findfreq+noise')
 plot(Nturns, 1./Nturns,'k--','DisplayName', '1/N')
 %plot(Nturns, 1./Nturns.^2,'r--','DisplayName', '1/N^2')
 hold off
 set(gca, 'YScale', 'log')
-set(gca, 'XScale', 'log')
+%set(gca, 'XScale', 'log')
 u = legend('show','Location','NorthEast');
 set(u,'FontSize',14)
 xlabel('Turn number');
