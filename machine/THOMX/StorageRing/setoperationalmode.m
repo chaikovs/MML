@@ -62,7 +62,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 AD = getad;
 AD.Machine = 'THOMX';            % Will already be defined if setpathmml was used
-AD.MachineType = 'StorageRing';   % Will already be defined if setpathmml was used
+AD.MachineType = 'StorageRing';   % Will already be defined if setpathmml was used %'Transport';
 AD.SubMachine  = 'StorageRing';   % Will already be defined if setpathmml was used
 AD.OperationalMode = '';          % Gets filled in later
 AD.HarmonicNumber = 30;
@@ -75,7 +75,7 @@ AD.DeltaRFDisp = 100e-6*1e2; % machine unit [MHz], 10000 Hz; called by measdisp.
 % detect such a small orbit (BPM resolution is about 5 micro meters in ThomX ring).
 
 
-AD.DeltaRFChro = [-100 -50 0 50 100] * 1e-6*1e2; % machine unit, [MHz]; -50*1e2 Hz
+AD.DeltaRFChro = 1*[ -100 -50 0 50 100 ] * 1e-6*1e2; % machine unit, [MHz]; -50*1e2 Hz
 
 
 % Tune processor delay: delay required to wait
@@ -123,8 +123,8 @@ if ModeNumber == 1
     AO = getao;
 
 AO.TUNE.Monitor.Golden = [
-        0.169
-        0.639
+        0.1699
+        0.6401
         NaN];
 
     % Golden chromaticity is in the AD (Physics units)

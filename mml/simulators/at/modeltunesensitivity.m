@@ -22,7 +22,7 @@ fprintf('Quadrupole change for dnux of %f and dnuz = %f \n',dnux,dnuz);
 
 a = findmemberof('QUAD');
 
-for k = 1:10
+for k = 1:6
 
     Family = a{k};
 

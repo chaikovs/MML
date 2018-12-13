@@ -51,8 +51,8 @@ ElemData.FullGap   		= gap;
 ElemData.FringeInt1	    = 0.5*FF1; % same convention as in Tracy II
 ElemData.FringeInt2	    = 0.5*FF2; % same convention as in Tracy II
 
-ElemData.FringeBendEntrance	= 2;
-ElemData.FringeBendExit 	= 2;
+ElemData.FringeBendEntrance	= 3;
+ElemData.FringeBendExit 	= 3;
 ElemData.FringeQuadEntrance = 0;
 ElemData.FringeQuadExit     = 0; 
 

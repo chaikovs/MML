@@ -102,10 +102,10 @@ if ~isempty(cavind)
     v_cav = THERING{cavind(:,1)}.Voltage;
 else
     % Default
-    freq = 352.202e6;
+    freq = 500.02311e6;
     v_cav = 3e6;
 end
-sum.harmon = sum.circumference/(PhysConstant.speed_of_light_in_vacuum.value/freq); % Assuming 499.654MHz RF %
+sum.harmon = sum.circumference/(PhysConstant.speed_of_light_in_vacuum.value/freq); % Assuming 500.02311MHz RF %
 sum.overvoltage = v_cav/(sum.radiation*1e9); 
 % Assuming the harmon and overvoltage above.
 % references:  H. Winick, "Synchrotron Radiation Sources: A Primer",

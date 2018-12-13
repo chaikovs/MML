@@ -33,7 +33,7 @@ if isempty(ATPATHDirectory)
     
     if isempty(ATVersion)
         if MatlabVersion >= 9.3  % 2017b (not sure about 2017a or 2016b)
-            if ismac || ispc  % Not linking properly on Linux yet!!!
+            if ismac || ispc || isunix  % Not linking properly on Linux yet!!!
                 ATVersion = 2.0;
             else
                 ATVersion = 1.3;

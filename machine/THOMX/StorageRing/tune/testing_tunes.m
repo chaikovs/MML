@@ -22,10 +22,19 @@ AM.Data.Y = BPMy(:,1);
 
 %%
 
+findtune(AM.Data.X)
+intfft(AM.Data.X)
+
+%%
+
 [Tune, Tune_Vec] = libera_calctunesS(AM,1);
 
 %%
 
 libera_calctunes(5,1);
+
+%%
+
+[nux nuz Xcod Zcod] = fourturnalgorithm('Model')
 
 %%

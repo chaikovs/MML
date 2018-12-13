@@ -156,14 +156,19 @@ X = BPMx(:,1) + 0.002*randn(size(BPMx(:,1)));
 [nu1; nu2] - tunes_fraq(1)
 
 %%
-Nturns = 200:500:10000;%200:1000:21000;
+Nturns =50:200:10000; % 5600:100:6100;%
 
 for iturn = 1:length(Nturns)
 
 Z0=[0.001 0.0 0.0001 0 0 0]';
 [OUT_thomx,lost_thomx]=ringpass(thomx_ring,Z0,Nturns(iturn)); %(X, PX, Y, PY, DP, CT2 ) 
 
-X = OUT_thomx(1,:);
+BPMindex = family2atindex('BPMx',getlist('BPMx'));
+X2 = linepass(thomx_ring, OUT_thomx, BPMindex);
+BPMx = reshape(X2(1,:), Nturns(iturn), length(BPMindex));
+BPMy = reshape(X2(3,:), Nturns(iturn), length(BPMindex));
+
+X = BPMx(:,1);
 
 Xnoise = X + 0.002*randn(size(X));
 
@@ -172,29 +177,58 @@ f = [1:length(fftx)]/length(fftx);
 [tuneFFT_ampl, tuneFFT_ind] = max(fftx);
 nu_fft(iturn)  = f(tuneFFT_ind);
 
-lpad = 2*length(X);
+lpad = 20*length(X);
 fftx_zpadding=abs(fft(X, lpad));
 f_zpadding = [1:length(fftx_zpadding)]/length(fftx_zpadding);
 [tuneFFT_zpadding_ampl, tuneFFT_zpadding_ind] = max(fftx_zpadding);
 nu_zpadding(iturn)  = f_zpadding(tuneFFT_zpadding_ind);
 
-[nu_naff(iturn), amp1] = naff(X');
-nu_findfreq(iturn) = findfreq(X',X');
+[nu_naff(iturn), amp1] = naff(X);
+nu_findfreq(iturn) = findfreq(X,X);
 
-[nu_naff_noise(iturn), amp1] = naff(Xnoise');
-nu_findfreq_noise(iturn) = findfreq(Xnoise',Xnoise');
+[nu_naff_noise(iturn), amp1] = naff(Xnoise);
+nu_findfreq_noise(iturn) = findfreq(Xnoise,Xnoise);
+
+fftx=abs(fft(BPMx(:,1)));
+f = [1:length(fftx)]/length(fftx);
+
+[tuneFFT_ampl tuneFFT_ind] = max(fftx);
+tuneFFT  = f(tuneFFT_ind)
+
+% figure
+% plot(f, fftx,'b.-');
+% xlabel('\nu_x');
+% ylabel('fft(x)');
+% title(['Tune \nu_x = ' num2str(nu_zpadding(iturn)) ' ( Model ' num2str(tunes_fraq(1)) ' ) \nu_x - \nu_{x0} = ' num2str((tuneFFT-tunes_fraq(1)))])
+% %xaxis([0 0.5]);
+
     
 end
+
+
+%%
+
+Z0=[0.001 0.0 0.0001 0 0 0]';
+Z1=[0.001 0 0.0001 0 0 0]';
+
+[X1,lost_thomx]=ringpass(thomx_ring,Z0,60000); %(X, PX, Y, PY, DP, CT2 ) 
+BPMindex = family2atindex('BPMx',getlist('BPMx'));
+X2 = linepass(thomx_ring, X1, BPMindex);
+BPMx = reshape(X2(1,:), 60000, length(BPMindex));
+
+
+[qq, amp1] = naff(BPMx(:,1))
+tunes_fraq(1) = qq;
 
 %%
 
 figure
-plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko','DisplayName', 'fft')
+plot(Nturns, abs(tunes_fraq(1) - nu_fft),'ko-','DisplayName', 'fft')
 hold on
-%plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo','DisplayName', 'fft zero padding')
-plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro','DisplayName', 'NAFF')
-%plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'bo','DisplayName', 'findfreq')
-plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'r*','DisplayName', 'NAFF+noise')
+plot(Nturns, abs(tunes_fraq(1) - nu_zpadding),'mo-','DisplayName', 'fft zero padding')
+plot(Nturns, abs(tunes_fraq(1) - nu_naff),'ro-','DisplayName', 'NAFF')
+plot(Nturns, abs(tunes_fraq(1) - nu_findfreq),'bo','DisplayName', 'findfreq')
+plot(Nturns, abs(tunes_fraq(1) - nu_naff_noise),'r*-','DisplayName', 'NAFF+noise')
 %plot(Nturns, abs(tunes_fraq(1) - nu_findfreq_noise),'b*','DisplayName', 'findfreq+noise')
 plot(Nturns, 1./Nturns,'k--','DisplayName', '1/N')
 %plot(Nturns, 1./Nturns.^2,'r--','DisplayName', '1/N^2')
@@ -205,9 +239,42 @@ u = legend('show','Location','NorthEast');
 set(u,'FontSize',14)
 xlabel('Turn number');
 ylabel('Tune error');
+%print('error_tune_diffmethods.png','-dpng','-r300')
+
+
 
 %%
 
+% figure
+% plot(Nturns(1:end-1), abs(diff(tunes_fraq(1) - nu_naff)),'r-','DisplayName', 'NAFF')
+% hold on
+% plot(Nturns(1:end-1), abs(diff(tunes_fraq(1) - nu_zpadding)),'m-','DisplayName', 'fft zero padding')
+% plot(Nturns(1:end-1), abs(diff(tunes_fraq(1) - nu_fft)),'k-','DisplayName', 'fft')
+% plot(Nturns(1:end-1), abs(diff(tunes_fraq(1) - nu_findfreq)),'b-','DisplayName', 'findfreq')
+% plot(Nturns(1:end-1), abs(diff(tunes_fraq(1) - nu_naff_noise)),'g-','DisplayName', 'NAFF+noise')
+% %plot(Nturns, 1./Nturns,'k--','DisplayName', '1/N')
+% %plot(Nturns, 1./Nturns.^2,'r--','DisplayName', '1/N^2')
+% hold off
+% set(gca, 'YScale', 'log')
+% %set(gca, 'XScale', 'log')
+% u = legend('show','Location','NorthEast');
+% set(u,'FontSize',14)
+% xlabel('Turn number');
+% ylabel('Tune error diff');
+% 
+% %%
+% 
+% figure
+% plot(abs(diff(nu_fft)),'ko','DisplayName', 'fft')
+% hold on
+% plot(abs(diff(nu_naff)),'bo','DisplayName', 'NAFF')
+% plot(abs(diff(nu_zpadding)),'ro','DisplayName', 'fft')
+% set(gca, 'YScale', 'log')
+% %set(gca, 'XScale', 'log')
+% 
+% %%
+% figure
+% plot(Nturns(1:end-1),abs(diff(tunes_fraq(1) - nu_naff)))
+% set(gca, 'YScale', 'log')
 
-
-
+%%

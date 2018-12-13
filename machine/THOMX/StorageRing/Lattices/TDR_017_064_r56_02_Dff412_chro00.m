@@ -127,9 +127,9 @@ SPassMethod = 'StrMPoleSymplectic4Pass';
 %  SX2 = sextupole('SX2', LSX,  2.91240510193354/LSX *sx_on, SPassMethod); 
 %  SX3 = sextupole('SX3', LSX,  -8.84477704272277/LSX *sx_on, SPassMethod);
 
- SX1 = sextupole('SX1', 0.1000000E-05, 0*sx_on,  SPassMethod); 
- SX2 = sextupole('SX2', 0.1000000E-05,  2912405.10193354 *sx_on, SPassMethod); 
- SX3 = sextupole('SX3', 0.1000000E-05,  -8844777.04272277 *sx_on, SPassMethod); 
+ SX1 = sextupole('SX1', 0.1000000E-05, -3.2556810e5*sx_on,  SPassMethod); 
+ SX2 = sextupole('SX2', 0.1000000E-05,  2.8961103800e6 *sx_on, SPassMethod); 
+ SX3 = sextupole('SX3', 0.1000000E-05,  -8.6741181600e6 *sx_on, SPassMethod); 
 
 %% =======================
 % BPM

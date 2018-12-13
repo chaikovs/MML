@@ -21,7 +21,7 @@ thomx_ring=ThomX_017_064_r56_02_chro00;
 
 Z0=[0.001 0.0 0.0001 0 0 0]';
 Z1=[0.001 0 0.0001 0 0 0]';
-Nturns = 1024;
+Nturns = 1026;
 
 [X1,lost_thomx]=ringpass(thomx_ring,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
 BPMindex = family2atindex('BPMx',getlist('BPMx'));
@@ -82,19 +82,19 @@ for i = 1:N
     [nuy] = calcnaff(mfy,zeros(length(mfy),1),1);
     
     nux = abs(nux)/(2*pi);
-    nuy = abs(nuy)/(2*pi);
+    nuy = 1-abs(nuy)/(2*pi);
     
     Tune = [NaN;NaN];
     
     for n=1:length(nux)
-        if nux(n) < 0.33
+        if nux(n) < 0.2
             Tune_Vec(1,i) = nux(n);
             break;
         end
     end
     
     for n=1:length(nuy)
-        if (nuy(n) > 0.3) 
+        if (nuy(n) > 0.6) 
             Tune_Vec(2,i) = nuy(n);
             break;
         end

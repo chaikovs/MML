@@ -73,7 +73,7 @@ else % Frequency map analysis
     %It seems there is a bug in nafflib, something returns nan even for valid data 
     niter = 0;
     while any(isnan(frequency)) && (niter < nitermax)
-        pause(2);
+        %pause(2);
         fprintf('Warning Nan returned by NAFF (x%d)\n', niter);
         niter = niter +1;
         [frequency,amplitude,phase] = nafflib(Y, Yp, WindowType,nfreq,1); % add debugging

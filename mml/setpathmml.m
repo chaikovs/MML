@@ -262,7 +262,8 @@ if ~isdeployed_local
 %     end
     
     % Connection MML to simulator
-    addpath(fullfile(MMLROOT, 'mml','simulators', 'at'), '-begin');
+%     addpath(fullfile(MMLROOT, 'mml','simulators', 'at'), '-begin');
+ addpath(fullfile(MMLROOT,'simulators', 'at2.0'), '-begin');
 
 
     % LOCO

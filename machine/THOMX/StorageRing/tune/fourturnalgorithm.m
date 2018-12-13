@@ -63,7 +63,7 @@ spos = getspos('BPMx');
 if ~OnlineFlag  % Model
     global THERING
 
-    X00 = [1e-3 0 1e-3 0 0 0]';
+    X00 = [1e-3 0 0.1e-3 0 0 0]';
     X01 = linepass(THERING, X00(:,end), 1:length(THERING)+1);
     X02 = linepass(THERING, X01(:,end), 1:length(THERING)+1);
     X03 = linepass(THERING, X02(:,end), 1:length(THERING)+1);
@@ -80,7 +80,7 @@ end
 
 %% Algo 4 turns
 nux = acos((X2-X1+X4-X3)/2./(X3-X2))/2/pi;
-nuz = acos((Z2-Z1+Z4-Z3)/2./(Z3-Z2))/2/pi;
+nuz = 1-acos((Z2-Z1+Z4-Z3)/2./(Z3-Z2))/2/pi;
 
 Xcod = (X3.*(X1+X3)-X2.*(X2+X4))./((X1-X4) + 3*(X3-X2));
 Zcod = (Z3.*(Z1+Z3)-Z2.*(Z2+Z4))./((Z1-Z4) + 3*(Z3-Z2));
@@ -111,15 +111,15 @@ if DisplayFlag
     title('4-turn Algorithm')
     legend(sprintf('nux %f',mean(nux(~isnan(nux)))),sprintf('nuz %f',mean(nuz(~isnan(nuz)))));
     grid on
-    yaxis([0 0.5])
+    yaxis([0 1])
 
     subplot(2,2,3)
-    hist(nux(~isnan(nux)))
+    hist(nux(~isnan(nux)));
     xlabel('Fractional tune nux')
     grid on
 
     subplot(2,2,4)
-    hist(nuz(~isnan(nuz)))
+    hist(nuz(~isnan(nuz)));
     xlabel('Fractional tune nuz')
     grid on
 

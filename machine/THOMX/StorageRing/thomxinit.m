@@ -1077,7 +1077,7 @@ for k = 1:3,
     
     %step size of k2 to correct the chromaticity
     %  used by stepchrom.m 
-    deltak2 =1e-5;
+    deltak2 =1000;%1e-5;
     AO.(ifam).Setpoint.DeltaRespMat  = deltak2; % Physics units for a thick sextupole
     %need to reuse when the real machine is ready
     %AO.(ifam).Setpoint.DeltaRespMat=physics2hw(AO.(ifam).FamilyName,'Setpoint',AO.(ifam).Setpoint.DeltaRespMat,AO.(ifam).DeviceList);    
@@ -1252,8 +1252,9 @@ AO.QP31.MemberOf = {AO.QP31.MemberOf{:}  'Tune Corrector'}';
 AO.QP4.MemberOf = {AO.QP4.MemberOf{:}  'Tune Corrector'}';
 
 %% chromaticity correctors
-AO.SX1.MemberOf  = {AO.SX1.MemberOf{:} 'Chromaticity Corrector'}';
-AO.SX2.MemberOf = {AO.SX2.MemberOf{:} 'Chromaticity Corrector'}';
+
+AO.SX2.MemberOf  = {AO.SX2.MemberOf{:} 'Chromaticity Corrector'}';
+AO.SX3.MemberOf = {AO.SX3.MemberOf{:} 'Chromaticity Corrector'}';
 %%%%%%%%%%%%%%%%%%%%
 
 %% CYCLAGE
