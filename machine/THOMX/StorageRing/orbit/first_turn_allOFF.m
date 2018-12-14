@@ -5,16 +5,17 @@ clc; close all; clear all;
 
 %% Initial lattices
 
-thomx_ring=ThomX_017_064_r56_02_chro00RF;
-%thomx_ring=ThomX_016_058_r56_02_chro22;
+%thomx_ring=ThomX_017_064_r56_02_chro00RF;
+thomx_ring=ThomX_017_064_r56_02_chro11;
 
 %%
+thomx_ring2=atcavityoff(thomx_ring);
 
 % atgetfieldvalues(thomx_ring,findcells(thomx_ring,'FamName','QP1'), 'PolynomB',{1,2})
 % atgetfieldvalues(thomx_ring,findcells(thomx_ring,'FamName','SX2'), 'PolynomB',{1,3})
 % getatfield('SX2','PolynomB')
 
-BareRING = atsetfieldvalues(thomx_ring,findcells(thomx_ring,'FamName','SX1'), 'PolynomB',{1,3},0);
+BareRING = atsetfieldvalues(thomx_ring2,findcells(thomx_ring,'FamName','SX1'), 'PolynomB',{1,3},0);
 BareRING = atsetfieldvalues(BareRING,findcells(BareRING,'FamName','SX2'), 'PolynomB',{1,3},0);
 BareRING = atsetfieldvalues(BareRING,findcells(BareRING,'FamName','SX3'), 'PolynomB',{1,3},0);
 
@@ -67,6 +68,8 @@ plot(X,PX,'b.','DisplayName', 'x-Px')
 
 %%
 Z0=[0.001 0.000 0.001 0 0 0]';
+Z1=[0.003 0.000 0.003 0 0 0]';
+
 indm=find(atgetcells(thomx_ring,'FamName','BPMx'));
 sBPM=findspos(thomx_ring,indm);
 
@@ -76,9 +79,17 @@ outtr=linepass(thomx_ring,Z0,indm);
 ox=outtr(1,:);
 oy=outtr(3,:);
 
+outtr2=linepass(thomx_ring,Z1,indm);
+ox2=outtr2(1,:);
+oy2=outtr2(3,:);
+
 outtrBareRING=linepass(BareRING,Z0,indm);
 oxBareRING=outtrBareRING(1,:);
 oyBareRING=outtrBareRING(3,:);
+
+outtrBareRING2=linepass(BareRING,Z1,indm);
+oxBareRING2=outtrBareRING2(1,:);
+oyBareRING2=outtrBareRING2(3,:);
  
 
 % figure
@@ -91,9 +102,11 @@ oyBareRING=outtrBareRING(3,:);
 figure
 %set(gcf,'color','w')
 h1 = subplot(5,1,[1 4]);
-plot(sBPM,ox,'b-','LineWidth',2,'DisplayName', 'Horizontal orbit')
+plot(sBPM,ox,'b.-','LineWidth',1,'MarkerSize',10,'DisplayName', 'Nominal lattice [0.001 0 0.001 0 0 0]')
 hold on
-plot(sBPM,oxBareRING,'r-','LineWidth',2,'DisplayName', 'Horizontal orbit bare lattice')
+plot(sBPM,ox2,'b--','LineWidth',1,'MarkerSize',10,'DisplayName', 'Nominal lattice [0.003 0 0.003 0 0 0]')
+plot(sBPM,oxBareRING,'r.-','LineWidth',1,'MarkerSize',10,'DisplayName', 'Bare lattice [0.001 0 0.001 0 0 0]')
+plot(sBPM,oxBareRING2,'r--','LineWidth',1,'MarkerSize',10,'DisplayName', 'Bare lattice [0.003 0 0.003 0 0 0]')
 hold off
 grid on
 set(gca,'fontsize',18);
@@ -111,7 +124,7 @@ set(gca,'FontSize',18)
 xlabel('s - position [m]');
 linkaxes([h1 h2],'x')
 set([h1 h2],'XGrid','On','YGrid','On');
-%print('thomx_betatron_phase_lat.png','-dpng','-r300')
+%print('thomx_first_traj.png','-dpng','-r300')
 
 
 

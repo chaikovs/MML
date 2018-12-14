@@ -97,7 +97,8 @@ Zcod = (Z3.*(Z1+Z3)-Z2.*(Z2+Z4))./((Z1-Z4) + 3*(Z3-Z2));
 % %%
 if DisplayFlag
     figure(78)
-    plot(spos,Xcod,'b',spos,Zcod,'r');
+    set(gca,'fontsize',18);
+    plot(spos,Xcod,'b.-',spos,Zcod,'r.-');
     xlabel('s-position [m]');
     ylabel('Close orbit [mm]');
     legend('Xcod','Zcod');
@@ -105,6 +106,7 @@ if DisplayFlag
 
     figure(79)
     subplot(2,2,[1 2])
+    set(gca,'fontsize',18);
     plot(spos,nux,'b.',spos,nuz,'r.')
     xlabel('s-position [m]')
     ylabel('tune fractionnal part')
@@ -114,11 +116,14 @@ if DisplayFlag
     yaxis([0 1])
 
     subplot(2,2,3)
+     set(gca,'fontsize',18);
+    set(gca,'fontsize',18);
     hist(nux(~isnan(nux)));
     xlabel('Fractional tune nux')
     grid on
 
     subplot(2,2,4)
+     set(gca,'fontsize',18);
     hist(nuz(~isnan(nuz)));
     xlabel('Fractional tune nuz')
     grid on

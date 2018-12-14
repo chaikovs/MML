@@ -140,11 +140,11 @@ AO.TUNE.Monitor.Golden = [
 elseif ModeNumber == 2
     AD.OperationalMode = '50e-3 GeV, 3.175 1.72';
     AD.Energy = 50e-3; % Make sure this is the same as bend2gev at the production lattice!
-    ModeName = 'TDR_017_064_r56_02_Dff412_chro00';
-    OpsFileExtension = 'TDR_017_064_r56_02_Dff412_chro00';
+    ModeName = 'TDR_017_064_r56_02_Dff412_chro11';
+    OpsFileExtension = 'TDR_017_064_r56_02_Dff412_chro11';
 
     % AT lattice
-    AD.ATModel = 'TDR_017_064_r56_02_Dff412_chro00';
+    AD.ATModel = 'TDR_017_064_r56_02_Dff412_chro11';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family
@@ -156,7 +156,7 @@ elseif ModeNumber == 2
         NaN];
 
     % Golden chromaticity is in the AD (Physics units)
-    AD.Chromaticity.Golden = [0.0; 0.0];
+    AD.Chromaticity.Golden = [1.0; 1.0];
     
     elseif ModeNumber == 3
     AD.OperationalMode = '50e-3 GeV, 3.175 1.72';
