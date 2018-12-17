@@ -303,29 +303,29 @@ switch AcceleratorName
                 
                             
             case {'HCOR'}    
-                Leff = 1e-6;
+                Leff = 73.25e-3;
                 a7= 0.0;
                 a6= 0.0;
                 a5= 0.0;
                 a4= 0.0;
                 a3= 0.0;
                 a2= 0.0;
-                a1= 1*0.1685*Leff;
-                a0= 0.0;
+                a1= -8.8900e-05;
+                a0= -2.1732e-05 ;
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
                 
                 MagnetType = 'COR';
                 
          case {'VCOR'}    
-                Leff = 1e-6;
+                Leff = 73.25e-3;
                 a7= 0.0;
                 a6= 0.0;
                 a5= 0.0;
                 a4= 0.0;  
                 a3= 0.0;
                 a2= 0.0;
-                a1= 1*0.1685*Leff;
-                a0= 0.0;
+                a1=  -4.9945e-05;%1*0.1685*Leff;
+                a0= -3.7622e-06 ;
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
                 
                 MagnetType = 'COR';

@@ -38,7 +38,7 @@ title('Magnetic calibration for 15 DIPOLES')
 % u = legend('DIP-9', 'DIP-91','DIP-7','DIP-11', 'DIP-12');
 % set(u,'Location','NorthWest')
 u = legend(str);
-set(u,'Location','SouthEast','FontSize',12)
+set(u,'Location','NorthWest','FontSize',12)
 print('dipole_all_calib.png','-dpng','-r300')
 
 str0= { 'DIP#01' 'DIP#02' 'DIP#03' 'DIP#04' 'DIP#05' 'DIP#06' 'DIP#07' 'DIP#08' 'DIP#09' 'DIP#10' 'DIP#11' 'DIP#12' 'DIP#13' 'DIP#14' 'DIP#15'};

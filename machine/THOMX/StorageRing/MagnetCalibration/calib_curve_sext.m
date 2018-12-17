@@ -8,13 +8,17 @@ load magn_meas_sext.mat
 current = sext_meas.current;
 B3 = sext_meas.b3;
 
+str0= { 'SEXT#01' 'SEXT#02' 'SEXT#03' 'SEXT#04' 'SEXT#05' 'SEXT#06' 'SEXT#07' 'SEXT#08' 'SEXT#09' 'SEXT#10' 'SEXT#11' 'SEXT#12'};
 figure
 set(gca,'FontSize',16)
-plot(current, (B3))
+plot(current, (B3),'o-','MarkerSize',6)
+set(gca,'FontSize',16)
 title('Sextupole calibration curves')
 xlabel(' Current [A]')
 ylabel('Inegrated field B3 [T m]')
-
+u = legend(str0);
+set(u,'Location','NorthWest','FontSize',12)
+print('sext_all_calib.png','-dpng','-r300')
 %%
 
 B_mean = mean(B3,2);
@@ -39,7 +43,7 @@ T3 = table(current,B3_sext,polyval(p3,current),B3_sext-polyval(p3,current),100*(
 
 figure
 subplot(2,1,1);
-set(gca,'FontSize',20)
+set(gca,'FontSize',16)
 plot(current, B3_sext, 'o', 'MarkerSize',6)
 hold on
 plot(xx, f3, 'r-', 'LineWidth',1.3)
@@ -59,6 +63,24 @@ plot(current,(polyval(p3,current) - B3_sext)./B3_sext,'ro-');
 ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast')
+print('sext_numb1_calibfit.png','-dpng','-r300')
+
+
+
+%%
+C = [ current ones(size(current))];
+d = B3_sext;
+A = [];     % No inequality constraint
+b = []; 
+Aeq = [  0  1 ];  
+beq = [0 ];                  
+
+x_lsqlin1 = lsqlin(C,d,A,b,Aeq,beq)
+
+plot(current, B3_sext,'o',current,C*x_lsqlin1)
+legend('data','lsqlin')
+grid on
+
 
 %%
 

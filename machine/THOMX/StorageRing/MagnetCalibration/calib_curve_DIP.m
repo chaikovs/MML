@@ -242,7 +242,7 @@ set(u,'Location','NorthWest','FontSize',14)
 subplot(2,1,2);
 set(gca,'FontSize',16)
 plot(I9_reg2,(polyval(p9,I9_reg2) - B9_reg2),'ro-',...
-     I9_reg1,(polyval(pl9,I9_reg1) - B9_reg1),'bo-','MarkerSize',5);
+     I9_reg1(1:end-1),(polyval(pl9,I9_reg1(1:end-1)) - B9_reg1(1:end-1)),'bo-','MarkerSize',5);
  xlabel(' Current [A]')
 ylabel('Field difference')
 u = legend('Polynom fit - Data','Linear fit - Data');

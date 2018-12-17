@@ -172,14 +172,24 @@ correct_meas.cor10vh = [data_correct(37:40,1) inverse_flag.*data_correct(37:40,2
 correct_meas.cor11vh = [data_correct(41:51,1) data_correct(41:51,2) data_correct(41:51,3)]; % more data points are measured
 correct_meas.cor12vh = [data_correct(52:55,1) data_correct(52:55,2) inverse_flag.*data_correct(52:55,3)];
 
-correct_meas.current1_10 = [data_correct(1:4,1) data_correct(5:8,1) data_correct(9:12,1) data_correct(13:16,1) data_correct(17:20,1) data_correct(21:24,1) data_correct(25:28,1) ...
-  data_correct(29:32,1) data_correct(33:36,1) data_correct(37:40,1)];
+% correct_meas.current1_10 = [data_correct(1:4,1) data_correct(5:8,1) data_correct(9:12,1) data_correct(13:16,1) data_correct(17:20,1) data_correct(21:24,1) data_correct(25:28,1) ...
+%   data_correct(29:32,1) data_correct(33:36,1) data_correct(37:40,1)];
+% 
+% correct_meas.vert_cor1_10 = [data_correct(1:4,2) inverse_flag.*data_correct(5:8,2) data_correct(9:12,2) data_correct(13:16,2) inverse_flag.*data_correct(17:20,2) data_correct(21:24,2) data_correct(25:28,2) ...
+%   inverse_flag.*data_correct(29:32,2) data_correct(33:36,2) inverse_flag.*data_correct(37:40,2)];
+% 
+% correct_meas.hor_cor1_10 = [inverse_flag.*data_correct(1:4,3) data_correct(5:8,3) inverse_flag.*data_correct(9:12,3) data_correct(13:16,3) data_correct(17:20,3) inverse_flag.*data_correct(21:24,3) data_correct(25:28,3) ...
+%   data_correct(29:32,3) data_correct(33:36,3) inverse_flag.*data_correct(37:40,3)];
 
-correct_meas.vert_cor1_10 = [data_correct(1:4,2) inverse_flag.*data_correct(5:8,2) data_correct(9:12,2) data_correct(13:16,2) inverse_flag.*data_correct(17:20,2) data_correct(21:24,2) data_correct(25:28,2) ...
-  inverse_flag.*data_correct(29:32,2) data_correct(33:36,2) inverse_flag.*data_correct(37:40,2)];
 
-correct_meas.hor_cor1_10 = [inverse_flag.*data_correct(1:4,3) data_correct(5:8,3) inverse_flag.*data_correct(9:12,3) data_correct(13:16,3) data_correct(17:20,3) inverse_flag.*data_correct(21:24,3) data_correct(25:28,3) ...
-  data_correct(29:32,3) data_correct(33:36,3) inverse_flag.*data_correct(37:40,3)];
+correct_meas.current1_10 = [data_correct(1:4,1) data_correct(5:8,1) data_correct(9:12,1) data_correct(17:20,1) data_correct(21:24,1) data_correct(25:28,1) ...
+ data_correct(37:40,1)];
+
+correct_meas.vert_cor1_10 = [data_correct(1:4,2) inverse_flag.*data_correct(5:8,2) data_correct(9:12,2)  inverse_flag.*data_correct(17:20,2) data_correct(21:24,2) data_correct(25:28,2) ...
+ inverse_flag.*data_correct(37:40,2)];
+
+correct_meas.hor_cor1_10 = [inverse_flag.*data_correct(1:4,3) data_correct(5:8,3) inverse_flag.*data_correct(9:12,3) data_correct(17:20,3) inverse_flag.*data_correct(21:24,3) data_correct(25:28,3) ...
+ inverse_flag.*data_correct(37:40,3)];
 
 
 save('magn_meas_correct.mat', 'correct_meas');

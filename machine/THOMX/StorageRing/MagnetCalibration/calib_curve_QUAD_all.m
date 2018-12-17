@@ -89,7 +89,73 @@ plot(I,(polyval(p,I) - current_mean)./current_mean,'ro-',...
 ylabel('Magnetic Field difference')
 u = legend('(Polynom fit - Data)/Data','(Linear fit - Data)/Data');
 set(u,'Location','NorthEast','FontSize',14)
-%print('quad_all_fitmean.png','-dpng','-r300')
+print('quad_all_fitmean.png','-dpng','-r300')
+
+
+
+figure(31)
+subplot(2,1,1);
+set(gca,'FontSize',20)
+plot(I, current_mean, 'ko', 'MarkerSize',6)
+hold on
+%plot(xx, f, 'r-', 'LineWidth',1.3)
+plot(xx, f1, 'b-', 'LineWidth',1.3)
+hold off
+title('Magnetic calibration for 34 QUADS (mean value)')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+u = legend('Data','Linear fit');
+set(u,'Location','NorthWest','FontSize',14)
+subplot(2,1,2);
+set(gca,'FontSize',20)
+% plot(I8,(interp1(x,f8,I8) - B8)./B8,'ro-',...
+%      I8,(interp1(x,f81,I8) - B8)./B8,'bo-');
+plot(I,(polyval(p1,I) - current_mean)./current_mean,'bo-');
+ xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+u = legend('(Linear fit - Data)/Data');
+set(u,'Location','NorthEast','FontSize',14)
+print('quad_all_fitmean.png','-dpng','-r300')
+
+%%
+C = [ I ones(size(I))];
+d = current_mean;
+A = [];     % No inequality constraint
+b = []; 
+Aeq = [  0  1 ];  
+beq = [0 ];                  
+
+x_lsqlin1 = lsqlin(C,d,A,b,Aeq,beq)
+
+plot(I, current_mean,'o',I,C*x_lsqlin1)
+legend('data','lsqlin')
+grid on
+
+%%
+figure(333)
+subplot(2,1,1);
+set(gca,'FontSize',20)
+plot(I, current_mean, 'ko', 'MarkerSize',6)
+hold on
+plot(I,C*x_lsqlin1, 'r-', 'LineWidth',1.3)
+plot(xx, f1, 'b-', 'LineWidth',1.3)
+hold off
+title('Magnetic calibration for 34 QUADS (mean value)')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+u = legend('Data','constr fit','Linear fit');
+set(u,'Location','NorthWest','FontSize',14)
+subplot(2,1,2);
+set(gca,'FontSize',20)
+% plot(I8,(interp1(x,f8,I8) - B8)./B8,'ro-',...
+%      I8,(interp1(x,f81,I8) - B8)./B8,'bo-');
+plot(I,(C*x_lsqlin1 - current_mean)./current_mean,'ro-',...
+     I,(polyval(p1,I) - current_mean)./current_mean,'bo-');
+ xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+u = legend('(Constr - Data)/Data','(Linear fit - Data)/Data');
+set(u,'Location','NorthEast','FontSize',14)
+
 
 %% Linear and Polynomial fit
 
