@@ -143,8 +143,8 @@ addpath(fullfile(MMLROOT, 'machine', 'THOMX', 'common', 'archiving'));
    
 if strcmpi(SubMachineName,'StorageRing')
     [MachineName, SubMachineName, LinkFlag, MMLROOT] = setpathmml(Machine, 'StorageRing', 'StorageRing', LinkFlag);
-% elseif strcmpi(SubMachineName,'TL')
-%     [MachineName, SubMachineName, LinkFlag, MMLROOT] = setpathmml(Machine, 'TL',         'Transport',   LinkFlag);
+elseif strcmpi(SubMachineName,'TL')
+    [MachineName, SubMachineName, LinkFlag, MMLROOT] = setpathmml(Machine, 'TL',         'Transport',   LinkFlag);
 % elseif strcmpi(SubMachineName,'TL_SL')
 %     [MachineName, SubMachineName, LinkFlag, MMLROOT] = setpathmml(Machine, 'TL_SL',         'Transport',   LinkFlag);
 % elseif strcmpi(SubMachineName,'EL')
