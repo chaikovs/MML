@@ -76,8 +76,11 @@ fullgap = 0.0;
 edge_effect1 = 1;
 edge_effect2 = 1;
 
+% BEND  =  rbend3('BEND', L, theta, thetae, thetas, K,fullgap,edge_effect1,edge_effect2, ...
+%                'BndMPoleSymplecticNew4Pass');
+
 BEND  =  rbend3('BEND', L, theta, thetae, thetas, K,fullgap,edge_effect1,edge_effect2, ...
-               'BndMPoleSymplecticNew4Pass');
+               'BndMPoleSymplectic4Pass')
  %DIP=         rbend2('DIP', L, theta, thetae, thetas, K,fullgap, ...
  %             'BndMPoleSymplectic4Pass');
 
@@ -95,10 +98,12 @@ fullgap=0;
 edge_effect1 = 0;
 edge_effect2 = 0;
 
+% BEND1  =  rbend3('BEND1', L, theta, thetae, thetas, K,fullgap,edge_effect1,edge_effect2, ...
+%                'BndMPoleSymplecticNew4Pass');
+
 BEND1  =  rbend3('BEND1', L, theta, thetae, thetas, K,fullgap,edge_effect1,edge_effect2, ...
-               'BndMPoleSymplecticNew4Pass');
-
-
+               'BndMPoleSymplectic4Pass');
+          
 Ldil3 = 0.2009579;
 %Ldil3 = 0.21169;
 thetadil3=0.169000;
@@ -108,10 +113,12 @@ thetas_1= 0
 K_1 =0.0;
 fullgap_1 = 0.0;
 	       
-BEND2  =  rbend3('BEND2', Ldil3, thetadil3, thetae_1, thetas_1, K_1, fullgap_1,0,0, ...
-               'BndMPoleSymplecticNew4Pass');
+% BEND2  =  rbend3('BEND2', Ldil3, thetadil3, thetae_1, thetas_1, K_1, fullgap_1,0,0, ...
+%                'BndMPoleSymplecticNew4Pass');
 
-	       
+BEND2  =  rbend3('BEND2', Ldil3, thetadil3, thetae_1, thetas_1, K_1, fullgap_1,0,0, ...
+               'BndMPoleSymplectic4Pass');
+           
 CO3E = drift('CO3E',0.0,'DriftPass');
 CO3S = drift('CO3S',0.0,'DriftPass');
 
@@ -124,10 +131,11 @@ thetas_2 = 0.0;
 K_2 =0.0;
 fullgap_2 = 0.0;
 	       
+% SEP  =  rbend3('SEP', Lsept, thetasept, thetae_2, thetas_2, K_2, fullgap_2,0,0, ...
+%                'BndMPoleSymplecticNew4Pass');
+
 SEP  =  rbend3('SEP', Lsept, thetasept, thetae_2, thetas_2, K_2, fullgap_2,0,0, ...
-               'BndMPoleSymplecticNew4Pass');
-
-
+               'BndMPoleSymplectic4Pass');
 	       
 %%Marker
 
