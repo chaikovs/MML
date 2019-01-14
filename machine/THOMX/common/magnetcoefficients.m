@@ -256,12 +256,42 @@ switch AcceleratorName
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
 
                 MagnetType = 'BEND';
-
-         case {'QP1', 'QP2','QP3','QP4','QP31','QP41'}   
+                
+           case {'QP1','QP3','QP31'}   
                          
                 %Defocusing quad k < 0.Coeff a0, a2, a4,...to be multiply by -1.
                         
                 
+                % Find the current from the given polynomial for B'Leff
+%                 Leff=0.15; 
+%                 a7=  0.0;
+%                 a6=  0.0;
+%                 a5=  0.0;
+%                 a4=  0.0;
+%                 a3=  0.0;
+%                 a2=  0;
+%                 a1=  1*0.1685*Leff; % brho of THomX is 0.1685
+%                 a0=  0;
+                
+                Leff=0.15731;%0.150; % 
+                a7=  0.0;
+                a6=  0.0;
+                a5=  -0.000000297907379;
+                a4=  (-1)*0.000006617832544;
+                a3=  -0.000055050541525;
+                a2=  (-1)*0.000114371606428;
+                a1=  0.074914375225616; % kL/I*Brho
+                a0=  (-1)*0.007959570093829;
+                
+                
+                A = [a7 a6 a5 a4 a3 a2 a1 a0];
+                
+                MagnetType = 'quad';
+
+         case { 'QP2','QP4','QP41'}   
+                         
+                %Focusing quad 
+                          
                 % Find the current from the given polynomial for B'Leff
 %                 Leff=0.15; 
 %                 a7=  0.0;
@@ -288,7 +318,8 @@ switch AcceleratorName
                 
                 MagnetType = 'quad';
                 
-             case {'SX1','SX2','SX3'}    
+             case {'SX1','SX3'}
+               %Leff=1e-8; % modeled as thin length;
                 Leff=0.07316;%0.06;
                 a7=  0.0;
                 a6=  0.0;
@@ -296,8 +327,21 @@ switch AcceleratorName
                 a4=  0.0;
                 a3=  0.0;
                 a2=  0.0;
-                a1=  1*0.1685*Leff;
-                a0=  0.0;
+                a1=  1.0e-04*0.933444196428572;
+                a0=  1.0e-04*0.283066964285713;
+                A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+                MagnetType = 'SEXT';
+                
+              case {'SX2'}    
+                Leff=0.07316;%0.06;
+                a7=  0.0;
+                a6=  0.0;
+                a5=  0.0;
+                a4=  0.0;
+                a3=  0.0;
+                a2=  0.0;
+                a1=  1.0e-04*0.933868080357143;%1*0.1685*Leff;
+                a0=  1.0e-04*0.240119375000000;
                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
                 MagnetType = 'SEXT';
                 
@@ -310,8 +354,8 @@ switch AcceleratorName
                 a4= 0.0;
                 a3= 0.0;
                 a2= 0.0;
-                a1= -8.8900e-05;
-                a0= -2.1732e-05 ;
+                a1= -8.8900e-05; %p1
+                a0= -2.1732e-05 ; %p2
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
                 
                 MagnetType = 'COR';

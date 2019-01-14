@@ -18,7 +18,7 @@ xlabel(' Current [A]')
 ylabel('Inegrated field B3 [T m]')
 u = legend(str0);
 set(u,'Location','NorthWest','FontSize',12)
-print('sext_all_calib.png','-dpng','-r300')
+%print('sext_all_calib.png','-dpng','-r300')
 %%
 
 B_mean = mean(B3,2);
@@ -63,7 +63,7 @@ plot(current,(polyval(p3,current) - B3_sext)./B3_sext,'ro-');
 ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast')
-print('sext_numb1_calibfit.png','-dpng','-r300')
+%print('sext_numb1_calibfit.png','-dpng','-r300')
 
 
 
@@ -125,5 +125,130 @@ ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast')
 
+%% SX1 => #07 #09 #10 #11
+
+sx1_current = current;
+sx1_b3_all = [B3(:,7) B3(:,9:11)];
+sx1_b3 = mean(sx1_b3_all,2);
+
+%Linear fit
+
+xx = linspace(min(current),max(current),5*length(current));
+
+sx1_p3 = polyfit(sx1_current,sx1_b3,1)
+
+sx1_f3 = polyval(sx1_p3,xx);
+
+
+figure
+subplot(2,1,1);
+set(gca,'FontSize',16)
+plot(sx1_current, sx1_b3, 'o', 'MarkerSize',6)
+hold on
+plot(xx, sx1_f3, 'r-', 'LineWidth',1.3)
+
+hold off
+title('SEXT SX1 Linear fit')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+u = legend('Data','Linear fit');
+set(u,'Location','NorthWest')
+subplot(2,1,2);
+set(gca,'FontSize',20)
+plot(current,(polyval(sx1_p3,sx1_current) - sx1_b3)./sx1_b3,'ro-');
+ xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+u = legend('(Linear fit - Data)/Data');
+set(u,'Location','NorthEast')
+
+
+%% SX2 => #02 #03 #06 #08
+
+sx2_current = current;
+sx2_b3_all = [B3(:,2:3) B3(:,6) B3(:,8)];
+
+sx2_b3 = mean(sx2_b3_all,2);
+
+%Linear fit
+
+xx = linspace(min(current),max(current),5*length(current));
+
+sx2_p3 = polyfit(sx2_current,sx2_b3,1)
+
+sx2_f3 = polyval(sx2_p3,xx);
+
+
+figure
+subplot(2,1,1);
+set(gca,'FontSize',16)
+plot(sx2_current, sx2_b3, 'o', 'MarkerSize',6)
+hold on
+plot(xx, sx2_f3, 'r-', 'LineWidth',1.3)
+
+hold off
+title('SEXT SX1 Linear fit')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+u = legend('Data','Linear fit');
+set(u,'Location','NorthWest')
+subplot(2,1,2);
+set(gca,'FontSize',20)
+plot(current,(polyval(sx2_p3,sx2_current) - sx2_b3)./sx2_b3,'ro-');
+ xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+u = legend('(Linear fit - Data)/Data');
+set(u,'Location','NorthEast')
+
+%% SX3 => #01 #04 #05 #12
+
+sx3_current = current;
+sx3_b3_all = [B3(:,1) B3(:,4:5) B3(:,12)];
+
+sx3_b3 = mean(sx3_b3_all,2);
+
+%Linear fit
+
+xx = linspace(min(current),max(current),5*length(current));
+
+sx3_p3 = polyfit(sx3_current,sx3_b3,1)
+
+sx3_f3 = polyval(sx3_p3,xx);
+
+
+figure
+subplot(2,1,1);
+set(gca,'FontSize',16)
+plot(sx3_current, sx3_b3, 'o', 'MarkerSize',6)
+hold on
+plot(xx, sx3_f3, 'r-', 'LineWidth',1.3)
+
+hold off
+title('SEXT SX1 Linear fit')
+xlabel(' Current [A]')
+ylabel('Inegrated gradient [T]')
+u = legend('Data','Linear fit');
+set(u,'Location','NorthWest')
+subplot(2,1,2);
+set(gca,'FontSize',20)
+plot(current,(polyval(sx3_p3,sx3_current) - sx3_b3)./sx3_b3,'ro-');
+ xlabel(' Current [A]')
+ylabel('Magnetic Field difference')
+u = legend('(Linear fit - Data)/Data');
+set(u,'Location','NorthEast')
+
+%% SX31 and SX3 
+
+sx13_current = current;
+sx13_b3_all = [B3(:,7) B3(:,9:11) B3(:,1) B3(:,4:5) B3(:,12)];
+
+sx13_b3 = mean(sx13_b3_all,2);
+
+%Linear fit
+
+xx = linspace(min(current),max(current),5*length(current));
+
+sx13_p3 = polyfit(sx13_current,sx13_b3,1)
+
+sx13_f3 = polyval(sx13_p3,xx);
 
 

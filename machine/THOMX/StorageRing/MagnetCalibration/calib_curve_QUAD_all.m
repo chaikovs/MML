@@ -89,7 +89,7 @@ plot(I,(polyval(p,I) - current_mean)./current_mean,'ro-',...
 ylabel('Magnetic Field difference')
 u = legend('(Polynom fit - Data)/Data','(Linear fit - Data)/Data');
 set(u,'Location','NorthEast','FontSize',14)
-print('quad_all_fitmean.png','-dpng','-r300')
+%print('quad_all_fitmean.png','-dpng','-r300')
 
 
 
@@ -115,7 +115,7 @@ plot(I,(polyval(p1,I) - current_mean)./current_mean,'bo-');
 ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast','FontSize',14)
-print('quad_all_fitmean.png','-dpng','-r300')
+%print('quad_all_fitmean.png','-dpng','-r300')
 
 %%
 C = [ I ones(size(I))];

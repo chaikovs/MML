@@ -27,7 +27,7 @@ xlabel(' Current [A]')
 ylabel('Inegrated field B1 [T m]')
 u = legend(str0);
 set(u,'Location','SouthWest','FontSize',12)
-print('VCOR_all_calib.png','-dpng','-r300')
+%print('VCOR_all_calib.png','-dpng','-r300')
 
 str0= { 'HCOR#01' 'HCOR#02' 'HCOR#03' 'HCOR#05' 'HCOR#06' 'HCOR#07' 'HCOR#10' 'HCOR#11' 'HCOR#12'};
 figure
@@ -45,7 +45,7 @@ xlabel(' Current [A]')
 ylabel('Inegrated field B1 [T m]')
 u = legend(str0);
 set(u,'Location','SouthWest','FontSize',12)
-print('HCOR_all_calib.png','-dpng','-r300')
+%print('HCOR_all_calib.png','-dpng','-r300')
 %%
 
 Bv_mean = mean( [vert_cor1_10 cor12(:,2)],2);
@@ -149,7 +149,7 @@ plot(current1_10(:,:),(f3allC(:,:) - hor_cor1_10(:,:))./hor_cor1_10(:,:),'ro-');
 ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast')
-print('HCOR_all_calibfit.png','-dpng','-r300')
+%print('HCOR_all_calibfit.png','-dpng','-r300')
 
 
 figure
@@ -173,5 +173,5 @@ plot(current1_10(:,:),(f3allCv(:,:) - vert_cor1_10(:,:))./vert_cor1_10(:,:),'ro-
 ylabel('Magnetic Field difference')
 u = legend('(Linear fit - Data)/Data');
 set(u,'Location','NorthEast')
-print('VCOR_all_calibfit.png','-dpng','-r300')
+%print('VCOR_all_calibfit.png','-dpng','-r300')
 
