@@ -345,6 +345,21 @@ switch AcceleratorName
                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
                 MagnetType = 'SEXT';
                 
+       % Sign for the current should be giben by DS(Tango)
+       % Magnet Spec: Theta = 5.1e-3/2.9e-3 radians @ 50 MeV and 10 amps
+                % Theta = BLeff / Brho    [radians]
+                % Therefore,
+                %       Theta = ((BLeff/Amp)/ Brho) * I
+                %       BLeff/Amp = 5.1e-3 * getbrho(0.05) / 10
+                %       B*Leff = a0 * I   => a1 = 5.1e-3 * getbrho(0.05) / 10
+                %
+                % However, AT uses Theta in radians so the A coefficients
+                % must be used for correctors with the middle layer with
+                % the addition of the DC term
+                
+                % Find the current from the given polynomial for BLeff and B
+                % NOTE: AT used BLeff (A) for correctors
+                
                             
             case {'HCOR'}    
                 Leff = 73.25e-3;
@@ -354,8 +369,10 @@ switch AcceleratorName
                 a4= 0.0;
                 a3= 0.0;
                 a2= 0.0;
-                a1= -8.8900e-05; %p1
-                a0= -2.1732e-05 ; %p2
+%                 a1=1*0.1685*Leff;
+%                 a0 =  0;
+                a1= -8.8900e-05 * Leff; %p1
+                a0= 0;%-2.1732e-05 * Leff ; %p2
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
                 
                 MagnetType = 'COR';
@@ -368,11 +385,15 @@ switch AcceleratorName
                 a4= 0.0;  
                 a3= 0.0;
                 a2= 0.0;
-                a1=  -4.9945e-05;%1*0.1685*Leff;
-                a0= -3.7622e-06 ;
+%                 a1= 2.9e-3 * getbrho(0.05) / 10;% 10A for 2.9 mrad
+%                 a0 =  0;
+                a1=  -4.9945e-05 * Leff; %1*0.1685*Leff;
+                a0= 0;%-3.7622e-06 * Leff;
                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
                 
                 MagnetType = 'COR';
+                
+                %amp2k('VCOR','Monitor',-10,[1 1], 0.05)
                 
                 case {'HCORT'}    
                 Leff = 1e-6;
