@@ -211,3 +211,7 @@ res = vartrunc(lower, upper, sc) - targetsigma2 - ...
 end % scz
 
 % End of file TruncatedGaussian.m
+
+
+
+

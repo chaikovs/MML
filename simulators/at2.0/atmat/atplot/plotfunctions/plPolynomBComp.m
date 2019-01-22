@@ -19,10 +19,10 @@ PolynomBVal3(ind)=getcellstruct(ring,'PolynomB',ind,1,3);
 PolynomBVal4(ind)=getcellstruct(ring,'PolynomB',ind,1,4);
 
 
-plotdata(1).values=[PolynomBVal1' PolynomBVal2'/10 ...];%...
-                     PolynomBVal3'/100 PolynomBVal4'/5000 ];
-plotdata(1).labels={'dipole','quadrupole/10',...
-                    'sextuople/100','octupole/5000'};
+plotdata(1).values=[PolynomBVal1' PolynomBVal2'/1 ...];%...
+                     PolynomBVal3'/1e5 PolynomBVal4'/5000 ];
+plotdata(1).labels={'dipole','quadrupole/1',...
+                    'sextuople/1e5','octupole/5000'};
 plotdata(1).axislabel='PolynomB';
 % dispersion=cat(2,lindata.Dispersion)';
 % plotdata(2).values=dispersion(:,3);
