@@ -67,23 +67,43 @@ ylabel('x-orbit');
 
 %% Error set
 
-dx_dipole = 30e-6; %100*1e-6;
-dy_dipole = 30e-6;%100*1e-6;
-ds_dipole = 30e-6;%100*1e-6;
-tilt_dipole = 200e-6;%500*1e-6;
-dkk_dipole = 1e-3;%5e-3;%1.2e-3;
+% dx_dipole = 30e-6; %100*1e-6;
+% dy_dipole = 30e-6;%100*1e-6;
+% ds_dipole = 30e-6;%100*1e-6;
+% tilt_dipole = 200e-6;%500*1e-6;
+% dkk_dipole = 1e-3;%5e-3;%1.2e-3;
+% 
+% dx_quad = 30e-6;%100*1e-6;
+% dy_quad = 30e-6;%100*1e-6;
+% ds_quad = 30e-6;%100*1e-6;
+% tilt_quad = 200e-6;%500*1e-6;
+% dkk_quad= 1e-3;%5e-3;
+% 
+% dx_sext = 30e-6;%100*1e-6;
+% dy_sext = 30e-6;%100*1e-6;
+% ds_sext = 30e-6;%100*1e-6;
+% tilt_sext = 200e-6;%500*1e-6;
+% dkk_sext= 1e-3;%5e-3;
 
-dx_quad = 30e-6;%100*1e-6;
-dy_quad = 30e-6;%100*1e-6;
-ds_quad = 30e-6;%100*1e-6;
-tilt_quad = 200e-6;%500*1e-6;
-dkk_quad= 1e-3;%5e-3;
+dx_dipole = 100*1e-6;
+dy_dipole = 100*1e-6;
+ds_dipole = 100*1e-6;
+tilt_dipole = 500*1e-6;
+dkk_dipole = 5e-3;%1.2e-3;
 
-dx_sext = 30e-6;%100*1e-6;
-dy_sext = 30e-6;%100*1e-6;
-ds_sext = 30e-6;%100*1e-6;
-tilt_sext = 200e-6;%500*1e-6;
-dkk_sext= 1e-3;%5e-3;
+dx_quad =  100*1e-6;%100*1e-6;
+dy_quad =  100*1e-6;%100*1e-6;
+ds_quad =  100*1e-6;%100*1e-6;
+tilt_quad = 500*1e-6;%500*1e-6;
+dkk_quad= 5e-3;
+
+dx_sext = 100*1e-6;
+dy_sext = 100*1e-6;
+ds_sext = 100*1e-6;
+tilt_sext = 500*1e-6;
+dkk_sext= 5e-3;
+
+
 
 
 %QUAD FF

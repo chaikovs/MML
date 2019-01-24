@@ -26,7 +26,7 @@ function varargout = test_lat
 
 
 %% Lattice definition
-load ThomX_017_064_r56_02_chro11_errors.mat
+load ThomX_017_064_r56_02_chro11_errorsMAX.mat
 
 
 THERING = thomx_lattice_error;
