@@ -1,10 +1,10 @@
 
 clear all; close all; clc;
 
+
 %% Initial lattices
 
-% global THERING
-% thomx_ring=THERING;
+
 
 % load lattice
 ring_woErr = ThomX_017_064_r56_02_chro11();
@@ -27,10 +27,15 @@ r0=ring;
 thomx_ring = ring;
 
 %%
+
+global THERING
+thomx_ring=THERING;
+
+
 Z0=[0.001 0.0 0.0001 0 0 0]';
 Z1=[0.001 0 0.0001 0 0 0]';
 
-Nturns = 10000;
+Nturns = 100;
 [X1,lost_thomx]=ringpass(thomx_ring,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
 BPMindex = family2atindex('BPMx',getlist('BPMx'));
 X2 = linepass(thomx_ring, X1, BPMindex);
@@ -48,8 +53,15 @@ plot(spos,BPMx)
 xlabel('s-position');
 ylabel('x-orbit');
 
+BPMxAll = reshape(BPMx', 1,Nturns*length(BPMindex));
+
 figure
 plot(BPMx(:,1))
+xlabel('Turn number');
+ylabel('x-orbit');
+
+figure
+plot(BPMxAll)
 xlabel('Turn number');
 ylabel('x-orbit');
 
@@ -355,12 +367,21 @@ addlabel(1, 0, datestr(clock,0))
 
 Z0=[0.001 0.0 0.0001 0 0 0]';
 
-Nturns = 10000;
+Nturns = 1000;
 [X1,lost_thomx]=ringpass(rerr,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
+
+[X1_woErr,lost_thomx_woErr]=ringpass(ring_woErr,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
+
 BPMindex = family2atindex('BPMx',getlist('BPMx'));
 X2 = linepass(rerr, X1, BPMindex);
+X2_woErr = linepass(ring_woErr, X1, BPMindex);
+
 BPMx = reshape(X2(1,:), Nturns, length(BPMindex));
 BPMy = reshape(X2(3,:), Nturns, length(BPMindex));
+
+BPMx_woErr = reshape(X2_woErr(1,:), Nturns, length(BPMindex));
+BPMy_woErr = reshape(X2_woErr(3,:), Nturns, length(BPMindex));
+
 
 % BPMindex = family2atindex('BPMx');
  spos = getspos('BPMx');
@@ -368,15 +389,32 @@ BPMy = reshape(X2(3,:), Nturns, length(BPMindex));
 %%
 
 figure
-
 plot(spos,BPMx)
+% hold on
+% plot(spos,BPMx_woErr)
+% hold off
 xlabel('s-position');
 ylabel('x-orbit');
 
+BPMxAll = reshape(BPMx', 1,Nturns*length(BPMindex));
+BPMxAll_woErr = reshape(BPMx_woErr', 1,Nturns*length(BPMindex));
+
 figure
-plot(BPMx(:,1))
+plot(BPMx(:,5))
+hold on
+plot(BPMx_woErr(:,5),'r.-')
+hold off
 xlabel('Turn number');
 ylabel('x-orbit');
+
+figure
+plot(BPMxAll)
+hold on
+plot(BPMxAll_woErr,'r.-')
+hold off
+xlabel('Turn number');
+ylabel('x-orbit');
+
 
 
 

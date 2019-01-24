@@ -115,7 +115,7 @@ if ModeNumber == 1
 
     
     % AT lattice
-    AD.ATModel = 'TDR_017_064_r56_02_Dff412_chro00';
+    AD.ATModel = 'test_lat';%'TDR_017_064_r56_02_Dff412_chro00';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family

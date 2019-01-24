@@ -39,10 +39,6 @@ function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, Inp
 % For sextupole:   k = B"/ Brho / 2  (to be compatible with AT)
 %                  (all coefficients all divided by 2 for sextupoles)
 %
-% MagnetCoreType is the magnet measurements name for the magnet core (string, string matrix, or cell)
-%   For SOLEIL:   BEND
-%                 Q1 - Q10 S1 - S10,
-%                 QT, HCOR, VCOR, FHCOR, FVCOR
 %
 % Leff is the effective length of the magnet
 %
@@ -59,8 +55,7 @@ function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, Inp
 % NOTE: Make sure the sign on the 'C' coefficients is reversed where positive current generates negative K-values
 % Or use Tango K value set to -1
 %
-%
-% Customized by Jianfeng Zhang for ThomX @ LAL 21/06/2013
+
 %
 %
 
@@ -259,7 +254,7 @@ switch AcceleratorName
                 
            case {'QP1','QP3','QP31'}   
                          
-                %Defocusing quad k < 0.Coeff a0, a2, a4,...to be multiply by -1.
+                %Defocusing quad k < 0.Coeff a0, a2, a4,...to be multiplied by -1.
                         
                 
                 % Find the current from the given polynomial for B'Leff

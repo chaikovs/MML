@@ -356,7 +356,7 @@ AO.(ifam).Switch.MemberOf = {'Plotfamily'};
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SLOW HORIZONTAL CORRECTORS
+%% HORIZONTAL CORRECTORS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ifam = 'HCOR';
 AO.(ifam).FamilyName               = ifam;
@@ -394,7 +394,7 @@ AO.(ifam).Voltage.Physics2HWFcn    = @k2amp;
 
 % elemlist devlist tangoname       status  common  attR
 % attW      range
-% the current range needed to be update for ThomX in the future
+
 varlist = {
      1  [ 1 1] 'RI-C1/ME/STR.010      ' 1 'HCOR001' 'current   ' 'currentPM ' [-11.0  11.0]
      2  [ 1 2] 'RI-C1/ME/STR.020      ' 1 'HCOR002' 'current   ' 'currentPM ' [-11.0  11.0]
