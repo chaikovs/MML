@@ -1,5 +1,0 @@
-function essai_panel(source, event, toto)
-   % fprintf('handle : %s\n', CellGrp)
-    fprintf('source : %s\n', source)
-    fprintf('old : %s\n', event.OldValue)
-    fprintf('new : %s\n', event.NewValue)

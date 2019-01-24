@@ -1,9 +1,0 @@
-MaxOrder is the maximum order in the transverse coordinate in expansion
-of the magnetic field.
-StrMPoleSymplectic4Pass
-
-MaxOrder	Type
------------------------------------------------------
-0		Dipole		[K0]
-1		Quadrupole	[K0, K1]
-2		Sextupole	[K0, K1, K2]
