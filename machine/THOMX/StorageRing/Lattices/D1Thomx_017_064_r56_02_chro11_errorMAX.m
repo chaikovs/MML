@@ -1,4 +1,4 @@
-function varargout = test_lat
+function varargout = D1Thomx_017_064_r56_02_chro11_errorMAX
 %************************************************************
 % ThomX ring lattice for AT (Accelrator Toolbox). 
 %   Based on the Alexandre Loulergue's
@@ -26,8 +26,7 @@ function varargout = test_lat
 
 
 %% Lattice definition
-load ThomX_017_064_r56_02_chro11_errorsMAX.mat
-
+load ThomX_017_064_r56_02_chro11_errorMAX.mat
 
 THERING = thomx_lattice_error;
       

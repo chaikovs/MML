@@ -182,3 +182,12 @@ change in the setpathmml
 addpath(fullfile(MMLROOT,'simulators', 'at2.0'), '-begin');
 
 
+25/01/2019
+
+Modification  in atcavityon/atcavityoff
+
+ [cavipass]=parseargs({'CavityPass','auto',''},varargin); ===>>> [cavipass]=parseargs({'CavityPass'},varargin);
+
+
+
+

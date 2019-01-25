@@ -25,7 +25,9 @@ function [ring_output,cavitiesIndex,energy]=atcavityon(ring_input,varargin)
 %% Written by Laurent S. Nadolski
 
 
-[cavipass]=parseargs({'CavityPass','auto',''},varargin);
+%[cavipass]=parseargs({'CavityPass','auto',''},varargin);
+[cavipass]=parseargs({'CavityPass'},varargin);
+
 
 ring_output=ring_input;
 

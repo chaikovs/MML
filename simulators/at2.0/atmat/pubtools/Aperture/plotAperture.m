@@ -23,7 +23,14 @@ Xm(apind)=xm;
 Yp(apind)=yp;
 Ym(apind)=ym;
 
+indNAN = isnan(Xp);
+Xp(indNAN) = 0;
+Xm(indNAN) = 0;
+Yp(indNAN) = 0;
+Ym(indNAN) = 0;
+
 plotdata(1).values=[Xp Xm Yp Ym]*1e2;%
+%plotdata(1).values=[xp xm yp ym]*1e2;%
 plotdata(1).labels={'x aperture','x aperture','y aperture','y aperture'};
 plotdata(1).axislabel='x or y aperture [cm]';
 % 
