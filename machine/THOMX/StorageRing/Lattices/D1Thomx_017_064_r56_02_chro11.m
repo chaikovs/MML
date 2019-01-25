@@ -1,4 +1,4 @@
-function varargout = TDR_017_064_r56_03_Dff412_chro11
+function varargout = D1Thomx_017_064_r56_02_chro11
 %************************************************************
 % ThomX ring lattice for AT (Accelrator Toolbox). 
 %   Based on the Alexandre Loulergue's
@@ -102,12 +102,12 @@ edge_effect2 = 1;
 LQP = 0.15731;% 0.15; % quadrupole length
 QPassMethod = 'QuadMPoleFringePass'; % tracking method QuadMPoleFringePass  StrMPoleSymplectic4Pass
 
-QP1 = quadrupole('QP1', LQP,-4.59243300, QPassMethod);
-QP2 = quadrupole('QP2', LQP, 9.0613280, QPassMethod);
-QP3 = quadrupole('QP3', LQP, -16.007290000000001, QPassMethod);
-QP4 = quadrupole('QP4', LQP, 16.323820000000001, QPassMethod);
-QP31 = quadrupole('QP31', LQP,  -9.90676000, QPassMethod);
-QP41 = quadrupole('QP41', LQP,  4.57566200000, QPassMethod);
+QP1 = quadrupole('QP1', LQP, -4.86169000, QPassMethod);
+QP2 = quadrupole('QP2', LQP, 9.44145900, QPassMethod);
+QP3 = quadrupole('QP3', LQP, -18.542829999999999, QPassMethod);
+QP4 = quadrupole('QP4', LQP, 16.460090000000001, QPassMethod);
+QP31 = quadrupole('QP31', LQP,   -8.900145999999999, QPassMethod);
+QP41 = quadrupole('QP41', LQP,  5.10744800, QPassMethod);
 
   
 %% =======================
@@ -128,8 +128,8 @@ SPassMethod = 'StrMPoleSymplectic4Pass';
 %  SX3 = sextupole('SX3', LSX,  -8.84477704272277/LSX *sx_on, SPassMethod);
 
  SX1 = sextupole('SX1', 0.1000000E-05, 0*sx_on,  SPassMethod); 
- SX2 = sextupole('SX2', 0.1000000E-05,  2.987786325454032e6 *sx_on, SPassMethod); 
- SX3 = sextupole('SX3', 0.1000000E-05,  -6.933307909408977e6 *sx_on, SPassMethod); 
+ SX2 = sextupole('SX2', 0.1000000E-05,  3.217180355558261e6 *sx_on, SPassMethod); 
+ SX3 = sextupole('SX3', 0.1000000E-05,   -9.597738518429978e6 *sx_on, SPassMethod); 
 
 %% =======================
 % BPM
@@ -137,9 +137,10 @@ SPassMethod = 'StrMPoleSymplectic4Pass';
 %BPM = marker('BPM', 'IdentityPass');
 %========================
 % horizontal
-BPMx = marker('BPMx', 'IdentityPass');
+% BPMx = marker('BPMx', 'IdentityPass');
+BPMx = monitor('BPMx', 'IdentityPass');
 % vertical
-BPMz = marker('BPMz', 'IdentityPass');
+BPMz = monitor('BPMz', 'IdentityPass');
 
 %% =======================
 % Interaction Point

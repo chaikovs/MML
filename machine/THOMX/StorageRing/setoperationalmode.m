@@ -43,10 +43,10 @@ if nargin < 1
 end
 if isempty(ModeNumber)
     ModeCell = {...
-        ' 1/ 50 MeV, 3.17 1.64, r56=0.2', ...
-        ' 2/ 50 MeV, 3.17 1.64, r56=0.3', ...
-        ' 3/ 50 MeV, 3.17 1.64, r56=0.4', ...
-        ' 4/ 50 MeV, 3.17 1.64, r56=0.4 SEPT KICK', ...
+        ' 1/ 50 MeV, 3.17 1.64, r56=0.2, chro 1/1', ...
+        ' 2/ 50 MeV, 3.17 1.64, r56=0.2, chro 1/1 ERRORS', ...
+        ' 3/ 50 MeV, 3.17 1.64, r56=0.3, chro 1/1', ...
+        ' 4/ 50 MeV, 3.17 1.64, r56=0.4, chro 1/1 ', ...
         };
     [ModeNumber, OKFlag] = listdlg('Name','THOMX','PromptString','Select the Operational Mode:', ...
         'SelectionMode','single', 'ListString', ModeCell, 'ListSize', [450 200], 'InitialValue', 1);
@@ -106,16 +106,16 @@ AD.ErrorWarningLevel = 0;
 % ModeName - String used for mode directory name off DataRoot/MachineName
 % OpsFileExtension - string add to default file names
 
-%% ModeNumber == 1, nu_x,y = 3.175/1.72
+%% ModeNumber == 1, nu_x,y = 3.17/1.64
 if ModeNumber == 1
-    AD.OperationalMode = '50e-3 GeV, 3.169 1.639';
+    AD.OperationalMode = '50e-3 GeV, 3.17 1.64';
     AD.Energy = 50e-3; % Make sure this is the same as bend2gev at the production lattice!
-    ModeName = 'TDR_017_064_r56_02_Dff412_chro00';
-    OpsFileExtension = 'TDR_017_064_r56_02_Dff412_chro00';
+    ModeName = 'D1Thomx_017_064_r56_02_chro11';
+    OpsFileExtension = 'D1Thomx_017_064_r56_02_chro11';
 
     
     % AT lattice
-    AD.ATModel = 'test_lat';%'TDR_017_064_r56_02_Dff412_chro00';
+    AD.ATModel = 'D1Thomx_017_064_r56_02_chro11';%'TDR_017_064_r56_02_Dff412_chro00';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family
@@ -128,7 +128,7 @@ AO.TUNE.Monitor.Golden = [
         NaN];
 
     % Golden chromaticity is in the AD (Physics units)
-    AD.Chromaticity.Golden = [0.0; 0.0];
+    AD.Chromaticity.Golden = [1.0; 1.0];
     
     % Status factory
     % don't need for ThomX ?????
@@ -138,13 +138,13 @@ AO.TUNE.Monitor.Golden = [
     setao(AO);
 
 elseif ModeNumber == 2
-    AD.OperationalMode = '50e-3 GeV, 3.175 1.72';
+    AD.OperationalMode = '50e-3 GeV, 3.17 1.64';
     AD.Energy = 50e-3; % Make sure this is the same as bend2gev at the production lattice!
-    ModeName = 'TDR_017_064_r56_02_Dff412_chro11';
-    OpsFileExtension = 'TDR_017_064_r56_02_Dff412_chro11';
+    ModeName = 'D1Thomx_017_064_r56_02_chro11_errorMAX';
+    OpsFileExtension = 'D1Thomx_017_064_r56_02_chro11_errorMAX';
 
     % AT lattice
-    AD.ATModel = 'TDR_017_064_r56_02_Dff412_chro11';
+    AD.ATModel = 'D1Thomx_017_064_r56_02_chro11_errorMAX';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family
@@ -159,13 +159,13 @@ elseif ModeNumber == 2
     AD.Chromaticity.Golden = [1.0; 1.0];
     
     elseif ModeNumber == 3
-    AD.OperationalMode = '50e-3 GeV, 3.175 1.72';
+    AD.OperationalMode = '50e-3 GeV, 3.17 1.64';
     AD.Energy = 50e-3; % Make sure this is the same as bend2gev at the production lattice!
-    ModeName = 'TDR_017_064_r56_02_Dff412';
-    OpsFileExtension = 'TDR_017_064_r56_02_Dff412';
+    ModeName = 'D1Thomx_017_064_r56_03_chro11';
+    OpsFileExtension = 'D1Thomx_017_064_r56_03_chro11';
 
     % AT lattice
-    AD.ATModel = 'TDR_017_064_r56_02_Dff412';
+    AD.ATModel = 'D1Thomx_017_064_r56_03_chro11';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family
@@ -177,16 +177,16 @@ elseif ModeNumber == 2
         NaN];
 
     % Golden chromaticity is in the AD (Physics units)
-    AD.Chromaticity.Golden = [0.0; 0.0];
+    AD.Chromaticity.Golden = [1.0; 1.0];
                
     elseif ModeNumber == 4
-    AD.OperationalMode = '50e-3 GeV, 3.175 1.72';
+    AD.OperationalMode = '50e-3 GeV, 3.17 1.64';
     AD.Energy = 50e-3; % Make sure this is the same as bend2gev at the production lattice!
-    ModeName = 'TDR_017_064_r56_02_sx_Dff412_DipMagnL_SEPT_KICK';
-    OpsFileExtension = '_TDR_017_064_r56_02_sx_Dff412_DipMagnL_SEPT_KICK';
+    ModeName = 'D1Thomx_017_064_r56_04_chro11';
+    OpsFileExtension = 'D1Thomx_017_064_r56_04_chro11';
 
     % AT lattice
-    AD.ATModel = 'TDR_017_064_r56_02_sx_Dff412_DipMagnL_SEPT_KICK';
+    AD.ATModel = 'D1Thomx_017_064_r56_04_chro11';
     eval(AD.ATModel);  %run model for compiler;
 
     % Golden TUNE is with the TUNE family
@@ -198,7 +198,7 @@ elseif ModeNumber == 2
         NaN];
 
     % Golden chromaticity is in the AD (Physics units)
-    AD.Chromaticity.Golden = [0.0; 0.0];
+    AD.Chromaticity.Golden = [1.0; 1.0];
                
                
  else

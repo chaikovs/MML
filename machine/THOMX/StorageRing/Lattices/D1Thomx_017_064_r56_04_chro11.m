@@ -1,4 +1,4 @@
-function varargout = TDR_017_064_r56_04_Dff412_chro11
+function varargout = D1Thomx_017_064_r56_04_chro11
 %************************************************************
 % ThomX ring lattice for AT (Accelrator Toolbox). 
 %   Based on the Alexandre Loulergue's

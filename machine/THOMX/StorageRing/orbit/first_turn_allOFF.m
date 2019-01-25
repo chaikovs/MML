@@ -28,6 +28,17 @@ BareRING = atsetfieldvalues(BareRING,findcells(BareRING,'FamName','QP11'), 'Poly
 
 %%
 
+ 
+ % Example: define apertures.
+Xapert=0.04*ones(size(BareRING));
+Yapert=0.028*ones(size(BareRING));
+BareRING=SetPhysicalAperture(BareRING,Xapert/2,Yapert/2);
+
+atplot(BareRING,@plotAperture);
+
+
+%%
+
 figure('units','normalized','position',[0.3 0.3 0.45 0.35])
 atplot(BareRING,'comment',[],@plClosedOrbit)
 %saveas(gca,'OrbitWithErr.fig')
