@@ -5,31 +5,29 @@ clear all; close all; clc;
 %% Initial lattices
 
 
-
 % load lattice
-ring_woErr = ThomX_017_064_r56_02_chro11();
-ring = ThomX_017_064_r56_02_chro11_multip();
+ring_woErr = ThomX_017_064_r56_02_chro11;
+%ring = ThomX_017_064_r56_02_chro11_multip();
 load ThomX_017_064_r56_02_chro11_errorMAX.mat
 rerr = thomx_lattice_error;
 
 
-indHCor=find(atgetcells(ring,'FamName','HCOR'));
-indVCor=find(atgetcells(ring,'FamName','VCOR'));
-indQCor=find(atgetcells(ring,'FamName','Quadrupole'));
-indm=find(atgetcells(ring,'FamName','BPMx'));
 
-ring_woErr=atsetfieldvalues(ring_woErr,indHCor,'PassMethod','StrMPoleSymplectic4Pass');
-ring_woErr=atsetfieldvalues(ring_woErr,indVCor,'PassMethod','StrMPoleSymplectic4Pass');
+% indHCor=find(atgetcells(rerr,'FamName','HCOR'));
+% indVCor=find(atgetcells(rerr,'FamName','VCOR'));
+% indQCor=find(atgetcells(rerr,'FamName','Quadrupole'));
+% indm=find(atgetcells(rerr,'FamName','BPMx'));
+% 
+% ring_woErr=atsetfieldvalues(ring_woErr,indHCor,'PassMethod','StrMPoleSymplectic4Pass');
+% ring_woErr=atsetfieldvalues(ring_woErr,indVCor,'PassMethod','StrMPoleSymplectic4Pass');
 
-ring=atsetfieldvalues(ring,indHCor,'PassMethod','StrMPoleSymplectic4Pass');
-ring=atsetfieldvalues(ring,indVCor,'PassMethod','StrMPoleSymplectic4Pass');
+% ring=atsetfieldvalues(rerr,indHCor,'PassMethod','StrMPoleSymplectic4Pass');
+% ring=atsetfieldvalues(rerr,indVCor,'PassMethod','StrMPoleSymplectic4Pass');
 
-
-
-r0=ring;
-
-thomx_ring = ring;
-
+%ring_woErr{20}.KickAngle = [1.5e-3 0];
+%ring_woErr{21}.KickAngle = [1.e-3 0];
+%atsetfieldvalues(ring_woErr,findcells(ring_woErr,'FamName','HCOR'), 'KickAngle',{1,1},0.1e-3)
+%atgetfieldvalues(ring_woErr,findcells(ring_woErr,'FamName','HCOR'), 'KickAngle')
 %%
 
 % global THERING
@@ -55,12 +53,13 @@ BPMy = reshape(X2(3,:), Nturns, length(BPMindex));
  
  %%
  
+ 
 %  % Example: define apertures.
-% Xapert=0.04*ones(size(thomx_ring));
-% Yapert=0.028*ones(size(thomx_ring));
-% thomx_ring=SetPhysicalAperture(thomx_ring,Xapert/2,Yapert/2);
-% 
-% atplot(thomx_ring,@plotAperture);
+Xapert=0.04*ones(size(ring_woErr));
+Yapert=0.028*ones(size(ring_woErr));
+thomx_ring=SetPhysicalAperture(ring_woErr,Xapert/2,Yapert/2);
+
+atplot(thomx_ring,@plotAperture);
 
  
  %%
@@ -250,9 +249,9 @@ Nturns = 1000;
 BPMindex = family2atindex('BPMx',getlist('BPMx'));
 X2_woErr = linepass(ring_woErr, X1_woErr, BPMindex);
 
-[X1,lost_thomx]=ringpass(rerr,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
+[X1,lost_thomx]=ringpass(thomx_ring,Z0,Nturns); %(X, PX, Y, PY, DP, CT2 ) 
 BPMindex = family2atindex('BPMx',getlist('BPMx'));
-X2 = linepass(rerr, X1, BPMindex);
+X2 = linepass(thomx_ring, X1, BPMindex);
 
 BPMx_woErr = reshape(X2_woErr(1,:), Nturns, length(BPMindex));
 BPMy_woErr = reshape(X2_woErr(3,:), Nturns, length(BPMindex));

@@ -79,7 +79,7 @@ ErrorFlag = 0;
 % Active NoiseFlag if BPM in Simulation mode (AO)
 NoiseFlag = getfamilydata('BPMx','Simulated','NoiseActivated') | ...
     getfamilydata('BPMz','Simulated','NoiseActivated');
-BPMsigma = 1e-6;
+BPMsigma = 10e-6;
  
 % Input parsing
 StructOutputFlag = 0;

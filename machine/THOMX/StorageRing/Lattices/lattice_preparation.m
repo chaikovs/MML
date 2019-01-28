@@ -1,6 +1,17 @@
 
 clear all; close all; clc;
 
+%% Bare lattice preparation
+
+% ring_woErr = ThomX_017_064_r56_02_chro11();
+% 
+% bare_lattice = atsetfieldvalues(RING,findcells(ring_woErr,'FamName','SX1'), 'PolynomB',{1,3},0);
+% bare_lattice = atsetfieldvalues(BareRING,findcells(bare_lattice,'FamName','SX2'), 'PolynomB',{1,3},0);
+% bare_lattice = atsetfieldvalues(BareRING,findcells(bare_lattice,'FamName','SX3'), 'PolynomB',{1,3},0);
+
+% save('ThomX_017_064_r56_02_chro11_bare','bare_lattice')
+
+
 
 %% Initial lattices
 

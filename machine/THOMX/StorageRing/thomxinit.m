@@ -1,8 +1,6 @@
 function thomxinit(OperationalMode)
 %THOMXINIT - Initializes params for ThomX control in MATLAB
 %
-
-% Modified by Jianfeng Zhang @ LAL 18/06/2013
 %
 %==========================
 % Accelerator Family Field
@@ -75,30 +73,9 @@ function thomxinit(OperationalMode)
 %suppress optimization message
 %#ok<*ASGLU>
 
-% CONTROL ROOM
-% Check for nanoscopium
-% Check for attribute names
-% Check for range value of sextupole
-
 % If controlromm user is operator and online mode
 %
 %
-%
-%  A lot of things to be checked and modified when the ThomX machine 
-%  and Tango is ready..., % Needs to be carefully tested...  by Zhang @ LAL, 02/2014.
-%
-%
-% 24/02/2014 by Jianfeng Zhang @ LAL
-%    Fix the bug to define all the family members of sextupoles.
-%
-%
-
-
-% system gives back an visible character: carriage return!
-% so comparison on the number of caracters
-%  This is a very important command, decide the 
-% machine mode or simualtion mode!!!!!!!!!!!!
-% Need to modify it in the future... by Jianfeng Zhang @ LAL, 09/04/2014
 %
 [statuss WHO] = system('whoami');
 if strncmp(WHO, 'operateur',9),
@@ -157,7 +134,7 @@ AO.(ifam).Monitor.Units            = 'Hardware';
 AO.(ifam).Monitor.HWUnits          = 'mm';
 AO.(ifam).Monitor.PhysicsUnits     = 'm';
 AO.(ifam).Monitor.SpecialFunctionGet = 'gethbpmgroup';
-AO.(ifam).Simulated.NoiseActivated = 0; %To activate Noise on BPM reading in simulation   
+AO.(ifam).Simulated.NoiseActivated = 1; %To activate Noise on BPM reading in simulation   
 %AO.(ifam).Monitor.SpecialFunctionGet = 'gethbpmaverage';
 %AO.(ifam).Monitor.SpecialFunctionGet = 'gethturdevnumberyturn';
 
@@ -262,7 +239,7 @@ AO.(ifam).Monitor.Units            = 'Hardware';
 AO.(ifam).Monitor.HWUnits          = 'mm';
 AO.(ifam).Monitor.PhysicsUnits     = 'm';
 AO.(ifam).Monitor.SpecialFunctionGet = 'getvbpmgroup';
-AO.(ifam).Simulated.NoiseActivated = 0; % To activate Noise on BPM reading in simulation     
+AO.(ifam).Simulated.NoiseActivated = 1; % To activate Noise on BPM reading in simulation     
 %AO.(ifam).Monitor.SpecialFunctionGet = 'getvbpmaverage';
 %AO.(ifam).Monitor.SpecialFunctionGet = 'getvturdevnumberyturn';
 
@@ -396,18 +373,18 @@ AO.(ifam).Voltage.Physics2HWFcn    = @k2amp;
 % attW      range
 
 varlist = {
-     1  [ 1 1] 'RI-C1/ME/STR.010      ' 1 'HCOR001' 'current   ' 'currentPM ' [-11.0  11.0]
-     2  [ 1 2] 'RI-C1/ME/STR.020      ' 1 'HCOR002' 'current   ' 'currentPM ' [-11.0  11.0]
-     3  [ 1 3] 'RI-C1/ME/STR.030      ' 1 'HCOR003' 'current   ' 'currentPM ' [-11.0  11.0]
-     4  [ 1 4] 'RI-C1/ME/STR.040      ' 1 'HCOR004' 'current   ' 'currentPM ' [-11.0  11.0]
-     5  [ 1 5] 'RI-C1/ME/STR.050      ' 1 'HCOR005' 'current   ' 'currentPM ' [-11.0  11.0]
-     6  [ 1 6] 'RI-C1/ME/STR.060      ' 1 'HCOR006' 'current   ' 'currentPM ' [-11.0  11.0]
-     7  [ 2 1] 'RI-C2/ME/STR.010      ' 1 'HCOR007' 'current   ' 'currentPM ' [-11.0  11.0]
-     8  [ 2 2] 'RI-C2/ME/STR.020      ' 1 'HCOR008' 'current   ' 'currentPM ' [-11.0  11.0]
-     9  [ 2 3] 'RI-C2/ME/STR.030      ' 1 'HCOR009' 'current   ' 'currentPM ' [-11.0  11.0]
-    10  [ 2 4] 'RI-C2/ME/STR.040      ' 1 'HCOR010' 'current   ' 'currentPM ' [-11.0  11.0]
-    11  [ 2 5] 'RI-C2/ME/STR.050      ' 1 'HCOR011' 'current   ' 'currentPM ' [-11.0  11.0]
-    12  [ 2 6] 'RI-C2/ME/STR.060      ' 1 'HCOR012' 'current   ' 'currentPM ' [-11.0  11.0]
+     1  [ 1 1] 'RI-C1/ME/STR.010      ' 1 'HCOR001' 'current   ' 'currentPM ' [-10.0  10.0]
+     2  [ 1 2] 'RI-C1/ME/STR.020      ' 1 'HCOR002' 'current   ' 'currentPM ' [-10.0  10.0]
+     3  [ 1 3] 'RI-C1/ME/STR.030      ' 1 'HCOR003' 'current   ' 'currentPM ' [-10.0  10.0]
+     4  [ 1 4] 'RI-C1/ME/STR.040      ' 1 'HCOR004' 'current   ' 'currentPM ' [-10.0  10.0]
+     5  [ 1 5] 'RI-C1/ME/STR.050      ' 1 'HCOR005' 'current   ' 'currentPM ' [-10.0  10.0]
+     6  [ 1 6] 'RI-C1/ME/STR.060      ' 1 'HCOR006' 'current   ' 'currentPM ' [-10.0  10.0]
+     7  [ 2 1] 'RI-C2/ME/STR.010      ' 1 'HCOR007' 'current   ' 'currentPM ' [-10.0  10.0]
+     8  [ 2 2] 'RI-C2/ME/STR.020      ' 1 'HCOR008' 'current   ' 'currentPM ' [-10.0  10.0]
+     9  [ 2 3] 'RI-C2/ME/STR.030      ' 1 'HCOR009' 'current   ' 'currentPM ' [-10.0  10.0]
+    10  [ 2 4] 'RI-C2/ME/STR.040      ' 1 'HCOR010' 'current   ' 'currentPM ' [-10.0  10.0]
+    11  [ 2 5] 'RI-C2/ME/STR.050      ' 1 'HCOR011' 'current   ' 'currentPM ' [-10.0  10.0]
+    12  [ 2 6] 'RI-C2/ME/STR.060      ' 1 'HCOR012' 'current   ' 'currentPM ' [-10.0  10.0]
           };
 
 devnumber = length(varlist);
@@ -448,11 +425,9 @@ for ii = 1:devnumber,
     AO.(ifam).Setpoint.Physics2HWParams{1}(ii,:)  = coefficients/Leff;
 end
 
-% need to customized for ThomX?
+% Optics depemdent
 AO.(ifam).Setpoint.Tolerance(:,:)    = 1e-2*ones(devnumber,1);
-% Warning optics dependent cf. Low alpha lattice
-%AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*5e-5*2; % ??? urad (half used for kicking) 
- AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*5e-5*2; % 2*5 urad (half used for kicking) % LAST *5e-6*2;
+AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*5e-5*2; % 2*5 urad (half used for kicking) % LAST *5e-6*2;
 %AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*0.5e-4*1; % 2*25 urad (half used for kicking)
 
 
@@ -499,7 +474,7 @@ AO.(ifam).Monitor.Mode             = Mode;
 AO.(ifam).Monitor.DataType         = 'Scalar';
 AO.(ifam).Monitor.Units            = 'Hardware';
 AO.(ifam).Monitor.HWUnits          = 'A';
-AO.(ifam).Monitor.PhysicsUnits     = 'meter^-2';
+AO.(ifam).Monitor.PhysicsUnits     = 'rad';
 AO.(ifam).Monitor.HW2PhysicsFcn = @amp2k;
 AO.(ifam).Monitor.Physics2HWFcn = @k2amp;
 
@@ -520,18 +495,18 @@ AO.(ifam).Voltage.HW2PhysicsFcn    = @amp2k;
 AO.(ifam).Voltage.Physics2HWFcn    = @k2amp;
 
 varlist = {
-     1  [ 1 1] 'RI-C1/ME/STR.010      ' 1 'VCOR001' 'current   ' 'currentPM ' [-11.0  11.0]
-     2  [ 1 2] 'RI-C1/ME/STR.020      ' 1 'VCOR002' 'current   ' 'currentPM ' [-11.0  11.0]
-     3  [ 1 3] 'RI-C1/ME/STR.030      ' 1 'VCOR003' 'current   ' 'currentPM ' [-11.0  11.0]
-     4  [ 1 4] 'RI-C1/ME/STR.040      ' 1 'VCOR004' 'current   ' 'currentPM ' [-11.0  11.0]
-     5  [ 1 5] 'RI-C1/ME/STR.050      ' 1 'VCOR005' 'current   ' 'currentPM ' [-11.0  11.0]
-     6  [ 1 6] 'RI-C1/ME/STR.060      ' 1 'VCOR006' 'current   ' 'currentPM ' [-11.0  11.0]
-     7  [ 2 1] 'RI-C2/ME/STR.010      ' 1 'VCOR007' 'current   ' 'currentPM ' [-11.0  11.0]
-     8  [ 2 2] 'RI-C2/ME/STR.020      ' 1 'VCOR008' 'current   ' 'currentPM ' [-11.0  11.0]
-     9  [ 2 3] 'RI-C2/ME/STR.030      ' 1 'VCOR009' 'current   ' 'currentPM ' [-11.0  11.0]
-    10  [ 2 4] 'RI-C2/ME/STR.040      ' 1 'VCOR010' 'current   ' 'currentPM ' [-11.0  11.0]
-    11  [ 2 5] 'RI-C2/ME/STR.050      ' 1 'VCOR011' 'current   ' 'currentPM ' [-11.0  11.0]
-    12  [ 2 6] 'RI-C2/ME/STR.060      ' 1 'VCOR012' 'current   ' 'currentPM ' [-11.0  11.0]
+     1  [ 1 1] 'RI-C1/ME/STR.010      ' 1 'VCOR001' 'current   ' 'currentPM ' [-10.0  10.0]
+     2  [ 1 2] 'RI-C1/ME/STR.020      ' 1 'VCOR002' 'current   ' 'currentPM ' [-10.0  10.0]
+     3  [ 1 3] 'RI-C1/ME/STR.030      ' 1 'VCOR003' 'current   ' 'currentPM ' [-10.0  10.0]
+     4  [ 1 4] 'RI-C1/ME/STR.040      ' 1 'VCOR004' 'current   ' 'currentPM ' [-10.0  10.0]
+     5  [ 1 5] 'RI-C1/ME/STR.050      ' 1 'VCOR005' 'current   ' 'currentPM ' [-10.0  10.0]
+     6  [ 1 6] 'RI-C1/ME/STR.060      ' 1 'VCOR006' 'current   ' 'currentPM ' [-10.0  10.0]
+     7  [ 2 1] 'RI-C2/ME/STR.010      ' 1 'VCOR007' 'current   ' 'currentPM ' [-10.0  10.0]
+     8  [ 2 2] 'RI-C2/ME/STR.020      ' 1 'VCOR008' 'current   ' 'currentPM ' [-10.0  10.0]
+     9  [ 2 3] 'RI-C2/ME/STR.030      ' 1 'VCOR009' 'current   ' 'currentPM ' [-10.0  10.0]
+    10  [ 2 4] 'RI-C2/ME/STR.040      ' 1 'VCOR010' 'current   ' 'currentPM ' [-10.0  10.0]
+    11  [ 2 5] 'RI-C2/ME/STR.050      ' 1 'VCOR011' 'current   ' 'currentPM ' [-10.0  10.0]
+    12  [ 2 6] 'RI-C2/ME/STR.060      ' 1 'VCOR012' 'current   ' 'currentPM ' [-10.0  10.0]
           };
 
 devnumber = length(varlist);
@@ -578,10 +553,9 @@ AO.(ifam).Monitor.MemberOf  = {'PlotFamily'};
 AO.(ifam).Voltage.MemberOf  = {'PlotFamily'};
 AO.(ifam).Setpoint.MemberOf  = {'PlotFamily'};
 
+%Optics dependent
 AO.(ifam).Setpoint.Tolerance(:,:)    = 1e-2*ones(devnumber,1);
-% Warning optics dependent cf. Low alpha lattice
-%AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*10e-5*2;
- AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*5e-5*2; % LAST *10e-6*2;
+AO.(ifam).Setpoint.DeltaRespMat(:,:) = ones(devnumber,1)*5e-5*2; % LAST *10e-6*2;
 
 dummy = strcat(AO.(ifam).DeviceName,'/voltage');
 AO.(ifam).Voltage.TangoNames(:,:)     = {dummy{:}};
@@ -621,14 +595,14 @@ AO.(ifam).TangoSetpoint.TangoNames(:,:)    = ...
 %==============
 
 varlist={
-     1  [ 1  1] 'RI-C1/ME/DP.010-DC' 1 'BEND.01' [+0 +560]
-     2  [ 1  2] 'RI-C1/ME/DP.020-DC' 1 'BEND.02' [+0 +560]
-     3  [ 1  3] 'RI-C1/ME/DP.030-DC' 1 'BEND.03' [+0 +560]
-     4  [ 1  4] 'RI-C1/ME/DP.040-DC' 1 'BEND.04' [+0 +560]
-     5  [ 2  1] 'RI-C2/ME/DP.010-DC' 1 'BEND.05' [+0 +560]
-     6  [ 2  2] 'RI-C2/ME/DP.020-DC' 1 'BEND.06' [+0 +560]
-     7  [ 2  3] 'RI-C2/ME/DP.030-DC' 1 'BEND.07' [+0 +560]
-     8  [ 2  4] 'RI-C2/ME/DP.040-DC' 1 'BEND.08' [+0 +560]
+     1  [ 1  1] 'RI-C1/ME/DP.010-DC' 1 'BEND.01' [+0 +300]
+     2  [ 1  2] 'RI-C1/ME/DP.020-DC' 1 'BEND.02' [+0 +300]
+     3  [ 1  3] 'RI-C1/ME/DP.030-DC' 1 'BEND.03' [+0 +300]
+     4  [ 1  4] 'RI-C1/ME/DP.040-DC' 1 'BEND.04' [+0 +300]
+     5  [ 2  1] 'RI-C2/ME/DP.010-DC' 1 'BEND.05' [+0 +300]
+     6  [ 2  2] 'RI-C2/ME/DP.020-DC' 1 'BEND.06' [+0 +300]
+     7  [ 2  3] 'RI-C2/ME/DP.030-DC' 1 'BEND.07' [+0 +300]
+     8  [ 2  4] 'RI-C2/ME/DP.040-DC' 1 'BEND.08' [+0 +300]
 };
 
 % *** BEND ***
@@ -692,8 +666,8 @@ AO.(ifam).Desired  = AO.(ifam).Monitor;
 AO.(ifam).Setpoint.MemberOf  = {'PlotFamily'};
 AO.(ifam).Setpoint.TangoNames(:,:)  = strcat(AO.(ifam).DeviceName,'/currentPM');
 
-AO.(ifam).Setpoint.Tolerance(:,:) = 0.05;
-AO.(ifam).Setpoint.DeltaRespMat(:,:) = 0.05;
+AO.(ifam).Setpoint.Tolerance(:,:) = 0.05; % <<==== CHECK!
+AO.(ifam).Setpoint.DeltaRespMat(:,:) = 0.05; % <<==== CHECK!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% QUADRUPOLE MAGNETS
@@ -701,45 +675,45 @@ AO.(ifam).Setpoint.DeltaRespMat(:,:) = 0.05;
 
 clear varlist;
 varlist.QP1={
-    1 [ 1  1 ] 'RI-C1/ME/QP.010   ' 1 ' QP1.1' [-250 +0]
-    2 [ 1  12] 'RI-C1/ME/QP.120   ' 1 ' QP1.2' [-250 +0]
-    3 [ 2  1 ] 'RI-C2/ME/QP.010   ' 1 ' QP1.3' [-250 +0]
-    4 [ 2  12] 'RI-C2/ME/QP.120   ' 1 ' QP1.4' [-250 +0]
+    1 [ 1  1 ] 'RI-C1/ME/QP.010   ' 1 ' QP1.1' [-12 +0]
+    2 [ 1  12] 'RI-C1/ME/QP.120   ' 1 ' QP1.2' [-12 +0]
+    3 [ 2  1 ] 'RI-C2/ME/QP.010   ' 1 ' QP1.3' [-12 +0]
+    4 [ 2  12] 'RI-C2/ME/QP.120   ' 1 ' QP1.4' [-12 +0]
     };
 
 varlist.QP2={
-    1 [ 1  2 ] 'RI-C1/ME/QP.020   ' 1 ' QP2.1' [+0 +250]
-    2 [ 1  11] 'RI-C1/ME/QP.110   ' 1 ' QP2.2' [+0 +250]
-    3 [ 2  2 ] 'RI-C2/ME/QP.020   ' 1 ' QP2.3' [+0 +250]
-    4 [ 2  11] 'RI-C2/ME/QP.110   ' 1 ' QP2.4' [+0 +250]
+    1 [ 1  2 ] 'RI-C1/ME/QP.020   ' 1 ' QP2.1' [+0 +12]
+    2 [ 1  11] 'RI-C1/ME/QP.110   ' 1 ' QP2.2' [+0 +12]
+    3 [ 2  2 ] 'RI-C2/ME/QP.020   ' 1 ' QP2.3' [+0 +12]
+    4 [ 2  11] 'RI-C2/ME/QP.110   ' 1 ' QP2.4' [+0 +12]
     };
 
 varlist.QP31={
-    1 [ 1  3 ] 'RI-C1/ME/QP.030   ' 1 ' QP31.1' [-250 +0]
-    2 [ 1  10] 'RI-C1/ME/QP.100   ' 1 ' QP31.2' [-250 +0]
-    3 [ 2  3 ] 'RI-C2/ME/QP.030   ' 1 ' QP31.3' [-250 +0]
-    4 [ 2  10] 'RI-C2/ME/QP.100   ' 1 ' QP31.4' [-250 +0]
+    1 [ 1  3 ] 'RI-C1/ME/QP.030   ' 1 ' QP31.1' [-12 +0]
+    2 [ 1  10] 'RI-C1/ME/QP.100   ' 1 ' QP31.2' [-12 +0]
+    3 [ 2  3 ] 'RI-C2/ME/QP.030   ' 1 ' QP31.3' [-12 +0]
+    4 [ 2  10] 'RI-C2/ME/QP.100   ' 1 ' QP31.4' [-12 +0]
     };
 
 varlist.QP41={
-    1 [ 1  4 ] 'RI-C1/ME/QP.040   ' 1 ' QP41.1' [+0 +250]
-    2 [ 1  9 ] 'RI-C1/ME/QP.090   ' 1 ' QP41.2' [+0 +250]
-    3 [ 2  4 ] 'RI-C2/ME/QP.040   ' 1 ' QP41.3' [+0 +250]
-    4 [ 2  9 ] 'RI-C2/ME/QP.090   ' 1 ' QP41.4' [+0 +250]
+    1 [ 1  4 ] 'RI-C1/ME/QP.040   ' 1 ' QP41.1' [+0 +12]
+    2 [ 1  9 ] 'RI-C1/ME/QP.090   ' 1 ' QP41.2' [+0 +12]
+    3 [ 2  4 ] 'RI-C2/ME/QP.040   ' 1 ' QP41.3' [+0 +12]
+    4 [ 2  9 ] 'RI-C2/ME/QP.090   ' 1 ' QP41.4' [+0 +12]
     };
 
 varlist.QP4={
-    1 [ 1  5 ] 'RI-C1/ME/QP.050   ' 1 ' QP4.1' [+0 +250]
-    2 [ 1  8 ] 'RI-C1/ME/QP.080   ' 1 ' QP4.2' [+0 +250]
-    3 [ 2  5 ] 'RI-C2/ME/QP.050   ' 1 ' QP4.3' [+0 +250]
-    4 [ 2  8 ] 'RI-C2/ME/QP.080   ' 1 ' QP4.4' [+0 +250]
+    1 [ 1  5 ] 'RI-C1/ME/QP.050   ' 1 ' QP4.1' [+0 +12]
+    2 [ 1  8 ] 'RI-C1/ME/QP.080   ' 1 ' QP4.2' [+0 +12]
+    3 [ 2  5 ] 'RI-C2/ME/QP.050   ' 1 ' QP4.3' [+0 +12]
+    4 [ 2  8 ] 'RI-C2/ME/QP.080   ' 1 ' QP4.4' [+0 +12]
     };
 
 varlist.QP3={
-    1 [ 1  6 ] 'RI-C1/ME/QP.060   ' 1 ' QP3.1' [-250 +0]
-    2 [ 1  7 ] 'RI-C1/ME/QP.070   ' 1 ' QP3.2' [-250 +0]
-    3 [ 2  6 ] 'RI-C2/ME/QP.060   ' 1 ' QP3.3' [-250 +0]
-    4 [ 2  7 ] 'RI-C2/ME/QP.070   ' 1 ' QP3.4' [-250 +0]
+    1 [ 1  6 ] 'RI-C1/ME/QP.060   ' 1 ' QP3.1' [-12 +0]
+    2 [ 1  7 ] 'RI-C1/ME/QP.070   ' 1 ' QP3.2' [-12 +0]
+    3 [ 2  6 ] 'RI-C2/ME/QP.060   ' 1 ' QP3.3' [-12 +0]
+    4 [ 2  7 ] 'RI-C2/ME/QP.070   ' 1 ' QP3.4' [-12 +0]
     };
 
 
@@ -818,7 +792,7 @@ for k = 1:6,
     % to be part of plotfamily
     AO.(ifam).Setpoint.MemberOf  = {'PlotFamily'};
     % set tolerance for setting values
-    AO.(ifam).Setpoint.Tolerance(:,:) = 0.02*ones(devnumber,1);
+    AO.(ifam).Setpoint.Tolerance(:,:) = 0.02*ones(devnumber,1); % <<<==== CHECK !!!
     % information for getrunflag
     AO.(ifam).Setpoint.RunFlagFcn = @tangogetrunflag;
     AO.(ifam).Setpoint.RampRate = 1;
@@ -876,19 +850,14 @@ for k = 1:6,
 % step for tuneshift of 1-e-2 in one of the planes
 % Called by measrespmat.m
 
-%now use the the physical unit , 1 A = 1k
-% Need to change to hard ware value in the future
-% when the ThomX magnet is ready
-deltak = 1e-6; % physics unit = hardware unit, need to modify for the real machine in the future
+deltak = 1e-6; % 
 AO.(ifam).Setpoint.DeltaRespMat = deltak; % T/m^-2 = A
 
 
     % deltaI [ampere] change of the quadrupole for betatron
     % function measurement (Used by measbeta.m).
-    % need to customize with the HW units for ThomX in the future
-    % when the machine is ready
     
-    AO.(ifam).Setpoint.DeltaKBeta = 0.005;  % maximum physics value, otherwise, the 
+AO.(ifam).Setpoint.DeltaKBeta = 0.005;     % maximum physics value, otherwise, the 
                                            % linear equation is not valid
                                            % anymore!!!!!
 
@@ -978,33 +947,29 @@ clear tune
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear varlist;
 varlist.SX1 ={
-    1 [ 1  1 ] 'RI-C1/ME/SP.010  ' 1 'SX1.1' [-349 +000]
-    2 [ 1  6 ] 'RI-C1/ME/SP.060  ' 1 'SX1.2' [-349 +000]
-    3 [ 2  1 ] 'RI-C2/ME/SP.010  ' 1 'SX1.3' [-349 +000]
-    4 [ 2  6 ] 'RI-C2/ME/SP.060  ' 1 'SX1.4' [-349 +000]
+    1 [ 1  1 ] 'RI-C1/ME/SP.010  ' 1 'SX1.1' [-12.0 +12.0]  % Check the range [-12 0]
+    2 [ 1  6 ] 'RI-C1/ME/SP.060  ' 1 'SX1.2' [-12.0 +12.0]
+    3 [ 2  1 ] 'RI-C2/ME/SP.010  ' 1 'SX1.3' [-12.0 +12.0]
+    4 [ 2  6 ] 'RI-C2/ME/SP.060  ' 1 'SX1.4' [-12.0 +12.0]
 };
 
 
 varlist.SX2 ={
-    1 [ 1  3 ] 'RI-C1/ME/SP.030  ' 1 'SX2.1' [+000 +349]
-    2 [ 1  4 ] 'RI-C1/ME/SP.040  ' 1 'SX2.2' [+000 +349]
-    3 [ 2  3 ] 'RI-C2/ME/SP.030  ' 1 'SX2.3' [+000 +349]
-    4 [ 2  4 ] 'RI-C2/ME/SP.040  ' 1 'SX2.4' [+000 +349]
+    1 [ 1  3 ] 'RI-C1/ME/SP.030  ' 1 'SX2.1' [-12.0 +12.0]
+    2 [ 1  4 ] 'RI-C1/ME/SP.040  ' 1 'SX2.2' [-12.0 +12.0]
+    3 [ 2  3 ] 'RI-C2/ME/SP.030  ' 1 'SX2.3' [-12.0 +12.0]
+    4 [ 2  4 ] 'RI-C2/ME/SP.040  ' 1 'SX2.4' [-12.0 +12.0]
 };
 
 
 varlist.SX3 ={
-    1 [ 1  2 ] 'RI-C1/ME/SP.020  ' 1 'SX3.1' [-349 +000]
-    2 [ 1  5 ] 'RI-C1/ME/SP.050  ' 1 'SX3.2' [-349 +000]
-    3 [ 2  2 ] 'RI-C2/ME/SP.020  ' 1 'SX3.3' [-349 +000]
-    4 [ 2  5 ] 'RI-C2/ME/SP.050  ' 1 'SX3.4' [-349 +000]
+    1 [ 1  2 ] 'RI-C1/ME/SP.020  ' 1 'SX3.1' [-12.0 +12.0]
+    2 [ 1  5 ] 'RI-C1/ME/SP.050  ' 1 'SX3.2' [-12.0 +12.0]
+    3 [ 2  2 ] 'RI-C2/ME/SP.020  ' 1 'SX3.3' [-12.0 +12.0]
+    4 [ 2  5 ] 'RI-C2/ME/SP.050  ' 1 'SX3.4' [-12.0 +12.0]
 };
 
-% varlist={
-%     1 [ 1  1 ] 'RI-C1/ME/SP.010  ' 1 'SX1' [-349 +000]
-%     1 [ 1  3 ] 'RI-C1/ME/SP.030  ' 1 'SX2' [+000 +349]
-%     1 [ 1  2 ] 'RI-C1/ME/SP.020  ' 1 'SX3' [-349 +000]
-%         };
+
 
 for k = 1:3,
     ifam = ['SX' num2str(k)];
@@ -1067,7 +1032,7 @@ for k = 1:3,
     AO.(ifam).Setpoint.Physics2HWParams = AO.(ifam).Monitor.Physics2HWParams;
         
     AO.(ifam).Setpoint.MemberOf  = {'PlotFamily'};
-    AO.(ifam).Setpoint.Tolerance     = 0.05;
+    AO.(ifam).Setpoint.Tolerance     = 0.05; % <<<=== CHECK!!
         % information for getrunflag
     AO.(ifam).Setpoint.RunFlagFcn = @tangogetrunflag;
     AO.(ifam).Setpoint.RampRate = 1;
@@ -1091,7 +1056,9 @@ end
     
     % ifam = sprintf('SX%s', num2str(k));
     %devnumber = size(varlist.(ifam),1);
+    
     %% preallocation
+    
     % AO.(ifam).ElementList = zeros(devnumber,1);
     % AO.(ifam).Status      = zeros(devnumber,1);
     % AO.(ifam).DeviceName  = cell(devnumber,1);
@@ -1113,7 +1080,6 @@ end
     %     AO.(ifam).Setpoint.Range(ik,:)      = varlist.(ifam){ik,6};
     % end
     
-
 %% All Sextupoles, configurations for the "plotfamily" feature
 ifam = 'Sall';
 AO.(ifam).FamilyName             = ifam;
@@ -1214,8 +1180,8 @@ AO.(ifam).Setpoint = AO.(ifam).Monitor;
 AO.(ifam).Desired = AO.(ifam).Monitor;
 
 
+%% Septum
 
-%% Septum 
 ifam = 'SEP';
 AO.(ifam).FamilyName           = ifam;
 AO.(ifam).FamilyType           = ifam;
@@ -1248,6 +1214,7 @@ AO.(ifam).Desired = AO.(ifam).Monitor;
 %%%%%%%%%%%%%%%%%%%%
 %%tune correctors
 %%%%%%%%%%%%%%%%%%%%
+
 AO.QP31.MemberOf = {AO.QP31.MemberOf{:}  'Tune Corrector'}';
 AO.QP4.MemberOf = {AO.QP4.MemberOf{:}  'Tune Corrector'}';
 
@@ -1694,7 +1661,7 @@ waitbar(0.80,h);
 
 disp('Setting gain offset configuration  ...');
 
-setfamilydata([0.1699; 0.63987; NaN],'TUNE','Golden');
+setfamilydata([0.1699; 0.6399; NaN],'TUNE','Golden');
 setfamilydata([0.0; 0.0],'CHRO','Golden');
 setfamilydata_local('BPMx');
 setfamilydata_local('BPMz');

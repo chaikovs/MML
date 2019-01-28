@@ -34,3 +34,10 @@ atenergy(thomx_ring) % check params=atgetcells(ring(:,1),'Class','RingParam');
 findrf
 
 %%
+
+L = length(RING);
+spos = findspos(RING,1:L+1);
+
+%%
+BPMindex=getlist('BPMz');	
+findcells(THERING,'FamName','BPMx')
