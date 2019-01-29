@@ -102,14 +102,12 @@ edge_effect2 = 1;
 LQP = 0.15731;% 0.15; % quadrupole length
 QPassMethod = 'QuadMPoleFringePass'; % tracking method QuadMPoleFringePass  StrMPoleSymplectic4Pass
 
-qp_on = 0;
-
-QP1 = quadrupole('QP1', LQP, -4.86169000*qp_on, QPassMethod);
-QP2 = quadrupole('QP2', LQP, 9.44145900*qp_on, QPassMethod);
-QP3 = quadrupole('QP3', LQP, -18.542829999999999*qp_on, QPassMethod);
-QP4 = quadrupole('QP4', LQP, 16.460090000000001*qp_on, QPassMethod);
-QP31 = quadrupole('QP31', LQP,   -8.900145999999999*qp_on, QPassMethod);
-QP41 = quadrupole('QP41', LQP,  5.10744800*qp_on, QPassMethod);
+QP1 = quadrupole('QP1', LQP, -4.86169000, QPassMethod);
+QP2 = quadrupole('QP2', LQP, 9.44145900, QPassMethod);
+QP3 = quadrupole('QP3', LQP, -18.542829999999999, QPassMethod);
+QP4 = quadrupole('QP4', LQP, 16.460090000000001, QPassMethod);
+QP31 = quadrupole('QP31', LQP,   -8.900145999999999, QPassMethod);
+QP41 = quadrupole('QP41', LQP,  5.10744800, QPassMethod);
 
   
 %% =======================

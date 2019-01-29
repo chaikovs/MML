@@ -5,10 +5,19 @@ clear all; close all; clc;
 
 % ring_woErr = ThomX_017_064_r56_02_chro11();
 % 
-% bare_lattice = atsetfieldvalues(RING,findcells(ring_woErr,'FamName','SX1'), 'PolynomB',{1,3},0);
-% bare_lattice = atsetfieldvalues(BareRING,findcells(bare_lattice,'FamName','SX2'), 'PolynomB',{1,3},0);
-% bare_lattice = atsetfieldvalues(BareRING,findcells(bare_lattice,'FamName','SX3'), 'PolynomB',{1,3},0);
+% bare_lattice = atsetfieldvalues(ring_woErr,findcells(ring_woErr,'FamName','SX1'), 'PolynomB',{1,3},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','SX2'), 'PolynomB',{1,3},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','SX3'), 'PolynomB',{1,3},0);
+% 
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP1'), 'PolynomB',{1,2},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP2'), 'PolynomB',{1,2},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP3'), 'PolynomB',{1,2},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP4'), 'PolynomB',{1,2},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP31'), 'PolynomB',{1,2},0);
+% bare_lattice = atsetfieldvalues(bare_lattice,findcells(bare_lattice,'FamName','QP11'), 'PolynomB',{1,2},0);
 
+
+%  save('ThomX_017_064_r56_02_chro11_bareSext','bare_lattice')
 % save('ThomX_017_064_r56_02_chro11_bare','bare_lattice')
 
 
