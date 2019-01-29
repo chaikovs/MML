@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of showresongui</title>
+  <meta name="keywords" content="showresongui">
+  <meta name="description" content="SHOWRESONGUI M-file for showresongui.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; showresongui.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>showresongui
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>SHOWRESONGUI M-file for showresongui.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = showresongui(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> SHOWRESONGUI M-file for showresongui.fig
+ Gui for plotting resonances in a given window 
+ Can be a standalone application or called from another gui
+ 
+  If varargin is not void then it has to be a structure with a fieldname 
+  'figure1' containing a handles to a figure with three private variables
+  where2plot, handle to the axe
+  fen, window dimension [xmin xmax zmin zmax] 
+  Tab, tab where to store resonances
+  eg: getappdata(handles_figure) should return at least
+
+        fen: [18 20 10 12]
+        where2plot: 217.0009
+        Tab: []
+
+ Laurent S. Nadolski, Synchrotron SOLEIL, 02/04</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="plot_reson.html" class="code" title="function plot_reson(a,b,c,fen)">plot_reson</a>	function plot_reson(a,b,c,fen)</li><li><a href="plusprochereson.html" class="code" title="function str = plusprochereson(pt,tab)">plusprochereson</a>	function str = plusprochereson(pt,tab)</li><li><a href="reson.html" class="code" title="function [k, tab]=reson(ordre,period,fen)">reson</a>	function reson(ordre, period, fen)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="resongui.html" class="code" title="function varargout = resongui(varargin)">resongui</a>	RESONGUI M-file for resongui.fig</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function showresongui_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = showresongui_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function cvalue_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function cvalue_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function avalue_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function avalue_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function bvalue_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function bvalue_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function periodicityvalue_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function periodicityvalue_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function ordervalue_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function ordervalue_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function pushbutton7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function plotandsettab(hObject,handles)</a></li><li><a href="#_sub15" class="code">function pushbutton_clear_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function checkbox2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function checkbox3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function checkbox4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function checkbox5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function checkbox6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function checkbox7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function checkbox8_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function checkbox9_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function checkbox10_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function checkbox11_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function checkbox12_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function checkbox13_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function checkbox14_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function checkbox15_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub31" class="code">function pushbutton_axis_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function souris_Callback(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = showresongui(varargin)</a>
+0002 <span class="comment">% SHOWRESONGUI M-file for showresongui.fig</span>
+0003 <span class="comment">% Gui for plotting resonances in a given window</span>
+0004 <span class="comment">% Can be a standalone application or called from another gui</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  If varargin is not void then it has to be a structure with a fieldname</span>
+0007 <span class="comment">%  'figure1' containing a handles to a figure with three private variables</span>
+0008 <span class="comment">%  where2plot, handle to the axe</span>
+0009 <span class="comment">%  fen, window dimension [xmin xmax zmin zmax]</span>
+0010 <span class="comment">%  Tab, tab where to store resonances</span>
+0011 <span class="comment">%  eg: getappdata(handles_figure) should return at least</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">%        fen: [18 20 10 12]</span>
+0014 <span class="comment">%        where2plot: 217.0009</span>
+0015 <span class="comment">%        Tab: []</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">% Laurent S. Nadolski, Synchrotron SOLEIL, 02/04</span>
+0018 
+0019 <span class="comment">%</span>
+0020 <span class="comment">%      SHOWRESONGUI, by itself, creates a new SHOWRESONGUI or raises the existing</span>
+0021 <span class="comment">%      singleton*.</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%      H = SHOWRESONGUI returns the handle to a new SHOWRESONGUI or the handle to</span>
+0024 <span class="comment">%      the existing singleton*.</span>
+0025 <span class="comment">%</span>
+0026 <span class="comment">%      SHOWRESONGUI('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0027 <span class="comment">%      function named CALLBACK in SHOWRESONGUI.M with the given input arguments.</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">%      SHOWRESONGUI('Property','Value',...) creates a new SHOWRESONGUI or raises the</span>
+0030 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0031 <span class="comment">%      applied to the GUI before showresongui_OpeningFunction gets called.  An</span>
+0032 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0033 <span class="comment">%      stop.  All inputs are passed to showresongui_OpeningFcn via varargin.</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0036 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0037 <span class="comment">%</span>
+0038 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0039 
+0040 <span class="comment">% Edit the above text to modify the response to help showresongui</span>
+0041 
+0042 <span class="comment">% Last Modified by GUIDE v2.5 06-Mar-2004 19:43:28</span>
+0043 
+0044 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0045 gui_Singleton = 1;
+0046 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0047                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0048                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction showresongui_OpeningFcn(hObject, eventdata, handles, varargin)">showresongui_OpeningFcn</a>, <span class="keyword">...</span>
+0049                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = showresongui_OutputFcn(hObject, eventdata, handles)">showresongui_OutputFcn</a>, <span class="keyword">...</span>
+0050                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0051                    <span class="string">'gui_Callback'</span>,   []);
+0052 <span class="keyword">if</span> nargin &amp; isstr(varargin{1})
+0053     gui_State.gui_Callback = str2func(varargin{1});
+0054 <span class="keyword">end</span>
+0055 
+0056 <span class="keyword">if</span> nargout
+0057     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0058 <span class="keyword">else</span>
+0059     gui_mainfcn(gui_State, varargin{:});
+0060 <span class="keyword">end</span>
+0061 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0062 
+0063 
+0064 <span class="comment">% --- Executes just before showresongui is made visible.</span>
+0065 <a name="_sub1" href="#_subfunctions" class="code">function showresongui_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0066 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0067 <span class="comment">% hObject    handle to figure</span>
+0068 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0069 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0070 <span class="comment">% varargin   command line arguments to showresongui (see VARARGIN)</span>
+0071 
+0072 <span class="comment">% Choose default command line output for showresongui</span>
+0073 
+0074 <span class="keyword">if</span> iscell(varargin) &amp;&amp; ~isempty(varargin)    
+0075     <span class="comment">%%%% Laurent</span>
+0076     <span class="comment">% store handle from caller</span>
+0077     handles.caller = varargin{1}.figure1;
+0078     
+0079     <span class="comment">% Update handles structure</span>
+0080     guidata(hObject, handles);
+0081 
+0082     <span class="comment">%%%%% Laurent</span>
+0083     <span class="comment">% Get A and B values from Application-Defined data</span>
+0084     handles.where2plot = getappdata(handles.caller, <span class="string">'where2plot'</span>);
+0085     handles.fen = getappdata(handles.caller, <span class="string">'fen'</span>);
+0086 <span class="keyword">else</span>
+0087     figure
+0088     handles.where2plot =axes;
+0089     handles.fen = [18 19 10 11];
+0090     handles.caller = hObject;
+0091     set(hObject,<span class="string">'Tag'</span>,<span class="string">'main'</span>);
+0092     setappdata(hObject,<span class="string">'Tab'</span>,[]);
+0093     <span class="comment">%% souris contextualmenu to identify resonances</span>
+0094 <span class="comment">%     cmenu = uicontextmenu;</span>
+0095 <span class="comment">%     set(handles.where2plot, 'UIContextMenu', cmenu);</span>
+0096 <span class="comment">%     uimenu(cmenu, 'Callback','souris_Callback(handles)');</span>
+0097 <span class="comment">%    handles.toto=uimenu(cmenu, 'Callback', ' showresongui(''souris_Callback'',gcbo,[],guidata(gcbo))');</span>
+0098 <span class="keyword">end</span>
+0099 
+0100 set(handles.caller,<span class="string">'DoubleBuffer'</span>,<span class="string">'on'</span>);
+0101 
+0102 handles.output = hObject;
+0103 handles.a = 3;
+0104 handles.b = 1;
+0105 handles.c = 65;
+0106 handles.periodicity = 4;
+0107 handles.order = 4;
+0108 handles.tab = [];
+0109 axes(handles.where2plot);
+0110 
+0111 set(handles.periodicityvalue,<span class="string">'String'</span>,num2str(handles.periodicity));
+0112 set(handles.ordervalue,<span class="string">'String'</span>,num2str(handles.order));
+0113 set(handles.avalue,<span class="string">'String'</span>,num2str(handles.a));
+0114 set(handles.bvalue,<span class="string">'String'</span>,num2str(handles.b));
+0115 set(handles.cvalue,<span class="string">'String'</span>,num2str(handles.c));
+0116 set(handles.eq1,<span class="string">'String'</span>,[num2str(handles.a) <span class="string">' nux + '</span> num2str(handles.b) <span class="keyword">...</span>
+0117         <span class="string">' nuz = '</span> num2str(handles.c)]); 
+0118 
+0119 <span class="comment">% reson(handles.order,handles.periodicity,handles.fen);</span>
+0120 hold on
+0121 <span class="comment">% reson(3,handles.periodicity,handles.fen);</span>
+0122 <span class="comment">% reson(5,handles.periodicity,handles.fen);</span>
+0123 <span class="comment">% reson(7,handles.periodicity,handles.fen);</span>
+0124 axis(handles.fen);
+0125 
+0126 <span class="comment">% Update handles structure</span>
+0127 guidata(hObject, handles);
+0128 
+0129 <span class="comment">% UIWAIT makes showresongui wait for user response (see UIRESUME)</span>
+0130 <span class="comment">% uiwait(handles.main);</span>
+0131 
+0132 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0133 <a name="_sub2" href="#_subfunctions" class="code">function varargout = showresongui_OutputFcn(hObject, eventdata, handles)</a>
+0134 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0135 <span class="comment">% hObject    handle to figure</span>
+0136 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0137 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0138 
+0139 <span class="comment">% Get default command line output from handles structure</span>
+0140 varargout{1} = handles.output;
+0141 
+0142 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0143 <a name="_sub3" href="#_subfunctions" class="code">function cvalue_CreateFcn(hObject, eventdata, handles)</a>
+0144 <span class="comment">% hObject    handle to cvalue (see GCBO)</span>
+0145 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0146 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0147 
+0148 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0149 <span class="comment">%       See ISPC and COMPUTER.</span>
+0150 <span class="keyword">if</span> ispc
+0151     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0152 <span class="keyword">else</span>
+0153     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0154 <span class="keyword">end</span>
+0155 
+0156 <a name="_sub4" href="#_subfunctions" class="code">function cvalue_Callback(hObject, eventdata, handles)</a>
+0157 <span class="comment">% hObject    handle to cvalue (see GCBO)</span>
+0158 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0159 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0160 
+0161 <span class="comment">% Hints: get(hObject,'String') returns contents of cvalue as text</span>
+0162 <span class="comment">%        str2double(get(hObject,'String')) returns contents of cvalue as a double</span>
+0163 
+0164 val = str2double(get(hObject,<span class="string">'String'</span>));
+0165 handles.c = val;
+0166 guidata(hObject, handles);
+0167 set(handles.eq1,<span class="string">'String'</span>,[num2str(handles.a) <span class="string">' nux + '</span> num2str(handles.b) <span class="keyword">...</span>
+0168         <span class="string">' nuz = '</span> num2str(handles.c)]); 
+0169 axes(handles.where2plot);
+0170 <a href="plot_reson.html" class="code" title="function plot_reson(a,b,c,fen)">plot_reson</a>(handles.a,handles.b,handles.c,handles.fen)
+0171 
+0172 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0173 <a name="_sub5" href="#_subfunctions" class="code">function avalue_CreateFcn(hObject, eventdata, handles)</a>
+0174 <span class="comment">% hObject    handle to avalue (see GCBO)</span>
+0175 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0176 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0177 
+0178 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0179 <span class="comment">%       See ISPC and COMPUTER.</span>
+0180 <span class="keyword">if</span> ispc
+0181     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0182 <span class="keyword">else</span>
+0183     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0184 <span class="keyword">end</span>
+0185 
+0186 
+0187 
+0188 <a name="_sub6" href="#_subfunctions" class="code">function avalue_Callback(hObject, eventdata, handles)</a>
+0189 <span class="comment">% hObject    handle to avalue (see GCBO)</span>
+0190 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0191 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0192 
+0193 <span class="comment">% Hints: get(hObject,'String') returns contents of avalue as text</span>
+0194 <span class="comment">%        str2double(get(hObject,'String')) returns contents of avalue as a double</span>
+0195 val = str2double(get(hObject,<span class="string">'String'</span>));
+0196 handles.a = val;
+0197 guidata(hObject, handles);
+0198 set(handles.eq1,<span class="string">'String'</span>,[num2str(handles.a) <span class="string">' nux + '</span> num2str(handles.b) <span class="keyword">...</span>
+0199         <span class="string">' nuz = '</span> num2str(handles.c)]); 
+0200 axes(handles.where2plot);
+0201 <a href="plot_reson.html" class="code" title="function plot_reson(a,b,c,fen)">plot_reson</a>(handles.a,handles.b,handles.c,handles.fen)
+0202 
+0203 
+0204 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0205 <a name="_sub7" href="#_subfunctions" class="code">function bvalue_CreateFcn(hObject, eventdata, handles)</a>
+0206 <span class="comment">% hObject    handle to bvalue (see GCBO)</span>
+0207 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0208 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0209 
+0210 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0211 <span class="comment">%       See ISPC and COMPUTER.</span>
+0212 <span class="keyword">if</span> ispc
+0213     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0214 <span class="keyword">else</span>
+0215     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0216 <span class="keyword">end</span>
+0217 
+0218 
+0219 
+0220 <a name="_sub8" href="#_subfunctions" class="code">function bvalue_Callback(hObject, eventdata, handles)</a>
+0221 <span class="comment">% hObject    handle to bvalue (see GCBO)</span>
+0222 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0223 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0224 
+0225 <span class="comment">% Hints: get(hObject,'String') returns contents of bvalue as text</span>
+0226 <span class="comment">%        str2double(get(hObject,'String')) returns contents of bvalue as a double</span>
+0227 val = str2double(get(hObject,<span class="string">'String'</span>));
+0228 handles.b = val;
+0229 guidata(hObject, handles);
+0230 set(handles.eq1,<span class="string">'String'</span>,[num2str(handles.a) <span class="string">' nux + '</span> num2str(handles.b) <span class="keyword">...</span>
+0231         <span class="string">' nuz = '</span> num2str(handles.c)]); 
+0232 axes(handles.where2plot);
+0233 <a href="plot_reson.html" class="code" title="function plot_reson(a,b,c,fen)">plot_reson</a>(handles.a,handles.b,handles.c,handles.fen)
+0234 
+0235 
+0236 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0237 <a name="_sub9" href="#_subfunctions" class="code">function periodicityvalue_CreateFcn(hObject, eventdata, handles)</a>
+0238 <span class="comment">% hObject    handle to periodicityvalue (see GCBO)</span>
+0239 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0240 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0241 
+0242 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0243 <span class="comment">%       See ISPC and COMPUTER.</span>
+0244 <span class="keyword">if</span> ispc
+0245     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0246 <span class="keyword">else</span>
+0247     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0248 <span class="keyword">end</span>
+0249 
+0250 <a name="_sub10" href="#_subfunctions" class="code">function periodicityvalue_Callback(hObject, eventdata, handles)</a>
+0251 <span class="comment">% hObject    handle to periodicityvalue (see GCBO)</span>
+0252 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0253 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0254 
+0255 <span class="comment">% Hints: get(hObject,'String') returns contents of periodicityvalue as text</span>
+0256 <span class="comment">%        str2double(get(hObject,'String')) returns contents of periodicityvalue as a double</span>
+0257 val = str2double(get(hObject,<span class="string">'String'</span>));
+0258 <span class="keyword">if</span> isnan(val)
+0259     uiwait(errordlg(<span class="string">'Incorrect value'</span>));        
+0260 <span class="keyword">else</span>
+0261     handles.periodicity = val;
+0262     <span class="comment">% guidata(hObject, handles);</span>
+0263     <span class="comment">% axes(handles.where2plot);</span>
+0264     <span class="comment">% reson(handles.order,handles.periodicity,handles.fen);</span>
+0265     <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0266 <span class="keyword">end</span>
+0267 
+0268 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0269 <a name="_sub11" href="#_subfunctions" class="code">function ordervalue_CreateFcn(hObject, eventdata, handles)</a>
+0270 <span class="comment">% hObject    handle to ordervalue (see GCBO)</span>
+0271 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0272 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0273 
+0274 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0275 <span class="comment">%       See ISPC and COMPUTER.</span>
+0276 <span class="keyword">if</span> ispc
+0277     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0278 <span class="keyword">else</span>
+0279     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0280 <span class="keyword">end</span>
+0281 
+0282 <a name="_sub12" href="#_subfunctions" class="code">function ordervalue_Callback(hObject, eventdata, handles)</a>
+0283 <span class="comment">% hObject    handle to ordervalue (see GCBO)</span>
+0284 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0285 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0286 
+0287 <span class="comment">% Hints: get(hObject,'String') returns contents of ordervalue as text</span>
+0288 <span class="comment">%        str2double(get(hObject,'String')) returns contents of ordervalue as a double</span>
+0289 
+0290 <span class="comment">% set resonance order</span>
+0291 val = str2double(get(hObject,<span class="string">'String'</span>));
+0292 <span class="keyword">if</span> isnan(val)
+0293     uiwait(errordlg(<span class="string">'Incorrect value'</span>));        
+0294 <span class="keyword">else</span>
+0295     <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0296 <span class="keyword">end</span>
+0297 
+0298 <span class="comment">% --- Executes on button press in pushbutton7.</span>
+0299 <a name="_sub13" href="#_subfunctions" class="code">function pushbutton7_Callback(hObject, eventdata, handles)</a>
+0300 <span class="comment">% hObject    handle to pushbutton7 (see GCBO)</span>
+0301 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0302 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0303 <span class="comment">%plotandsettab(hObject,handles)</span>
+0304 
+0305 <a name="_sub14" href="#_subfunctions" class="code">function plotandsettab(hObject,handles)</a>
+0306 
+0307 <span class="keyword">if</span> hObject ~= handles.periodicityvalue    
+0308     handles.order=str2double(get(hObject,<span class="string">'String'</span>));
+0309     set(handles.ordervalue,<span class="string">'String'</span>,num2str(handles.order));
+0310 <span class="keyword">end</span>
+0311 
+0312 axes(handles.where2plot);
+0313 [k tab] =<a href="reson.html" class="code" title="function [k, tab]=reson(ordre,period,fen)">reson</a>(handles.order,handles.periodicity,handles.fen);
+0314 
+0315 <span class="keyword">if</span> (k ~=0)
+0316     <span class="comment">% Force le premier coef a etre positif</span>
+0317     tab(tab(:,1) &lt;0,:)=-tab(tab(:,1) &lt;0,:);
+0318     <span class="comment">% Si a = 0, force le coef de nuz a etre positif</span>
+0319     r= tab(:,2) &lt;0 &amp; tab(:,1) ==0; 
+0320     tab(r,:)=-tab(r,:);
+0321     <span class="comment">%% remove redundancy</span>
+0322     handles.tab = unique(handles.tab,<span class="string">'rows'</span>);
+0323     
+0324     <span class="comment">%% cherche le pgcd et prend le pgcd des pgcd</span>
+0325     <span class="comment">%% dans ce cas on perd la periodicite N, mais c'est plus clair</span>
+0326     pgcd =gcd(gcd(tab(:,1),tab(:,2)),gcd(tab(:,2),tab(:,3)));
+0327     tab= tab./repmat(pgcd,1,3);
+0328     
+0329     <span class="comment">% Complete le tableau des resonances</span>
+0330     handles.tab = [handles.tab; tab];
+0331     <span class="comment">%% remove redundancy</span>
+0332     handles.tab = unique(handles.tab,<span class="string">'rows'</span>);
+0333 <span class="keyword">end</span>
+0334 axes(handles.where2plot);
+0335 
+0336 handles.tab
+0337 <span class="comment">% size(handles.tab)</span>
+0338 guidata(hObject, handles);
+0339 setappdata(handles.caller,<span class="string">'Tab'</span>,handles.tab);
+0340 <span class="comment">% setappdata(handles.toto,'Tab',handles.tab);</span>
+0341 
+0342 <span class="comment">% --- Executes on button press in pushbutton_clear.</span>
+0343 <a name="_sub15" href="#_subfunctions" class="code">function pushbutton_clear_Callback(hObject, eventdata, handles)</a>
+0344 <span class="comment">% hObject    handle to pushbutton_clear (see GCBO)</span>
+0345 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0346 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0347 axes(handles.where2plot);
+0348 <span class="comment">%% Deselectionne toutes les checkbox</span>
+0349 set(findobj(get(handles.main,<span class="string">'Children'</span>),<span class="string">'Style'</span>,<span class="string">'CheckBox'</span>),<span class="string">'Value'</span>,0);
+0350 cla
+0351 handles.tab = [];
+0352 guidata(hObject, handles);
+0353 
+0354 
+0355 <span class="comment">% --- Executes on button press in checkbox1.</span>
+0356 <a name="_sub16" href="#_subfunctions" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a>
+0357 <span class="comment">% hObject    handle to checkbox1 (see GCBO)</span>
+0358 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0359 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0360 
+0361 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox1</span>
+0362 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0363 
+0364 
+0365 <span class="comment">% --- Executes on button press in checkbox2.</span>
+0366 <a name="_sub17" href="#_subfunctions" class="code">function checkbox2_Callback(hObject, eventdata, handles)</a>
+0367 <span class="comment">% hObject    handle to checkbox2 (see GCBO)</span>
+0368 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0369 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0370 
+0371 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox2</span>
+0372 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0373 
+0374 <span class="comment">% --- Executes on button press in checkbox3.</span>
+0375 <a name="_sub18" href="#_subfunctions" class="code">function checkbox3_Callback(hObject, eventdata, handles)</a>
+0376 <span class="comment">% hObject    handle to checkbox3 (see GCBO)</span>
+0377 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0378 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0379 
+0380 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox3</span>
+0381 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0382 
+0383 <span class="comment">% --- Executes on button press in checkbox4.</span>
+0384 <a name="_sub19" href="#_subfunctions" class="code">function checkbox4_Callback(hObject, eventdata, handles)</a>
+0385 <span class="comment">% hObject    handle to checkbox4 (see GCBO)</span>
+0386 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0387 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0388 
+0389 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox4</span>
+0390 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0391 
+0392 <span class="comment">% --- Executes on button press in checkbox5.</span>
+0393 <a name="_sub20" href="#_subfunctions" class="code">function checkbox5_Callback(hObject, eventdata, handles)</a>
+0394 <span class="comment">% hObject    handle to checkbox5 (see GCBO)</span>
+0395 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0396 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0397 
+0398 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox5</span>
+0399 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0400 
+0401 <span class="comment">% --- Executes on button press in checkbox6.</span>
+0402 <a name="_sub21" href="#_subfunctions" class="code">function checkbox6_Callback(hObject, eventdata, handles)</a>
+0403 <span class="comment">% hObject    handle to checkbox6 (see GCBO)</span>
+0404 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0405 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0406 
+0407 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox6</span>
+0408 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0409 
+0410 <span class="comment">% --- Executes on button press in checkbox7.</span>
+0411 <a name="_sub22" href="#_subfunctions" class="code">function checkbox7_Callback(hObject, eventdata, handles)</a>
+0412 <span class="comment">% hObject    handle to checkbox7 (see GCBO)</span>
+0413 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0414 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0415 
+0416 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox7</span>
+0417 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0418 
+0419 <span class="comment">% --- Executes on button press in checkbox8.</span>
+0420 <a name="_sub23" href="#_subfunctions" class="code">function checkbox8_Callback(hObject, eventdata, handles)</a>
+0421 <span class="comment">% hObject    handle to checkbox8 (see GCBO)</span>
+0422 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0423 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0424 
+0425 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox8</span>
+0426 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0427 
+0428 
+0429 <span class="comment">% --- Executes on button press in checkbox9.</span>
+0430 <a name="_sub24" href="#_subfunctions" class="code">function checkbox9_Callback(hObject, eventdata, handles)</a>
+0431 <span class="comment">% hObject    handle to checkbox9 (see GCBO)</span>
+0432 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0433 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0434 
+0435 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox9</span>
+0436 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0437 
+0438 
+0439 <span class="comment">% --- Executes on button press in checkbox10.</span>
+0440 <a name="_sub25" href="#_subfunctions" class="code">function checkbox10_Callback(hObject, eventdata, handles)</a>
+0441 <span class="comment">% hObject    handle to checkbox10 (see GCBO)</span>
+0442 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0443 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0444 
+0445 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox10</span>
+0446 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0447 
+0448 <span class="comment">% --- Executes on button press in checkbox11.</span>
+0449 <a name="_sub26" href="#_subfunctions" class="code">function checkbox11_Callback(hObject, eventdata, handles)</a>
+0450 <span class="comment">% hObject    handle to checkbox11 (see GCBO)</span>
+0451 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0452 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0453 
+0454 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox11</span>
+0455 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0456 
+0457 <span class="comment">% --- Executes on button press in checkbox12.</span>
+0458 <a name="_sub27" href="#_subfunctions" class="code">function checkbox12_Callback(hObject, eventdata, handles)</a>
+0459 <span class="comment">% hObject    handle to checkbox12 (see GCBO)</span>
+0460 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0461 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0462 
+0463 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox12</span>
+0464 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0465 
+0466 <span class="comment">% --- Executes on button press in checkbox13.</span>
+0467 <a name="_sub28" href="#_subfunctions" class="code">function checkbox13_Callback(hObject, eventdata, handles)</a>
+0468 <span class="comment">% hObject    handle to checkbox13 (see GCBO)</span>
+0469 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0470 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0471 
+0472 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox13</span>
+0473 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0474 
+0475 <span class="comment">% --- Executes on button press in checkbox14.</span>
+0476 <a name="_sub29" href="#_subfunctions" class="code">function checkbox14_Callback(hObject, eventdata, handles)</a>
+0477 <span class="comment">% hObject    handle to checkbox14 (see GCBO)</span>
+0478 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0479 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0480 
+0481 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox14</span>
+0482 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0483 
+0484 <span class="comment">% --- Executes on button press in checkbox15.</span>
+0485 <a name="_sub30" href="#_subfunctions" class="code">function checkbox15_Callback(hObject, eventdata, handles)</a>
+0486 <span class="comment">% hObject    handle to checkbox15 (see GCBO)</span>
+0487 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0488 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0489 
+0490 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox15</span>
+0491 <a href="#_sub14" class="code" title="subfunction plotandsettab(hObject,handles)">plotandsettab</a>(hObject,handles)
+0492 
+0493 
+0494 <span class="comment">% --- Executes on button press in pushbutton_axis.</span>
+0495 <a name="_sub31" href="#_subfunctions" class="code">function pushbutton_axis_Callback(hObject, eventdata, handles)</a>
+0496 <span class="comment">% hObject    handle to pushbutton_axis (see GCBO)</span>
+0497 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0498 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0499 axes(handles.where2plot);
+0500 uiwait(axlimdlg(<span class="string">'Axis limits'</span>));
+0501 handles.fen = [get(handles.where2plot,<span class="string">'Xlim'</span>) get(handles.where2plot,<span class="string">'Ylim'</span>)];
+0502 guidata(hObject,handles);
+0503 
+0504 <span class="comment">% --------------------------------------------------------------------</span>
+0505 <a name="_sub32" href="#_subfunctions" class="code">function souris_Callback(hObject, eventdata, handles)</a>
+0506 <span class="comment">% hObject    handle to souris (see GCBO)</span>
+0507 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0508 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0509 pt=get(gca,<span class="string">'CurrentPoint'</span>);
+0510 tab = getappdata(gcbo,<span class="string">'Tab'</span>);
+0511 pt=[pt(1,1), pt(1,2)];
+0512 str=<a href="plusprochereson.html" class="code" title="function str = plusprochereson(pt,tab)">plusprochereson</a>(pt,tab);
+0513 <span class="comment">%set(gcbo,'Label', str);</span>
+0514 text(pt(1),pt(2),str,<span class="string">'BackgroundColor'</span>,<span class="string">'y'</span>);
+0515</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

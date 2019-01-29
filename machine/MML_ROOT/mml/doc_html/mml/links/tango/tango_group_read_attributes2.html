@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_group_read_attributes2</title>
+  <meta name="keywords" content="tango_group_read_attributes2">
+  <meta name="description" content="TANGO_GROUP_WRITE_ATTRIBUTES - enhance function with error handling">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_group_read_attributes2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_group_read_attributes2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TANGO_GROUP_WRITE_ATTRIBUTES - enhance function with error handling</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function replies = tango_group_read_attributes2(group_id, attr_name, forward) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TANGO_GROUP_WRITE_ATTRIBUTES - enhance function with error handling
+
+  INPUTS
+  1. Group identification number
+  2. Attr_name Attribute name
+  3. forward
+
+  See Also tango_group_read_attribute</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="tango_print_error_stack_as_it_is.html" class="code" title="function tango_print_error_stack_as_it_is(tango_error_stack)">tango_print_error_stack_as_it_is</a>	TANGO_PRINT_ERROR_STACK_AS_IT_IS - Used to print the error stack in group</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function replies = tango_group_read_attributes2(group_id, attr_name, forward)</a>
+0002 <span class="comment">%TANGO_GROUP_WRITE_ATTRIBUTES - enhance function with error handling</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. Group identification number</span>
+0006 <span class="comment">%  2. Attr_name Attribute name</span>
+0007 <span class="comment">%  3. forward</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  See Also tango_group_read_attribute</span>
+0010 
+0011 <span class="comment">%</span>
+0012 <span class="comment">%% Written by Laurent S. Nadolski</span>
+0013 
+0014 <span class="keyword">if</span> nargin &lt; 2
+0015    error(<span class="string">'At least 3 arguments required'</span>);
+0016 <span class="keyword">end</span>
+0017 <span class="keyword">if</span> nargin &lt; 3
+0018    forward = 0;
+0019 <span class="keyword">end</span>
+0020 
+0021 replies = tango_group_read_attributes(group_id, attr_name, forward);
+0022 
+0023 <span class="keyword">if</span> tango_error == -1
+0024     tango_print_error_stack;
+0025     ErrorFlag = 1;
+0026     tout = etime(clock, t0);
+0027     <span class="keyword">return</span>;
+0028 <span class="keyword">else</span>
+0029     <span class="keyword">if</span> replies.has_failed &gt; 0
+0030         ErrorFlag = 1;
+0031         <span class="keyword">for</span> k=1:length(replies.dev_replies),
+0032             <span class="keyword">if</span> replies.dev_replies(k).has_failed
+0033                 <a href="tango_print_error_stack_as_it_is.html" class="code" title="function tango_print_error_stack_as_it_is(tango_error_stack)">tango_print_error_stack_as_it_is</a>(replies.dev_replies(k).attr_values.error);
+0034             <span class="keyword">end</span>
+0035         <span class="keyword">end</span>
+0036         ErrorFlag = 1;
+0037         tout = etime(clock, t0);
+0038         <span class="comment">%return;</span>
+0039     <span class="keyword">end</span>
+0040 <span class="keyword">end</span>
+0041 
+0042 <span class="comment">% construct data</span>
+0043 <span class="keyword">for</span> k = 1:length(replies.dev_replies),    
+0044     <span class="keyword">if</span> ~replies.dev_replies(k).has_failed 
+0045         AM(k,1) = replies.dev_replies(k).attr_values(1).value(1);
+0046     <span class="keyword">else</span>
+0047         AM(k,1) = NaN;
+0048     <span class="keyword">end</span>
+0049 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:37:59 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,1024 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of magnetcoefficients_pascale_11-09-06</title>
+  <meta name="keywords" content="magnetcoefficients_pascale_11-09-06">
+  <meta name="description" content="MAGNETCOEFFICIENTS - Retrieves coefficient for conversion between Physics and Hardware units">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">common</a> &gt; magnetcoefficients_pascale_11-09-06.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>magnetcoefficients_pascale_11-09-06
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>MAGNETCOEFFICIENTS - Retrieves coefficient for conversion between Physics and Hardware units</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, InputType) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MAGNETCOEFFICIENTS - Retrieves coefficient for conversion between Physics and Hardware units
+[C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType)
+
+ INPUTS
+ 1. MagnetCoreType - Family name or type of magnet
+
+ OUTPUTS
+ 1. C vector coefficients for the polynomial expansion of the magnet field
+    based on magnet measurements
+ 2. Leff - Effective length ie, which is used in AT
+ 3. MagnetType
+ 4. A - vector coefficients for the polynomial expansion of the curviline 
+        integral of the magnet field based on magnet measurements
+
+ C and A are vector coefficients for the polynomial expansion of the magnet field
+ based on magnet measurements.
+
+ The amp2k and k2amp functions convert between the two types of units.
+   amp2k returns BLeff, B'Leff, or B&quot;Leff scaled by Brho if A-coefficients are used.
+   amp2k returns B    , B'    , or B&quot;     scaled by Brho if C-coefficients are used.
+
+ The A coefficients are direct from magnet measurements with a DC term:
+   a8*I^8+a7*I^7+a6*I^6+a5*I^5+a4*I^4+a3*I^3+a2*I^2+a1*I+a0 = B*Leff or B'*Leff or B&quot;*Leff
+   A = [a8 a7 a6 a5 a4 a3 a2 a1 a0]
+
+ C coefficients have been scaled to field (AT units, except correctors) and includes a DC term:
+   c8 * I^8+ c7 * I^7+ c6 * I^6 + c5 * I^5 + c4 * I^4 + c3 * I^3 + c2 * I^2 + c1*I + c0 = B or B' or B&quot;
+   C = A/Leff
+
+ For dipole:      k = B / Brho      (for AT: KickAngle = BLeff / Brho)
+ For quadrupole:  k = B'/ Brho
+ For sextupole:   k = B&quot;/ Brho / 2  (to be compatible with AT)
+                  (all coefficients all divided by 2 for sextupoles)
+
+ MagnetCoreType is the magnet measurements name for the magnet core (string, string matrix, or cell)
+   For SOLEIL:   BEND
+                 Q1 - Q10 S1 - S10,
+                 QT, HCOR, VCOR, FHCOR, FVCOR
+
+ Leff is the effective length of the magnet
+
+ See Also <a href="amp2k.html" class="code" title="function k = amp2k(Family, Field, Amps, DeviceList, Energy, C, K2AmpScaleFactor)">amp2k</a>, <a href="k2amp.html" class="code" title="function Amps = k2amp(Family, Field, k, DeviceList, Energy, C, K2AmpScaleFactor)">k2amp</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="magnetcoefficients.html" class="code" title="function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, InputType)">magnetcoefficients</a>	MAGNETCOEFFICIENTS - Retrieves coefficient for conversion between Physics and Hardware units</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, InputType)</a>
+0002 <span class="comment">%MAGNETCOEFFICIENTS - Retrieves coefficient for conversion between Physics and Hardware units</span>
+0003 <span class="comment">%[C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">% INPUTS</span>
+0006 <span class="comment">% 1. MagnetCoreType - Family name or type of magnet</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% OUTPUTS</span>
+0009 <span class="comment">% 1. C vector coefficients for the polynomial expansion of the magnet field</span>
+0010 <span class="comment">%    based on magnet measurements</span>
+0011 <span class="comment">% 2. Leff - Effective length ie, which is used in AT</span>
+0012 <span class="comment">% 3. MagnetType</span>
+0013 <span class="comment">% 4. A - vector coefficients for the polynomial expansion of the curviline</span>
+0014 <span class="comment">%        integral of the magnet field based on magnet measurements</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% C and A are vector coefficients for the polynomial expansion of the magnet field</span>
+0017 <span class="comment">% based on magnet measurements.</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% The amp2k and k2amp functions convert between the two types of units.</span>
+0020 <span class="comment">%   amp2k returns BLeff, B'Leff, or B&quot;Leff scaled by Brho if A-coefficients are used.</span>
+0021 <span class="comment">%   amp2k returns B    , B'    , or B&quot;     scaled by Brho if C-coefficients are used.</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">% The A coefficients are direct from magnet measurements with a DC term:</span>
+0024 <span class="comment">%   a8*I^8+a7*I^7+a6*I^6+a5*I^5+a4*I^4+a3*I^3+a2*I^2+a1*I+a0 = B*Leff or B'*Leff or B&quot;*Leff</span>
+0025 <span class="comment">%   A = [a8 a7 a6 a5 a4 a3 a2 a1 a0]</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">% C coefficients have been scaled to field (AT units, except correctors) and includes a DC term:</span>
+0028 <span class="comment">%   c8 * I^8+ c7 * I^7+ c6 * I^6 + c5 * I^5 + c4 * I^4 + c3 * I^3 + c2 * I^2 + c1*I + c0 = B or B' or B&quot;</span>
+0029 <span class="comment">%   C = A/Leff</span>
+0030 <span class="comment">%</span>
+0031 <span class="comment">% For dipole:      k = B / Brho      (for AT: KickAngle = BLeff / Brho)</span>
+0032 <span class="comment">% For quadrupole:  k = B'/ Brho</span>
+0033 <span class="comment">% For sextupole:   k = B&quot;/ Brho / 2  (to be compatible with AT)</span>
+0034 <span class="comment">%                  (all coefficients all divided by 2 for sextupoles)</span>
+0035 <span class="comment">%</span>
+0036 <span class="comment">% MagnetCoreType is the magnet measurements name for the magnet core (string, string matrix, or cell)</span>
+0037 <span class="comment">%   For SOLEIL:   BEND</span>
+0038 <span class="comment">%                 Q1 - Q10 S1 - S10,</span>
+0039 <span class="comment">%                 QT, HCOR, VCOR, FHCOR, FVCOR</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">% Leff is the effective length of the magnet</span>
+0042 <span class="comment">%</span>
+0043 <span class="comment">% See Also amp2k, k2amp</span>
+0044 
+0045 <span class="comment">%</span>
+0046 <span class="comment">% Written by M. Yoon 4/8/03</span>
+0047 <span class="comment">% Adapted By Laurent S. Nadolski354.09672</span>
+0048 <span class="comment">%</span>
+0049 <span class="comment">% Partie Anneau modifi�e par P. Brunelle et A. Nadji le 31/03/06</span>
+0050 <span class="comment">%</span>
+0051 <span class="comment">% Add a switch on accelerator</span>
+0052 
+0053 <span class="comment">% NOTE: Make sure the sign on the 'C' coefficients is reversed where positive current generates negative K-values</span>
+0054 <span class="comment">% Or use Tango K value set to -1</span>
+0055 
+0056 
+0057 <span class="keyword">if</span> nargin &lt; 1
+0058     error(<span class="string">'MagnetCoreType input required'</span>);
+0059 <span class="keyword">end</span>
+0060 
+0061 <span class="keyword">if</span> nargin &lt; 2
+0062     Amps = 230;  <span class="comment">% not sure!!!</span>
+0063 <span class="keyword">end</span>
+0064 
+0065 <span class="keyword">if</span> nargin &lt; 3
+0066     InputType = <span class="string">'Amps'</span>;
+0067 <span class="keyword">end</span>
+0068 
+0069 
+0070 
+0071 <span class="comment">% For a string matrix</span>
+0072 <span class="keyword">if</span> iscell(MagnetCoreType)
+0073     <span class="keyword">for</span> i = 1:size(MagnetCoreType,1)
+0074         <span class="keyword">for</span> j = 1:size(MagnetCoreType,2)
+0075             [C{i,j}, Leff{i,j}, MagnetType{i,j}, A{i,j}] = <a href="magnetcoefficients.html" class="code" title="function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, InputType)">magnetcoefficients</a>(MagnetCoreType{i});
+0076         <span class="keyword">end</span>
+0077     <span class="keyword">end</span>
+0078     <span class="keyword">return</span>
+0079 <span class="keyword">end</span>
+0080 
+0081 <span class="comment">% For a string matrix</span>
+0082 <span class="keyword">if</span> size(MagnetCoreType,1) &gt; 1
+0083     C=[]; Leff=[]; MagnetType=[]; A=[];
+0084     <span class="keyword">for</span> i = 1:size(MagnetCoreType,1)
+0085         [C1, Leff1, MagnetType1, A1] = <a href="magnetcoefficients.html" class="code" title="function [C, Leff, MagnetType, A] = magnetcoefficients(MagnetCoreType, Amps, InputType)">magnetcoefficients</a>(MagnetCoreType(i,:));
+0086         C(i,:) = C1;
+0087         Leff(i,:) = Leff1;
+0088         MagnetType = strvcat(MagnetType, MagnetType1);
+0089         A(i,:) = A1;
+0090     <span class="keyword">end</span>
+0091     <span class="keyword">return</span>
+0092 <span class="keyword">end</span>
+0093 
+0094 <span class="comment">%% get accelerator name</span>
+0095 AcceleratorName = getfamilydata(<span class="string">'Machine'</span>);
+0096 
+0097 <span class="keyword">switch</span> AcceleratorName
+0098     <span class="keyword">case</span> <span class="string">'LT1'</span>
+0099         <span class="comment">%%%%</span>
+0100         <span class="keyword">switch</span> upper(deblank(MagnetCoreType))
+0101 
+0102             <span class="keyword">case</span> <span class="string">'BEND'</span>    
+0103                 Leff = 0.30; <span class="comment">% 300 mm</span>
+0104                 <span class="comment">% B = 1e-4 * (0.0004 I� + 16.334 I + 1.7202)</span>
+0105                 a8 =  0.0;
+0106                 a7 =  0.0;
+0107                 a6 =  0.0;
+0108                 a5 =  0.0;
+0109                 a4 =  0.0;
+0110                 a3 =  0.0;
+0111                 a2 =  0.0;
+0112                 a1 =  4.8861e-4;
+0113                 a0 =  1.19e-4;
+0114 
+0115                 A = [a8 a7 a6 a5 a4 a3 a2 a1 a0];
+0116                 MagnetType = <span class="string">'BEND'</span>;
+0117 
+0118             <span class="keyword">case</span> {<span class="string">'QP'</span>}   <span class="comment">% 150 mm quadrupole</span>
+0119                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0120                 Leff=0.150; <span class="comment">% 162 mm;</span>
+0121                 a8 =  0.0;
+0122                 a7 =  0.0;
+0123                 a6 =  0.0;
+0124                 a5 =  0.0;
+0125 <span class="comment">%                 a4 =  1.49e-6;</span>
+0126 <span class="comment">%                 a3 =  2.59e-5;</span>
+0127 <span class="comment">%                 a2 =  1.93e-4;</span>
+0128 <span class="comment">%                 a1 =  4.98e-2;</span>
+0129 <span class="comment">%                 a0 =  0.0;</span>
+0130                 a4 =  -1.49e-6;
+0131                 a3 =  2.59e-5;
+0132                 a2 =  -1.93e-4;
+0133                 a1 =  4.98e-2;
+0134                 a0 =  8.13e-4;              
+0135                 
+0136                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0137                 MagnetType = <span class="string">'QUAD'</span>;
+0138 
+0139             <span class="keyword">case</span> {<span class="string">'CH'</span>,<span class="string">'CV'</span>}    <span class="comment">% 16 cm horizontal corrector</span>
+0140                 <span class="comment">% Magnet Spec: Theta = 0.8e-3 radians @ 2.75 GeV and 10 amps</span>
+0141                 <span class="comment">% Theta = BLeff / Brho    [radians]</span>
+0142                 <span class="comment">% Therefore,</span>
+0143                 <span class="comment">%       Theta = ((BLeff/Amp)/ Brho) * I</span>
+0144                 <span class="comment">%       BLeff/Amp = 0.8e-3 * getbrho(2.75) / 10</span>
+0145                 <span class="comment">%       B*Leff = a0 * I   =&gt; a0 = 0.8e-3 * getbrho(2.75) / 10</span>
+0146                 <span class="comment">%</span>
+0147                 <span class="comment">% The C coefficients are w.r.t B</span>
+0148                 <span class="comment">%       B = c0 + c1*I = (0 + a0*I)/Leff</span>
+0149                 <span class="comment">% However, AT uses Theta in radians so the A coefficients</span>
+0150                 <span class="comment">% must be used for correctors with the middle layer with</span>
+0151                 <span class="comment">% the addition of the DC term</span>
+0152 
+0153                 <span class="comment">% Find the current from the given polynomial for BLeff and B</span>
+0154                 <span class="comment">% NOTE: AT used BLeff (A) for correctors</span>
+0155                 MagnetType = <span class="string">'COR'</span>;
+0156                 
+0157                 Leff = 1e-6; <span class="comment">% 0.1577 m</span>
+0158                 a8 =  0.0;
+0159                 a7 =  0.0;
+0160                 a6 =  0.0;
+0161                 a5 =  0.0;
+0162                 a4 =  0.0;
+0163                 a3 =  0.0;
+0164                 a2 =  0.0;
+0165                 a1 =  4.49e-4;
+0166                 a0 =  0;
+0167                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0168                 
+0169             <span class="keyword">otherwise</span>
+0170                 error(sprintf(<span class="string">'MagnetCoreType %s is not unknown'</span>, MagnetCoreType));
+0171                 <span class="comment">%k = 0;</span>
+0172                 <span class="comment">%MagnetType = '';</span>
+0173                 <span class="comment">%return</span>
+0174         <span class="keyword">end</span>
+0175 
+0176         <span class="comment">% compute B-field = int(Bdl)/Leff</span>
+0177         C = A/ Leff;
+0178 
+0179         MagnetType = upper(MagnetType);
+0180     
+0181     <span class="keyword">case</span> <span class="string">'Ring'</span>
+0182         <span class="comment">%%%%</span>
+0183         <span class="keyword">switch</span> upper(deblank(MagnetCoreType))
+0184 
+0185             <span class="keyword">case</span> <span class="string">'BEND'</span>   
+0186                 <span class="comment">% Moyenne des longueurs magn�tiques mesur�es = 1055.548mm</span>
+0187                 <span class="comment">% Décalage en champ entre le dip�le de référence et les</span>
+0188                 <span class="comment">% dip�les de l'Anneau = DB/B= +1.8e-03.</span>
+0189                 <span class="comment">% On part de l'�talonnage B(I) effectu� sur le dip�le de</span>
+0190                 <span class="comment">% r�f�rence dans la zone de courant 516 - 558 A</span>
+0191                 <span class="comment">% les coefficients du fit doivent �tre affect�s du facteur</span>
+0192                 <span class="comment">% (1-1.8e-3) pour passer du dip�le de r�f�rence � l'Anneau</span>
+0193                 <span class="comment">% et du facteur Leff pour passer � l'int�grale de champ.</span>
+0194                 <span class="comment">%</span>
+0195                 
+0196                 <span class="comment">% B=1.7063474 T correspond � 2.75 GeV</span>
+0197                 <span class="comment">% ?  longueur magnétique du model : Leff = 1.052433;</span>
+0198 <span class="comment">%                 Leff=1.055548;</span>
+0199 <span class="comment">%                 a7= 0.0;</span>
+0200 <span class="comment">%                 a6=-0.0;</span>
+0201 <span class="comment">%                 a5= 0.0;</span>
+0202 <span class="comment">%                 a4=-0.0;</span>
+0203 <span class="comment">%                 a3= 0.0;</span>
+0204 <span class="comment">%                 a2=-9.7816E-6*(1-1.8e-3)*Leff;</span>
+0205 <span class="comment">%                 a1= 1.26066E-02*(1-1.8E-3)*Leff;</span>
+0206 <span class="comment">%                 a0= -2.24944*(1-1.8E-3)*Leff;</span>
+0207 <span class="comment">%                 A = [a7 a6 a5 a4 a3 a2 a1 a0];</span>
+0208                 
+0209                 Leff=1.052433;
+0210                 a7= 0.0;
+0211                 a6=-0.0;
+0212                 a5= 0.0;
+0213                 a4=-0.0;
+0214                 a3= 0.0;
+0215                 a2=-9.7816E-6*(1-1.8e-3)*Leff*(1.055548/1.052433);
+0216                 a1= 1.26066E-02*(1-1.8E-3)*Leff*(1.055548/1.052433);
+0217                 a0= -2.24944*(1-1.8E-3)*Leff*(1.055548/1.052433);
+0218                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0219                 
+0220 
+0221                 MagnetType = <span class="string">'BEND'</span>;
+0222 
+0223             <span class="keyword">case</span> {<span class="string">'Q1'</span>,<span class="string">'Q6'</span>}  
+0224                 <span class="comment">% Familles Q1 et Q6 l= 320 mm</span>
+0225                 <span class="comment">% Etalonnage GL(I) sur 90 - 150 A quadrup�le court</span>
+0226                 <span class="comment">% le courant remont� est n�gatif car Q1 et Q6 d�focalisants</span>
+0227                 <span class="comment">% il faut donc un k &lt; 0. Les coefficients du fit a0, a2,</span>
+0228                 <span class="comment">% a4,...sont multipli�s par -1.</span>
+0229                 
+0230                 <span class="comment">% Correction des coefficients des QC de + 3 10-3 (manque</span>
+0231                 <span class="comment">% capteur BMS)</span>
+0232                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0233                 <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0234                  bob=1-8.0e-3-2.3e-3+3e-3;
+0235                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0236                 Leff=0.320;
+0237 
+0238         <span class="comment">% G. Portmann</span>
+0239 <span class="comment">%                 % Just a way to get the correct polynomial for different k-values</span>
+0240 <span class="comment">%                 if strcmpi(InputType, 'K')</span>
+0241 <span class="comment">%                     if Amps &lt; 0.18928717429288</span>
+0242 <span class="comment">%                         Amps = 10;</span>
+0243 <span class="comment">%                     elseif Amps &lt; 0.75086308092911</span>
+0244 <span class="comment">%                         Amps = 50;</span>
+0245 <span class="comment">%                     elseif Amps &lt; 1.31229873800730</span>
+0246 <span class="comment">%                         Amps = 100;</span>
+0247 <span class="comment">%                     elseif Amps &lt; 1.68337408687106</span>
+0248 <span class="comment">%                         Amps = 150;</span>
+0249 <span class="comment">%                     elseif Amps &lt; 2.04021595285003</span>
+0250 <span class="comment">%                         Amps = 200;</span>
+0251 <span class="comment">%                     else</span>
+0252 <span class="comment">%                         Amps = 230;</span>
+0253 <span class="comment">%                     end</span>
+0254 <span class="comment">%                 end</span>
+0255         <span class="comment">% G. Portmann</span>
+0256                 
+0257                 a7=  0.0;
+0258                 a6=  0.0;
+0259                 a5=  0.0;
+0260                 a4=  0.0;
+0261                 a3=  0.0;
+0262                 a2=  -1.629e-6*(-1)*bob;
+0263                 a1=  2.7836E-2*bob;
+0264                 a0=  6.4464E-3*(-1)*bob;
+0265 <span class="comment">%                 a7=  0.0;</span>
+0266 <span class="comment">%                 a6=  0.0;</span>
+0267 <span class="comment">%                 a5=  0.0;</span>
+0268 <span class="comment">%                 a4=  0.0;</span>
+0269 <span class="comment">%                 a3=  0.0;</span>
+0270 <span class="comment">%                 a2=  -8.6E-7*(-1)*bob;</span>
+0271 <span class="comment">%                 a1=  2.7664E-2*bob;</span>
+0272 <span class="comment">%                 a0=  -3.3E-3*(-1)*bob;</span>
+0273        <span class="comment">% G. Portmann</span>
+0274 <span class="comment">%                 if Amps &lt; 20</span>
+0275 <span class="comment">%                     a2=  0.0;</span>
+0276 <span class="comment">%                     a1=  0.027473;</span>
+0277 <span class="comment">%                     a0=  0.0;</span>
+0278 <span class="comment">%                 elseif Amps &lt; 80</span>
+0279 <span class="comment">%                     a2=  0.0;</span>
+0280 <span class="comment">%                     a1=  0.027473;</span>
+0281 <span class="comment">%                     a0=  0.006270;</span>
+0282 <span class="comment">%                  elseif Amps &lt; 140</span>
+0283 <span class="comment">%                     a2= -5.6000e-7;</span>
+0284 <span class="comment">%                     a1=  2.7598e-2;</span>
+0285 <span class="comment">%                     a0=  2.1000e-4;</span>
+0286 <span class="comment">%                  elseif Amps &lt; 180</span>
+0287 <span class="comment">%                     a3= -3.25400e-8;</span>
+0288 <span class="comment">%                     a2=  1.05300e-5;</span>
+0289 <span class="comment">%                     a1=  2.63758e-2;</span>
+0290 <span class="comment">%                     a0=  4.30800e-2;</span>
+0291 <span class="comment">%                  elseif Amps &lt; 220</span>
+0292 <span class="comment">%                     a4= -1.14374e-8;</span>
+0293 <span class="comment">%                     a3=  8.69384e-6;</span>
+0294 <span class="comment">%                     a2= -2.49129e-3;</span>
+0295 <span class="comment">%                     a1=  3.45626e-1;</span>
+0296 <span class="comment">%                     a0= -1.52486e+1;</span>
+0297 <span class="comment">%                 else</span>
+0298 <span class="comment">%                     a5= -3.417777770e-8;</span>
+0299 <span class="comment">%                     a4=  3.992090910e-5;</span>
+0300 <span class="comment">%                     a3= -1.864441566e-2;</span>
+0301 <span class="comment">%                     a2=  4.351937350e+0;</span>
+0302 <span class="comment">%                     a1= -5.076535920e+2;</span>
+0303 <span class="comment">%                     a0=  2.367859440e+4;</span>
+0304 <span class="comment">%                 end</span>
+0305          <span class="comment">% G. Portmann</span>
+0306          
+0307                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0308                 
+0309                 MagnetType = <span class="string">'quad'</span>;
+0310                 
+0311              <span class="keyword">case</span> {<span class="string">'Q8'</span>,<span class="string">'Q9'</span>}  
+0312                 <span class="comment">% Familles Q8 et Q9 l= 320 mm</span>
+0313                 <span class="comment">% Etalonnage GL(I) sur 160 - 200 A quadrup�le court</span>
+0314                 <span class="comment">% le courant remont� est n�gatif car Q8 et Q9 d�focalisants</span>
+0315                 <span class="comment">% il faut donc un k &lt; 0. Les coefficients du fit a0, a2,</span>
+0316                 <span class="comment">% a4,...sont multipli�s par -1.</span>
+0317                 
+0318                 <span class="comment">% Correction des coefficients des QC de + 3 10-3 (manque</span>
+0319                 <span class="comment">% capteur BMS)</span>
+0320                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0321                 <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0322                  bob=1-8.0e-3-2.3e-3+3e-3;
+0323 
+0324                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0325                 Leff=0.320;
+0326                 a7=  0.0;
+0327                 a6=  0.0;
+0328                 a5=  0.0;
+0329                 a4=  0.0;
+0330                 a3=  -8.843E-8*bob;
+0331                 a2=  3.6389E-5*(-1)*bob;
+0332                 a1=  2.2448E-2*bob;
+0333                 a0=  2.382E-1*(-1)*bob;
+0334                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0335                 
+0336                 MagnetType = <span class="string">'quad'</span>;  
+0337                 
+0338             <span class="keyword">case</span> {<span class="string">'Q3'</span>}  
+0339                 <span class="comment">% Famille Q3 l= 320 mm</span>
+0340                 <span class="comment">% Etalonnage GL(I) sur 50 - 100 A quadrup�le court</span>
+0341                 <span class="comment">% le courant remont� est n�gatif car Q3 est d�focalisant</span>
+0342                 <span class="comment">% il faut donc un k &lt; 0. Les coefficients du fit a0, a2,</span>
+0343                 <span class="comment">% a4,...sont multipli�s par -1.</span>
+0344                 
+0345                 <span class="comment">%Correction des coefficients des QC de + 3 10-3 (manque</span>
+0346                 <span class="comment">% capteur BMS)</span>
+0347                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0348                 <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0349                  bob=1-8.0e-3-2.3e-3+3e-3;
+0350 
+0351                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0352                 Leff=0.320;
+0353                 a7=  0.0;
+0354                 a6=  0.0;
+0355                 a5=  0.0;
+0356                 a4=  0.0;
+0357                 a3=  0.;
+0358                 a2=  1.4E-7*(-1)*bob;
+0359                 a1=  2.7471E-2*bob;
+0360                 a0=  5.83E-3*(-1)*bob;
+0361                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0362                 
+0363                 MagnetType = <span class="string">'quad'</span>; 
+0364                 
+0365              <span class="keyword">case</span> {<span class="string">'Q4'</span>}  
+0366                 <span class="comment">% Famille Q4 l= 320 mm</span>
+0367                 <span class="comment">% Etalonnage GL(I) sur 120 - 170 A quadrup�le court</span>
+0368                 <span class="comment">% le courant remont� est n�gatif car Q4 est d�focalisant</span>
+0369                 <span class="comment">% il faut donc un k &lt; 0. Les coefficients du fit a0, a2,</span>
+0370                 <span class="comment">% a4,...sont multipli�s par -1.</span>
+0371                 
+0372                 <span class="comment">%Correction des coefficients des QC de + 3 10-3 (manque</span>
+0373                 <span class="comment">% capteur BMS)</span>
+0374                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0375                <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0376                  bob=1-8.0e-3-2.3e-3+3e-3;
+0377                 
+0378                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0379                 Leff=0.320;
+0380                 a7=  0.0;
+0381                 a6=  0.0;
+0382                 a5=  0.0;
+0383                 a4=  0.0;
+0384                 a3=  -5.2680E-8*bob;
+0385                 a2=  1.9620E-5*(-1)*bob;
+0386                 a1=  2.5016E-2*bob;
+0387                 a0=  1.1046E-1*(-1)*bob;
+0388                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0389                 
+0390                 MagnetType = <span class="string">'quad'</span>; 
+0391                 
+0392             <span class="keyword">case</span> {<span class="string">'Q5'</span>,<span class="string">'Q10'</span>}   <span class="comment">% 320 mm quadrupole</span>
+0393                  <span class="comment">% Familles Q5 et Q10 l= 320 mm</span>
+0394                 <span class="comment">% Etalonnage GL(I) sur 180 - 230 A quadrup�le court</span>
+0395                 <span class="comment">% le courant remont� est n�gatif car Q5 et Q10 sont</span>
+0396                 <span class="comment">% focalisants</span>
+0397                 
+0398                 <span class="comment">%Correction des coefficients des QC de + 3 10-3 (manque</span>
+0399                 <span class="comment">% capteur BMS)</span>
+0400                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0401                 <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0402                  bob=1-8.0e-3-2.3e-3+3e-3;
+0403                 
+0404                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0405                 Leff=0.320;
+0406                 a7=  0.0;
+0407                 a6=  0.0;
+0408                 a5=  0.0;
+0409                 a4=  -8.0497E-09*bob;
+0410                 a3= 6.01284E-06*bob;
+0411                 a2=  -1.696898E-03*bob;
+0412                 a1=  2.41175E-01*bob;
+0413                 a0=  -1.01064E+01*bob;
+0414                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0415 
+0416                 MagnetType = <span class="string">'quad'</span>;    
+0417                     
+0418             <span class="keyword">case</span> {<span class="string">'Q2'</span>}   <span class="comment">% l= 460 mm</span>
+0419                 <span class="comment">% quadrup�le focalisant</span>
+0420                 <span class="comment">% Etalonnage GL(I) sur 140 - 190 A quadrup�le long</span>
+0421                 
+0422                 
+0423                 <span class="comment">%Correction des coefficients des QL de + 1.55 10-2 (manque</span>
+0424                 <span class="comment">% capteur BMS)</span>
+0425                 <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0426                <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0427                  bob=1-8.0e-3-2.3e-3+1.55e-2;
+0428 
+0429                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0430                 Leff=0.460;
+0431                 a7=  0.0;
+0432                 a6=  0.0;
+0433                 a5= -0.0;
+0434                 a4=  0.0;
+0435                 a3= -2.7609E-7*bob;
+0436                 a2=  1.17098E-4*bob;
+0437                 a1=  2.7718E-2*bob;
+0438                 a0=  8.2470E-1*bob;
+0439                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0440                 MagnetType = <span class="string">'quad'</span>;
+0441 
+0442             <span class="keyword">case</span> {<span class="string">'Q7'</span>}   <span class="comment">% l= 460 mm</span>
+0443                 <span class="comment">% quadrup�le focalisant</span>
+0444                 <span class="comment">% Etalonnage GL(I) sur 190 - 230 A quadrup�le long</span>
+0445                 
+0446                 <span class="comment">%Correction des coefficients des QL de + 1.55 10-2 (manque</span>
+0447                 <span class="comment">% capteur BMS)</span>
+0448                  <span class="comment">%correction offset capteur BMS -2.310-3 P. Brunelle 30/05/06</span>
+0449                 <span class="comment">%facteur 8e-3 pour ajuster nux du 1er jour</span>
+0450                  bob=1-8.0e-3-2.3e-3+1.55e-2;
+0451 
+0452                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0453                 Leff=0.460;
+0454                 a7=  0.0;
+0455                 a6=  0.0;
+0456                 a5= 1.50427350E-9*bob;
+0457                 a4=  -1.52722610E-6*bob;
+0458                 a3= 6.16874120E-4*bob;
+0459                 a2=  -1.24044936E-1*bob;
+0460                 a1=  1.24707096E+01*bob;
+0461                 a0=  -4.96304380E+02*bob;
+0462                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0463                 MagnetType = <span class="string">'quad'</span>;
+0464 
+0465                 <span class="comment">% Sextup�les : on multiplie les coefficients par 2 car ils</span>
+0466                 <span class="comment">% sont exprim�s en B&quot;L et non B&quot;L/2</span>
+0467                 
+0468             <span class="keyword">case</span> {<span class="string">'S1'</span>,<span class="string">'S10'</span>}    
+0469                 <span class="comment">% l= 160 mm focalisants</span>
+0470                 <span class="comment">% Etalonnage HL(I) sur 40 - 160 A</span>
+0471                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0472                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0473                 a7=  0.0;
+0474                 a6=  0.0;
+0475                 a5=  0.0;
+0476                 a4=  0.0;
+0477                 a3=  0.0;
+0478                 a2=  -3.773E-6;
+0479                 a1=  1.5476E-1;
+0480                 a0=  2.36991E-1;
+0481                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0482                 MagnetType = <span class="string">'SEXT'</span>;
+0483                 
+0484                 
+0485             <span class="keyword">case</span> {<span class="string">'S3'</span>,<span class="string">'S9'</span>}    
+0486                 <span class="comment">% l= 160 mm d�focalisants</span>
+0487                 <span class="comment">% Etalonnage HL(I) sur 80 - 250 A</span>
+0488                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0489                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0490                 a7=  0.0;
+0491                 a6=  0.0;
+0492                 a5=  0.0;
+0493                 a4=  0.0;
+0494                 a3=  -2.6735E-8;
+0495                 a2=  5.8793E-6*(-1);
+0496                 a1=  1.5364E-1;
+0497                 a0=  2.7867E-1*(-1);
+0498                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0499                 MagnetType = <span class="string">'SEXT'</span>;
+0500                 
+0501              <span class="keyword">case</span> {<span class="string">'S6'</span>}    
+0502                 <span class="comment">% l= 160 mm focalisant</span>
+0503                 <span class="comment">% Etalonnage HL(I) sur 80 - 250 A</span>
+0504                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0505                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0506                 a7=  0.0;
+0507                 a6=  0.0;
+0508                 a5=  0.0;
+0509                 a4=  0.0;
+0510                 a3=  -2.6735E-8;
+0511                 a2=  5.8793E-6;
+0512                 a1=  1.5364E-1;
+0513                 a0=  2.7867E-1;
+0514                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0515                 MagnetType = <span class="string">'SEXT'</span>;
+0516 
+0517                 
+0518               <span class="keyword">case</span> {<span class="string">'S4'</span>,<span class="string">'S8'</span>}    
+0519                 <span class="comment">% l= 160 mm focalisants</span>
+0520                 <span class="comment">% Etalonnage HL(I) sur 170 - 300 A</span>
+0521                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0522                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0523                 a7=  0.0;
+0524                 a6=  0.0;
+0525                 a5=  0.0;
+0526                 a4=  -8.8836E-10;
+0527                 a3=  7.1089E-7;
+0528                 a2=  -2.2277E-4;
+0529                 a1=  1.8501E-1;
+0530                 a0=  -1.329;
+0531                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0532                 MagnetType = <span class="string">'SEXT'</span>;
+0533 
+0534              <span class="keyword">case</span> {<span class="string">'S2'</span>,<span class="string">'S5'</span>}    
+0535                 <span class="comment">% l= 160 mm d�focalisants</span>
+0536                 <span class="comment">% Etalonnage HL(I) sur 170 - 300 A</span>
+0537                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0538                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0539                 a7=  0.0;
+0540                 a6=  0.0;
+0541                 a5=  0.0;
+0542                 a4=  -8.8836E-10*(-1);
+0543                 a3=  7.1089E-7;
+0544                 a2=  -2.2277E-4*(-1);
+0545                 a1=  1.8501E-1;
+0546                 a0=  -1.329*(-1);
+0547                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0548                 MagnetType = <span class="string">'SEXT'</span>;    
+0549         
+0550               <span class="keyword">case</span> {<span class="string">'S7'</span>}    
+0551                 <span class="comment">% l= 160 mm d�focalisant</span>
+0552                 <span class="comment">% Etalonnage HL(I) sur 250 - 350 A</span>
+0553                 <span class="comment">% Find the current from the given polynomial for B''Leff</span>
+0554                 Leff=1e-8; <span class="comment">% modeled as thin length;</span>
+0555                 a7=  0.0;
+0556                 a6=  0.0;
+0557                 a5=  -2.613556E-10;
+0558                 a4=  3.730258E-7*(-1);
+0559                 a3=  -2.1301205E-4;
+0560                 a2=  6.077561E-2*(-1);
+0561                 a1=  -8.5069349;
+0562                 a0=  4.933E+2*(-1);
+0563                 A = [a7 a6 a5 a4 a3 a2 a1 a0]*2;
+0564                 MagnetType = <span class="string">'SEXT'</span>; 
+0565                 
+0566             <span class="keyword">case</span> <span class="string">'QT'</span>    <span class="comment">% 160 mm dans sextupole</span>
+0567                 <span class="comment">% Etalonnage: moyenne sur les 32 sextup�les incluant un QT.</span>
+0568                 <span class="comment">% Efficacit� = 3 G.m/A @ R=32mm; soit 93.83 G/A</span>
+0569                 <span class="comment">% Le signe du courant est donn� par le DeviceServer (Tango)</span>
+0570                 <span class="comment">% Find the currAO.(ifam).Monitor.HW2PhysicsParams{1}(1,:) = magnetcoefficients(AO.(ifam).FamilyName );</span>
+0571                 Leff = 0.16;
+0572                 a7= 0.0;
+0573                 a6= 0.0;
+0574                 a5= 0.0;
+0575                 a4= 0.0;
+0576                 a3= 0.0;
+0577                 a2= 0.0;
+0578                 a1= 93.83E-4;
+0579                 a0= 0.0;
+0580                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0581 
+0582                 MagnetType = <span class="string">'QT'</span>;
+0583 
+0584             <span class="keyword">case</span> {<span class="string">'HCOR'</span>}    <span class="comment">% 16 cm horizontal corrector</span>
+0585                 <span class="comment">% Etalonnage: moyenne sur les 56 sextup�les incluant un CORH.</span>
+0586                 <span class="comment">% Efficacit� = 8.143 G.m/A</span>
+0587                 <span class="comment">% Le signe du courant est donn� par le DeviceServer (Tango)</span>
+0588                 <span class="comment">% Find the currAO.(ifam).Monitor.HW2PhysicsParams{1}(1,:) = magnetcoefficients(AO.(ifam).FamilyName );</span>
+0589                 Leff = 0.16;
+0590                 a7= 0.0;
+0591                 a6= 0.0;
+0592                 a5= 0.0;
+0593                 a4= 0.0;
+0594                 a3= 0.0;
+0595                 a2= 0.0;
+0596                 a1= 8.143E-4;
+0597                 a0= 0.0;
+0598                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0599 
+0600                 MagnetType = <span class="string">'COR'</span>;
+0601                 
+0602 
+0603             <span class="keyword">case</span> {<span class="string">'FHCOR'</span>}    <span class="comment">% 10 cm horizontal corrector</span>
+0604                 <span class="comment">% Magnet Spec: Theta = 280e-6 radians @ 2.75 GeV and 10 amps</span>
+0605                 <span class="comment">% Theta = BLeff / Brho    [radians]</span>
+0606                 <span class="comment">% Therefore,</span>
+0607                 <span class="comment">%       Theta = ((BLeff/Amp)/ Brho) * I</span>
+0608                 <span class="comment">%       BLeff/Amp = 280e-6 * getbrho(2.75) / 10</span>
+0609                 <span class="comment">%       B*Leff = a0 * I   =&gt; a0 = 0.8e-3 * getbrho(2.75) / 10</span>
+0610                 <span class="comment">%</span>
+0611                 <span class="comment">% The C coefficients are w.r.t B</span>
+0612                 <span class="comment">%       B = c0 + c1*I = (0 + a0*I)/Leff</span>
+0613                 <span class="comment">% However, AT uses Theta in radians so the A coefficients</span>
+0614                 <span class="comment">% must be used for correctors with the middle layer with</span>
+0615                 <span class="comment">% the addition of the DC term</span>
+0616 
+0617                 <span class="comment">% Find the current from the given polynomial for BLeff and B</span>
+0618                 <span class="comment">% NOTE: AT used BLeff (A) for correctors</span>
+0619                 Leff = .10;
+0620                 imax = 10;
+0621                 cormax = 28e-6 ; <span class="comment">% 28 urad for imax = 10 A</span>
+0622                 MagnetType = <span class="string">'COR'</span>;
+0623                 A = [0 cormax*getbrho(2.75)/imax 0];
+0624 
+0625             <span class="keyword">case</span> {<span class="string">'VCOR'</span>}    <span class="comment">% 16 cm vertical corrector</span>
+0626                 <span class="comment">% Etalonnage: moyenne sur les 56 sextup�les incluant un CORV.</span>
+0627                 <span class="comment">% Efficacit� = 4.642 G.m/A</span>
+0628                 <span class="comment">% Le signe du courant est donn� par le DeviceServer (Tango)</span>
+0629                 <span class="comment">% Find the currAO.(ifam).Monitor.HW2PhysicsParams{1}(1,:) = magnetcoefficients(AO.(ifam).FamilyName );</span>
+0630                 Leff = 0.16;
+0631                 a7= 0.0;
+0632                 a6= 0.0;
+0633                 a5= 0.0;
+0634                 a4= 0.0;
+0635                 a3= 0.0;
+0636                 a2= 0.0;
+0637                 a1= 4.642E-4;
+0638                 a0= 0.0;
+0639                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0640 
+0641                 MagnetType = <span class="string">'COR'</span>;
+0642 
+0643             <span class="keyword">case</span> {<span class="string">'FVCOR'</span>}    <span class="comment">% 10 cm vertical corrector</span>
+0644                 <span class="comment">% Find the current from the given polynomial for BLeff and B</span>
+0645                 Leff = .10;
+0646                 imax = 10;
+0647                 cormax = 23e-6 ; <span class="comment">% 23 urad for imax = 10 A</span>
+0648                 MagnetType = <span class="string">'COR'</span>;
+0649                 A = [0 cormax*getbrho(2.75)/imax 0];
+0650 
+0651             <span class="keyword">case</span> {<span class="string">'K_INJ'</span>}
+0652                 <span class="comment">% Kicker d'injection</span>
+0653                 <span class="comment">% étalonnage provisoire</span>
+0654                 <span class="comment">% attention l'element n'etant pas dans le modele,definition</span>
+0655                 <span class="comment">% de A ambigue</span>
+0656                 Leff = .6;
+0657                 vmax = 8000;
+0658                 alphamax = 8e-3 ; <span class="comment">% 8 mrad pour 8000 V</span>
+0659                 MagnetType = <span class="string">'K_INJ'</span>;
+0660                 A = [0 alphamax*getbrho(2.75)/vmax 0]*Leff;
+0661                 
+0662              <span class="keyword">case</span> {<span class="string">'K_INJ1'</span>}
+0663                 <span class="comment">% Kickers d'injection 1 et 4</span>
+0664                 Leff = .6;
+0665                 vmax = 7500; <span class="comment">% tension de mesure</span>
+0666                 SBDL = 75.230e-3 ; <span class="comment">% somme de Bdl mesurée</span>
+0667                 MagnetType = <span class="string">'K_INJ1'</span>;
+0668                 A = [0 -SBDL/vmax 0]*Leff; 
+0669                 
+0670              <span class="keyword">case</span> {<span class="string">'K_INJ2'</span>}
+0671                 <span class="comment">% Kickers d'injection 2 et 3</span>
+0672                 Leff = .6;
+0673                 vmax = 7500;<span class="comment">% tension de mesure</span>
+0674                 SBDL = 74.800e-3 ; <span class="comment">% somme de Bdl mesurée</span>
+0675                 MagnetType = <span class="string">'K_INJ2'</span>;  
+0676                 A = [0 SBDL/vmax 0]*Leff; 
+0677                 
+0678             <span class="keyword">case</span> {<span class="string">'SEP_P'</span>}
+0679                 <span class="comment">% Septum passif d'injection</span>
+0680                 Leff = .6;
+0681                 vmax = 547; <span class="comment">% tension de mesure V</span>
+0682                 SBDL = 263e-3; <span class="comment">% somme de Bdl mesurée</span>
+0683                 MagnetType = <span class="string">'SEP_P'</span>;
+0684                 A = [0 SBDL/vmax 0]*Leff; 
+0685                 
+0686              <span class="keyword">case</span> {<span class="string">'SEP_A'</span>}
+0687                 <span class="comment">% Septum actif d'injection</span>
+0688                 Leff = 1.;
+0689                 vmax = 111;
+0690                 MagnetType = <span class="string">'SEP_A'</span>;
+0691                 SBDL = 1147.8e-3 ; <span class="comment">% Somme de Bdl mesurée à 111 V</span>
+0692                 A = [0 SBDL/vmax 0]*Leff; 
+0693 
+0694             <span class="keyword">otherwise</span>
+0695                 error(sprintf(<span class="string">'MagnetCoreType %s is not unknown'</span>, MagnetCoreType));
+0696                 k = 0;
+0697                 MagnetType = <span class="string">''</span>;
+0698                 <span class="keyword">return</span>
+0699         <span class="keyword">end</span>
+0700 
+0701         <span class="comment">% compute B-field = int(Bdl)/Leff</span>
+0702         C = A / Leff;
+0703 
+0704         MagnetType = upper(MagnetType);
+0705 
+0706 
+0707         <span class="comment">% Power Series Denominator (Factoral) be AT compatible</span>
+0708         <span class="keyword">if</span> strcmpi(MagnetType,<span class="string">'SEXT'</span>)
+0709             C = C / 2;
+0710         <span class="keyword">end</span>
+0711         <span class="keyword">if</span> strcmpi(MagnetType,<span class="string">'OCTO'</span>)
+0712             C = C / 6;
+0713         <span class="keyword">end</span>
+0714         <span class="keyword">return</span>;
+0715     <span class="keyword">case</span> <span class="string">'Booster'</span>
+0716         <span class="comment">%%%%</span>
+0717         <span class="keyword">switch</span> upper(deblank(MagnetCoreType))
+0718 
+0719             <span class="keyword">case</span> <span class="string">'BEND'</span>    
+0720                 <span class="comment">% B[T] = 0.00020 + 0.0013516 I[A]</span>
+0721                 <span class="comment">% B[T] = 0.00020 + (0.0013051 + 0.00005/540 I) I[A] Alex</span>
+0722                 Leff = 2.160; <span class="comment">% 2160 mm</span>
+0723                 a8 =  0.0;
+0724                 a7 =  0.0;
+0725                 a6 =  0.0;
+0726                 a5 =  0.0;
+0727                 a4 =  0.0;
+0728                 a3 =  0.0;
+0729                 a2 =  9.2e-8*Leff;
+0730                 a1 =  0.0013051*Leff;
+0731                 a0 =  2.0e-3*Leff;
+0732 
+0733                 A = [a8 a7 a6 a5 a4 a3 a2 a1 a0];
+0734                 MagnetType = <span class="string">'BEND'</span>;
+0735 
+0736             <span class="keyword">case</span> {<span class="string">'QF'</span>}   <span class="comment">% 400 mm quadrupole</span>
+0737                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0738                 <span class="comment">% G[T/m] = 0.0465 + 0.0516 I[A] Alex</span>
+0739                 Leff=0.400; 
+0740                 a8 =  0.0;
+0741                 a7 =  0.0;
+0742                 a6 =  0.0;
+0743                 a5 =  0.0;
+0744                 a4 =  0.0;
+0745                 a3 =  0.0;
+0746                 a2 =  0.0;
+0747                 a1 =  0.0516*Leff;
+0748                 a0 =  0.0465*Leff;
+0749                 
+0750                 A = [a7 a6 a5 a4 a3 a2 a1 a0]; <span class="comment">%*getbrho(0.1);</span>
+0751                 MagnetType = <span class="string">'QUAD'</span>;
+0752 
+0753             <span class="keyword">case</span> {<span class="string">'QD'</span>}   <span class="comment">% 400 mm quadrupole</span>
+0754                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0755                 <span class="comment">% G[T/m] = 0.0485 + 0.0518 I[A] Alex</span>
+0756                 Leff=0.400; 
+0757                 a8 =  0.0;
+0758                 a7 =  0.0;
+0759                 a6 =  0.0;
+0760                 a5 =  0.0;
+0761                 a4 =  0.0;
+0762                 a3 =  0.0;
+0763                 a2 =  0.0;
+0764                 a1 =  -0.0518*Leff;
+0765                 a0 =  -0.0485*Leff;
+0766                 
+0767                 A = [a7 a6 a5 a4 a3 a2 a1 a0]; <span class="comment">%*getbrho(0.1);</span>
+0768                 MagnetType = <span class="string">'QUAD'</span>;
+0769 
+0770             <span class="keyword">case</span> {<span class="string">'SF'</span>, <span class="string">'SD'</span>}   <span class="comment">% 150 mm sextupole</span>
+0771                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0772                 <span class="comment">% HL [T/m] = 0.2 I [A] (deja int�gr�)</span>
+0773                 Leff=1.e-8; <span class="comment">% thin lens;</span>
+0774                 a8 =  0.0;
+0775                 a7 =  0.0;
+0776                 a6 =  0.0;
+0777                 a5 =  0.0;
+0778                 a4 =  0.0;
+0779                 a3 =  0.0;
+0780                 a2 =  0.0;
+0781                 a1 =  0.2*2;
+0782                 a0 =  0.0;
+0783                 
+0784                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0785                 MagnetType = <span class="string">'SEXT'</span>;
+0786                 
+0787             <span class="keyword">case</span> {<span class="string">'HCOR'</span>,<span class="string">'VCOR'</span>}    <span class="comment">% ?? cm horizontal corrector</span>
+0788                 <span class="comment">% Magnet Spec: Theta = 0.8e-3 radians @ 2.75 GeV and 10 amps</span>
+0789                 <span class="comment">% Theta = BLeff / Brho    [radians]</span>
+0790                 <span class="comment">% Therefore,</span>
+0791                 <span class="comment">%       Theta = ((BLeff/Amp)/ Brho) * I</span>
+0792                 <span class="comment">%       BLeff/Amp = 0.8e-3 * getbrho(2.75) / 10</span>
+0793                 <span class="comment">%       B*Leff = a0 * I   =&gt; a0 = 0.8e-3 * getbrho(2.75) / 10</span>
+0794                 <span class="comment">%</span>
+0795                 <span class="comment">% The C coefficients are w.r.t B</span>
+0796                 <span class="comment">%       B = c0 + c1*I = (0 + a0*I)/Leff</span>
+0797                 <span class="comment">% However, AT uses Theta in radians so the A coefficients</span>
+0798                 <span class="comment">% must be used for correctors with the middle layer with</span>
+0799                 <span class="comment">% the addition of the DC term</span>
+0800 
+0801                 <span class="comment">% Find the current from the given polynomial for BLeff and B</span>
+0802                 <span class="comment">% NOTE: AT used BLeff (A) for correctors</span>
+0803                 MagnetType = <span class="string">'COR'</span>;
+0804                 <span class="comment">% theta [mrad] = 1.34 I[A] @ 0.1 GeV</span>
+0805                 Leff = 1e-6;
+0806                 a8 =  0.0;
+0807                 a7 =  0.0;
+0808                 a6 =  0.0;
+0809                 a5 =  0.0;
+0810                 a4 =  0.0;
+0811                 a3 =  0.0;
+0812                 a2 =  0.0;
+0813                 a1 =  1.34e-3*getbrho(0.1);
+0814                 a0 =  0;
+0815                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0816                 
+0817             <span class="keyword">otherwise</span>
+0818                 error(sprintf(<span class="string">'MagnetCoreType %s is not unknown'</span>, MagnetCoreType));
+0819                 <span class="comment">%k = 0;</span>
+0820                 <span class="comment">%MagnetType = '';</span>
+0821                 <span class="comment">%return</span>
+0822         <span class="keyword">end</span>
+0823 
+0824         <span class="comment">% compute B-field = int(Bdl)/Leff</span>
+0825         C = A/ Leff;
+0826  
+0827         <span class="comment">% Power Series Denominator (Factoral) be AT compatible</span>
+0828         <span class="keyword">if</span> strcmpi(MagnetType,<span class="string">'SEXT'</span>)
+0829             C = C / 2;
+0830         <span class="keyword">end</span>
+0831  
+0832         MagnetType = upper(MagnetType);
+0833 
+0834     <span class="keyword">case</span> <span class="string">'LT2'</span>
+0835         <span class="comment">%%%%</span>
+0836         <span class="keyword">switch</span> upper(deblank(MagnetCoreType))
+0837 
+0838             <span class="keyword">case</span> <span class="string">'BEND'</span>    
+0839                 <span class="comment">% les coefficients et longueur magnétique sont recopiés de l'anneau</span>
+0840                 Leff=1.052433;
+0841                 a7= 0.0;
+0842                 a6=-0.0;
+0843                 a5= 0.0;
+0844                 a4=-0.0;
+0845                 a3= 0.0;
+0846                 a2=-9.7816E-6*(1-1.8e-3)*Leff*(1.055548/1.052433);
+0847                 a1= 1.26066E-02*(1-1.8E-3)*Leff*(1.055548/1.052433);
+0848                 a0= -2.24944*(1-1.8E-3)*Leff*(1.055548/1.052433);
+0849                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0850                 
+0851 
+0852                 MagnetType = <span class="string">'BEND'</span>;
+0853 
+0854             <span class="keyword">case</span> {<span class="string">'QP'</span>}   <span class="comment">% 400 mm quadrupole</span>
+0855                 <span class="comment">% Find the current from the given polynomial for B'Leff</span>
+0856                 
+0857                 <span class="comment">% G[T/m] = 0.1175 + 0.0517 I[A]</span>
+0858                 <span class="comment">% le rémanent est + fort que pour les quad Booster car les</span>
+0859                 <span class="comment">% courants max sont + eleves</span>
+0860                 Leff=0.400; 
+0861 <span class="comment">%                 a8 =  0.0;</span>
+0862 <span class="comment">%                 a7 =  0.0;</span>
+0863 <span class="comment">%                 a6 =  0.0;</span>
+0864 <span class="comment">%                 a5 =  0.0;</span>
+0865 <span class="comment">%                 a4 =  0.0;</span>
+0866 <span class="comment">%                 a3 =  0.0;</span>
+0867 <span class="comment">%                 a2 =  0.0;</span>
+0868 <span class="comment">%                 a1 =  0.0517*Leff;</span>
+0869 <span class="comment">%                 a0 =  0.1175*Leff;</span>
+0870                 
+0871                 a8 =  0.0;
+0872                 a7 =  0.0;
+0873                 a6 =  0.0;
+0874                 a5 =  0.0;
+0875                 a4 =  -1.3345e-10;
+0876                 a3 =  8.1746e-8;
+0877                 a2 =  -1.6548e-5;
+0878                 a1 =  2.197e-2;
+0879                 a0 =  2.73e-2;
+0880                 A = [a7 a6 a5 a4 a3 a2 a1 a0]; 
+0881                 MagnetType = <span class="string">'QUAD'</span>;
+0882 
+0883             <span class="keyword">case</span> {<span class="string">'CH'</span>,<span class="string">'CV'</span>}    <span class="comment">% 16 cm horizontal corrector</span>
+0884                 
+0885 
+0886                 
+0887                 <span class="comment">% Magnet Spec: Theta = environ 1 mradians @ 2.75 GeV and 10 amps</span>
+0888                 <span class="comment">% Theta = BLeff / Brho    [radians]</span>
+0889                 <span class="comment">% Therefore,</span>
+0890                 <span class="comment">%       Theta = ((BLeff/Amp)/ Brho) * I</span>
+0891                 <span class="comment">%       BLeff/Amp = 1.e-3 * getbrho(2.75) / 10</span>
+0892                 <span class="comment">%       B*Leff = a1 * I   =&gt; a1 = 1.e-3 * getbrho(2.75) / 10</span>
+0893                 <span class="comment">%</span>
+0894                 <span class="comment">% The C coefficients are w.r.t B</span>
+0895                 <span class="comment">%       B = c0 + c1*I = (0 + a0*I)/Leff</span>
+0896                 <span class="comment">% However, AT uses Theta in radians so the A coefficients</span>
+0897                 <span class="comment">% must be used for correctors with the middle layer with</span>
+0898                 <span class="comment">% the addition of the DC term</span>
+0899 
+0900                 <span class="comment">% Find the current from the given polynomial for BLeff and B</span>
+0901                 <span class="comment">% NOTE: AT used BLeff (A) for correctors</span>
+0902                 
+0903                 <span class="comment">% environ 32 cm  corrector</span>
+0904                 <span class="comment">% Efficacit� = 11.06 G.m/A</span>
+0905                 <span class="comment">% Le signe du courant est donn� par le DeviceServer (Tango)</span>
+0906                 <span class="comment">% Find the currAO.(ifam).Monitor.HW2PhysicsParams{1}(1,:) =</span>
+0907                 <span class="comment">% magnetcoefficien</span>
+0908                 
+0909                 MagnetType = <span class="string">'COR'</span>;
+0910                 
+0911                 Leff = 1e-6; <span class="comment">% 0.1577 m</span>
+0912                 a8 =  0.0;
+0913                 a7 =  0.0;
+0914                 a6 =  0.0;
+0915                 a5 =  0.0;
+0916                 a4 =  0.0;
+0917                 a3 =  0.0;
+0918                 a2 =  0.0;
+0919                 a1 =  110.6e-4/10;
+0920                 a0 =  0;
+0921                 A = [a7 a6 a5 a4 a3 a2 a1 a0];
+0922                 
+0923             <span class="keyword">otherwise</span>
+0924                 error(sprintf(<span class="string">'MagnetCoreType %s is not unknown'</span>, MagnetCoreType));
+0925                 <span class="comment">%k = 0;</span>
+0926                 <span class="comment">%MagnetType = '';</span>
+0927                 <span class="comment">%return</span>
+0928         <span class="keyword">end</span>
+0929 
+0930         <span class="comment">% compute B-field = int(Bdl)/Leff</span>
+0931         C = A/ Leff;
+0932 
+0933         MagnetType = upper(MagnetType);
+0934 
+0935     <span class="keyword">otherwise</span>
+0936         error(<span class="string">'Unknown accelerator name %s'</span>, AcceleratorName);
+0937 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,257 @@
+ *** VERSION ***
+ BETA-LNS v7.70 /26/09/08/ 12-Dec-08 12:27:46                                    
+ *** AUTHOR ***
+PB+MAT                                                                          
+ *** TITRE ***
+ alpha1 by 20 MAHER nouveau modele lineaire + sextu fins                        
+ *** LIST OF ELEMENTS ***
+    40
+ SD6        SD 0.7900000E+00
+ COURT      SD 0.1904680E+01
+ QP1        QP 0.1801000E+00 -.7007056E+00 0.0000000E+00
+ QP2        QP 0.2481000E+00 0.1488616E+01 0.0000000E+00
+ QP3        QP 0.1801000E+00 -.9624504E+00 0.0000000E+00
+ QP4        QP 0.1801000E+00 -.1003552E+01 0.0000000E+00
+ QP5        QP 0.1801000E+00 0.1679244E+01 0.0000000E+00
+ QP6        QP 0.1801000E+00 -.1471161E+01 0.0000000E+00
+ QP7        QP 0.2481000E+00 0.1211547E+01 0.0000000E+00
+ QP8        QP 0.1801000E+00 0.6933753E+00 0.0000000E+00
+ QP9        QP 0.1801000E+00 -.1301369E+01 0.0000000E+00
+ QP10       QP 0.1801000E+00 0.1809106E+01 0.0000000E+00
+ SD2        SD 0.3699000E+00
+ SD3        SD 0.1819001E+00
+ SD4        SD 0.3719001E+00
+ SD5        SD 0.1799000E+00
+ SD7        SD 0.4199000E+00
+ SD8        SD 0.1799000E+00
+ SD9        SD 0.4562400E+00
+ SD10       SD 0.4499000E+00
+ SD12       SD 0.4499000E+00
+ SD14       SD 0.5518000E+00
+ MOYE       SD 0.3462450E+01
+ LONG       SD 0.5979900E+01
+ SX1        SX 0.1000000E-06 -.4402794E+07 0.0000000E+00 0.0000000E+00
+ SX2        SX 0.1000000E-06 -.1700000E+08 0.0000000E+00 0.0000000E+00
+ COIE1      CO 0.9757500E-01 0.5360000E+01 0.1607000E+00 0.0000000E+00 0.0000000E+00
+ DIPE1      DI 0.9817500E-01 0.5360000E+01 -.5860000E-01 0.0000000E+00
+ DIPS1      DI 0.9817500E-01 0.5360000E+01 -.5860000E-01 0.0000000E+00
+ COIS1      CO 0.9907500E-01 0.5360000E+01 0.1607000E+00 0.0000000E+00 0.0000000E+00
+ SX3        SX 0.1000000E-06 -.3891858E+08 0.0000000E+00 0.0000000E+00
+ SX4        SX 0.1000000E-06 0.4500000E+08 0.0000000E+00 0.0000000E+00
+ CAV        CA -.3125000E+06 0.2400000E+03 0.0000000E+00 0.0000000E+00 0.0000000E+00
+               0.0000000E+00
+ SX5        SX 0.1000000E-06 -.2277198E+08 0.0000000E+00 0.0000000E+00
+ SX6        SX 0.1000000E-06 0.2465343E+08 0.0000000E+00 0.0000000E+00
+ SX7        SX 0.1000000E-06 -.2000000E+08 0.0000000E+00 0.0000000E+00
+ SX8        SX 0.1000000E-06 0.2270539E+08 0.0000000E+00 0.0000000E+00
+ BEND1      BH 0.1963500E+00 0.5360000E+01 0.0000000E+00 0.0000000E+00 0.9817500E-01
+               0.0000000E+00 0.0000000E+00 0.0000000E+00 0.9817500E-01
+ SX9        SX 0.1000000E-06 -.3700156E+08 0.0000000E+00 0.0000000E+00
+ SX10       SX 0.1000000E-06 0.4400000E+08 0.0000000E+00 0.0000000E+00
+ *** STRUCTURE ***
+   904
+ LONG       QP1        QP1        SD2        SX1        SD3       
+ QP2        QP2        SD14       QP3        QP3        SD5       
+ SX2        SD6        COIE1      DIPE1      DIPS1      COIS1     
+ SD7        QP4        QP4        SD8        SX3        SD9       
+ QP5        QP5        SD12       SX4        SD10       QP5       
+ QP5        SD9        SX3        SD8        QP4        QP4       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP6        QP6        SD5        SX5        SD4        QP7       
+ QP7        SD3        SX6        SD2        QP8        QP8       
+ MOYE       MOYE       QP8        QP8        SD2        SX8       
+ SD3        QP7        QP7        SD4        SX7        SD5       
+ QP6        QP6        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP9        QP9        SD8        SX9       
+ SD9        QP10       QP10       SD8        SX10       COURT     
+ COURT      SX10       SD8        QP10       QP10       SD9       
+ SX9        SD8        QP9        QP9        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP6        QP6       
+ SD5        SX7        SD4        QP7        QP7        SD3       
+ SX8        SD2        QP8        QP8        MOYE       MOYE      
+ QP8        QP8        SD2        SX8        SD3        QP7       
+ QP7        SD4        SX7        SD5        QP6        QP6       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP9        QP9        SD8        SX9        SD9        QP10      
+ QP10       SD8        SX10       COURT      COURT      SX10      
+ SD8        QP10       QP10       SD9        SX9        SD8       
+ QP9        QP9        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP6        QP6        SD5        SX7       
+ SD4        QP7        QP7        SD3        SX8        SD2       
+ QP8        QP8        MOYE       MOYE       QP8        QP8       
+ SD2        SX6        SD3        QP7        QP7        SD4       
+ SX5        SD5        QP6        QP6        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP4        QP4       
+ SD8        SX3        SD9        QP5        QP5        SD10      
+ SX4        SD12       QP5        QP5        SD9        SX3       
+ SD8        QP4        QP4        SD7        COIE1      DIPE1     
+ DIPS1      COIS1      SD6        SX2        SD5        QP3       
+ QP3        SD14       QP2        QP2        SD3        SX1       
+ SD2        QP1        QP1        LONG       LONG       QP1       
+ QP1        SD2        SX1        SD3        QP2        QP2       
+ SD14       QP3        QP3        SD5        SX2        SD6       
+ COIE1      DIPE1      DIPS1      COIS1      SD7        QP4       
+ QP4        SD8        SX3        SD9        QP5        QP5       
+ SD12       SX4        SD10       QP5        QP5        SD9       
+ SX3        SD8        QP4        QP4        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP6        QP6       
+ SD5        SX5        SD4        QP7        QP7        SD3       
+ SX6        SD2        QP8        QP8        MOYE       MOYE      
+ QP8        QP8        SD2        SX8        SD3        QP7       
+ QP7        SD4        SX7        SD5        QP6        QP6       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP9        QP9        SD8        SX9        SD9        QP10      
+ QP10       SD8        SX10       COURT      COURT      SX10      
+ SD8        QP10       QP10       SD9        SX9        SD8       
+ QP9        QP9        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP6        QP6        SD5        SX7       
+ SD4        QP7        QP7        SD3        SX8        SD2       
+ QP8        QP8        MOYE       MOYE       QP8        QP8       
+ SD2        SX8        SD3        QP7        QP7        SD4       
+ SX7        SD5        QP6        QP6        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP9        QP9       
+ SD8        SX9        SD9        QP10       QP10       SD8       
+ SX10       COURT      COURT      SX10       SD8        QP10      
+ QP10       SD9        SX9        SD8        QP9        QP9       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP6        QP6        SD5        SX7        SD4        QP7       
+ QP7        SD3        SX8        SD2        QP8        QP8       
+ MOYE       MOYE       QP8        QP8        SD2        SX6       
+ SD3        QP7        QP7        SD4        SX5        SD5       
+ QP6        QP6        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP4        QP4        SD8        SX3       
+ SD9        QP5        QP5        SD10       SX4        SD12      
+ QP5        QP5        SD9        SX3        SD8        QP4       
+ QP4        SD7        COIE1      DIPE1      DIPS1      COIS1     
+ SD6        SX2        SD5        QP3        QP3        SD14      
+ QP2        QP2        SD3        SX1        SD2        QP1       
+ QP1        LONG       LONG       QP1        QP1        SD2       
+ SX1        SD3        QP2        QP2        SD14       QP3       
+ QP3        SD5        SX2        SD6        COIE1      DIPE1     
+ DIPS1      COIS1      SD7        QP4        QP4        SD8       
+ SX3        SD9        QP5        QP5        SD12       SX4       
+ SD10       QP5        QP5        SD9        SX3        SD8       
+ QP4        QP4        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP6        QP6        SD5        SX5       
+ SD4        QP7        QP7        SD3        SX6        SD2       
+ QP8        QP8        MOYE       MOYE       QP8        QP8       
+ SD2        SX8        SD3        QP7        QP7        SD4       
+ SX7        SD5        QP6        QP6        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP9        QP9       
+ SD8        SX9        SD9        QP10       QP10       SD8       
+ SX10       COURT      COURT      SX10       SD8        QP10      
+ QP10       SD9        SX9        SD8        QP9        QP9       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP6        QP6        SD5        SX7        SD4        QP7       
+ QP7        SD3        SX8        SD2        QP8        QP8       
+ MOYE       MOYE       QP8        QP8        SD2        SX8       
+ SD3        QP7        QP7        SD4        SX7        SD5       
+ QP6        QP6        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP9        QP9        SD8        SX9       
+ SD9        QP10       QP10       SD8        SX10       COURT     
+ COURT      SX10       SD8        QP10       QP10       SD9       
+ SX9        SD8        QP9        QP9        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP6        QP6       
+ SD5        SX7        SD4        QP7        QP7        SD3       
+ SX8        SD2        QP8        QP8        MOYE       MOYE      
+ QP8        QP8        SD2        SX6        SD3        QP7       
+ QP7        SD4        SX5        SD5        QP6        QP6       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP4        QP4        SD8        SX3        SD9        QP5       
+ QP5        SD10       SX4        SD12       QP5        QP5       
+ SD9        SX3        SD8        QP4        QP4        SD7       
+ COIE1      DIPE1      DIPS1      COIS1      SD6        SX2       
+ SD5        QP3        QP3        SD14       QP2        QP2       
+ SD3        SX1        SD2        QP1        QP1        LONG      
+ LONG       QP1        QP1        SD2        SX1        SD3       
+ QP2        QP2        SD14       QP3        QP3        SD5       
+ SX2        SD6        COIE1      DIPE1      DIPS1      COIS1     
+ SD7        QP4        QP4        SD8        SX3        SD9       
+ QP5        QP5        SD12       SX4        SD10       QP5       
+ QP5        SD9        SX3        SD8        QP4        QP4       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP6        QP6        SD5        SX5        SD4        QP7       
+ QP7        SD3        SX6        SD2        QP8        QP8       
+ MOYE       MOYE       QP8        QP8        SD2        SX8       
+ SD3        QP7        QP7        SD4        SX7        SD5       
+ QP6        QP6        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP9        QP9        SD8        SX9       
+ SD9        QP10       QP10       SD8        SX10       COURT     
+ COURT      SX10       SD8        QP10       QP10       SD9       
+ SX9        SD8        QP9        QP9        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP6        QP6       
+ SD5        SX7        SD4        QP7        QP7        SD3       
+ SX8        SD2        QP8        QP8        MOYE       MOYE      
+ QP8        QP8        SD2        SX8        SD3        QP7       
+ QP7        SD4        SX7        SD5        QP6        QP6       
+ SD7        COIE1      DIPE1      DIPS1      COIS1      SD7       
+ QP9        QP9        SD8        SX9        SD9        QP10      
+ QP10       SD8        SX10       COURT      COURT      SX10      
+ SD8        QP10       QP10       SD9        SX9        SD8       
+ QP9        QP9        SD7        COIE1      DIPE1      DIPS1     
+ COIS1      SD7        QP6        QP6        SD5        SX7       
+ SD4        QP7        QP7        SD3        SX8        SD2       
+ QP8        QP8        MOYE       MOYE       QP8        QP8       
+ SD2        SX6        SD3        QP7        QP7        SD4       
+ SX5        SD5        QP6        QP6        SD7        COIE1     
+ DIPE1      DIPS1      COIS1      SD7        QP4        QP4       
+ SD8        SX3        SD9        QP5        QP5        SD10      
+ SX4        SD12       QP5        QP5        SD9        SX3       
+ SD8        QP4        QP4        SD7        COIE1      DIPE1     
+ DIPS1      COIS1      SD6        SX2        SD5        QP3       
+ QP3        SD14       QP2        QP2        SD3        SX1       
+ SD2        QP1        QP1        LONG      
+ *** PERIOD ***
+      1
+ *** OPTION ***
+ BETA
+ *** BEAM-MATRIX ***
+  1.1548797340E+01
+ -5.4238804989E-04  8.6589128265E-02
+ -1.8030572879E-16  8.4680395491E-21  6.9754795567E+00
+  0.0000000000E+00  0.0000000000E+00 -1.2988709357E-03  1.4335956101E-01
+  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00
+  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00  0.0000000000E+00
+ *** DISPERSION ***
+  1.6330282E-01  4.8302413E-06
+  0.0000000E+00  0.0000000E+00
+ *** PARTICLE TYPE ***
+ E 
+ *** ENERGIE CINETIQUE (MeV) ***
+ 2.7500000E+03
+  0.511003435
+ *** EMITTANCE ***
+ 8.0284943E-09  0.0000000E+00  0.0000000E+00
+ *** PARAMETERS OF FIT ***
+ *** VARIABLES ***
+   10
+ QP1           2    0 0.10000E-02  0
+ QP2           2    0 0.10000E-02  0
+ QP3           2    0 0.10000E-02  0
+ QP4           2    0 0.10000E-02  0
+ QP5           2    0 0.10000E-02  0
+ QP6           2    0 0.10000E-02  0
+ QP7           2    0 0.10000E-02  0
+ QP8           2    0 0.10000E-02  0
+ QP9           2    0 0.10000E-02  0
+ QP10          2    0 0.10000E-02  0
+ *** CONSTRAINTS ***
+   11
+    3    24 0                0                0.4400000E-04 0.10000E-08   0
+    3    29 0                0                0.2200000E-04 0.10000E-08   0
+    0     1 2                55               0.0000000E+00 0.10000E-04   0
+    0     3 4                55               0.0000000E+00 0.10000E-04   0
+    6     2 0                55               0.0000000E+00 0.10000E-06   0
+    0     1 2                84               0.0000000E+00 0.10000E-04   0
+    0     3 4                84               0.0000000E+00 0.10000E-04   0
+    6     2 0                84               0.0000000E+00 0.10000E-04   0
+    2     1 START            904              0.3000000E+00 0.10000E-04   0
+    0     3 3                904              0.7000000E+01 0.10000E-03   0
+    2     3 START            904              0.4000000E+00 0.10000E-04   0
+ *** TABLE ***
+     4
+/home/PM/brunelle/jupiter/insertions/solamor2/hu640/HU640_CIRC.dat              
+/home/PM/brunelle/jupiter/insertions/solamor2/hu640/HU640_CIRC.dat              
+/home/PM/brunelle/jupiter/insertions/solamor2/hu640/HU640_CIRC.dat              
+/home/PM/brunelle/jupiter/insertions/solamor2/hu640/HU640_CIRC.dat              
+ *** ENDFILE ***

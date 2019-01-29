@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of monitorpv</title>
+  <meta name="keywords" content="monitorpv">
+  <meta name="description" content="MONITORPV -">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; monitorpv.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>monitorpv
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MONITORPV -</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Out1, Out2, Out3, Out4, Out5, Out6, Out7, Out8, Out9, Out10] = monitorpv(In1, In2, In3, In4, In5, In6, In7, In8, In9, In10); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MONITORPV - 
+   [Out1, Out2, ... , t] = Monitor(FuncStr1, FuncStr2, ... , t);
+
+   
+  INPUTS
+  FuncStr1, FuncStr2, ... = functions to be evaluated (max. 9) (string)
+                                      (must return a scalar or column vector)
+  t = time (row vector) 
+
+  OUTPUTS
+  tout (row vector) = time at the start of each set of measurements,
+                     tout will be the last output matrix
+  Note: one should compare tout to t, to varify timing accuracy
+
+  EXAMPLES
+  1. [BPMx, BPMy, tout]     = monitorpv('getx', 'getz', t);
+  2. [VCMam, Current, tout] = monitorpv('getam(''VCOR'')', 'getdcct', t);</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Out1, Out2, Out3, Out4, Out5, Out6, Out7, Out8, Out9, Out10] = monitorpv(In1, In2, In3, In4, In5, In6, In7, In8, In9, In10);</a>
+0002 <span class="comment">%MONITORPV -</span>
+0003 <span class="comment">%   [Out1, Out2, ... , t] = Monitor(FuncStr1, FuncStr2, ... , t);</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  INPUTS</span>
+0007 <span class="comment">%  FuncStr1, FuncStr2, ... = functions to be evaluated (max. 9) (string)</span>
+0008 <span class="comment">%                                      (must return a scalar or column vector)</span>
+0009 <span class="comment">%  t = time (row vector)</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  OUTPUTS</span>
+0012 <span class="comment">%  tout (row vector) = time at the start of each set of measurements,</span>
+0013 <span class="comment">%                     tout will be the last output matrix</span>
+0014 <span class="comment">%  Note: one should compare tout to t, to varify timing accuracy</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">%  EXAMPLES</span>
+0017 <span class="comment">%  1. [BPMx, BPMy, tout]     = monitorpv('getx', 'getz', t);</span>
+0018 <span class="comment">%  2. [VCMam, Current, tout] = monitorpv('getam(''VCOR'')', 'getdcct', t);</span>
+0019 
+0020 <span class="comment">%</span>
+0021 <span class="comment">%% Written by Gregory J. Portmann</span>
+0022 
+0023     <span class="keyword">if</span> nargin &gt; 10
+0024         error(<span class="string">'10 inputs maximum'</span>);
+0025     <span class="keyword">end</span>
+0026 
+0027     FuncNum = nargin - 1;
+0028     eval([<span class="string">'t = In'</span>,num2str(nargin),<span class="string">';'</span>]);
+0029 
+0030     <span class="keyword">if</span> nargout &lt; nargin 
+0031         disp(<span class="string">'WARNING:  Not enough outputs arguments!'</span>);
+0032     <span class="keyword">end</span>
+0033 
+0034     <span class="comment">% Create data arrays</span>
+0035     <span class="keyword">if</span> nargout &gt;=1 &amp; FuncNum &gt;= 1
+0036         a = eval(In1);
+0037         Out1 = zeros(size(a,1), size(t,2));
+0038     <span class="keyword">end</span>
+0039     <span class="keyword">if</span> nargout &gt;=2 &amp; FuncNum &gt;= 2
+0040         a = eval(In2);
+0041         Out2 = zeros(size(a,1), size(t,2));
+0042     <span class="keyword">end</span>
+0043     <span class="keyword">if</span> nargout &gt;=3 &amp; FuncNum &gt;= 3
+0044         a = eval(In3);
+0045         Out3 = zeros(size(a,1), size(t,2));
+0046     <span class="keyword">end</span>
+0047     <span class="keyword">if</span> nargout &gt;=4 &amp; FuncNum &gt;= 4
+0048         a = eval(In4);
+0049         Out4 = zeros(size(a,1), size(t,2));
+0050     <span class="keyword">end</span>
+0051     <span class="keyword">if</span> nargout &gt;=5 &amp; FuncNum &gt;= 5
+0052         a = eval(In5);
+0053         Out5 = zeros(size(a,1), size(t,2));
+0054     <span class="keyword">end</span>
+0055     <span class="keyword">if</span> nargout &gt;=6 &amp; FuncNum &gt;= 6
+0056         a = eval(In6);
+0057         Out6 = zeros(size(a,1), size(t,2));
+0058     <span class="keyword">end</span>
+0059     <span class="keyword">if</span> nargout &gt;=7 &amp; FuncNum &gt;= 7
+0060         a = eval(In7);
+0061         Out7 = zeros(size(a,1), size(t,2));
+0062     <span class="keyword">end</span>
+0063     <span class="keyword">if</span> nargout &gt;=8 &amp; FuncNum &gt;= 8
+0064         a = eval(In8);
+0065         Out8 = zeros(size(a,1), size(t,2));
+0066     <span class="keyword">end</span>
+0067     <span class="keyword">if</span> nargout &gt;=9 &amp; FuncNum &gt;= 9
+0068         a = eval(In9);
+0069         Out9 = zeros(size(a,1), size(t,2));
+0070     <span class="keyword">end</span>
+0071 
+0072     <span class="comment">% Read once to setup channels (for SCA)</span>
+0073     i=1;
+0074     <span class="keyword">if</span> nargout &gt;=1 &amp; FuncNum &gt;= 1
+0075         Out1(:,i) = [eval(In1)];
+0076     <span class="keyword">end</span>
+0077     <span class="keyword">if</span> nargout &gt;=2 &amp; FuncNum &gt;= 2
+0078         Out2(:,i) = [eval(In2)];
+0079     <span class="keyword">end</span>
+0080     <span class="keyword">if</span> nargout &gt;=3 &amp; FuncNum &gt;= 3
+0081         Out3(:,i) = [eval(In3)];
+0082     <span class="keyword">end</span>
+0083     <span class="keyword">if</span> nargout &gt;=4 &amp; FuncNum &gt;= 4
+0084         Out4(:,i) = [eval(In4)];
+0085     <span class="keyword">end</span>
+0086     <span class="keyword">if</span> nargout &gt;=5 &amp; FuncNum &gt;= 5
+0087         Out5(:,i) = [eval(In5)];
+0088     <span class="keyword">end</span>
+0089     <span class="keyword">if</span> nargout &gt;=6 &amp; FuncNum &gt;= 6
+0090         Out6(:,i) = [eval(In6)];
+0091     <span class="keyword">end</span>
+0092     <span class="keyword">if</span> nargout &gt;=7 &amp; FuncNum &gt;= 7
+0093         Out7(:,i) = [eval(In7)];
+0094     <span class="keyword">end</span>
+0095     <span class="keyword">if</span> nargout &gt;=8 &amp; FuncNum &gt;= 8
+0096         Out8(:,i) = [eval(In8)];
+0097     <span class="keyword">end</span>
+0098     <span class="keyword">if</span> nargout &gt;=9 &amp; FuncNum &gt;= 9
+0099         Out9(:,i) = [eval(In9)];
+0100     <span class="keyword">end</span>
+0101 
+0102 
+0103     <span class="comment">% Get data</span>
+0104     <span class="comment">%t0 = clock;</span>
+0105     t0 = gettime;
+0106     <span class="keyword">for</span> i = 1:size(t,2);
+0107         <span class="comment">%tout(1,i) = etime(clock,t0);</span>
+0108         <span class="keyword">while</span> gettime-t0 &lt; t(i)-.002
+0109         <span class="keyword">end</span>
+0110 
+0111         tout(1,i) = gettime-t0;
+0112 
+0113         <span class="keyword">if</span> nargout &gt;=1 &amp; FuncNum &gt;= 1
+0114             Out1(:,i) = [eval(In1)];
+0115         <span class="keyword">end</span>
+0116         <span class="keyword">if</span> nargout &gt;=2 &amp; FuncNum &gt;= 2
+0117             Out2(:,i) = [eval(In2)];
+0118         <span class="keyword">end</span>
+0119         <span class="keyword">if</span> nargout &gt;=3 &amp; FuncNum &gt;= 3
+0120             Out3(:,i) = [eval(In3)];
+0121         <span class="keyword">end</span>
+0122         <span class="keyword">if</span> nargout &gt;=4 &amp; FuncNum &gt;= 4
+0123             Out4(:,i) = [eval(In4)];
+0124         <span class="keyword">end</span>
+0125         <span class="keyword">if</span> nargout &gt;=5 &amp; FuncNum &gt;= 5
+0126             Out5(:,i) = [eval(In5)];
+0127         <span class="keyword">end</span>
+0128         <span class="keyword">if</span> nargout &gt;=6 &amp; FuncNum &gt;= 6
+0129             Out6(:,i) = [eval(In6)];
+0130         <span class="keyword">end</span>
+0131         <span class="keyword">if</span> nargout &gt;=7 &amp; FuncNum &gt;= 7
+0132             Out7(:,i) = [eval(In7)];
+0133         <span class="keyword">end</span>
+0134         <span class="keyword">if</span> nargout &gt;=8 &amp; FuncNum &gt;= 8
+0135             Out8(:,i) = [eval(In8)];
+0136         <span class="keyword">end</span>
+0137         <span class="keyword">if</span> nargout &gt;=9 &amp; FuncNum &gt;= 9
+0138             Out9(:,i) = [eval(In9)];
+0139         <span class="keyword">end</span>
+0140     <span class="keyword">end</span>
+0141     
+0142     <span class="comment">% Output number for tout</span>
+0143     <span class="keyword">if</span> nargout &gt; FuncNum
+0144         OutStr = [<span class="string">'Out'</span>,num2str(FuncNum+1)];
+0145             eval([OutStr,<span class="string">'=tout;'</span>]);
+0146     <span class="keyword">end</span>
+0147</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

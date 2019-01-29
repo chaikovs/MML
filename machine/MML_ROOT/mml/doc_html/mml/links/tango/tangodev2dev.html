@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tangodev2dev</title>
+  <meta name="keywords" content="tangodev2dev">
+  <meta name="description" content="TANGO2DEV - Convert TANGO name to device list name">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tangodev2dev.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tangodev2dev
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TANGO2DEV - Convert TANGO name to device list name</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TANGO2DEV - Convert TANGO name to device list name
+  [DeviceList, ErrorFlag] = tangodev2dev(TangoName, Family)
+
+  INPUTS
+  1. TangoNames = List of Tango names (string, matrix, or cell array)
+  2. Family = optional input to limit the search (string, matrix, structure, or cell array)
+
+  OUTPUTS
+  1. DeviceList = DeviceList name corresponding to the channel name
+                 If the TangoNames cannot be found an empty matrix
+                 (or a [NaN NaN] for matrix inputs) is returned
+  2. ErrorFlag = Number of errors found
+
+  EXAMPLES
+  1. tangodev2dev('ANS-C01/DG/BPM.1')
+  2. tangodev2dev({'ANS-C01/DG/BPM.1'; 'ANS-C01/DG/BPM.1'})
+
+  See Also <a href="tango2family.html" class="code" title="function [Family] = tango2family(TangoNames);">tango2family</a>, <a href="dev2tango.html" class="code" title="function [TangoNames, ErrorFlag] = dev2tango(Family, DeviceList, Field)">dev2tango</a>, <a href="tango2common.html" class="code" title="function [CommonNames, ErrorFlag] = tango2common(TangoNames, Field, Family);">tango2common</a>, <a href="tango2dev.html" class="code" title="function [DeviceList, ErrorFlag] = tango2dev(TangoNames, FamilyList)">tango2dev</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="tangodev2dev.html" class="code" title="function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList)">tangodev2dev</a>	TANGO2DEV - Convert TANGO name to device list name</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="tangodev2dev.html" class="code" title="function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList)">tangodev2dev</a>	TANGO2DEV - Convert TANGO name to device list name</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList)</a>
+0002 <span class="comment">%TANGO2DEV - Convert TANGO name to device list name</span>
+0003 <span class="comment">%  [DeviceList, ErrorFlag] = tangodev2dev(TangoName, Family)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. TangoNames = List of Tango names (string, matrix, or cell array)</span>
+0007 <span class="comment">%  2. Family = optional input to limit the search (string, matrix, structure, or cell array)</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  OUTPUTS</span>
+0010 <span class="comment">%  1. DeviceList = DeviceList name corresponding to the channel name</span>
+0011 <span class="comment">%                 If the TangoNames cannot be found an empty matrix</span>
+0012 <span class="comment">%                 (or a [NaN NaN] for matrix inputs) is returned</span>
+0013 <span class="comment">%  2. ErrorFlag = Number of errors found</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">%  EXAMPLES</span>
+0016 <span class="comment">%  1. tangodev2dev('ANS-C01/DG/BPM.1')</span>
+0017 <span class="comment">%  2. tangodev2dev({'ANS-C01/DG/BPM.1'; 'ANS-C01/DG/BPM.1'})</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  See Also tango2family, dev2tango, tango2common, tango2dev</span>
+0020 
+0021 <span class="comment">%</span>
+0022 <span class="comment">% Written by Laurent S. Nadolski</span>
+0023 
+0024 <span class="keyword">if</span> nargin &lt; 1
+0025     error(<span class="string">'Must have 1 input (''TangoNames'')'</span>);
+0026 <span class="keyword">end</span>
+0027 <span class="keyword">if</span> nargin &lt; 2
+0028     FamilyList = [];
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="comment">% Cell inputs</span>
+0032 <span class="keyword">if</span> iscell(TangoNames)
+0033     <span class="keyword">if</span> iscell(FamilyList)
+0034         <span class="keyword">if</span> length(FamilyList) ~= length(TangoNames)
+0035             error(<span class="string">'Family and TangoNames must be the same size cell arrays.'</span>);
+0036         <span class="keyword">end</span>
+0037     <span class="keyword">end</span>
+0038 
+0039     <span class="keyword">for</span> i = 1:length(TangoNames)
+0040         <span class="keyword">if</span> iscell(FamilyList)
+0041             [DeviceList{i}, ErrorFlag{i}] = <a href="tangodev2dev.html" class="code" title="function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList)">tangodev2dev</a>(TangoNames{i}, FamilyList{i});
+0042         <span class="keyword">else</span>
+0043             [DeviceList{i}, ErrorFlag{i}] = <a href="tangodev2dev.html" class="code" title="function [DeviceList, ErrorFlag] = tangodev2dev(TangoNames, FamilyList)">tangodev2dev</a>(TangoNames{i}, FamilyList);
+0044         <span class="keyword">end</span>
+0045     <span class="keyword">end</span>
+0046     <span class="keyword">return</span>;
+0047 <span class="keyword">end</span>
+0048 <span class="comment">% End cell input</span>
+0049 
+0050 ErrorFlag = 0;
+0051 DeviceList = [];
+0052 
+0053 <span class="comment">%% Set FamilyList</span>
+0054 <span class="keyword">if</span> isempty(FamilyList)
+0055     FamilyList = getfamilylist;
+0056 <span class="keyword">elseif</span> isstruct(FamilyList)
+0057     <span class="comment">% Structures are ok</span>
+0058     FamilyList = FamilyList.FamilyName;
+0059 <span class="keyword">end</span>
+0060 
+0061 <span class="keyword">for</span> i = 1:size(TangoNames,1)
+0062     Found = 0;
+0063     <span class="keyword">for</span> l = 1:size(FamilyList, 1)
+0064         FamilyTest = deblank(FamilyList(l,:));
+0065             TangoNamesTotal = getfamilydata(FamilyTest, <span class="string">'DeviceName'</span>);
+0066             <span class="keyword">if</span> ~isempty(TangoNamesTotal)
+0067                 Name = deblank(TangoNames(i,:));
+0068                 <span class="keyword">if</span> iscell(TangoNamesTotal)
+0069                     [name,j,k] = intersect(Name, TangoNamesTotal);
+0070                 <span class="keyword">else</span>
+0071                     [name,j,k] = intersect(Name, TangoNamesTotal, <span class="string">'rows'</span>);
+0072                 <span class="keyword">end</span>
+0073                 <span class="keyword">if</span> isempty(name) &amp; length(Name) ~= size(TangoNamesTotal)
+0074                     Name = [repmat(<span class="string">' '</span>,size(Name,1),size(TangoNamesTotal,2)-size(Name,2)) Name];
+0075                     <span class="keyword">if</span> iscell(TangoNamesTotal)
+0076                         [name,j,k] = intersect(Name, TangoNamesTotal);
+0077                     <span class="keyword">else</span>
+0078                         [name,j,k] = intersect(Name, TangoNamesTotal, <span class="string">'rows'</span>);
+0079                     <span class="keyword">end</span>
+0080                 <span class="keyword">end</span>
+0081                 <span class="keyword">if</span> isempty(name)
+0082                     Name = deblank(TangoNames(i,:));
+0083                     <span class="keyword">if</span> length(Name)~=size(TangoNamesTotal)
+0084                         Name = [Name repmat(<span class="string">' '</span>,size(Name,1),size(TangoNamesTotal,2)-size(Name,2))];
+0085                         <span class="keyword">if</span> iscell(TangoNamesTotal)
+0086                             [name,j,k] = intersect(Name, TangoNamesTotal);
+0087                         <span class="keyword">else</span>
+0088                             [name,j,k] = intersect(Name, TangoNamesTotal, <span class="string">'rows'</span>);
+0089                         <span class="keyword">end</span>
+0090                     <span class="keyword">end</span>
+0091                 <span class="keyword">end</span>
+0092                 <span class="keyword">if</span> ~isempty(k)
+0093                     Found = 1;
+0094                     <span class="keyword">break</span>
+0095                 <span class="keyword">end</span>
+0096             <span class="keyword">end</span>
+0097             <span class="keyword">if</span> Found
+0098                 <span class="keyword">break</span>
+0099             <span class="keyword">end</span>
+0100         <span class="keyword">if</span> Found
+0101             <span class="keyword">break</span>
+0102         <span class="keyword">end</span>
+0103     <span class="keyword">end</span>
+0104     <span class="keyword">if</span> Found
+0105         DeviceListTotal = getfamilydata(FamilyTest,<span class="string">'DeviceList'</span>);
+0106         Dev = DeviceListTotal(k,:);
+0107     <span class="keyword">else</span>
+0108         Dev = [NaN NaN];
+0109         ErrorFlag = ErrorFlag + 1;
+0110     <span class="keyword">end</span>
+0111 
+0112     DeviceList = [DeviceList; Dev];
+0113 <span class="keyword">end</span>
+0114 
+0115 <span class="keyword">if</span> all(isnan(DeviceList))
+0116     DeviceList = [];
+0117 <span class="keyword">end</span>
+0118 <span class="comment">% End all family search</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:37:59 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

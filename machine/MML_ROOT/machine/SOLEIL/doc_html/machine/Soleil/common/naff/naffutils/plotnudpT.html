@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotnudpT</title>
+  <meta name="keywords" content="plotnudpT">
+  <meta name="description" content="function plotnudpT(file)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; plotnudpT.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>plotnudpT
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function plotnudpT(file)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function plotnudpT(file) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> function plotnudpT(file)
+ plot tune shift with energy from tracy output file</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="naffgui.html" class="code" title="function varargout = naffgui(varargin)">naffgui</a>	NAFFGUI M-file for naffgui.fig</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotnudpT(file)</a>
+0002 <span class="comment">% function plotnudpT(file)</span>
+0003 <span class="comment">% plot tune shift with energy from tracy output file</span>
+0004 
+0005 <span class="keyword">if</span> nargin &lt; 1
+0006     file =<span class="string">'nudp.out'</span>
+0007 <span class="keyword">end</span>
+0008 
+0009 <span class="keyword">try</span>
+0010     [header data] = hdrload(file);
+0011 <span class="keyword">catch</span>
+0012     error(<span class="string">'Error while opening filename %s'</span>,file)
+0013 <span class="keyword">end</span>
+0014 
+0015 <span class="comment">%% energy in percent</span>
+0016 dp = data(:,1)*100;
+0017 
+0018 <span class="comment">%% fractional tunes</span>
+0019 nux = data(:,2);
+0020 nuz = data(:,3);
+0021 nux(nux==0)=NaN;
+0022 nuz(nuz==0)=NaN;
+0023 
+0024 <span class="comment">%% closed orbit</span>
+0025 xcod = data(:,4)*1e3;
+0026 zcod = data(:,5)*1e3;
+0027 
+0028 <span class="comment">%% Set default properties</span>
+0029 set(0,<span class="string">'DefaultAxesXgrid'</span>,<span class="string">'on'</span>);
+0030 set(0,<span class="string">'DefaultAxesYgrid'</span>,<span class="string">'on'</span>);
+0031 
+0032 <span class="comment">%% Plot</span>
+0033 figure(44)
+0034 subplot(1,2,1)
+0035 plot(dp,nux,<span class="string">'.'</span>)
+0036 xlabel(<span class="string">'\delta (%)'</span>)
+0037 ylabel(<span class="string">'\nu_x'</span>)
+0038 
+0039 subplot(1,2,2)
+0040 plot(dp,nuz,<span class="string">'.'</span>)
+0041 xlabel(<span class="string">'\delta (%)'</span>)
+0042 ylabel(<span class="string">'\nu_z'</span>)
+0043 suptitle(<span class="string">'Tune shift with energy'</span>)
+0044 
+0045 addlabel(0,0,datestr(now))
+0046 
+0047 h=figure(45)
+0048 pos=get(h,<span class="string">'Position'</span>);
+0049 set(h,<span class="string">'Position'</span>, [pos(1:2)  900 380]);
+0050 subplot(1,2,1)
+0051 plot(dp,xcod,<span class="string">'.'</span>)
+0052 xlabel(<span class="string">'\delta (%)'</span>)
+0053 ylabel(<span class="string">'xcod (mm)'</span>)
+0054 
+0055 subplot(1,2,2)
+0056 plot(dp,zcod,<span class="string">'.'</span>)
+0057 xlabel(<span class="string">'\delta (%)'</span>)
+0058 ylabel(<span class="string">'zcod (mm)'</span>)
+0059 suptitle(<span class="string">'Closed orbit variation with energy'</span>)
+0060 
+0061 addlabel(0,0,datestr(now))</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

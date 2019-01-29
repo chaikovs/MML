@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of do_update</title>
+  <meta name="keywords" content="do_update">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; do_update.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>do_update
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function do_update </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>	retour update</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="synchro_injecteur7_rafale.html" class="code" title="function varargout = synchro_injecteur7_rafale(varargin)">synchro_injecteur7_rafale</a>	SYNCHRO_INJECTEUR7_RAFALE M-file for synchro_injecteur7_rafale.fig</li><li><a href="synchro_injecteur8_rafale.html" class="code" title="function varargout = synchro_injecteur8_rafale(varargin)">synchro_injecteur8_rafale</a>	SYNCHRO_INJECTEUR8_RAFALE M-file for synchro_injecteur8_rafale.fig</li><li><a href="synchro_survey.html" class="code" title="function varargout = synchro_survey(varargin)">synchro_survey</a>	SYNCHRO_SURVEY M-file for synchro_survey.fig</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function do_update</a>
+0002 
+0003 fprintf(<span class="string">'*****Update des 16 cartes locales******\n'</span>)
+0004 
+0005 r=tango_command_inout2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>,<span class="string">'Update'</span>);  <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>,r);
+0006 r=tango_command_inout2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>,<span class="string">'Update'</span>);  <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'LT1/SY/LOCAL.DG.1'</span>,r);
+0007 r=tango_command_inout2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>,<span class="string">'Update'</span>);  <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>,r);
+0008 
+0009 r=tango_command_inout2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>,<span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>,r);
+0010 r=tango_command_inout2(<span class="string">'BOO/SY/LOCAL.Alim.1'</span>,<span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'BOO/SY/LOCAL.Alim.1'</span>,r);
+0011 r=tango_command_inout2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'BOO/SY/LOCAL.DG.3'</span>,r);
+0012 r=tango_command_inout2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>,<span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>,r);
+0013 
+0014 r=tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,r);
+0015 r=tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,r);
+0016 r=tango_command_inout2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>,r);
+0017 r=tango_command_inout2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>,r);
+0018 r=tango_command_inout2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>,r);
+0019 r=tango_command_inout2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>,r);
+0020 r=tango_command_inout2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>,r);
+0021 r=tango_command_inout2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>,r);
+0022 r=tango_command_inout2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>,r);
+0023 r=tango_command_inout2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>,  <span class="string">'Update'</span>); <a href="retour_update.html" class="code" title="function retour_update(carte,r)">retour_update</a>(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>,r);
+0024 
+0025 fprintf(<span class="string">'**************************************\n'</span>)</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

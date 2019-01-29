@@ -1,0 +1,734 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of respgui</title>
+  <meta name="keywords" content="respgui">
+  <meta name="description" content="RESPGUI - Part treating of the response matrice and the correction">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">orbit</a> &gt; respgui.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/orbit&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>respgui
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RESPGUI - Part treating of the response matrice and the correction</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function respgui(action, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> RESPGUI - Part treating of the response matrice and the correction
+
+ INPUT
+ 1. action among
+ 
+ PlotSVD_Init
+ SVDotActive
+ MoveDot
+ DotUp
+ PlotSVD
+ SolveSystem
+ BackSubSystem
+ SVDEdit
+ MoveSVDDot
+ DisplayRFFit
+ DisplayNsvd
+ UpdateFit
+ RFToggle
+ ExternalFitOff
+ FitOff
+ DispersionPanel
+ EtaXFlag
+ EtaZFlag</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>	function varargout = bpmgui(action, varargin)</li><li><a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>	CORGUI - controls corrector manipulation and plotting for orbit program</li><li><a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>	ORBGUI -- Contains routines to set up the main orbit control panel</li><li><a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>	RESPGUI - Part treating of the response matrice and the correction</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>	function varargout = bpmgui(action, varargin)</li><li><a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>	ORBGUI -- Contains routines to set up the main orbit control panel</li><li><a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>	RESPGUI - Part treating of the response matrice and the correction</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function respgui(action, varargin)</a>
+0002 <span class="comment">% RESPGUI - Part treating of the response matrice and the correction</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% INPUT</span>
+0005 <span class="comment">% 1. action among</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% PlotSVD_Init</span>
+0008 <span class="comment">% SVDotActive</span>
+0009 <span class="comment">% MoveDot</span>
+0010 <span class="comment">% DotUp</span>
+0011 <span class="comment">% PlotSVD</span>
+0012 <span class="comment">% SolveSystem</span>
+0013 <span class="comment">% BackSubSystem</span>
+0014 <span class="comment">% SVDEdit</span>
+0015 <span class="comment">% MoveSVDDot</span>
+0016 <span class="comment">% DisplayRFFit</span>
+0017 <span class="comment">% DisplayNsvd</span>
+0018 <span class="comment">% UpdateFit</span>
+0019 <span class="comment">% RFToggle</span>
+0020 <span class="comment">% ExternalFitOff</span>
+0021 <span class="comment">% FitOff</span>
+0022 <span class="comment">% DispersionPanel</span>
+0023 <span class="comment">% EtaXFlag</span>
+0024 <span class="comment">% EtaZFlag</span>
+0025 <span class="comment">%</span>
+0026 
+0027 
+0028 <span class="comment">%</span>
+0029 <span class="comment">% Written by J. Corbett</span>
+0030 <span class="comment">% Adapted by Laurent S. Nadolski</span>
+0031 
+0032 
+0033 <span class="comment">% TODO etaflag and rfflag misused</span>
+0034 <span class="comment">% rfflag shoudl be for RF correction</span>
+0035 <span class="comment">% etaflag should be for Amman factor substraction (to be implemented)</span>
+0036 
+0037 <span class="comment">%globals</span>
+0038 <span class="keyword">global</span> BPM COR RSP SYS
+0039 
+0040 orbfig = findobj(0,<span class="string">'tag'</span>,<span class="string">'orbfig'</span>);
+0041 plane  = SYS.plane;
+0042 
+0043 <span class="keyword">switch</span> action
+0044 
+0045     <span class="comment">%==========================================================</span>
+0046     <span class="keyword">case</span> <span class="string">'PlotSVD_Init'</span>                  <span class="comment">% *** PlotSVD_Init ***</span>
+0047         <span class="comment">%==========================================================</span>
+0048         <span class="comment">%blue, solid dynamic semilog-line for singular value plot.</span>
+0049         set(SYS.ahsvd,<span class="string">'Color'</span>,[1 1 1],<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+0050         <span class="comment">%           'ButtonDownFcn','respgui(''SVDotActive'')');</span>
+0051 
+0052         set(orbfig,<span class="string">'currentaxes'</span>,SYS.ahsvd)
+0053 
+0054         SYS.svdplot = plot(ones(1,RSP(plane).nsvd),<span class="string">'LineStyle'</span>,<span class="string">'-'</span>, <span class="keyword">...</span>
+0055             <span class="string">'Color'</span>,<span class="string">'b'</span>); <span class="comment">%does this tag axes or line?</span>
+0056         grid on;
+0057         SYS.lhsvd = SYS.svdplot;
+0058 
+0059         SYS.lhdot = line(<span class="string">'parent'</span>,SYS.ahsvd,<span class="keyword">...</span>
+0060             <span class="string">'XData'</span>,0,<span class="string">'YData'</span>,0,<span class="keyword">...</span>
+0061             <span class="string">'ButtonDownFcn'</span>,<span class="string">'respgui(''SVDotActive'');'</span>,<span class="keyword">...</span>
+0062             <span class="string">'Marker'</span>,<span class="string">'o'</span>,<span class="string">'MarkerSize'</span>,8,<span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>);
+0063 
+0064 
+0065         <span class="comment">%=============================================================</span>
+0066     <span class="keyword">case</span> <span class="string">'SVDotActive'</span>                       <span class="comment">% *** SVDotActive ***</span>
+0067         <span class="comment">%=============================================================</span>
+0068         <span class="comment">%used if mouse clicks on SVD plot dot or anywhere in SVD window</span>
+0069         <span class="comment">%activate window-button-motion</span>
+0070         set(orbfig,<span class="string">'WindowButtonMotionFcn'</span>,<span class="string">'respgui(''MoveDot'');'</span>,<span class="keyword">...</span>
+0071             <span class="string">'WindowButtonUpFcn'</span>,<span class="string">'respgui(''DotUp'')'</span>);
+0072 
+0073         <span class="comment">%==========================================================</span>
+0074     <span class="keyword">case</span> <span class="string">'MoveDot'</span>                            <span class="comment">% *** MoveDot ***</span>
+0075         <span class="comment">%==========================================================</span>
+0076         <span class="comment">%The callback of the singular value plot dot drag</span>
+0077         cpa             = get(SYS.ahsvd,<span class="string">'CurrentPoint'</span>);
+0078         RSP(plane).nsvd = round(cpa(1));
+0079 
+0080         <span class="comment">%check for out-of-range drag above</span>
+0081         <span class="keyword">if</span> RSP(plane).nsvd &gt; RSP(plane).nsvdmax
+0082             RSP(plane).nsvd = RSP(plane).nsvdmax;
+0083         <span class="keyword">end</span>
+0084 
+0085         <span class="comment">%check for out-of-range drag below</span>
+0086         <span class="keyword">if</span> RSP(plane).nsvd &lt;= 0
+0087             RSP(plane).nsvd = 1;            
+0088         <span class="keyword">end</span>
+0089 
+0090         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0091 
+0092         <span class="comment">%re-draw dot</span>
+0093         <span class="comment">% vector of singular values</span>
+0094         ydat = diag(RSP(plane).S);
+0095         <span class="comment">% index of the dot</span>
+0096         indx = RSP(plane).nsvd;
+0097         
+0098         <span class="keyword">if</span> indx &lt;= 0, indx = 1; <span class="keyword">end</span>
+0099 
+0100         set(SYS.lhdot,<span class="string">'Xdata'</span>,RSP(plane).nsvd,<span class="string">'YData'</span>,ydat(indx));
+0101 
+0102         <span class="comment">%==========================================================</span>
+0103     <span class="keyword">case</span> <span class="string">'DotUp'</span>                            <span class="comment">% *** DotUp ***</span>
+0104         <span class="comment">%==========================================================</span>
+0105         <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'MoveDot'</span>);
+0106 
+0107         set(orbfig,<span class="string">'WindowButtonMotionFcn'</span>,<span class="string">''</span>,<span class="string">'WindowButtonUpFcn'</span>,<span class="string">''</span>);
+0108         <span class="comment">%update edit boxes</span>
+0109         set(SYS.svdedit,<span class="string">'String'</span>,num2str(RSP(plane).nsvd));
+0110 
+0111         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0112 
+0113         <span class="comment">%==========================================================</span>
+0114     <span class="keyword">case</span> <span class="string">'PlotSVD'</span>                             <span class="comment">% ***PlotSVD ***</span>
+0115         <span class="comment">%==========================================================</span>
+0116         <span class="comment">%blue, solid dynamic line for singular value plot</span>
+0117         set(orbfig,<span class="string">'currentaxes'</span>,SYS.ahsvd);
+0118         <span class="comment">%...must have fit valid before plotting</span>
+0119         <span class="keyword">if</span> RSP(plane).nsvdmax &gt; 1 &amp;&amp; RSP(plane).fit == 1 
+0120             k      = RSP(plane).nsvdmax;
+0121             ydat   = diag(RSP(plane).S);
+0122             set(SYS.lhsvd,<span class="string">'Xdata'</span>,(1:k),<span class="string">'YData'</span>,ydat(1:k));
+0123             <span class="comment">% scale y absciss using log scale</span>
+0124             axis(<span class="string">'tight'</span>);
+0125             <span class="comment">%red dot</span>
+0126             indx = RSP(plane).nsvd;
+0127             <span class="keyword">if</span> indx &lt;= 0, indx = 1; <span class="keyword">end</span>
+0128             set(SYS.lhdot,<span class="string">'Xdata'</span>,RSP(plane).nsvd,<span class="string">'YData'</span>,ydat(indx));
+0129         <span class="keyword">else</span> <span class="comment">%fit not valid</span>
+0130 <span class="comment">%             set(SYS.lhsvd,'Xdata',0:10,'YData',ones(1,11));</span>
+0131 <span class="comment">%             axis('tight');</span>
+0132             <span class="comment">%no red dot</span>
+0133             set(SYS.lhdot,<span class="string">'Xdata'</span>,[],<span class="string">'YData'</span>,[]);
+0134         <span class="keyword">end</span>
+0135 
+0136         <span class="comment">%==========================================================</span>
+0137     <span class="keyword">case</span> <span class="string">'SolveSystem'</span>                    <span class="comment">% *** SolveSystem ***</span>
+0138         <span class="comment">%==========================================================</span>
+0139         <span class="comment">%solve the system with requested technique (SYS.algo)</span>
+0140         <span class="comment">% 1. check that bpms and correctors selected for fitting</span>
+0141         <span class="comment">% 2. build total response matrix (orbit dispersion)</span>
+0142         <span class="comment">% 3. build total constraint vector (orbit, dispersion)</span>
+0143         <span class="comment">% 4. check dimensions of matrix, constraints</span>
+0144         <span class="comment">% 5. perform inversion</span>
+0145         <span class="comment">% 6. backsubstitute</span>
+0146         
+0147         <span class="comment">%check for no variables or constraints</span>
+0148         <span class="keyword">if</span> isempty(BPM(plane).ifit) || isempty(COR(plane).ifit) 
+0149             RSP(plane).fit = 0;
+0150             BPM(plane).fit = zeros(length(BPM(plane).act),1);
+0151             COR(plane).fit = COR(plane).act;
+0152             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0153             setappdata(0,<span class="string">'BPM'</span>,BPM);
+0154             setappdata(0,<span class="string">'COR'</span>,COR);
+0155 
+0156             <span class="keyword">if</span> ~RSP(plane).rfflag <span class="comment">%% RF fit only</span>
+0157                 SYS.drf = 0;
+0158                 setappdata(0,<span class="string">'SYS'</span>,SYS);
+0159                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Warning: select BPMs and CORs first'</span>);
+0160                 disp(<span class="string">'Warning: select beam position monitors and correctors first'</span>);
+0161                 <span class="keyword">return</span>
+0162             <span class="keyword">end</span>
+0163         <span class="keyword">end</span>
+0164 
+0165         <span class="comment">%check for no singular values requested</span>
+0166         <span class="keyword">if</span> RSP(plane).nsvd &lt;= 0 &amp;&amp; RSP(plane).svdtol &lt;=0
+0167             disp(<span class="string">'   Warning: no singular values or tolerance requested in svdfit'</span>);
+0168             <span class="keyword">return</span>
+0169         <span class="keyword">end</span>
+0170 
+0171         <span class="comment">%========================</span>
+0172         <span class="keyword">switch</span> SYS.algo
+0173             <span class="comment">%========================</span>
+0174             <span class="keyword">case</span> <span class="string">'SVD'</span>   <span class="comment">%use singular value technique to solve system</span>
+0175 
+0176                 <span class="comment">% Index the response matrix</span>
+0177                 <span class="comment">%...corrector set</span>
+0178                 ActuatorDeviceList      = elem2dev(COR(plane).AOFamily,COR(plane).ifit);
+0179                 ActuatorDeviceListTotal = elem2dev(COR(plane).AOFamily);
+0180                 [corlist, iNotFound]    = findrowindex(ActuatorDeviceList, ActuatorDeviceListTotal);
+0181                 <span class="keyword">if</span> ~isempty(iNotFound)
+0182                     <span class="keyword">for</span> i = iNotFound(:)',
+0183                         fprintf(<span class="string">'   %s(%d,%d) not found\n'</span>, S.Actuator.FamilyName, <span class="keyword">...</span>
+0184                             ActuatorDeviceList(i,1), ActuatorDeviceList(i,2));
+0185                     <span class="keyword">end</span>
+0186                     error(<span class="string">'Actuator not found'</span>);
+0187                 <span class="keyword">end</span>
+0188 <span class="comment">%                 corwt   = COR(plane).wt(corlist);</span>
+0189   
+0190 <span class="comment">%                 %remove dispersion component if rfflag true</span>
+0191 <span class="comment">%                 if RSP(plane).rfflag == 1                             %...subtract rf component</span>
+0192 <span class="comment">%                     [BPM] = etaoff(plane,BPM,RSP);                    %...calc dispersion component</span>
+0193 <span class="comment">%                 else</span>
+0194                     BPM(plane).rffit = zeros(length(BPM(plane).s),1); <span class="comment">%...initialize to zero</span>
+0195 <span class="comment">%                 end</span>
+0196                 setappdata(0,<span class="string">'BPM'</span>,BPM);
+0197 
+0198                 <span class="comment">%...electron BPM orbit and matrix (compressed)</span>
+0199 <span class="comment">%                 eBPMlist = BPM(plane).ifit;                                   %...electron BPM list</span>
+0200                 MonitorDeviceList      = elem2dev(BPM(plane).AOFamily,BPM(plane).ifit);
+0201                 MonitorDeviceListTotal = elem2dev(BPM(plane).AOFamily);
+0202                 [eBPMlist, iNotFound]  = findrowindex(MonitorDeviceList,  MonitorDeviceListTotal);
+0203                 <span class="keyword">if</span> ~isempty(iNotFound)
+0204                     <span class="keyword">for</span> i = iNotFound(:)'
+0205                         fprintf(<span class="string">'   %s(%d,%d) not found\n'</span>, S.Monitor.FamilyName, MonitorDeviceList(i,1), MonitorDeviceList(i,2));
+0206                     <span class="keyword">end</span>
+0207                     error(<span class="string">'Monitor not found'</span>);
+0208                 <span class="keyword">end</span>
+0209 
+0210                 eBPMval = BPM(plane).act - BPM(plane).des - BPM(plane).rffit;<span class="comment">%...actual minus reference orbit</span>
+0211                 eBPMval = BPM(plane).wt.*eBPMval;                            <span class="comment">%...apply weights</span>
+0212                 BPMval  = eBPMval(eBPMlist);                                 <span class="comment">%...compress residual orbit vector</span>
+0213 
+0214                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0215                 <span class="comment">% Build up R-matrix</span>
+0216                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0217                 
+0218                 Rmat    = RSP(plane).Data(eBPMlist,corlist);<span class="comment">%...use only selected fit indices</span>
+0219                 wt      = diag(BPM(plane).wt(eBPMlist));    <span class="comment">%...bpm weights on diagonal</span>
+0220                 Rmat    = wt*Rmat;                          <span class="comment">%...weight matrix lines w/ BPM weights before inversion</span>
+0221 
+0222                 <span class="comment">%...add dispersion portion of orbit and matrix (compressed)</span>
+0223                 <span class="comment">%   NOTE - only electron BPMs selected for orbit fitting used for dispersion fitting</span>
+0224 <span class="comment">%                 if RSP(plane).etaflag                                %...check dispersion fitting flag</span>
+0225 <span class="comment">%                     etaBPMval = BPM(plane).dsp-BPM(plane).dspref;    %...actual minus reference dispersion</span>
+0226 <span class="comment">%                     etaBPMval = diag(BPM(plane).etawt)*etaBPMval(:); %...apply weights</span>
+0227 <span class="comment">%                     etaBPMval = etaBPMval(eBPMlist);                 %...compress residual dispersion vector</span>
+0228 <span class="comment">%                     BPMval    = [BPMval; etaBPMval];                 %...concatenate electron and dispersion BPM error signals</span>
+0229 <span class="comment">%</span>
+0230 <span class="comment">%                     ceta = RSP(plane).eta(eBPMlist,corlist);        %...use only selected fit indices</span>
+0231 <span class="comment">%                     wt   = diag(BPM(plane).etawt(eBPMlist));         %...bpm weights on diagonal</span>
+0232 <span class="comment">%                     ceta = wt*ceta;                                  %...weight matrix before inversion</span>
+0233 <span class="comment">%                     Rmat = [Rmat; ceta];                             %...concatenate dispersion response matrix</span>
+0234 <span class="comment">%                 end</span>
+0235 
+0236                 <span class="keyword">if</span> RSP(plane).etaflag &amp;&amp; RSP(plane).rfflag          <span class="comment">%...check dispersion fitting flag</span>
+0237                     eta  = RSP(plane).eta(eBPMlist);            <span class="comment">%...use only selected fit indices</span>
+0238                     RFWeight = 10*mean(std(Rmat))/std(eta); <span class="comment">%...bpm weights on diagonal</span>
+0239                     Rmat = [Rmat RFWeight*eta];             <span class="comment">%...concatenate dispersion response matrix</span>
+0240                 <span class="keyword">end</span>
+0241 
+0242                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0243                 <span class="comment">%...perform SVD decomposition</span>
+0244                 <span class="comment">%...A=USV'   A-1=VU'/S</span>
+0245                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0246 
+0247                 [RSP(plane).U , RSP(plane).S, RSP(plane).V] = svd(Rmat,0);    
+0248                 
+0249                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0250                 <span class="comment">% Determine the singular vector and error check</span>
+0251                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0252                                 
+0253                 <span class="comment">%... get singular values</span>
+0254                 S    = diag(RSP(plane).S);
+0255            
+0256                 <span class="comment">%...reject zeros to get nb of nonzero singular values</span>
+0257                 RSP(plane).nsvdmax = length(S(find(S)));      
+0258                 
+0259                 <span class="comment">% Check whether singular value number larger than total number</span>
+0260                 <span class="keyword">if</span> RSP(plane).nsvd &gt; RSP(plane).nsvdmax
+0261                     RSP(plane).nsvd = RSP(plane).nsvdmax;
+0262                     fprintf(<span class="string">'Warning: %d zero singular value(s) rejected\n'</span>, <span class="keyword">...</span>
+0263                         RSP(plane).nsvd - RSP(plane).nsvdmax)
+0264                 <span class="keyword">end</span>
+0265                 
+0266                 <span class="comment">%...use tolerance method if specified</span>
+0267                 <span class="keyword">if</span> RSP(plane).svdtol == 0  <span class="comment">% user given number</span>
+0268                     Ivect = 1:RSP(plane).nsvd;
+0269                 <span class="keyword">else</span> <span class="comment">% Tolerance</span>
+0270                     Ivect = find(S &gt; RSP(plane).svdtol*S(1));
+0271                     <span class="keyword">if</span> isempty(Ivect)
+0272                         disp(<span class="string">'   Warning: no singular values requested in svdfit'</span>);
+0273                         RSP(plane).fit = 0; <span class="comment">% valid fit flag</span>
+0274                         <span class="keyword">return</span>
+0275                     <span class="keyword">end</span>
+0276                 <span class="keyword">end</span>
+0277 
+0278                 <span class="comment">%...backsubstitute</span>
+0279                 <span class="comment">%Computes first Rmat2=U(1,Ivect)*S(Ivect,Ivect) = Rmat*V(1,:Ivect)</span>
+0280                 Rmat2          =  Rmat*RSP(plane).V(:,Ivect);   
+0281                 SUtBPM         = -Rmat2\BPMval;         
+0282                 Delcm =  RSP(plane).V(:,Ivect)*SUtBPM; <span class="comment">%compute actuator values</span>
+0283                 
+0284                 <span class="comment">%% Fitted values for correctors</span>
+0285                 <span class="keyword">if</span> RSP(plane).etaflag &amp;&amp; RSP(plane).rfflag <span class="comment">% if RF correction</span>
+0286                     COR(plane).fit = Delcm(1:end-1);
+0287                     SYS.drf        = RFWeight*Delcm(end);
+0288                     <span class="comment">%% update rf value and rf step for correction</span>
+0289                     set(SYS.hrf,<span class="string">'String'</span>, num2str(getrf(SYS.mode), <span class="string">'%10.7f'</span>));
+0290                     set(SYS.hdrf,<span class="string">'String'</span>,num2str(SYS.drf));
+0291                 <span class="keyword">else</span>
+0292                     COR(plane).fit = Delcm;
+0293                 <span class="keyword">end</span>
+0294 
+0295                 <span class="comment">%NOTE: fraction scalar only used at time of corrector application</span>
+0296 
+0297                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0298                 <span class="comment">%...compute predicted results</span>
+0299                 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0300                 
+0301                 <span class="comment">% Note: use of RSP(plane).Data and not Rmat for orbit</span>
+0302                 <span class="comment">% predicted at all BPM required</span>
+0303                 BPM(plane).fit = RSP(plane).Data(eBPMlist,corlist)*COR(plane).fit;
+0304 
+0305                 <span class="comment">%% Case of RF correction</span>
+0306                 <span class="keyword">if</span> RSP(plane).etaflag &amp;&amp; RSP(plane).rfflag
+0307                     BPM(plane).rffit = eta*SYS.drf; 
+0308                 <span class="keyword">end</span>
+0309 
+0310                 RSP(plane).fit = 1; <span class="comment">%...set valid fit flag</span>
+0311 
+0312                 setappdata(0,<span class="string">'BPM'</span>,BPM);
+0313                 setappdata(0,<span class="string">'COR'</span>,COR);
+0314                 setappdata(0,<span class="string">'RSP'</span>,RSP);
+0315 
+0316             <span class="keyword">otherwise</span>
+0317                 disp([<span class="string">'Warning: no CASE found in SolveSystem: '</span> SYS.algo]);
+0318         <span class="keyword">end</span>  <span class="comment">%end SYS.algo switchyard</span>
+0319 
+0320         <span class="comment">%==========================================================</span>
+0321 <span class="comment">%     case 'BackSubSystem'                      % ***BackSubSystem ***</span>
+0322 <span class="comment">%         %==========================================================</span>
+0323 <span class="comment">%         %backsubstitute to find solution</span>
+0324 <span class="comment">%         switch SYS.algo</span>
+0325 <span class="comment">%</span>
+0326 <span class="comment">%             case 'SVD'                                % ***BackSubSystem ***</span>
+0327 <span class="comment">%                 %callback of svdedit via SVDEdit</span>
+0328 <span class="comment">%                 %etaoff has already been called</span>
+0329 <span class="comment">%</span>
+0330 <span class="comment">%                 [BPM,BL,COR]      = BackSubSystem(plane,SYS,BPM,BL,COR,RSP);  %also removes eta, bumps</span>
+0331 <span class="comment">%                 RSP(plane).nsvdes = RSP(plane).nsvd;</span>
+0332 <span class="comment">%                 RSP(plane).nsvd   = SVDMax(SYS,BPM,BL,COR,RSP);</span>
+0333 <span class="comment">%                 if RSP(plane).nsvd &lt;= RSP(plane).nsvdes</span>
+0334 <span class="comment">%                     [BPM,COR] = BackSubSystem(plane,SYS,BPM,BL,COR,RSP);  %also removes eta, bumps</span>
+0335 <span class="comment">%                 end</span>
+0336 <span class="comment">%</span>
+0337 <span class="comment">%                 setappdata(0,'BPM',BPM);</span>
+0338 <span class="comment">%                 setappdata(0,'COR',COR);</span>
+0339 <span class="comment">%                 setappdata(0,'RSP',RSP);</span>
+0340 <span class="comment">%</span>
+0341 <span class="comment">%             otherwise</span>
+0342 <span class="comment">%                 disp(['Warning: no CASE found in BackSubSystem: ' algorithm]);</span>
+0343 <span class="comment">%         end  %end backsubsystem switchyard</span>
+0344 <span class="comment">%</span>
+0345 <span class="comment">%         %==========================================================</span>
+0346     <span class="keyword">case</span> <span class="string">'SVDEdit'</span>                            <span class="comment">% *** SVDEdit ***</span>
+0347         <span class="comment">%==========================================================</span>
+0348         <span class="comment">%callback of the singular value edit box.</span>
+0349 
+0350         val = str2double(get(SYS.svdedit,<span class="string">'String'</span>));
+0351 
+0352         <span class="keyword">if</span> isnan(val) || ~isnumeric(val) || ~length(val) == 1
+0353             <span class="comment">% flush the bad string out of the edit; replace with current value:</span>
+0354             set(SYS.svdedit,<span class="string">'String'</span>,num2str(RSP(plane).nsvd));
+0355             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Warning: Invalid entry # singular values'</span>);
+0356             disp(<span class="string">'Warning: Invalid SVD entry.'</span>);
+0357             <span class="keyword">return</span>;
+0358         <span class="keyword">else</span>
+0359 
+0360             RSP(plane).nsvd = round(val);
+0361 
+0362             <span class="keyword">if</span> RSP(plane).nsvd == 0        <span class="comment">%don't allow zero singular values</span>
+0363                 RSP(plane).nsvd = 1;
+0364                 set(SYS.svdedit,<span class="string">'String'</span>,num2str(RSP(plane).nsvd));
+0365             <span class="keyword">end</span>
+0366 
+0367             <span class="keyword">if</span> RSP(plane).nsvd &gt; RSP(plane).nsvdmax
+0368                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Warning: # singular values exceeds maximum'</span>);
+0369                 disp([<span class="string">'Warning: number of singular values exceeds maximum: '</span>,num2str(RSP(plane).nsvdmax)])
+0370                 RSP(plane).nsvd=RSP(plane).nsvdmax;
+0371                 set(SYS.svdedit,<span class="string">'String'</span>,num2str(RSP(plane).nsvd));
+0372             <span class="keyword">end</span>
+0373 
+0374             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0375 
+0376             <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'MoveSVDDot'</span>);
+0377             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0378 
+0379         <span class="keyword">end</span>
+0380 
+0381 <span class="comment">%         %============================================================</span>
+0382 <span class="comment">%     case 'SVDSlider'                            % *** SVDSlide ***</span>
+0383 <span class="comment">%         %============================================================</span>
+0384 <span class="comment">%         %The callback of the singular value slider.</span>
+0385 <span class="comment">%         %</span>
+0386 <span class="comment">%         val = (get(SYS.svdslide,'Value'));</span>
+0387 <span class="comment">%</span>
+0388 <span class="comment">%         RSP(plane).nsvd = round(val);</span>
+0389 <span class="comment">%</span>
+0390 <span class="comment">% %         if RSP(plane).nsvd == 0</span>
+0391 <span class="comment">% %             RSP(plane).nsvd = 1;</span>
+0392 <span class="comment">% %         end</span>
+0393 <span class="comment">%</span>
+0394 <span class="comment">%         if RSP(plane).nsvd &gt; RSP(plane).nsvdmax</span>
+0395 <span class="comment">%             disp(['Warning: number of singular values exceeds maximum: ',num2str(RSP(plane).nsvdmax)])</span>
+0396 <span class="comment">%             RSP(plane).nsvd = RSP(plane).nsvdmax;</span>
+0397 <span class="comment">%             set(SYS.svdslide,'Value',RSP(plane).nsvd);</span>
+0398 <span class="comment">%         end</span>
+0399 <span class="comment">%</span>
+0400 <span class="comment">%         setappdata(0,'RSP',RSP);</span>
+0401 <span class="comment">%</span>
+0402 <span class="comment">%         set(SYS.svdedit,'String', num2str(RSP(plane).nsvd));</span>
+0403 <span class="comment">%         respgui('MoveSVDDot');</span>
+0404 <span class="comment">%         orbgui('RefreshOrbGUI');</span>
+0405 <span class="comment">%</span>
+0406         <span class="comment">%==========================================================</span>
+0407     <span class="keyword">case</span> <span class="string">'MoveSVDDot'</span>                       <span class="comment">% ***MoveSVDDot ***</span>
+0408         <span class="comment">%==========================================================</span>
+0409         <span class="keyword">if</span> isempty(COR(plane).ifit) || RSP(plane).rfflag, <span class="keyword">return</span>; <span class="keyword">end</span>
+0410         
+0411         <span class="comment">% Vector of singular values</span>
+0412         yd = diag(RSP(plane).S);
+0413         
+0414         <span class="comment">% default dot is user defined</span>
+0415         indx = RSP(plane).nsvd;
+0416 
+0417         <span class="keyword">if</span> indx &lt;= 0, indx = 1; <span class="keyword">end</span>
+0418         
+0419         <span class="comment">% check number of singular values</span>
+0420         <span class="comment">%nb of correctors included RF</span>
+0421         ncor = length(COR(plane).ifit) + RSP(plane).rfflag; 
+0422         <span class="keyword">if</span> RSP(plane).nsvd &gt; ncor 
+0423             RSP(plane).nsvd = ncor;
+0424             indx            = ncor;
+0425         <span class="keyword">end</span>
+0426 
+0427         <span class="comment">% check fit</span>
+0428         <span class="keyword">if</span> RSP(plane).fit == 1
+0429             <span class="comment">%move the red dot</span>
+0430             set(SYS.lhdot,<span class="string">'Xdata'</span>,RSP(plane).nsvd,<span class="string">'YData'</span>,yd(indx));
+0431         <span class="keyword">end</span>
+0432 
+0433         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0434       
+0435         <span class="comment">%==========================================================</span>
+0436     <span class="keyword">case</span> <span class="string">'DisplayRFFit'</span>                         <span class="comment">% ***DisplayRFFit ***</span>
+0437         <span class="comment">%==========================================================</span>
+0438         <span class="comment">%update prediction for rf component</span>
+0439         <span class="keyword">if</span> RSP(plane).rfflag == 1     <span class="comment">%display rf component</span>
+0440             set(SYS.hdrf,<span class="string">'String'</span>, num2str(SYS.drf));
+0441         <span class="keyword">end</span>
+0442 
+0443         <span class="comment">%==========================================================</span>
+0444     <span class="keyword">case</span> <span class="string">'DisplayNsvd'</span>                     <span class="comment">% ***DisplayNsvd ***</span>
+0445         <span class="comment">%==========================================================</span>
+0446         <span class="comment">%update SVD Slider</span>
+0447         <span class="comment">%                                      'Value',round(RSP(plane).nsvd));</span>
+0448         <span class="comment">%update SVD Edit Field</span>
+0449         set(SYS.svdedit,<span class="string">'String'</span>,num2str(RSP(plane).nsvd));
+0450 
+0451         <span class="comment">%==========================================================</span>
+0452     <span class="keyword">case</span> <span class="string">'UpdateFit'</span>                         <span class="comment">% ***UpdateFit ***</span>
+0453         <span class="comment">%==========================================================</span>
+0454       
+0455         <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotFit'</span>);        <span class="comment">%plots orbit fit, updates limits</span>
+0456         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'PlotFit'</span>);        <span class="comment">%plots corrector fit (don't need to clear), updates ylimits</span>
+0457         <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'DisplayRFFit'</span>);  <span class="comment">%display rf frequency shift</span>
+0458 
+0459         <span class="keyword">if</span> strcmp(SYS.algo,<span class="string">'SVD'</span>)
+0460             <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'PlotSVD'</span>);       <span class="comment">%...show singular value plot</span>
+0461             <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'DisplayNsvd'</span>);   <span class="comment">%...display number of singular values</span>
+0462             <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'MoveSVDDot'</span>);    <span class="comment">%...move dot to display number of singular values</span>
+0463             <span class="comment">%update eigenvector plot</span>
+0464             <span class="keyword">if</span> strcmpi(RSP(plane).eig(1:2), <span class="string">'of'</span>) || RSP(plane).nsvd==0    <span class="comment">%Eigenvector display mode</span>
+0465                 set(SYS.lheig,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0466             <span class="keyword">else</span>
+0467                 <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotEig'</span>);                   <span class="comment">%plot matrix column vector</span>
+0468             <span class="keyword">end</span>
+0469         <span class="keyword">end</span>
+0470 
+0471         <span class="comment">%update response matrix plot</span>
+0472         <span class="keyword">if</span> strcmpi(RSP(plane).disp(1:2),<span class="string">'of'</span>)
+0473             set(SYS.lhrsp,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0474         <span class="keyword">else</span>
+0475             <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotResp'</span>);                   <span class="comment">%plot matrix column vector</span>
+0476         <span class="keyword">end</span>
+0477 
+0478         <span class="comment">%==========================================================</span>
+0479     <span class="keyword">case</span> <span class="string">'RFToggle'</span>                            <span class="comment">% ***RFToggle***</span>
+0480         <span class="comment">%==========================================================</span>
+0481         <span class="comment">%callback of the rf component toggle radio button</span>
+0482         <span class="comment">%radio button toggles state and then executes callback</span>
+0483         <span class="comment">%hence, this routine finds the new state</span>
+0484         h1  = SYS.rftoggle;
+0485         val = get(h1,<span class="string">'Value'</span>);
+0486         <span class="keyword">if</span> val == 1                    <span class="comment">%state was just toggled 'on'</span>
+0487             RSP(plane).rfflag = 1;
+0488             <span class="comment">%add RF singular value</span>
+0489             RSP(plane).nsvdmax = RSP(plane).nsvdmax + 1;
+0490             RSP(plane).nsvd = RSP(plane).nsvd + 1;
+0491         <span class="keyword">else</span>
+0492             RSP(plane).rfflag = 0;     <span class="comment">%state was just toggled 'off'</span>
+0493             <span class="comment">%retrieve RF singular value</span>
+0494             RSP(plane).nsvdmax = RSP(plane).nsvdmax - 1;
+0495             RSP(plane).nsvd = RSP(plane).nsvd - 1;
+0496         <span class="keyword">end</span>
+0497 
+0498         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0499 
+0500         <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'SolveSystem'</span>,SYS.algo);
+0501         <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'UpdateFit'</span>);
+0502 
+0503         <span class="comment">%==========================================================</span>
+0504     <span class="keyword">case</span> <span class="string">'ExternalFitOff'</span>                     <span class="comment">%...ExternalFitOff</span>
+0505         <span class="comment">%==========================================================</span>
+0506         plane = str2double(varargin{1});     <span class="comment">%define requested plane</span>
+0507         RSP(plane).fit = 0;                  <span class="comment">%fit not valid</span>
+0508 
+0509         <span class="keyword">switch</span> SYS.algo
+0510             <span class="keyword">case</span> <span class="string">'SVD'</span>
+0511                 RSP(plane).nsvd = 0;
+0512                 setappdata(0,<span class="string">'RSP'</span>,RSP);
+0513         <span class="keyword">end</span>
+0514 
+0515 
+0516         <span class="comment">%==========================================================</span>
+0517     <span class="keyword">case</span> <span class="string">'FitOff'</span>                             <span class="comment">%...FitOff</span>
+0518         <span class="comment">%==========================================================</span>
+0519         <span class="comment">%clear graphics because fit invalid</span>
+0520         plane = str2double(varargin{1});    <span class="comment">%define requested plane</span>
+0521 
+0522         RSP(plane).fit = 0;                 <span class="comment">%fit not valid</span>
+0523         RSP(plane).U   = [];
+0524         RSP(plane).S   = [];
+0525         RSP(plane).V   = [];
+0526         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0527 
+0528         set(SYS.hdrf,<span class="string">'String'</span>, <span class="string">'0.0'</span>);
+0529         <span class="comment">%zero out fitting variables</span>
+0530         BPM(plane).fit = zeros(size(BPM(plane).name,1),1);
+0531         setappdata(0,<span class="string">'BPM'</span>,BPM);
+0532 
+0533         ncor=length(COR(plane).ifit);
+0534         COR(plane).fit = zeros(ncor,1);   <span class="comment">%COR.fit is compressed</span>
+0535         COR(plane).sav = COR(plane).fit;  <span class="comment">%zero out save vector</span>
+0536         setappdata(0,<span class="string">'COR'</span>,COR);
+0537 
+0538         <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'ClearPlots'</span>);          <span class="comment">%remove all bpm fitting plots</span>
+0539         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ClearFit'</span>);            <span class="comment">%remove all cor fitting plots</span>
+0540         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ylimits'</span>);
+0541 
+0542         <span class="keyword">switch</span> SYS.algo
+0543             <span class="keyword">case</span> <span class="string">'SVD'</span>
+0544                 <span class="comment">%RSP=getappdata(0,'RSP');</span>
+0545                 RSP(plane).nsvdmax = 1;
+0546                 RSP(plane).nsvd    = 1;      <span class="comment">%keep one singular value - all correctors off then one on</span>
+0547                 setappdata(0,<span class="string">'RSP'</span>,RSP);
+0548                 set(SYS.svdedit,<span class="string">'String'</span>,num2str(1));  <span class="comment">%SVD display box</span>
+0549                 <a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>(<span class="string">'PlotSVD'</span>);
+0550         <span class="keyword">end</span>
+0551 
+0552         <span class="comment">%==========================================================</span>
+0553     <span class="keyword">case</span> <span class="string">'DispersionPanel'</span>                   <span class="comment">%  DispersionPanel</span>
+0554         <span class="comment">%==========================================================</span>
+0555         <span class="comment">%----------------------------------------------------------------</span>
+0556         <span class="comment">%  create figure</span>
+0557         <span class="comment">%----------------------------------------------------------------</span>
+0558         h = findobj(0,<span class="string">'tag'</span>,<span class="string">'dispersionpanel'</span>);
+0559         
+0560         <span class="keyword">if</span> ~isempty(h)
+0561             delete(h);
+0562         <span class="keyword">end</span>
+0563 
+0564         [screen_wide, screen_high] = screensizecm;
+0565         fig_start = [0.4*screen_wide 0.5*screen_high];
+0566         fig_size  = [0.5*screen_wide 0.25*screen_high];
+0567         <span class="comment">%----------------------------------------------------------------</span>
+0568         figh = figure(<span class="string">'units'</span>,<span class="string">'centimeters'</span>,<span class="keyword">...</span><span class="comment">  %...Dispersion Control Figure</span>
+0569             <span class="string">'Position'</span>,[fig_start fig_size],<span class="keyword">...</span>
+0570             <span class="string">'tag'</span>,<span class="string">'dispersionpanel'</span>,<span class="keyword">...</span>
+0571             <span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0572             <span class="string">'Doublebuffer'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0573             <span class="string">'Visible'</span>,<span class="string">'On'</span>,<span class="keyword">...</span>
+0574             <span class="string">'Name'</span>,<span class="string">'Dispersion Fitting Control Panel'</span>,<span class="keyword">...</span>
+0575             <span class="string">'PaperPositionMode'</span>,<span class="string">'Auto'</span>);
+0576         set(figh,<span class="string">'MenuBar'</span>,<span class="string">'None'</span>);
+0577         <span class="comment">%------------------------------------------------------------------</span>
+0578 
+0579         <span class="comment">%Radio Dispersion On/Off</span>
+0580         uicontrol(<span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">     %Radio Horizontal Dispersion On/Off</span>
+0581             <span class="string">'units'</span>, <span class="string">'normalize'</span>, <span class="keyword">...</span>
+0582             <span class="string">'Position'</span>, [.05 .8 .3 .1], <span class="keyword">...</span>
+0583             <span class="string">'String'</span>,<span class="string">'Fit Eta-X'</span>,<span class="keyword">...</span>
+0584             <span class="string">'Tag'</span>,<span class="string">'etaxflag'</span>,<span class="keyword">...</span>
+0585             <span class="string">'Value'</span>,RSP(1).etaflag,<span class="keyword">...</span>
+0586             <span class="string">'ToolTipString'</span>,<span class="string">'Fit Horizontal Dispersion'</span>,<span class="keyword">...</span>
+0587             <span class="string">'FontSize'</span>,8,<span class="string">'FontWeight'</span>,<span class="string">'demi'</span>,<span class="keyword">...</span>
+0588             <span class="string">'Callback'</span>,<span class="string">'respgui(''EtaXFlag'')'</span>);
+0589 
+0590         uicontrol(<span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">     %Radio Vertical Dispersion On/Off</span>
+0591             <span class="string">'units'</span>, <span class="string">'normalize'</span>, <span class="keyword">...</span>
+0592             <span class="string">'Position'</span>, [.5 .8 .3 .1], <span class="keyword">...</span>
+0593             <span class="string">'String'</span>,<span class="string">'Fit Eta-Z'</span>,<span class="keyword">...</span>
+0594             <span class="string">'Tag'</span>,<span class="string">'etazflag'</span>,<span class="keyword">...</span>
+0595             <span class="string">'Value'</span>,RSP(2).etaflag,<span class="keyword">...</span>
+0596             <span class="string">'ToolTipString'</span>,<span class="string">'Fit Vertical Dispersion'</span>,<span class="keyword">...</span>
+0597             <span class="string">'FontSize'</span>,8,<span class="string">'FontWeight'</span>,<span class="string">'demi'</span>,<span class="keyword">...</span>
+0598             <span class="string">'Callback'</span>,<span class="string">'respgui(''EtaZFlag'')'</span>);
+0599 
+0600         <span class="comment">%Select Horizontal Dispersion Weights</span>
+0601         cback = <span class="string">'rload(''GenFig'',BPM(1).name,BPM(1).status,BPM(1).ifit,'</span>;
+0602         cback = [cback <span class="string">'BPM(1).etawt,''Horizontal BPMs for Eta Fitting'',''etaxwt'');'</span>];
+0603         <span class="comment">%instructions are used during 'load' procedure of rload window</span>
+0604         instructions = [<span class="keyword">...</span>
+0605             <span class="string">'   global BPM;'</span>,<span class="keyword">...</span>
+0606             <span class="string">'   tlist = get(gcf,''UserData'');'</span>,<span class="keyword">...</span>
+0607             <span class="string">'   BPM(1).etawt=tlist{4};'</span>,<span class="keyword">...</span>
+0608             <span class="string">'   setappdata(0,''BPM'',BPM);'</span>,<span class="keyword">...</span>
+0609             <span class="string">'   orbgui(''RefreshOrbGUI'');'</span>];
+0610 
+0611         uicontrol(<span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span><span class="comment">                           %Select Horizontal Dispersion Weights</span>
+0612             <span class="string">'units'</span>, <span class="string">'normalize'</span>, <span class="keyword">...</span>
+0613             <span class="string">'Position'</span>, [.05 .65 .3 .1], <span class="keyword">...</span>
+0614             <span class="string">'String'</span>,<span class="string">'Select x-BPM Weights'</span>,<span class="keyword">...</span>
+0615             <span class="string">'tag'</span>,<span class="string">'etaxwt'</span>,<span class="keyword">...</span>
+0616             <span class="string">'Callback'</span>,cback,<span class="keyword">...</span>
+0617             <span class="string">'Userdata'</span>,instructions);
+0618 
+0619         <span class="comment">%Select Vertical Dispersion Weights</span>
+0620         cback=<span class="string">'rload(''GenFig'',BPM(2).name,BPM(2).status,BPM(2).ifit,'</span>;
+0621         cback=[cback <span class="string">'BPM(2).etawt,''Horizontal BPMs for Eta Fitting'',''etaywt'');'</span>];
+0622         <span class="comment">%instructions are used during 'load' procedure of rload window</span>
+0623         instructions=[<span class="keyword">...</span>
+0624             <span class="string">'   global BPM;'</span>,<span class="keyword">...</span>
+0625             <span class="string">'   tlist = get(gcf,''UserData'');'</span>,<span class="keyword">...</span>
+0626             <span class="string">'   BPM(2).etawt=tlist{4};'</span>,<span class="keyword">...</span>
+0627             <span class="string">'   setappdata(0,''BPM'',BPM);'</span>,<span class="keyword">...</span>
+0628             <span class="string">'   orbgui(''RefreshOrbGUI'');'</span>];
+0629 
+0630         uicontrol(<span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span><span class="comment"> %Select Vertical Dispersion Weights</span>
+0631             <span class="string">'units'</span>, <span class="string">'normalize'</span>, <span class="keyword">...</span>
+0632             <span class="string">'Position'</span>, [.5 .65 .3 .1], <span class="keyword">...</span>
+0633             <span class="string">'String'</span>,<span class="string">'Select z-BPM Weights'</span>,<span class="keyword">...</span>
+0634             <span class="string">'tag'</span>,<span class="string">'etaywt'</span>,<span class="keyword">...</span>
+0635             <span class="string">'Callback'</span>,cback,<span class="keyword">...</span>
+0636             <span class="string">'Userdata'</span>,instructions);
+0637 
+0638         <span class="comment">%==========================================================</span>
+0639     <span class="keyword">case</span> <span class="string">'EtaXFlag'</span>                   <span class="comment">%  EtaXFlag</span>
+0640         <span class="comment">%==========================================================</span>
+0641         RSP(1).etaflag = 0;
+0642         h = findobj(gcf,<span class="string">'tag'</span>,<span class="string">'etaxflag'</span>);
+0643         val = get(h,<span class="string">'value'</span>);
+0644         <span class="keyword">if</span> val == 1
+0645             RSP(1).etaflag = 1;
+0646             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0647         <span class="keyword">end</span>
+0648 
+0649         <span class="comment">%% TODO merge ETAXZflag function</span>
+0650         
+0651         <span class="comment">%==========================================================</span>
+0652     <span class="keyword">case</span> <span class="string">'EtaZFlag'</span>                   <span class="comment">%  EtaZFlag</span>
+0653         <span class="comment">%==========================================================</span>
+0654         RSP(2).etaflag = 0;
+0655         h = findobj(gcf,<span class="string">'tag'</span>,<span class="string">'etazflag'</span>);
+0656         val = get(h,<span class="string">'value'</span>);
+0657         <span class="keyword">if</span> val == 1
+0658             RSP(2).etaflag=1;
+0659             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0660         <span class="keyword">end</span>
+0661 
+0662 
+0663         <span class="comment">%==========================================================</span>
+0664     <span class="keyword">otherwise</span>
+0665         disp([<span class="string">'Warning: no CASE found in respgui: '</span> action]);
+0666 <span class="keyword">end</span>  <span class="comment">%end switchyard</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

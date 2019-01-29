@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of linac</title>
+  <meta name="keywords" content="linac">
+  <meta name="description" content="switch linac">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; linac.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>linac
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>switch linac</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function linac(mode) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> switch linac</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function linac(mode)</a>
+0002 <span class="comment">% switch linac</span>
+0003 
+0004 
+0005 load(<span class="string">'synchro_offset_lin'</span>, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0006 tout=0.;
+0007 
+0008 
+0009 <span class="keyword">switch</span> mode  <span class="comment">% Get Tag of selected object</span>
+0010     <span class="keyword">case</span> <span class="string">'soft'</span>
+0011     <span class="comment">% switch to soft</span>
+0012         event=int32(5) ;<span class="comment">% adresse de l'injection</span>
+0013         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,event); pause(tout);
+0014         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,int16(0));
+0015         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,int32(1)); pause(tout);
+0016         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event); pause(tout);
+0017         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,event); pause(tout);
+0018         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,event); pause(tout);
+0019         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+0020         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,event); pause(tout);
+0021     <span class="comment">% special modulateur</span>
+0022         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcTimeDelay'</span>);pc=temp.value(1);
+0023         temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);soft=temp.value(1);
+0024         delay=inj_offset+soft-pc;
+0025         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0026         display(<span class="string">'ok change 3Hz to soft'</span>)
+0027         
+0028     <span class="keyword">case</span> <span class="string">'3Hz'</span>
+0029     <span class="comment">% switch to 3Hz</span>
+0030         event=int32(2) ;<span class="comment">% adresse de l'injection</span>
+0031         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,int32(2)); pause(tout);
+0032         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,int16(0)); 
+0033         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,event); pause(tout);
+0034         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,event); pause(tout);
+0035         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,event); pause(tout);
+0036         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,event); pause(tout);
+0037         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,event); pause(tout);
+0038         tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,event); pause(tout);
+0039     <span class="comment">% special modulateur</span>
+0040         delay=inj_offset+0;
+0041         tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>,delay);
+0042         display(<span class="string">'ok change soft to 3Hz'</span>)
+0043 <span class="keyword">end</span>
+0044</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotorbit</title>
+  <meta name="keywords" content="plotorbit">
+  <meta name="description" content="PLOTORBIT - Plot the present orbit w.r.t. the golden or offset orbit">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; plotorbit.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>plotorbit
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>PLOTORBIT - Plot the present orbit w.r.t. the golden or offset orbit</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function plotorbit(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PLOTORBIT - Plot the present orbit w.r.t. the golden or offset orbit
+  plotorbit
+
+  KEY WORDS
+  1. 'Golden' - Plot w.r.t. the golden orbit {Default}
+  2. 'Offset' - Plot w.r.t. the offset orbit
+  3. 'Position' - X-axis is the position along the ring {Default}
+  4. 'Phase'    - X-axis is the phase along the ring</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>	FAMILY2DEV - Return the device list for a family</li><li><a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>	GETAM - Gets monitor channels</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getgolden.html" class="code" title="function Data = getgolden(varargin)">getgolden</a>	GETGOLDEN - Returns the golden values for a family</li><li><a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>	GETHBPMFAMILY - Return the default horizontal BPM family</li><li><a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>	GETOFFSET - Returns the offset values for a family</li><li><a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>	GETSPOS - Returns the longitudinal position in meters</li><li><a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>	GETVBPMFAMILY - Return the default vertical BPM family</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="measlocodata.html" class="code" title="function measlocodata(varargin)">measlocodata</a>	MEASLOCODATA - Measures a set of LOCO data</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotorbit(varargin)</a>
+0002 <span class="comment">%PLOTORBIT - Plot the present orbit w.r.t. the golden or offset orbit</span>
+0003 <span class="comment">%  plotorbit</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  KEY WORDS</span>
+0006 <span class="comment">%  1. 'Golden' - Plot w.r.t. the golden orbit {Default}</span>
+0007 <span class="comment">%  2. 'Offset' - Plot w.r.t. the offset orbit</span>
+0008 <span class="comment">%  3. 'Position' - X-axis is the position along the ring {Default}</span>
+0009 <span class="comment">%  4. 'Phase'    - X-axis is the phase along the ring</span>
+0010 
+0011 XAxisFlag = <span class="string">'Position'</span>;
+0012 RefFlag = <span class="string">'Golden'</span>;
+0013 
+0014 <span class="comment">% Input parsing</span>
+0015 <span class="keyword">for</span> i = length(varargin):-1:1
+0016     <span class="keyword">if</span> isstruct(varargin{i})
+0017         <span class="comment">% Ignor structures</span>
+0018     <span class="keyword">elseif</span> iscell(varargin{i})
+0019         <span class="comment">% Ignor cells</span>
+0020     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'struct'</span>)
+0021         <span class="comment">% Just remove</span>
+0022         varargin(i) = [];
+0023     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'numeric'</span>)
+0024         <span class="comment">% Just remove</span>
+0025         varargin(i) = [];
+0026     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Position'</span>)
+0027         XAxisFlag = <span class="string">'Position'</span>;
+0028         varargin(i) = [];
+0029     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Phase'</span>)
+0030         XAxisFlag = <span class="string">'Phase'</span>;
+0031         varargin(i) = [];
+0032     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Golden'</span>)
+0033         RefFlag = <span class="string">'Golden'</span>;
+0034         varargin(i) = [];
+0035     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Offset'</span>)
+0036         RefFlag = <span class="string">'Offset'</span>;
+0037         varargin(i) = [];
+0038     <span class="keyword">end</span>
+0039 <span class="keyword">end</span>
+0040 
+0041 
+0042 <span class="comment">% Default orbit families</span>
+0043 BPMxFamily = <a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>;
+0044 BPMyFamily = <a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>;
+0045 
+0046 
+0047 <span class="keyword">if</span> strcmpi(XAxisFlag, <span class="string">'Phase'</span>)
+0048     [BPMxspos, BPMyspos, Sx, Sy, Tune] = modeltwiss(<span class="string">'Phase'</span>, BPMxFamily, [], BPMyFamily, []);
+0049     BPMxspos = BPMxspos/2/pi;
+0050     BPMyspos = BPMyspos/2/pi;
+0051     XLabel = <span class="string">'BPM Phase'</span>;
+0052 <span class="keyword">else</span>
+0053     BPMxspos = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(BPMxFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMxFamily));
+0054     BPMyspos = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(BPMyFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMyFamily));
+0055     XLabel = <span class="string">'BPM Position [meters]'</span>;
+0056 <span class="keyword">end</span>
+0057 
+0058 
+0059 <span class="comment">% Get data</span>
+0060 x = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMxFamily,<span class="string">'struct'</span>, varargin{:});
+0061 y = <a href="getam.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getam(varargin)">getam</a>(BPMyFamily,<span class="string">'struct'</span>, varargin{:});
+0062 
+0063 
+0064 <span class="keyword">if</span> strcmpi(RefFlag, <span class="string">'Golden'</span>)
+0065     Xref = <a href="getgolden.html" class="code" title="function Data = getgolden(varargin)">getgolden</a>(BPMxFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMxFamily), varargin{:});
+0066     Yref = <a href="getgolden.html" class="code" title="function Data = getgolden(varargin)">getgolden</a>(BPMyFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMyFamily), varargin{:});
+0067 <span class="keyword">elseif</span> strcmpi(RefFlag, <span class="string">'Offset'</span>)
+0068     Xref = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMxFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMxFamily), varargin{:});
+0069     Yref = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMyFamily,<a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(BPMyFamily), varargin{:});
+0070 <span class="keyword">else</span>
+0071     error(<span class="string">'Reference orbit not unknown'</span>);
+0072 <span class="keyword">end</span>
+0073 
+0074 
+0075 <span class="comment">% % Change to physics units</span>
+0076 <span class="comment">% if any(strcmpi('Physics',varargin))</span>
+0077 <span class="comment">%     Xref = hw2physics(BPMxFamily, 'Monitor', Xref, family2dev(BPMxFamily));</span>
+0078 <span class="comment">%     Yref = hw2physics(BPMyFamily, 'Monitor', Yref, family2dev(BPMyFamily));</span>
+0079 <span class="comment">% end</span>
+0080 
+0081 
+0082 Xerr = x.Data - Xref;
+0083 Yerr = y.Data - Yref;
+0084 
+0085 L = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Circumference'</span>);
+0086 
+0087 clf reset
+0088 subplot(2,1,1);
+0089 plot(BPMxspos, Xerr, <span class="string">'.-'</span>);
+0090 <span class="comment">%xlabel(XLabel);</span>
+0091 ylabel(sprintf(<span class="string">'Horizontal [%s]'</span>,x.UnitsString));
+0092 title(sprintf(<span class="string">'Storage Ring Orbit (Difference from the %s Orbit)'</span>,RefFlag));
+0093 xaxis([0 L]);
+0094 
+0095 subplot(2,1,2);
+0096 plot(BPMyspos, Yerr, <span class="string">'.-'</span>);
+0097 xlabel(XLabel);
+0098 ylabel(sprintf(<span class="string">'Vertical [%s]'</span>,y.UnitsString));
+0099 xaxis([0 L]);
+0100 
+0101 addlabel(1, 0, datestr(clock,0));
+0102 <span class="comment">%addlabel(0, 0, sprintf(sprintf('RMS Error: Horizontal %6.4f %s  Vertical %6.4f %s', std(Xerr), x.UnitsString, std(Yerr), y.UnitsString)));</span>
+0103 addlabel(0, 0, sprintf(sprintf(<span class="string">'RMS Error:   Horizontal %f %s    Vertical %f %s'</span>, std(Xerr), x.UnitsString, std(Yerr), y.UnitsString)));
+0104</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

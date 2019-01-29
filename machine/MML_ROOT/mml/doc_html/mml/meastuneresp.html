@@ -1,0 +1,707 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of meastuneresp</title>
+  <meta name="keywords" content="meastuneresp">
+  <meta name="description" content="MEASTUNERESP - Measures the response from quadrupole to tune">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; meastuneresp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>meastuneresp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MEASTUNERESP - Measures the response from quadrupole to tune</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Rmat, OutputFileName] = meastuneresp(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MEASTUNERESP - Measures the response from quadrupole to tune
+  [R, FileName] = meastuneresp(ActuatorFamily, ActuatorDeviceList, ActuatorDelta, ModulationMethod, WaitFlag, FileName, DirectoryName, ExtraDelay)
+
+  INPUTS 
+  1. ActuatorFamily = Family name or cell array of family nams {Default: {'Q7','Q9'}}
+  2. ActuatorDeviceList = Device list {Default: [], the entire family}
+                          (Note: all devices in DeviceList are changed at the same time)
+  3. ActuatorDelta = Change in magnet strength {Default: getfamilydata('ActuatorFamily','Setpoint','DeltaRespMat')}
+  4. ModulationMethod - 'Unipolar' is the default since hysteresis is usually an issue (see help measrespmat)
+  5. If WaitFlag &gt;= 0, then WaitFlag is the delay before measuring the tune (sec)
+                 = -3, then a delay of getfamilydata('TuneDelay') is used {Default} 
+                 = -4, then pause until keyboard input
+                 = -5, then input the tune measurement manually by keyboard input
+  6. Optional input to change the default filename and directory
+     FileName - Filename for the response matrix data
+                (No input or empty means data will be saved to the default file (except for model response matrices))  
+     DirectoryName - Directory name to store the response matrix data file 
+     Note: a. FileName can include the path if DirectoryName is not used
+           b. For model response matrices, FileName must exist for a file save
+           c. When using the default FileName, a dialog box will prompt for changes
+
+  7. ExtraDelay - extra time delay [seconds] after a setpoint change
+
+  8. 'Struct' will return a response matrix structure
+     'Numeric' will return a matrix output {Default}
+     'Matrix'  - Return a matrix output {Default}
+          
+                 Note: 'Matrix' is only a valid flag for Numeric outputs
+                 Often use with the model input.  For example, to compare the model
+                 tune response matrix to the default matrix,
+                 Mmodel = meastuneresp('Model','Matrix');
+                 Mmeas  = gettuneresp;
+
+  9. Optional override of the units:
+     'Physics'  - Use physics  units
+     'Hardware' - Use hardware units
+
+  10. Optional override of the mode:
+      'Online'    - Set/Get data online  
+      'Model'     - Get the model chromaticity directly from AT (uses modeltune)
+      'Simulator' - Set/Get data on the simulated accelerator using AT (ie, same commands as 'Online')
+      'Manual'    - Set/Get data manually
+
+  11. 'Display'    - Prints status information to the command window {Default}
+      'NoDisplay'  - Nothing is printed to the command window
+
+  12. 'Archive' - Save the response matrix structure {Default, unless Mode='Model'}
+      'NoArchive' - Save the response matrix structure
+ 
+  OUTPUTS
+  R = Response matrix from delta quadrupole to delta tune
+
+      If more than one quadrupole family is input, the R is a cell array indexed by 
+      quadrupole family (ie, the number of families in ActuatorFamily).  The default
+      is to make R{1} Q7 and R{2} Q9.  R{1} or R.Data for structure output
+      is a 2x(number of quadrupole in family) array.  The first row is horizontal 
+      tuen and the second is vertical.
+
+      Units: delta(Tune) / delta(Quadrupole) is set by the .Units field for the quadrupole family
+             Typically:  Hardware units:  fractional tune / Amp;
+                         Physics  units:  fractional tune / K;
+
+  EXAMPLES
+  1. Gets 2x2 tune response matrix using the 2 default families
+     meastuneresp('Display')
+  2. For all quad in model
+     RTune = meastuneresp({'Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10'}, 'Model')
+
+  NOTES
+  1. 'Physics' does not work at SOLEIL since polynomial fit does not work for small current !!!
+
+  See Also <a href="gettune.html" class="code" title="function [Tune, tout, DataTime, ErrorFlag] = gettune(varargin)">gettune</a>, <a href="steptune.html" class="code" title="function [DelQuad, ActuatorFamily] = steptune(varargin)">steptune</a>, <a href="settune.html" class="code" title="function [DelQuad, ActuatorFamily] = settune(varargin)">settune</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="findmemberof.html" class="code" title="function  FamilyName = findmemberof(MemberString, Field)">findmemberof</a>	FINDMEMBEROF - Finds all family members</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getmachineconfig.html" class="code" title="function [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(varargin)">getmachineconfig</a>	GETMACHINECONFIG - Returns or saves to file the present storage ring setpoints and monitors</li><li><a href="getx.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getx(varargin)">getx</a>	GETX - Returns the horizontal orbit</li><li><a href="gety.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = gety(varargin)">gety</a>	GETY - Returns the vertical orbit</li><li><a href="measrespmat.html" class="code" title="function S = measrespmat(varargin)">measrespmat</a>	MEASRESPMAT - Measure a response matrix</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="buildopsdatafiles.html" class="code" title="function buildopsdatafiles">buildopsdatafiles</a>	BUILDOPSDATAFILES - Builds the files for the OpsData directory from the model</li><li><a href="gettuneresp.html" class="code" title="function [TuneMatrix, FileName] = gettuneresp(varargin)">gettuneresp</a>	GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Rmat, OutputFileName] = meastuneresp(varargin)</a>
+0002 <span class="comment">%MEASTUNERESP - Measures the response from quadrupole to tune</span>
+0003 <span class="comment">%  [R, FileName] = meastuneresp(ActuatorFamily, ActuatorDeviceList, ActuatorDelta, ModulationMethod, WaitFlag, FileName, DirectoryName, ExtraDelay)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. ActuatorFamily = Family name or cell array of family nams {Default: {'Q7','Q9'}}</span>
+0007 <span class="comment">%  2. ActuatorDeviceList = Device list {Default: [], the entire family}</span>
+0008 <span class="comment">%                          (Note: all devices in DeviceList are changed at the same time)</span>
+0009 <span class="comment">%  3. ActuatorDelta = Change in magnet strength {Default: getfamilydata('ActuatorFamily','Setpoint','DeltaRespMat')}</span>
+0010 <span class="comment">%  4. ModulationMethod - 'Unipolar' is the default since hysteresis is usually an issue (see help measrespmat)</span>
+0011 <span class="comment">%  5. If WaitFlag &gt;= 0, then WaitFlag is the delay before measuring the tune (sec)</span>
+0012 <span class="comment">%                 = -3, then a delay of getfamilydata('TuneDelay') is used {Default}</span>
+0013 <span class="comment">%                 = -4, then pause until keyboard input</span>
+0014 <span class="comment">%                 = -5, then input the tune measurement manually by keyboard input</span>
+0015 <span class="comment">%  6. Optional input to change the default filename and directory</span>
+0016 <span class="comment">%     FileName - Filename for the response matrix data</span>
+0017 <span class="comment">%                (No input or empty means data will be saved to the default file (except for model response matrices))</span>
+0018 <span class="comment">%     DirectoryName - Directory name to store the response matrix data file</span>
+0019 <span class="comment">%     Note: a. FileName can include the path if DirectoryName is not used</span>
+0020 <span class="comment">%           b. For model response matrices, FileName must exist for a file save</span>
+0021 <span class="comment">%           c. When using the default FileName, a dialog box will prompt for changes</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  7. ExtraDelay - extra time delay [seconds] after a setpoint change</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">%  8. 'Struct' will return a response matrix structure</span>
+0026 <span class="comment">%     'Numeric' will return a matrix output {Default}</span>
+0027 <span class="comment">%     'Matrix'  - Return a matrix output {Default}</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">%                 Note: 'Matrix' is only a valid flag for Numeric outputs</span>
+0030 <span class="comment">%                 Often use with the model input.  For example, to compare the model</span>
+0031 <span class="comment">%                 tune response matrix to the default matrix,</span>
+0032 <span class="comment">%                 Mmodel = meastuneresp('Model','Matrix');</span>
+0033 <span class="comment">%                 Mmeas  = gettuneresp;</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">%  9. Optional override of the units:</span>
+0036 <span class="comment">%     'Physics'  - Use physics  units</span>
+0037 <span class="comment">%     'Hardware' - Use hardware units</span>
+0038 <span class="comment">%</span>
+0039 <span class="comment">%  10. Optional override of the mode:</span>
+0040 <span class="comment">%      'Online'    - Set/Get data online</span>
+0041 <span class="comment">%      'Model'     - Get the model chromaticity directly from AT (uses modeltune)</span>
+0042 <span class="comment">%      'Simulator' - Set/Get data on the simulated accelerator using AT (ie, same commands as 'Online')</span>
+0043 <span class="comment">%      'Manual'    - Set/Get data manually</span>
+0044 <span class="comment">%</span>
+0045 <span class="comment">%  11. 'Display'    - Prints status information to the command window {Default}</span>
+0046 <span class="comment">%      'NoDisplay'  - Nothing is printed to the command window</span>
+0047 <span class="comment">%</span>
+0048 <span class="comment">%  12. 'Archive' - Save the response matrix structure {Default, unless Mode='Model'}</span>
+0049 <span class="comment">%      'NoArchive' - Save the response matrix structure</span>
+0050 <span class="comment">%</span>
+0051 <span class="comment">%  OUTPUTS</span>
+0052 <span class="comment">%  R = Response matrix from delta quadrupole to delta tune</span>
+0053 <span class="comment">%</span>
+0054 <span class="comment">%      If more than one quadrupole family is input, the R is a cell array indexed by</span>
+0055 <span class="comment">%      quadrupole family (ie, the number of families in ActuatorFamily).  The default</span>
+0056 <span class="comment">%      is to make R{1} Q7 and R{2} Q9.  R{1} or R.Data for structure output</span>
+0057 <span class="comment">%      is a 2x(number of quadrupole in family) array.  The first row is horizontal</span>
+0058 <span class="comment">%      tuen and the second is vertical.</span>
+0059 <span class="comment">%</span>
+0060 <span class="comment">%      Units: delta(Tune) / delta(Quadrupole) is set by the .Units field for the quadrupole family</span>
+0061 <span class="comment">%             Typically:  Hardware units:  fractional tune / Amp;</span>
+0062 <span class="comment">%                         Physics  units:  fractional tune / K;</span>
+0063 <span class="comment">%</span>
+0064 <span class="comment">%  EXAMPLES</span>
+0065 <span class="comment">%  1. Gets 2x2 tune response matrix using the 2 default families</span>
+0066 <span class="comment">%     meastuneresp('Display')</span>
+0067 <span class="comment">%  2. For all quad in model</span>
+0068 <span class="comment">%     RTune = meastuneresp({'Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10'}, 'Model')</span>
+0069 <span class="comment">%</span>
+0070 <span class="comment">%  NOTES</span>
+0071 <span class="comment">%  1. 'Physics' does not work at SOLEIL since polynomial fit does not work for small current !!!</span>
+0072 <span class="comment">%</span>
+0073 <span class="comment">%  See Also gettune, steptune, settune</span>
+0074 
+0075 
+0076 <span class="comment">%</span>
+0077 <span class="comment">%  Written by Gregory Portmann and Jeff Corbett</span>
+0078 
+0079 
+0080 <span class="comment">% Initialize</span>
+0081 ActuatorFamily = <a href="findmemberof.html" class="code" title="function  FamilyName = findmemberof(MemberString, Field)">findmemberof</a>(<span class="string">'Tune Corrector'</span>)';
+0082 <span class="keyword">if</span> isempty(ActuatorFamily)
+0083     ActuatorFamily = {<span class="string">'Q7'</span>,<span class="string">'Q9'</span>};
+0084 <span class="keyword">end</span>
+0085 
+0086 <span class="comment">%ActuatorDelta = {getfamilydata('Q9','Setpoint','DeltaRespMat'),getfamilydata('Q10','Setpoint','DeltaRespMat')};</span>
+0087 ActuatorDelta = {1,1};
+0088 
+0089 ModulationMethod = <span class="string">'unipolar'</span>;
+0090 DirectoryName = [];
+0091 WaitFlag = 10;
+0092 ExtraDelay = 0; 
+0093 StructOutputFlag = 0;
+0094 MatrixFlag = 1;
+0095 DisplayFlag = 1;
+0096 ArchiveFlag = -1;
+0097 FileName = -1;
+0098 ModeFlag = <span class="string">''</span>;  <span class="comment">% model, online, manual, or '' for default mode</span>
+0099 UnitsFlag = <span class="string">''</span>; <span class="comment">% hardware, physics, or '' for default units</span>
+0100 TimeStamp = clock;
+0101 
+0102 InputFlags = {};
+0103 <span class="keyword">for</span> i = length(varargin):-1:1
+0104     <span class="keyword">if</span> isstruct(varargin{i})
+0105         <span class="comment">% Ignore structures</span>
+0106     <span class="keyword">elseif</span> iscell(varargin{i})
+0107         <span class="comment">% Ignore cells</span>
+0108     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Struct'</span>)
+0109         StructOutputFlag = 1;
+0110         MatrixFlag = 0;
+0111         varargin(i) = [];
+0112     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Numeric'</span>)
+0113         StructOutputFlag = 0;
+0114         NumericOutputFlag = 1;
+0115         varargin(i) = [];
+0116     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Matrix'</span>)
+0117         MatrixFlag = 1;
+0118         StructOutputFlag = 0;
+0119         NumericOutputFlag = 1;
+0120         varargin(i) = [];
+0121     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Archive'</span>)
+0122         ArchiveFlag = 1;
+0123         <span class="keyword">if</span> length(varargin) &gt; i
+0124             <span class="comment">% Look for a filename as the next input</span>
+0125             <span class="keyword">if</span> ischar(varargin{i+1})
+0126                 FileName = varargin{i+1};
+0127                 varargin(i+1) = [];
+0128             <span class="keyword">end</span>
+0129         <span class="keyword">end</span>
+0130         varargin(i) = [];
+0131     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoArchive'</span>)
+0132         ArchiveFlag = 0;
+0133         varargin(i) = [];
+0134     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'unipolar'</span>)
+0135         ModulationMethod = <span class="string">'unipolar'</span>;
+0136         varargin(i) = [];
+0137     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'bipolar'</span>)
+0138         ModulationMethod = <span class="string">'bipolar'</span>;
+0139         varargin(i) = [];
+0140     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Model'</span>)
+0141         ModeFlag = varargin{i};
+0142         InputFlags = [InputFlags varargin(i)];
+0143         varargin(i) = [];
+0144     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Simulator'</span>)
+0145         ModeFlag = varargin{i};
+0146         InputFlags = [InputFlags varargin(i)];
+0147         varargin(i) = [];
+0148     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Online'</span>)
+0149         ModeFlag = varargin{i};
+0150         InputFlags = [InputFlags varargin(i)];
+0151         varargin(i) = [];
+0152     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Manual'</span>)
+0153         ModeFlag = varargin{i};
+0154         InputFlags = [InputFlags varargin(i)];
+0155         varargin(i) = [];
+0156     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Physics'</span>)
+0157         UnitsFlag = varargin{i};
+0158         InputFlags = [InputFlags varargin(i)];
+0159         varargin(i) = [];
+0160     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Hardware'</span>)
+0161         UnitsFlag = varargin{i};
+0162         InputFlags = [InputFlags varargin(i)];
+0163         varargin(i) = [];
+0164     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoDisplay'</span>)
+0165         DisplayFlag = 0;
+0166         varargin(i) = [];
+0167     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Display'</span>)
+0168         DisplayFlag = 1;
+0169         varargin(i) = [];
+0170     <span class="keyword">end</span>
+0171 <span class="keyword">end</span>
+0172 
+0173 <span class="keyword">if</span> length(varargin) &gt;= 1
+0174     ActuatorFamily = varargin{1};  
+0175 <span class="keyword">end</span>
+0176 
+0177 <span class="keyword">if</span> length(varargin) &gt;= 2
+0178     ActuatorDeviceList = varargin{2};
+0179 <span class="keyword">else</span>
+0180     <span class="keyword">if</span> iscell(ActuatorFamily)
+0181         <span class="keyword">for</span> i = 1:length(ActuatorFamily)
+0182             ActuatorDeviceList{i} = [];
+0183         <span class="keyword">end</span>
+0184     <span class="keyword">else</span>
+0185         ActuatorDeviceList = [];
+0186     <span class="keyword">end</span>
+0187 <span class="keyword">end</span>
+0188 
+0189 <span class="keyword">if</span> length(varargin) &gt;= 3
+0190     ActuatorDelta = varargin{3};  
+0191 <span class="keyword">else</span>
+0192     <span class="keyword">if</span> iscell(ActuatorFamily)
+0193         <span class="keyword">for</span> i = 1:length(ActuatorFamily)
+0194             ActuatorDelta{i} = [];
+0195         <span class="keyword">end</span>
+0196     <span class="keyword">else</span>
+0197         ActuatorDelta = [];
+0198     <span class="keyword">end</span>
+0199 <span class="keyword">end</span>
+0200 
+0201 <span class="comment">% Force to be a cells</span>
+0202 <span class="keyword">if</span> ~iscell(ActuatorFamily)
+0203     ActuatorFamily = {ActuatorFamily};
+0204 <span class="keyword">end</span>
+0205 <span class="keyword">if</span> ~iscell(ActuatorDeviceList)
+0206     ActuatorDeviceList = {ActuatorDeviceList};
+0207 <span class="keyword">end</span>
+0208 <span class="keyword">if</span> ~iscell(ActuatorDelta)
+0209     ActuatorDelta = {ActuatorDelta};
+0210 <span class="keyword">end</span>
+0211 
+0212 <span class="keyword">if</span> length(varargin) &gt;= 4
+0213     ModulationMethod = varargin{4};  
+0214 <span class="keyword">end</span>
+0215 
+0216 <span class="comment">% WaitFlag input</span>
+0217 <span class="keyword">if</span> length(varargin) &gt;= 5
+0218     WaitFlag = varargin{5};
+0219 <span class="keyword">end</span>
+0220 <span class="keyword">if</span> isempty(WaitFlag) || WaitFlag == -3
+0221     WaitFlag = 2.2*<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'TuneDelay'</span>);
+0222 <span class="keyword">end</span>
+0223 <span class="keyword">if</span> isempty(WaitFlag)
+0224     WaitFlag = input(<span class="string">'   Delay for Tune Measurement (Seconds, Keyboard Pause = -4, or Manual Tune Input = -5) = '</span>);
+0225 <span class="keyword">end</span>
+0226 
+0227 <span class="keyword">if</span> length(varargin) &gt;= 6
+0228     FileName = varargin{6};  
+0229 <span class="keyword">end</span>
+0230 <span class="keyword">if</span> length(varargin) &gt;= 7
+0231     <span class="keyword">if</span> isempty(varargin{7})
+0232         <span class="comment">% Use default</span>
+0233         DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'TuneResponse'</span>);
+0234     <span class="keyword">elseif</span> ischar(varargin{7})
+0235         DirectoryName = varargin{7};
+0236     <span class="keyword">else</span>
+0237         <span class="comment">% Empty DirectoryName mean it will only be used if FileName is empty</span>
+0238         DirectoryName = [];
+0239     <span class="keyword">end</span>
+0240 <span class="keyword">end</span>
+0241 
+0242 <span class="comment">% Look for ExtraDelay</span>
+0243 <span class="keyword">if</span> length(varargin) &gt;= 8
+0244     <span class="keyword">if</span> isempty(varargin{8})
+0245         <span class="comment">% Use default</span>
+0246     <span class="keyword">end</span>
+0247     <span class="keyword">if</span> isnumeric(varargin{8})
+0248         ExtraDelay = varargin{8};
+0249     <span class="keyword">end</span>
+0250 <span class="keyword">end</span>
+0251 
+0252 
+0253 <span class="comment">% % Check units (default units is based on the actuator)</span>
+0254 <span class="comment">% if isempty(UnitsFlag)</span>
+0255 <span class="comment">%     UnitsFlag = getfamilydata(ActuatorFamily{1},'Setpoint','Units');</span>
+0256 <span class="comment">% end</span>
+0257 <span class="comment">% if isempty(UnitsFlag)</span>
+0258 <span class="comment">%     error('Unknown Units');</span>
+0259 <span class="comment">% end</span>
+0260 
+0261 <span class="comment">% % Check mode</span>
+0262 <span class="comment">% if isempty(ModeFlag)</span>
+0263 <span class="comment">%     ModeFlag = getfamilydata(ActuatorFamily{1},'Setpoint','Mode');</span>
+0264 <span class="comment">% end</span>
+0265 <span class="comment">% if isempty(ModeFlag)</span>
+0266 <span class="comment">%     error('Unknown Mode');</span>
+0267 <span class="comment">% end</span>
+0268 
+0269 
+0270 <span class="comment">% Change defaults for the model (note: simulator mode mimics online)</span>
+0271 <span class="keyword">if</span> strcmpi(ModeFlag,<span class="string">'Model'</span>)
+0272     <span class="comment">% Only archive data if ArchiveFlag==1 or FileName~=[]</span>
+0273     <span class="keyword">if</span> ischar(FileName) || ArchiveFlag == 1
+0274         ArchiveFlag = 1;    
+0275     <span class="keyword">else</span>
+0276         ArchiveFlag = 0;            
+0277     <span class="keyword">end</span>
+0278     
+0279     <span class="comment">% Only display is it was turned on at the command line</span>
+0280     <span class="keyword">if</span> DisplayFlag == 1
+0281         <span class="comment">% Keep DisplayFlag = 1</span>
+0282     <span class="keyword">else</span>
+0283         DisplayFlag = 0;
+0284     <span class="keyword">end</span>
+0285 <span class="keyword">else</span>
+0286     <span class="comment">% Online or Simulator: Archive unless ArchiveFlag was forced to zero</span>
+0287     <span class="keyword">if</span> ArchiveFlag ~= 0
+0288         ArchiveFlag = 1;  
+0289         <span class="keyword">if</span> FileName == -1
+0290             FileName = <span class="string">''</span>;
+0291         <span class="keyword">end</span>
+0292     <span class="keyword">end</span>
+0293 <span class="keyword">end</span>
+0294 
+0295 
+0296 <span class="comment">% Print setup information</span>
+0297 <span class="comment">% if DisplayFlag</span>
+0298 <span class="comment">%     if ~strcmpi(ModeFlag,'Model')</span>
+0299 <span class="comment">%         fprintf('\n');</span>
+0300 <span class="comment">%         fprintf('   MEASTUNERESP measures the tune response to the quadrupole magnet families.\n');</span>
+0301 <span class="comment">%         fprintf('   The storage ring lattice and hardware should be setup for properly.\n');</span>
+0302 <span class="comment">%         fprintf('   Make sure the following information is correct:\n');</span>
+0303 <span class="comment">%         fprintf('   1.  Proper magnet lattice (including skew quadrupoles)\n');</span>
+0304 <span class="comment">%         fprintf('   2.  Proper electron beam energy\n');</span>
+0305 <span class="comment">%         fprintf('   3.  Proper electron bunch pattern\n');</span>
+0306 <span class="comment">%         fprintf('   4.  Tune is functioning or in manual mode\n');</span>
+0307 <span class="comment">%         fprintf('   5.  The injection bump magnets off\n\n');</span>
+0308 <span class="comment">%     end</span>
+0309 <span class="comment">% end</span>
+0310 
+0311 
+0312 <span class="comment">% Browse for filename and directory if using default FileName</span>
+0313 <span class="keyword">if</span> ArchiveFlag
+0314     <span class="keyword">if</span> isempty(FileName)
+0315         FileName = appendtimestamp(<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Default'</span>, <span class="string">'TuneRespFile'</span>));
+0316         DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'TuneResponse'</span>);
+0317         <span class="keyword">if</span> isempty(DirectoryName)
+0318             DirectoryName = [<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>) <span class="string">'Response'</span>, filesep, <span class="string">'Dispersion'</span>, filesep];
+0319         <span class="keyword">else</span>
+0320             <span class="comment">% Make sure default directory exists</span>
+0321             DirStart = pwd;
+0322             [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0323             cd(DirStart);
+0324         <span class="keyword">end</span>
+0325         [FileName, DirectoryName] = uiputfile(<span class="string">'*.mat'</span>, <span class="string">'Select a Dispersion Response File'</span>, [DirectoryName FileName]);
+0326         <span class="keyword">if</span> FileName == 0 
+0327             ArchiveFlag = 0;
+0328             disp(<span class="string">'   Dispersion response measurement canceled.'</span>);
+0329             Rmat = []; OutputFileName=<span class="string">''</span>;
+0330             <span class="keyword">return</span>
+0331         <span class="keyword">end</span>
+0332         FileName = [DirectoryName, FileName];
+0333     <span class="keyword">elseif</span> FileName == -1
+0334         FileName = appendtimestamp(<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Default'</span>, <span class="string">'TuneRespFile'</span>));
+0335         DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'TuneResponse'</span>);
+0336         <span class="keyword">if</span> isempty(DirectoryName)
+0337             DirectoryName = [<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>) <span class="string">'Response'</span>, filesep, <span class="string">'Dispersion'</span>, filesep];
+0338         <span class="keyword">end</span>
+0339         FileName = [DirectoryName, FileName];
+0340     <span class="keyword">end</span>
+0341     
+0342     <span class="comment">% Acquire initial data</span>
+0343     MachineConfig = <a href="getmachineconfig.html" class="code" title="function [ConfigSetpoint, ConfigMonitor, FileName] = getmachineconfig(varargin)">getmachineconfig</a>(InputFlags{:});
+0344 <span class="keyword">end</span>
+0345 
+0346 
+0347 <span class="comment">% % Query to begin measurement</span>
+0348 <span class="comment">% if DisplayFlag</span>
+0349 <span class="comment">%     tmp = questdlg('Begin response matrix measurement?','MEASTUNERESP','YES','NO','YES');</span>
+0350 <span class="comment">%     if strcmp(tmp,'NO')</span>
+0351 <span class="comment">%         fprintf('   Response matrix measurement aborted\n');</span>
+0352 <span class="comment">%         Rmat = [];</span>
+0353 <span class="comment">%         return</span>
+0354 <span class="comment">%     end</span>
+0355 <span class="comment">% end</span>
+0356 
+0357 
+0358 <span class="comment">% Acquire initial data</span>
+0359 <span class="keyword">if</span> StructOutputFlag || ArchiveFlag               
+0360     X = <a href="getx.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getx(varargin)">getx</a>(<span class="string">'struct'</span>, InputFlags{:});
+0361     Y = <a href="gety.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = gety(varargin)">gety</a>(<span class="string">'struct'</span>, InputFlags{:});
+0362 <span class="keyword">end</span>    
+0363 
+0364 
+0365 <span class="comment">% Begin main loop over actuators</span>
+0366 TimeStart = gettime;
+0367 <span class="comment">% TUNE must be a family for this to work</span>
+0368 <span class="keyword">if</span> DisplayFlag
+0369     Rmat = <a href="measrespmat.html" class="code" title="function S = measrespmat(varargin)">measrespmat</a>(<span class="string">'TUNE'</span>, [1;2], ActuatorFamily, ActuatorDeviceList, ActuatorDelta, ModulationMethod, WaitFlag, ExtraDelay, <span class="string">'Struct'</span>, <span class="string">'Display'</span>, InputFlags{:});
+0370 <span class="keyword">else</span>
+0371     Rmat = <a href="measrespmat.html" class="code" title="function S = measrespmat(varargin)">measrespmat</a>(<span class="string">'TUNE'</span>, [1;2], ActuatorFamily, ActuatorDeviceList, ActuatorDelta, ModulationMethod, WaitFlag, ExtraDelay, <span class="string">'Struct'</span>, <span class="string">'NoDisplay'</span>, InputFlags{:});
+0372 <span class="keyword">end</span>
+0373 <span class="keyword">if</span> StructOutputFlag   
+0374     <span class="keyword">for</span> i = 1:size(Rmat,1)
+0375         <span class="keyword">for</span> j = 1:size(Rmat,2)
+0376             <span class="keyword">if</span> iscell(Rmat)
+0377                 Rmat{i,j}.DataDescriptor = <span class="string">'Tune Response Matrix'</span>;
+0378                 Rmat{i,j}.CreatedBy = <span class="string">'meastuneresp'</span>;
+0379                 
+0380                 Rmat{i,j}.X = X;
+0381                 Rmat{i,j}.Y = Y;
+0382             <span class="keyword">else</span>
+0383                 Rmat(i,j).DataDescriptor = <span class="string">'Tune Response Matrix'</span>;
+0384                 Rmat(i,j).CreatedBy = <span class="string">'meastuneresp'</span>;
+0385                 
+0386                 Rmat(i,j).X = X;
+0387                 Rmat(i,j).Y = Y;
+0388             <span class="keyword">end</span>
+0389         <span class="keyword">end</span>
+0390     <span class="keyword">end</span>
+0391 <span class="keyword">end</span>
+0392 
+0393 
+0394 <span class="comment">% For one family inputs, there is no need for a cell output (probably already done in measrespmat)</span>
+0395 <span class="keyword">if</span> length(Rmat) == 1 &amp;&amp; iscell(Rmat)
+0396     Rmat = Rmat{1};
+0397 <span class="keyword">end</span>
+0398 
+0399 
+0400 <span class="comment">% Save data in the proper directory</span>
+0401 <span class="keyword">if</span> ArchiveFlag || ischar(FileName)
+0402     [DirectoryName, FileName, Ext] = fileparts(FileName);
+0403     DirStart = pwd;
+0404     [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0405     <span class="keyword">if</span> ErrorFlag
+0406         fprintf(<span class="string">'\n   There was a problem getting to the proper directory!\n\n'</span>);
+0407     <span class="keyword">end</span>
+0408     save(FileName, <span class="string">'Rmat'</span>,<span class="string">'MachineConfig'</span>);
+0409     cd(DirStart);
+0410     OutputFileName = [DirectoryName, FileName, <span class="string">'.mat'</span>];
+0411     
+0412     <span class="keyword">if</span> DisplayFlag
+0413         fprintf(<span class="string">'   Tune response matrix data (''Rmat'') saved to disk\n'</span>);
+0414         fprintf(<span class="string">'   Filename: %s\n'</span>, OutputFileName);
+0415         fprintf(<span class="string">'   The total response matrix measurement time: %.2f minutes.\n'</span>, (gettime-TimeStart)/60);
+0416     <span class="keyword">end</span>
+0417 <span class="keyword">end</span>
+0418 
+0419 
+0420 <span class="comment">% Put the data part in Rmat</span>
+0421 <span class="keyword">if</span> ~StructOutputFlag
+0422     <span class="keyword">if</span> length(ActuatorFamily) == 1
+0423         Rmat = Rmat.Data;
+0424     <span class="keyword">else</span>
+0425         <span class="keyword">for</span> i = 1:size(Rmat,1)
+0426             <span class="keyword">for</span> j = 1:size(Rmat,2)
+0427                 Rmat{i,j} = Rmat{i,j}.Data;
+0428             <span class="keyword">end</span>
+0429         <span class="keyword">end</span>
+0430     <span class="keyword">end</span>
+0431 <span class="keyword">end</span>
+0432 
+0433 <span class="keyword">if</span> MatrixFlag &amp;&amp; StructOutputFlag
+0434     error(<span class="string">'Cannot ask for a matrix and a structure output.'</span>);
+0435 <span class="keyword">end</span>
+0436 
+0437 
+0438 <span class="keyword">if</span> MatrixFlag
+0439     <span class="keyword">if</span> length(ActuatorFamily) == 1
+0440         R = sum(Rmat,2);
+0441     <span class="keyword">else</span>
+0442         <span class="keyword">if</span> size(Rmat,1) == 1
+0443             <span class="keyword">for</span> j = 1:size(Rmat,2)
+0444                 R(:,j) = sum(Rmat{1,j},2);
+0445             <span class="keyword">end</span>
+0446         <span class="keyword">else</span>
+0447             error(<span class="string">'Tune response matrix cell array has more than one row (which is very odd)'</span>);
+0448         <span class="keyword">end</span>
+0449     <span class="keyword">end</span>
+0450     Rmat = R;
+0451 <span class="keyword">end</span>
+0452 
+0453 
+0454 
+0455 
+0456 
+0457 <span class="comment">% % TUNE is not a family, then use gettune</span>
+0458 <span class="comment">%</span>
+0459 <span class="comment">% % Force to be a column vector</span>
+0460 <span class="comment">% % ActuatorDelta = {getfamilydata('QF','Setpoint','DeltaRespMat'),getfamilydata('QD','Setpoint','DeltaRespMat')};</span>
+0461 <span class="comment">% ActuatorDelta{i} = ActuatorDelta{i}(:);</span>
+0462 <span class="comment">%</span>
+0463 <span class="comment">% Rmat(i).Data = [];</span>
+0464 <span class="comment">% Rmat(i).Monitor.FamilyName = 'TUNE';</span>
+0465 <span class="comment">% Rmat(i).Actuator = getsp(ActuatorFamily{i}, ActuatorDeviceList{i}, 'struct');</span>
+0466 <span class="comment">% Rmat(i).ActuatorDelta = ActuatorDelta{i};</span>
+0467 <span class="comment">% Rmat(i).GeV = bend2gev(InputFlags{:});</span>
+0468 <span class="comment">% Rmat(i).TimeStamp = TimeStamp;</span>
+0469 <span class="comment">% if strcmp(lower(family2units(ActuatorFamily{i},'Setpoint')),'hardware')</span>
+0470 <span class="comment">%     Rmat(i).Units = 'Hardware';</span>
+0471 <span class="comment">%     Rmat(i).UnitsString = '1/Amp';</span>
+0472 <span class="comment">%     Rmat(i).Monitor.Units = 'Hardware';</span>
+0473 <span class="comment">% else</span>
+0474 <span class="comment">%     Rmat(i).Units = 'Physics';</span>
+0475 <span class="comment">%     Rmat(i).UnitsString = '1/K';</span>
+0476 <span class="comment">%     Rmat(i).Monitor.Units = 'Physics';</span>
+0477 <span class="comment">% end</span>
+0478 <span class="comment">% Rmat(i).ModulationMethod = 'Unipolar';</span>
+0479 <span class="comment">% Rmat(i).WaitFlag = WaitFlag;</span>
+0480 <span class="comment">% Rmat(i).DataDescriptor = 'Tune Response Matrix';</span>
+0481 <span class="comment">% Rmat(i).CreatedBy = 'meastuneresp';</span>
+0482 <span class="comment">%</span>
+0483 <span class="comment">% InitActuator = Rmat(i).Actuator.Data;</span>
+0484 <span class="comment">%</span>
+0485 <span class="comment">% % Acquire initial data</span>
+0486 <span class="comment">% if StructOutputFlag</span>
+0487 <span class="comment">%     Rmat(i).X = getx('struct');</span>
+0488 <span class="comment">%     Rmat(i).Y = gety('struct');</span>
+0489 <span class="comment">%     Rmat(i).DCCT = getdcct;</span>
+0490 <span class="comment">% end</span>
+0491 <span class="comment">%</span>
+0492 <span class="comment">% % No actuator change for first point</span>
+0493 <span class="comment">% if DisplayFlag</span>
+0494 <span class="comment">%     fprintf('   Initial actuator value for %s is %+f\n', ActuatorFamily{i}, InitActuator(1));</span>
+0495 <span class="comment">%     fprintf('   No change to actuator');</span>
+0496 <span class="comment">%     drawnow;</span>
+0497 <span class="comment">% end</span>
+0498 <span class="comment">%</span>
+0499 <span class="comment">% % Acquire data</span>
+0500 <span class="comment">% if DisplayFlag</span>
+0501 <span class="comment">%     fprintf(', recording data point #1\n');</span>
+0502 <span class="comment">%     drawnow;</span>
+0503 <span class="comment">% end</span>
+0504 <span class="comment">%</span>
+0505 <span class="comment">% % Wait for tune monitor to have fresh data</span>
+0506 <span class="comment">% if WaitFlag &gt;= 0</span>
+0507 <span class="comment">%     fprintf('   Pausing %f seconds for the tune measurement.\n', WaitFlag);</span>
+0508 <span class="comment">%     sleep(WaitFlag);</span>
+0509 <span class="comment">%     Rmat(i).Monitor = gettune('struct');</span>
+0510 <span class="comment">% elseif WaitFlag == -4</span>
+0511 <span class="comment">%     tmp = input('   Hit return when the tune measurement is ready. ');</span>
+0512 <span class="comment">%     Rmat(i).Monitor = gettune('struct');</span>
+0513 <span class="comment">% elseif WaitFlag == -5</span>
+0514 <span class="comment">%     Rmat(i).Monitor.Data(1,1) = input('      Input the horizontal tune = ');</span>
+0515 <span class="comment">%     Rmat(i).Monitor.Data(2,1) = input('      Input the  vertical  tune = ');</span>
+0516 <span class="comment">%     Rmat(i).Monitor.DeviceList = [1 1;1 2];</span>
+0517 <span class="comment">%     Rmat(i).Monitor.ElementList = [1; 2];</span>
+0518 <span class="comment">%     Rmat(i).Monitor.Field = 'Monitor';</span>
+0519 <span class="comment">%     Rmat(i).Monitor.Status = [1;1];</span>
+0520 <span class="comment">%     Rmat(i).Monitor.Mode: 'Unknown';</span>
+0521 <span class="comment">%     Rmat(i).Monitor.t = 0;</span>
+0522 <span class="comment">%     Rmat(i).Monitor.tout = NaN;</span>
+0523 <span class="comment">%     Rmat(i).Monitor.TimeStamp = clock;</span>
+0524 <span class="comment">%     Rmat(i).Monitor.Units = 'Unknown';</span>
+0525 <span class="comment">%     Rmat(i).Monitor.UnitsString = 'Fractional Tune';</span>
+0526 <span class="comment">%     Rmat(i).Monitor.DataDescriptor = 'Tune';</span>
+0527 <span class="comment">%     CreatedBy = 'gettune';</span>
+0528 <span class="comment">% else</span>
+0529 <span class="comment">%     error('Tune delay method unknown');</span>
+0530 <span class="comment">% end</span>
+0531 <span class="comment">% TuneMinus = Rmat(i).Monitor.Data;</span>
+0532 <span class="comment">%</span>
+0533 <span class="comment">% % Step actuator up</span>
+0534 <span class="comment">% if DisplayFlag</span>
+0535 <span class="comment">%     fprintf('\n   Changing actuator by %+f', ActuatorDelta{i}(1));</span>
+0536 <span class="comment">%     drawnow;</span>
+0537 <span class="comment">% end</span>
+0538 <span class="comment">% setsp(ActuatorFamily{i}, InitActuator+ActuatorDelta{i}, ActuatorDeviceList{i}, WaitFlag);</span>
+0539 <span class="comment">%</span>
+0540 <span class="comment">% % Acquire data</span>
+0541 <span class="comment">% if DisplayFlag</span>
+0542 <span class="comment">%     fprintf(', recording data point #2\n');</span>
+0543 <span class="comment">%     drawnow;</span>
+0544 <span class="comment">% end</span>
+0545 <span class="comment">%</span>
+0546 <span class="comment">% % Wait for tune monitor to have fresh data</span>
+0547 <span class="comment">% if WaitFlag &gt;= 0</span>
+0548 <span class="comment">%     fprintf('   Pausing %f seconds for the tune measurement.\n', WaitFlag);</span>
+0549 <span class="comment">%     sleep(WaitFlag);</span>
+0550 <span class="comment">%     TunePlus = gettune;</span>
+0551 <span class="comment">% elseif WaitFlag == -4</span>
+0552 <span class="comment">%     tmp = input('   Hit return when the tune measurement is ready. ');</span>
+0553 <span class="comment">%     TunePlus = gettune;</span>
+0554 <span class="comment">% elseif WaitFlag == -5</span>
+0555 <span class="comment">%     TunePlus(1,2) = input('      Input the horizontal tune = ');</span>
+0556 <span class="comment">%     TunePlus(2,2) = input('      Input the  vertical  tune = ');</span>
+0557 <span class="comment">% else</span>
+0558 <span class="comment">%     error('Tune delay method unknown');</span>
+0559 <span class="comment">% end</span>
+0560 <span class="comment">%</span>
+0561 <span class="comment">% % Restore actuators</span>
+0562 <span class="comment">% setsp(ActuatorFamily{i}, InitActuator, ActuatorDeviceList{i}, WaitFlag);</span>
+0563 <span class="comment">% if DisplayFlag</span>
+0564 <span class="comment">%     fprintf('   Reset actuator %s \n\n', ActuatorFamily{i});</span>
+0565 <span class="comment">%     drawnow;</span>
+0566 <span class="comment">% end</span>
+0567 <span class="comment">%</span>
+0568 <span class="comment">% % Compute response matrix columns</span>
+0569 <span class="comment">% % For each magnet:  1. Divide by the change in amperes [Tune / Ampere]</span>
+0570 <span class="comment">% %                   2. Scale each magnet by its fractional contribution in physics units</span>
+0571 <span class="comment">% if strcmp(lower(family2units(ActuatorFamily{i},'Setpoint')),'hardware')</span>
+0572 <span class="comment">%     DeltaPhysics = hw2physics(ActuatorFamily{i}, 'Setpoint', InitActuator+ActuatorDelta{i}, ActuatorDeviceList{i}) - hw2physics(ActuatorFamily{i}, 'Setpoint', InitActuator, ActuatorDeviceList{i});</span>
+0573 <span class="comment">% else</span>
+0574 <span class="comment">%     DeltaPhysics = ActuatorDelta{i};</span>
+0575 <span class="comment">% end</span>
+0576 <span class="comment">%</span>
+0577 <span class="comment">% % In order to backout the tune response at each magnet, assume that</span>
+0578 <span class="comment">% % the tune response at each magnet is equal in physics units.</span>
+0579 <span class="comment">% DelTunePerK = (TunePlus-TuneMinus) / sum(DeltaPhysics);</span>
+0580 <span class="comment">%</span>
+0581 <span class="comment">% % Expand to each magnet</span>
+0582 <span class="comment">% Rmat(i).Data = DelTunePerK * ones(1,length(DeltaPhysics));</span>
+0583 <span class="comment">%</span>
+0584 <span class="comment">% % When in hardware unit convert to delta tune / ampere</span>
+0585 <span class="comment">% if strcmp(lower(family2units(ActuatorFamily{i},'Setpoint')),'hardware')</span>
+0586 <span class="comment">%     KPerAmp = DeltaPhysics ./ ActuatorDelta{i};</span>
+0587 <span class="comment">%     for j = 1:length(DeltaPhysics)</span>
+0588 <span class="comment">%         Rmat(i).Data(:,j) = KPerAmp(j) * Rmat(i).Data(:,j);</span>
+0589 <span class="comment">%     end</span>
+0590 <span class="comment">% end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

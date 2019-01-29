@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of fmap_solamor2</title>
+  <meta name="keywords" content="fmap_solamor2">
+  <meta name="description" content="function [nux,nuy]=fmap_soleilnu(nx,ny,ax,ay)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="index.html">naffutils</a> &gt; fmap_solamor2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../index.html"><img alt="<" border="0" src="../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils&nbsp;<img alt=">" border="0" src="../../../../../right.png"></a></td></tr></table>-->
+
+<h1>fmap_solamor2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function [nux,nuy]=fmap_soleilnu(nx,ny,ax,ay)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function [nux,nuy,diffu]=fmap_soleilnu(nx,ny,ax,ay) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> function [nux,nuy]=fmap_soleilnu(nx,ny,ax,ay)
+
+ simulates a frequency map using the tracking
+ routine's out of Andrei Terebilos ATtoolbox and
+ Jacques Laskars NAFF algorithm 
+ (calcnaff.mex or calcnaff.dll)
+
+ nux, nuy         are the returned betatron tune values
+ diffu            is the returned diffusion rate
+
+ nx        number of horizontal amplitudes
+ ny        number of vertical amplitudes
+ ax        maximum horizontal amplitude [mm]
+ ay        maximum vertical amplitude [mm]
+
+ Laurent Nadolski, ALS 09/01/02</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [nux,nuy,diffu]=fmap_soleilnu(nx,ny,ax,ay)</a>
+0002 <span class="comment">% function [nux,nuy]=fmap_soleilnu(nx,ny,ax,ay)</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% simulates a frequency map using the tracking</span>
+0005 <span class="comment">% routine's out of Andrei Terebilos ATtoolbox and</span>
+0006 <span class="comment">% Jacques Laskars NAFF algorithm</span>
+0007 <span class="comment">% (calcnaff.mex or calcnaff.dll)</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% nux, nuy         are the returned betatron tune values</span>
+0010 <span class="comment">% diffu            is the returned diffusion rate</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% nx        number of horizontal amplitudes</span>
+0013 <span class="comment">% ny        number of vertical amplitudes</span>
+0014 <span class="comment">% ax        maximum horizontal amplitude [mm]</span>
+0015 <span class="comment">% ay        maximum vertical amplitude [mm]</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">% Laurent Nadolski, ALS 09/01/02</span>
+0018 
+0019 pathold = path;
+0020 
+0021 <span class="keyword">if</span> (~findstr(pathold,<span class="string">'matlab\at\accelerator\simulator\element'</span>))
+0022     atinit;
+0023 <span class="keyword">end</span>
+0024 
+0025 solamor2
+0026 radiationoff;
+0027 cavityoff;
+0028 
+0029 
+0030 <span class="comment">%FitTune2([.25,.2],'QF','QD');</span>
+0031 <span class="comment">%FitChrom2([0.4,1.4],'SF','SD');</span>
+0032 <span class="comment">%FitTune2([.25,.2],'QF','QD');</span>
+0033 
+0034 plotbeta;
+0035 
+0036 <span class="comment">% Has to be in 6D tracking mode</span>
+0037 <span class="comment">% [closeOrb] = findorbit6(THERING);</span>
+0038 <span class="comment">% closeOrb</span>
+0039 
+0040 fprintf(<span class="string">'Type any key to continue ...\n'</span>);
+0041 pause;
+0042 
+0043 NT = 1024;
+0044 
+0045 T = ringpass(THERING,[0;0;0;0;0;0],1);
+0046 
+0047 <span class="keyword">for</span> i=1:nx
+0048     ampx = ax*sqrt(i/nx);
+0049     
+0050     <span class="keyword">for</span> j=1:ny
+0051         ampy = ay*sqrt(j/ny);
+0052         sampx = int2str(ampx);
+0053         sampy = int2str(ampy);
+0054         
+0055         fprintf(<span class="string">'amp_x=%g mm, amp_y=%g mm\n'</span>,ampx,ampy);
+0056         
+0057         X0=[ampx/1000 0 ampy/1000 0 0 0]';
+0058         
+0059         clear LOSSFLAG
+0060         cpustart=cputime;
+0061         T = ringpass(THERING,X0,NT,<span class="string">'reuse'</span>);
+0062         cpustop=cputime;
+0063         fprintf(<span class="string">'track time for 1024 turns : %g s\n'</span>,cpustop-cpustart);
+0064         
+0065         
+0066         Tx = T(1,:);
+0067         Txp = T(2,:);
+0068         Ty = T(3,:);
+0069         Typ = T(4,:);
+0070         TE = T(5,:);
+0071         Tphi = T(6,:);
+0072         
+0073         <span class="keyword">if</span> (length(Ty)==1024) &amp; (all(Ty&lt;0.04)) <span class="keyword">...</span>
+0074                 &amp; (~any(isnan(Ty))) &amp; (LOSSFLAG==0)
+0075             
+0076             cpustart=cputime;
+0077             [tmpnux1]=abs(calcnaff(Tx(1:512),Txp(1:512),1)/(2*pi));
+0078             [tmpnuy1]=abs(calcnaff(Ty(1:512),Typ(1:512),1)/(2*pi));
+0079             [tmpnux2]=abs(calcnaff(Tx(513:1024),Txp(513:1024),1)/(2*pi));
+0080             [tmpnuy2]=abs(calcnaff(Ty(513:1024),Typ(513:1024),1)/(2*pi));
+0081             
+0082             cpustop=cputime;
+0083             fprintf(<span class="string">'NAFF CPU time (4*512 turns) : %g s\n'</span>,cpustop-cpustart);
+0084             
+0085             
+0086             nux(i,j)=0.0; nuy(i,j) = 0.0;
+0087             pampx(i,j)=-1;pampy(i,j)=-1;
+0088             
+0089             
+0090             pampx(i,j)=ampx;
+0091             pampy(i,j)=ampy;
+0092             <span class="keyword">if</span> ((abs(tmpnuy1(1))&gt;0.001) &amp; (abs(tmpnuy1(1)-tmpnux1(1))&gt;0.001))
+0093                 nuy(i,j)=tmpnuy1(1);
+0094             <span class="keyword">else</span>
+0095                 nuy(i,j)=tmpnuy1(2);
+0096             <span class="keyword">end</span>         
+0097             
+0098             <span class="keyword">if</span> (abs(tmpnux1(1))&gt;0.001)
+0099                 nux(i,j)=tmpnux1(1);
+0100             <span class="keyword">else</span>
+0101                 nux(i,j)=tmpnux1(2);
+0102             <span class="keyword">end</span>            
+0103             
+0104             <span class="keyword">if</span> ((abs(tmpnuy2(1))&gt;0.001) &amp; (abs(tmpnuy2(1)-tmpnux2(1))&gt;0.001))
+0105                 nuy2=tmpnuy2(1);
+0106             <span class="keyword">else</span>
+0107                 nuy2=tmpnuy2(2);
+0108             <span class="keyword">end</span>         
+0109             
+0110             <span class="keyword">if</span> (abs(tmpnux2(1))&gt;0.001)
+0111                 nux2=tmpnux2(1);
+0112             <span class="keyword">else</span>
+0113                 nux2=tmpnux2(2);
+0114             <span class="keyword">end</span>            
+0115             
+0116             
+0117             <span class="keyword">if</span> (length(nuy2)==1) &amp; (length(nux2)==1) &amp; (length(nux(i,j))==1) &amp; (length(nuy(i,j))==1)
+0118                 diffu(i,j)=log10(sqrt((tmpnuy2-nuy(i,j))^2+(tmpnux2-nux(i,j))^2)/512);
+0119             <span class="keyword">else</span>
+0120                 diffu(i,j) = -3;
+0121             <span class="keyword">end</span>
+0122             
+0123             <span class="keyword">if</span> (diffu(i,j) &lt; (-10))
+0124                 diffu(i,j) = -10;
+0125             <span class="keyword">end</span>
+0126             
+0127             taxi = ax*sqrt(i/nx);
+0128             taxii = ax*sqrt((i-1)/nx);
+0129             tayj = ay*sqrt(j/ny);
+0130             tayjj = ay*sqrt((j-1)/ny);
+0131             
+0132             <span class="keyword">if</span> (i&gt;1) &amp; (j&gt;1)
+0133                 xpos(:,(i-1)*(ny)+j) = [taxii;taxii;taxi;taxi];
+0134                 ypos(:,(i-1)*(ny)+j) = [tayjj;tayj;tayj;tayjj];
+0135             <span class="keyword">elseif</span> (i&gt;1)
+0136                 xpos(:,(i-1)*(ny)+j) = [taxii;taxii;taxi;taxi];
+0137                 ypos(:,(i-1)*(ny)+j) = [0;tayj;tayj;0];    
+0138             <span class="keyword">elseif</span> (j&gt;1)    
+0139                 xpos(:,(i-1)*(ny)+j) = [0;0;taxi;taxi];
+0140                 ypos(:,(i-1)*(ny)+j) = [tayjj;tayj;tayj;tayjj];
+0141             <span class="keyword">else</span>
+0142                 xpos(:,(i-1)*(ny)+j) = [0;0;taxi;taxi];
+0143                 ypos(:,(i-1)*(ny)+j) = [0;tayj;tayj;0];
+0144             <span class="keyword">end</span>        
+0145             
+0146             nuxpos(:,(i-1)*(ny)+j) = <span class="keyword">...</span>
+0147                 [nux(i,j)-.0001;nux(i,j)-.0001;nux(i,j)+.0001;nux(i,j)+.0001];
+0148             nuypos(:,(i-1)*(ny)+j) = <span class="keyword">...</span>
+0149                 [nuy(i,j)-.0006;nuy(i,j)+.0006;nuy(i,j)+.0006;nuy(i,j)-.0006];
+0150             
+0151             diffuvec(1:4,(i-1)*(ny)+j) = diffu(i,j);
+0152             
+0153             
+0154         <span class="keyword">else</span>
+0155             nux(i,j)=0.0; nuy(i,j)=0.0;
+0156             pampx(i,j)=-1;pampy(i,j)=-1;
+0157             xpos(:,(i-1)*(ny)+j) = [0;0;0;0];            
+0158             ypos(:,(i-1)*(ny)+j) = [0;0;0;0];            
+0159             nuxpos(:,(i-1)*(ny)+j) = [0;0;0;0];
+0160             nuypos(:,(i-1)*(ny)+j) = [0;0;0;0];
+0161             diffu(i,j)=-10;
+0162             diffuvec(1:4,(i-1)*(ny)+j) = [-10;-10;-10;-10];
+0163         <span class="keyword">end</span>
+0164         
+0165         <span class="keyword">if</span> nux(i,j) &amp; nuy(i,j)
+0166             fprintf(<span class="string">'nu_x=%g, nu_y=%g\n'</span>,14+nux(i,j),8+nuy(i,j));
+0167         <span class="keyword">else</span>
+0168             fprintf(<span class="string">'particle lost\n'</span>);
+0169         <span class="keyword">end</span>
+0170         
+0171     <span class="keyword">end</span>
+0172     
+0173     save <span class="string">'freqmap_new'</span> nux nuy diffu nuxpos nuypos xpos ypos diffuvec pampx pampy
+0174     
+0175 <span class="keyword">end</span>
+0176 
+0177 f1=figure;
+0178 plot(18+nux,10+nuy,<span class="string">'b.'</span>);
+0179 axis([18.2 18.5 10.0 10.5]);
+0180 title(<span class="string">'SOLEIL lattice, calculated frequency map (NAFF)'</span>);
+0181 xlabel(<span class="string">'\nu_x'</span>);
+0182 ylabel(<span class="string">'\nu_y'</span>);
+0183 pause(0.1);
+0184 
+0185 <span class="keyword">if</span> min(size(diffu)) &gt; 1
+0186     
+0187     figure;
+0188     fill(xpos,ypos,diffuvec);
+0189     axis([0 ax 0 ay]);
+0190     caxis([-10 -3]);
+0191     hold on;
+0192     shading flat;
+0193     colormap(<span class="string">'jet'</span>);
+0194     colorbar;
+0195     title(<span class="string">'SOLEIL lattice, calculated frequency map (NAFF)'</span>);
+0196     xlabel(<span class="string">'x position [mm] (injection straight)'</span>);
+0197     ylabel(<span class="string">'y position [mm]'</span>);
+0198     hold off;
+0199     
+0200     figure;
+0201     fill(18+nuxpos,10+nuypos,diffuvec);
+0202     axis([18.2 18.5 10.0 10.5]);
+0203     caxis([-10 -3]);
+0204     hold on;
+0205     shading flat;
+0206     colormap(<span class="string">'jet'</span>);
+0207     colorbar;
+0208     title(<span class="string">'SOLEIL lattice, calculated frequency map (NAFF)'</span>);
+0209     xlabel(<span class="string">'\nu_x'</span>);
+0210     ylabel(<span class="string">'\nu_y'</span>);
+0211     hold off;
+0212     
+0213 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

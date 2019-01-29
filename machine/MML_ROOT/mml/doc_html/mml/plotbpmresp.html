@@ -1,0 +1,507 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotbpmresp</title>
+  <meta name="keywords" content="plotbpmresp">
+  <meta name="description" content="PLOTBPMRESP - Plots the orbit response matrix in various ways">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; plotbpmresp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>plotbpmresp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>PLOTBPMRESP - Plots the orbit response matrix in various ways</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function plotbpmresp(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PLOTBPMRESP - Plots the orbit response matrix in various ways
+  plotbpmresp
+
+  INPUTS
+  1. 'Absolute' {Default} or 'Error' (subtract the model)
+  2. PlotType: '3D', 'Rows', 'Columns', 'CMSpace', 'BPMSpace'  {Default: '3D'}
+  3. Plane:   'All', 'xx', 'x{y,z}', '{y,z}x', '{yy,zz}'  {Default: 'All' for '3D', else 'xx'}
+  4. Filename (or '' for a dialog box)
+
+  NOTE
+  1. PlotType = 'Rows' or 'Columns' can take a long time to generate
+  2. 'ColumnSpace' and 'BPMSpace' are the same
+     'RowSpace' and 'CMSpace' are the same
+  3. Plane = 'All' can only be used on PlotType = '3D'
+  4. Use popplot to expand a subplot to full size.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>	GETBPMRESP - Returns the BPM response matrix in the horizontal and vertical planes</li><li><a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>	GETSPOS - Returns the longitudinal position in meters</li><li><a href="measbpmresp.html" class="code" title="function [Rmat, OutputFileName] = measbpmresp(varargin)">measbpmresp</a>	MEASBPMRESP - Measures the BPM response matrix in the horizontal and vertical planes</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="measlocodata.html" class="code" title="function measlocodata(varargin)">measlocodata</a>	MEASLOCODATA - Measures a set of LOCO data</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotbpmresp(varargin)</a>
+0002 <span class="comment">%PLOTBPMRESP - Plots the orbit response matrix in various ways</span>
+0003 <span class="comment">%  plotbpmresp</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. 'Absolute' {Default} or 'Error' (subtract the model)</span>
+0007 <span class="comment">%  2. PlotType: '3D', 'Rows', 'Columns', 'CMSpace', 'BPMSpace'  {Default: '3D'}</span>
+0008 <span class="comment">%  3. Plane:   'All', 'xx', 'x{y,z}', '{y,z}x', '{yy,zz}'  {Default: 'All' for '3D', else 'xx'}</span>
+0009 <span class="comment">%  4. Filename (or '' for a dialog box)</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  NOTE</span>
+0012 <span class="comment">%  1. PlotType = 'Rows' or 'Columns' can take a long time to generate</span>
+0013 <span class="comment">%  2. 'ColumnSpace' and 'BPMSpace' are the same</span>
+0014 <span class="comment">%     'RowSpace' and 'CMSpace' are the same</span>
+0015 <span class="comment">%  3. Plane = 'All' can only be used on PlotType = '3D'</span>
+0016 <span class="comment">%  4. Use popplot to expand a subplot to full size.</span>
+0017 
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  Written by Gregory J. Portmann</span>
+0020 <span class="comment">%  Adapted by Laurent S. Nadolski</span>
+0021 
+0022 
+0023 R = <span class="string">''</span>;
+0024 PlotType = <span class="string">'3D'</span>;
+0025 Plane = <span class="string">'All'</span>;
+0026 ErrorFlag = 0;
+0027 
+0028 
+0029 <span class="comment">% Input parsing</span>
+0030 <span class="keyword">for</span> i = length(varargin):-1:1
+0031     <span class="keyword">if</span> isstruct(varargin{i})
+0032         <span class="comment">% Response matrix</span>
+0033         R = varargin(i);
+0034         varargin(i) = [];
+0035     <span class="keyword">elseif</span> iscell(varargin{i})
+0036         <span class="comment">% Just remove</span>
+0037         varargin(i) = [];
+0038     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'Absolute'</span>,<span class="string">'Abs'</span>}))
+0039         ErrorFlag = 0;
+0040         varargin(i) = [];
+0041     <span class="keyword">elseif</span> strcmpi(varargin(i),<span class="string">'Error'</span>)
+0042         ErrorFlag = 1;
+0043         varargin(i) = [];
+0044     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'3D'</span>}))
+0045         PlotType = <span class="string">'3D'</span>;
+0046         varargin(i) = [];
+0047     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'Row'</span>,<span class="string">'Rows'</span>}))
+0048         PlotType = <span class="string">'Rows'</span>;
+0049         varargin(i) = [];
+0050     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'Col'</span>,<span class="string">'Cols'</span>,<span class="string">'Column'</span>,<span class="string">'Columns'</span>}))
+0051         PlotType = <span class="string">'Columns'</span>;
+0052         varargin(i) = [];
+0053     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'RowSpace'</span>,<span class="string">'CMSpace'</span>}))
+0054         PlotType = <span class="string">'CMSpace'</span>;
+0055         varargin(i) = [];
+0056     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'ColumnSpace'</span>,<span class="string">'BPMSpace'</span>}))
+0057         PlotType = <span class="string">'BPMSpace'</span>;
+0058         varargin(i) = [];
+0059     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'x'</span>,<span class="string">'xx'</span>,<span class="string">'horizontal'</span>}))
+0060         Plane = <span class="string">'xx'</span>;
+0061         varargin(i) = [];
+0062     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'y'</span>,<span class="string">'yy'</span>,<span class="string">'z'</span>,<span class="string">'zz'</span>,<span class="string">'vertical'</span>}))
+0063         Plane = <span class="string">'yy'</span>;
+0064         varargin(i) = [];
+0065     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'xy'</span>,<span class="string">'xz'</span>}))
+0066         Plane = <span class="string">'xy'</span>;
+0067         varargin(i) = [];
+0068     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'yx'</span>,<span class="string">'zx'</span>}))
+0069         Plane = <span class="string">'yx'</span>;
+0070         varargin(i) = [];
+0071     <span class="keyword">elseif</span> any(strcmpi(varargin(i),{<span class="string">'All'</span>}))
+0072         Plane = <span class="string">'All'</span>;
+0073         varargin(i) = [];
+0074     <span class="keyword">elseif</span> ischar(varargin{i})
+0075         <span class="comment">% Filename</span>
+0076         R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'FileName'</span>, varargin{i}, <span class="string">'Struct'</span>, <span class="string">'NoEnergyScaling'</span>);
+0077         varargin(i) = [];
+0078     <span class="keyword">end</span>
+0079 <span class="keyword">end</span>
+0080 
+0081 
+0082 <span class="keyword">if</span> isempty(R)
+0083     R = <a href="getbpmresp.html" class="code" title="function [S, FileName] = getbpmresp(varargin)">getbpmresp</a>(<span class="string">'Struct'</span>, <span class="string">'NoEnergyScaling'</span>);
+0084 <span class="keyword">end</span>
+0085 <span class="keyword">if</span> isempty(R)
+0086     fprintf(<span class="string">'   Response matrix not found.\n'</span>);
+0087     <span class="keyword">return</span>;
+0088 <span class="keyword">end</span>
+0089 
+0090 
+0091 <span class="keyword">if</span> ErrorFlag
+0092     <span class="comment">% Plot the difference between the measured and model</span>
+0093     m = <a href="measbpmresp.html" class="code" title="function [Rmat, OutputFileName] = measbpmresp(varargin)">measbpmresp</a>(<span class="string">'Model'</span>,<span class="string">'Struct'</span>);
+0094     R(1,1).Data = R(1,1).Data - m(1,1).Data;
+0095     R(1,2).Data = R(1,2).Data - m(1,2).Data;
+0096     R(2,1).Data = R(2,1).Data - m(2,1).Data;
+0097     R(2,2).Data = R(2,2).Data - m(2,2).Data;
+0098 <span class="keyword">end</span>
+0099 
+0100 
+0101 hfig = gcf;
+0102 clf reset
+0103 
+0104 <span class="keyword">if</span> strcmpi(PlotType, <span class="string">'3D'</span>)
+0105 
+0106     <span class="comment">% 3-D response matrix plot</span>
+0107     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'All'</span>)
+0108         surf([R(1,1).Data R(1,2).Data; R(2,1).Data R(2,2).Data]);
+0109         xlabel(<span class="string">'CM Number'</span>);
+0110         ylabel(<span class="string">'BPM Number'</span>);
+0111         <span class="keyword">if</span> isfield(R(1,1),<span class="string">'UnitsString'</span>)
+0112             zlabel(R(1,1).UnitsString);
+0113         <span class="keyword">end</span>
+0114     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xx'</span>)
+0115         surf([R(1,1).Data]);
+0116         xlabel(<span class="string">'HCM Number'</span>);
+0117         ylabel(<span class="string">'BPMx Number'</span>);
+0118         <span class="keyword">if</span> isfield(R(1,1),<span class="string">'UnitsString'</span>)
+0119             zlabel(R(1,1).UnitsString);
+0120         <span class="keyword">end</span>
+0121     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0122         surf([R(1,2).Data]);
+0123         xlabel(<span class="string">'VCM Number'</span>);
+0124         ylabel(<span class="string">'BPMx Number'</span>);
+0125         <span class="keyword">if</span> isfield(R(1,2),<span class="string">'UnitsString'</span>)
+0126             zlabel(R(1,2).UnitsString);
+0127         <span class="keyword">end</span>
+0128     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0129         surf([R(2,1).Data]);
+0130         xlabel(<span class="string">'HCM Number'</span>);
+0131         ylabel(<span class="string">'BPMy Number'</span>);
+0132         <span class="keyword">if</span> isfield(R(2,1),<span class="string">'UnitsString'</span>)
+0133             zlabel(R(2,1).UnitsString);
+0134         <span class="keyword">end</span>
+0135     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0136         surf([R(2,2).Data]);
+0137         xlabel(<span class="string">'VCM Number'</span>);
+0138         ylabel(<span class="string">'BPMy Number'</span>);
+0139         <span class="keyword">if</span> isfield(R(2,2),<span class="string">'UnitsString'</span>)
+0140             zlabel(R(2,2).UnitsString);
+0141         <span class="keyword">end</span>
+0142     <span class="keyword">end</span>
+0143     view(-70, 65);
+0144     addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(R(1,1).TimeStamp)));
+0145 
+0146     <span class="keyword">if</span> ErrorFlag
+0147         <span class="comment">% Measured - Model</span>
+0148         title(<span class="string">'Orbit Response Matrix Error (Measured-Model)'</span>);
+0149     <span class="keyword">else</span>
+0150         <span class="comment">% Absolute response matrix plot</span>
+0151         title(<span class="string">'Orbit Response Matrix'</span>);
+0152     <span class="keyword">end</span>
+0153 
+0154 <span class="keyword">elseif</span> strcmpi(PlotType,<span class="string">'Columns'</span>)
+0155     set(gcf, <span class="string">'Units'</span>, get(0, <span class="string">'Units'</span>));
+0156     Pfig = get(gcf, <span class="string">'Position'</span>);
+0157     set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'ScreenSize'</span>));
+0158 
+0159     NSectors = R(1,1).Monitor.DeviceList(<span class="keyword">end</span>,1);
+0160     NBPMxperSector = max(R(1,1).Monitor.DeviceList(:,2));
+0161     NBPMyperSector = max(R(2,2).Monitor.DeviceList(:,2));
+0162 
+0163     NBPMx = size(R(1,1).Data,1);
+0164     NBPMy = size(R(2,2).Data,1);
+0165 
+0166     NHCMperSector = max(R(1,1).Actuator.DeviceList(:,2));
+0167     NVCMperSector = max(R(2,2).Actuator.DeviceList(:,2));
+0168 
+0169     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0170         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(1,1).Monitor.FamilyName, R(1,1).Monitor.DeviceList);
+0171         <span class="keyword">for</span> i = 1:NSectors
+0172             <span class="keyword">for</span> j = 1:NHCMperSector
+0173                 Index = findrowindex([i j], R(1,1).Actuator.DeviceList);
+0174                 <span class="keyword">if</span> ~isempty(Index)
+0175                     figure(hfig);
+0176                     subplot(NSectors, NHCMperSector, (i-1)*NHCMperSector + j);
+0177                     plot(s, R(1,1).Data(:,Index));
+0178                     <span class="comment">%axis tight</span>
+0179                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0180                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0181                 <span class="keyword">end</span>
+0182             <span class="keyword">end</span>
+0183         <span class="keyword">end</span>
+0184         addlabel(.5, 1, <span class="string">'Horizontal Orbit Response Matrix Columns'</span>,12);
+0185         addlabel(.5, 0, <span class="string">'Horizontal Magnet Device Number'</span>, 10);
+0186 
+0187     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0188         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(1,2).Monitor.FamilyName, R(1,2).Monitor.DeviceList);
+0189         <span class="keyword">for</span> i = 1:NSectors
+0190             <span class="keyword">for</span> j = 1:NVCMperSector
+0191                 Index = findrowindex([i j], R(1,2).Actuator.DeviceList);
+0192                 <span class="keyword">if</span> ~isempty(Index)
+0193                     figure(hfig);
+0194                     subplot(NSectors, NVCMperSector, (i-1)*NVCMperSector + j);
+0195                     plot(s, R(1,2).Data(:,Index));
+0196                     <span class="comment">%axis tight</span>
+0197                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0198                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0199                 <span class="keyword">end</span>
+0200             <span class="keyword">end</span>
+0201         <span class="keyword">end</span>
+0202         addlabel(.5, 1, <span class="string">'Response Matrix Columns:  Horizontal Orbit / Vertical Kick'</span>,12);
+0203         addlabel(.5, 0, <span class="string">'Vertical Magnet Device Number'</span>, 10);
+0204 
+0205     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0206         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(2,1).Monitor.FamilyName, R(2,1).Monitor.DeviceList);
+0207         <span class="keyword">for</span> i = 1:NSectors
+0208             <span class="keyword">for</span> j = 1:NHCMperSector
+0209                 Index = findrowindex([i j], R(2,1).Actuator.DeviceList);
+0210                 <span class="keyword">if</span> ~isempty(Index)
+0211                     figure(hfig);
+0212                     subplot(NSectors, NHCMperSector, (i-1)*NHCMperSector + j);
+0213                     plot(s, R(2,1).Data(:,Index));
+0214                     <span class="comment">%axis tight</span>
+0215                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0216                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0217                 <span class="keyword">end</span>
+0218             <span class="keyword">end</span>
+0219         <span class="keyword">end</span>
+0220         addlabel(.5, 1, <span class="string">'Response Matrix Columns:  Vertical Orbit / Horizontal Kick'</span>,12);
+0221         addlabel(.5, 0, <span class="string">'Horizontal Magnet Device Number'</span>, 10);
+0222 
+0223     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0224         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(2,2).Monitor.FamilyName, R(2,2).Monitor.DeviceList);
+0225         <span class="keyword">for</span> i = 1:NSectors
+0226             <span class="keyword">for</span> j = 1:NVCMperSector
+0227                 Index = findrowindex([i j], R(2,2).Actuator.DeviceList);
+0228                 <span class="keyword">if</span> ~isempty(Index)
+0229                     figure(hfig);
+0230                     subplot(NSectors, NVCMperSector, (i-1)*NVCMperSector + j);
+0231                     plot(s, R(2,2).Data(:,Index));
+0232                     <span class="comment">%axis tight</span>
+0233                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0234                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0235                 <span class="keyword">end</span>
+0236             <span class="keyword">end</span>
+0237         <span class="keyword">end</span>
+0238         addlabel(.5, 1, <span class="string">'Vertical Orbit Response Matrix Columns'</span>,12);
+0239         addlabel(.5, 0, <span class="string">'Vertical Magnet Device Number'</span>, 10);
+0240     <span class="keyword">end</span>
+0241 
+0242     h = addlabel(.02,.5,<span class="string">'Sector Number'</span>,10);
+0243     set(h,<span class="string">'Rotation'</span>,90);
+0244     set(h,<span class="string">'HorizontalAlignment'</span>,<span class="string">'center'</span>);
+0245     set(h,<span class="string">'VerticalAlignment'</span>,<span class="string">'top'</span>);
+0246     addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(R(1,1).TimeStamp)));
+0247     set(gcf,<span class="string">'Position'</span>, Pfig);
+0248 
+0249 <span class="keyword">elseif</span> strcmpi(PlotType,<span class="string">'Rows'</span>)
+0250     set(gcf, <span class="string">'Units'</span>, get(0, <span class="string">'Units'</span>));
+0251     Pfig = get(gcf, <span class="string">'Position'</span>);
+0252     set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'ScreenSize'</span>));
+0253 
+0254     NSectors = R(1,1).Monitor.DeviceList(<span class="keyword">end</span>,1);
+0255     NBPMxperSector = max(R(1,1).Monitor.DeviceList(:,2));
+0256     NBPMyperSector = max(R(2,2).Monitor.DeviceList(:,2));
+0257 
+0258     NBPMx = size(R(1,1).Data,1);
+0259     NBPMy = size(R(2,2).Data,1);
+0260 
+0261     NHCMperSector = max(R(1,1).Actuator.DeviceList(:,2));
+0262     NVCMperSector = max(R(2,2).Actuator.DeviceList(:,2));
+0263 
+0264 
+0265     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0266         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(1,1).Actuator.FamilyName, R(1,1).Actuator.DeviceList);
+0267         <span class="keyword">for</span> i = 1:NSectors
+0268             <span class="keyword">for</span> j = 1:NBPMxperSector
+0269                 Index = findrowindex([i j], R(1,1).Monitor.DeviceList);
+0270                 <span class="keyword">if</span> ~isempty(Index)
+0271                     figure(hfig);
+0272                     subplot(NSectors, NBPMxperSector, (i-1)*NBPMxperSector + j);
+0273                     plot(s, R(1,1).Data(Index,:));
+0274                     <span class="comment">%axis tight</span>
+0275                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0276                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0277                 <span class="keyword">end</span>
+0278             <span class="keyword">end</span>
+0279         <span class="keyword">end</span>
+0280         addlabel(.5,1, <span class="string">'Horizontal Orbit Response Matrix Rows'</span>,12);
+0281         addlabel(.5,0, <span class="string">'Horizontal BPM Device Number'</span>, 10);
+0282 
+0283     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0284         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(1,2).Actuator.FamilyName, R(1,2).Actuator.DeviceList);
+0285         <span class="keyword">for</span> i = 1:NSectors
+0286             <span class="keyword">for</span> j = 1:NBPMxperSector
+0287                 Index = findrowindex([i j], R(1,2).Monitor.DeviceList);
+0288                 <span class="keyword">if</span> ~isempty(Index)
+0289                     figure(hfig);
+0290                     subplot(NSectors, NBPMxperSector, (i-1)*NBPMxperSector + j);
+0291                     plot(s, R(1,2).Data(Index,:));
+0292                     <span class="comment">%axis tight</span>
+0293                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0294                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0295                 <span class="keyword">end</span>
+0296             <span class="keyword">end</span>
+0297         <span class="keyword">end</span>
+0298         addlabel(.5,1, <span class="string">'Response Matrix Rows:  Horizontal Orbit / Vertical Kick'</span>,12);
+0299         addlabel(.5,0, <span class="string">'Horizontal BPM Device Number'</span>, 10);
+0300 
+0301     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0302         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(2,1).Actuator.FamilyName, R(2,1).Actuator.DeviceList);
+0303         <span class="keyword">for</span> i = 1:NSectors
+0304             <span class="keyword">for</span> j = 1:NBPMyperSector
+0305                 Index = findrowindex([i j], R(2,1).Monitor.DeviceList);
+0306                 <span class="keyword">if</span> ~isempty(Index)
+0307                     figure(hfig);
+0308                     subplot(NSectors, NBPMyperSector, (i-1)*NBPMyperSector + j);
+0309                     plot(s, R(2,1).Data(Index,:));
+0310                     <span class="comment">%axis tight</span>
+0311                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0312                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0313                 <span class="keyword">end</span>
+0314             <span class="keyword">end</span>
+0315         <span class="keyword">end</span>
+0316         addlabel(.5,1, <span class="string">'Response Matrix Rows:  Vertical Orbit / Horizontal Kick'</span>,12);
+0317         addlabel(.5,0, <span class="string">'Vertical BPM Device Number'</span>, 10);
+0318 
+0319     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0320         s = <a href="getspos.html" class="code" title="function S = getspos(Family, DeviceList)">getspos</a>(R(2,2).Actuator.FamilyName, R(2,2).Actuator.DeviceList);
+0321         <span class="keyword">for</span> i = 1:NSectors
+0322             <span class="keyword">for</span> j = 1:NBPMyperSector
+0323                 Index = findrowindex([i j], R(2,2).Monitor.DeviceList);
+0324                 <span class="keyword">if</span> ~isempty(Index)
+0325                     figure(hfig);
+0326                     subplot(NSectors, NBPMyperSector, (i-1)*NBPMyperSector + j);
+0327                     plot(s, R(2,2).Data(Index,:));
+0328                     <span class="comment">%axis tight</span>
+0329                     set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0330                     set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0331                 <span class="keyword">end</span>
+0332             <span class="keyword">end</span>
+0333         <span class="keyword">end</span>
+0334         addlabel(.5,1, <span class="string">'Vertical Orbit Response Matrix Rows'</span>,12);
+0335         addlabel(.5,0, <span class="string">'Vertical BPM Device Number'</span>, 10);
+0336     <span class="keyword">end</span>
+0337 
+0338     xaxesposition(1.20);
+0339     yaxesposition(1.20);
+0340     h = addlabel(.02,.5,<span class="string">'Sector Number'</span>,10);
+0341     set(h,<span class="string">'Rotation'</span>,90);
+0342     set(h,<span class="string">'HorizontalAlignment'</span>,<span class="string">'center'</span>);
+0343     set(h,<span class="string">'VerticalAlignment'</span>,<span class="string">'top'</span>);
+0344     addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(R(1,1).TimeStamp)));
+0345     set(gcf,<span class="string">'Position'</span>, Pfig);
+0346     
+0347 <span class="keyword">elseif</span> strcmpi(PlotType,<span class="string">'BPMSpace'</span>)
+0348     set(gcf, <span class="string">'Units'</span>, get(0, <span class="string">'Units'</span>));
+0349     Pfig = get(gcf, <span class="string">'Position'</span>);
+0350     set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'ScreenSize'</span>));
+0351 
+0352     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0353         [U,S,V] = svd(R(1,1).Data, 0);
+0354     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0355         [U,S,V] = svd(R(1,2).Data, 0);
+0356     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0357         [U,S,V] = svd(R(2,1).Data, 0);
+0358     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0359         [U,S,V] = svd(R(2,2).Data, 0);
+0360     <span class="keyword">end</span>
+0361     
+0362     n = 0;
+0363     M = ceil(sqrt(size(U,2)));
+0364     N = ceil(sqrt(size(U,2)));
+0365     <span class="keyword">for</span> i = 1:M
+0366         <span class="keyword">for</span> j = 1:N
+0367             n = n + 1;
+0368             figure(hfig);
+0369             subplot(M, N, n);
+0370             plot(U(:,n));
+0371             axis tight
+0372             set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0373             set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0374             <span class="keyword">if</span> n == size(U,2)
+0375                 <span class="keyword">break</span>
+0376             <span class="keyword">end</span>
+0377         <span class="keyword">end</span>
+0378         <span class="keyword">if</span> n == size(U,2)
+0379             <span class="keyword">break</span>
+0380         <span class="keyword">end</span>
+0381     <span class="keyword">end</span>
+0382 
+0383     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0384         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Horizontal BPM Space (U(%dx%d))'</span>,size(U,1),size(U,2)),12);
+0385     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0386         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Horizontal BPM Cross Space (U(%dx%d))'</span>,size(U,1),size(U,2)),12);
+0387     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0388         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Vertical BPM Cross Space (U(%dx%d))'</span>,size(U,1),size(U,2)),12);
+0389     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0390         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Vertical BPM Space (U(%dx%d))'</span>,size(U,1),size(U,2)),12);
+0391     <span class="keyword">end</span>
+0392 
+0393     addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(R(1,1).TimeStamp)));
+0394     set(gcf,<span class="string">'Position'</span>, Pfig);
+0395 
+0396 <span class="keyword">elseif</span> strcmpi(PlotType,<span class="string">'CMSpace'</span>)
+0397     set(gcf, <span class="string">'Units'</span>, get(0, <span class="string">'Units'</span>));
+0398     Pfig = get(gcf, <span class="string">'Position'</span>);
+0399     set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'ScreenSize'</span>));
+0400 
+0401     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0402         [U,S,V] = svd(R(1,1).Data, 0);
+0403     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0404         [U,S,V] = svd(R(1,2).Data, 0);
+0405     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0406         [U,S,V] = svd(R(2,1).Data, 0);
+0407     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0408         [U,S,V] = svd(R(2,2).Data, 0);
+0409     <span class="keyword">end</span>
+0410     
+0411     n = 0;
+0412     M = ceil(sqrt(size(V,2)));
+0413     N = ceil(sqrt(size(V,2)));
+0414     <span class="keyword">for</span> i = 1:M
+0415         <span class="keyword">for</span> j = 1:N
+0416             n = n + 1;
+0417             figure(hfig);
+0418             subplot(M, N, n);
+0419             plot(V(:,n));
+0420             axis tight
+0421             set(gca,<span class="string">'XTickLabel'</span>,<span class="string">''</span>);
+0422             set(gca,<span class="string">'YTickLabel'</span>,<span class="string">''</span>);
+0423             <span class="keyword">if</span> n == size(V,2)
+0424                 <span class="keyword">break</span>
+0425             <span class="keyword">end</span>
+0426         <span class="keyword">end</span>
+0427         <span class="keyword">if</span> n == size(U,2)
+0428             <span class="keyword">break</span>
+0429         <span class="keyword">end</span>
+0430     <span class="keyword">end</span>
+0431 
+0432     <span class="keyword">if</span> strcmpi(Plane, <span class="string">'xx'</span>) | strcmpi(Plane, <span class="string">'All'</span>)
+0433         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Horizontal Corrector Space (V(%dx%d))'</span>, size(V,1), size(V,2)), 12);
+0434     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'xy'</span>)
+0435         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Vertical Corrector Cross Space (V(%dx%d))'</span>, size(V,1), size(V,2)), 12);
+0436     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yx'</span>)
+0437         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Horizontal Corrector Cross Space (V(%dx%d))'</span>, size(V,1), size(V,2)), 12);
+0438     <span class="keyword">elseif</span> strcmpi(Plane, <span class="string">'yy'</span>)
+0439         addlabel(.5, 1, sprintf(<span class="string">'Singular Vectors Spanning the Vertical Corrector Space (V(%dx%d))'</span>, size(V,1), size(V,2)), 12);
+0440     <span class="keyword">end</span>
+0441 
+0442     addlabel(1,0,sprintf(<span class="string">'%s'</span>, datestr(R(1,1).TimeStamp)));
+0443     set(gcf,<span class="string">'Position'</span>, Pfig);
+0444 
+0445 <span class="keyword">end</span>
+0446 
+0447</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makephysdata</title>
+  <meta name="keywords" content="makephysdata">
+  <meta name="description" content="MAKEPHYSDATA - Make a starting physics data file">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; makephysdata.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>makephysdata
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>MAKEPHYSDATA - Make a starting physics data file</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function makephysdata(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">MAKEPHYSDATA - Make a starting physics data file
+
+  NOTE: MML creators are phasing out the use of physdata.
+
+ NOTES
+1. This just a rountine to be used to create the Physdata file
+   Then the parameter like Golden parameters should be updated
+   using setphydata command. For example, to set the golden H-orbit:
+   setphysdata('BPMx','Golden',getx('Struct'));
+
+ See also soleilinit</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getfamilylist.html" class="code" title="function  [Families, AO] = getfamilylist(OutputFlag)">getfamilylist</a>	GETFAMILYLIST - Returns a list of all the family names</li><li><a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>	ISMEMBEROF - Returns turn if the membership information of a family (cell of strings)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makephysdata(varargin)</a>
+0002 <span class="comment">%MAKEPHYSDATA - Make a starting physics data file</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  NOTE: MML creators are phasing out the use of physdata.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% NOTES</span>
+0007 <span class="comment">%1. This just a rountine to be used to create the Physdata file</span>
+0008 <span class="comment">%   Then the parameter like Golden parameters should be updated</span>
+0009 <span class="comment">%   using setphydata command. For example, to set the golden H-orbit:</span>
+0010 <span class="comment">%   setphysdata('BPMx','Golden',getx('Struct'));</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% See also soleilinit</span>
+0013 
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Written By Gregory J. Portmann</span>
+0016 <span class="comment">% Modified by Laurent S. Nadolski</span>
+0017 
+0018 <span class="comment">%</span>
+0019 <span class="comment">% TODO to be adapted for SOLEIL</span>
+0020 
+0021 FamilyName = <a href="getfamilylist.html" class="code" title="function  [Families, AO] = getfamilylist(OutputFlag)">getfamilylist</a>;
+0022 N = size(FamilyName,1);
+0023 
+0024 <span class="keyword">for</span> i = 1:N
+0025     Family = deblank(FamilyName(i,:));
+0026     
+0027     <span class="keyword">if</span> <a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>(Family,<span class="string">'BPM'</span>)        
+0028         PhysData.(Family).Golden = 0;        
+0029         PhysData.(Family).Gain = 1;        
+0030         PhysData.(Family).Offset = 0;        
+0031         PhysData.(Family).Coupling = 0;        
+0032         
+0033     <span class="keyword">elseif</span> <a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>(Family,<span class="string">'COR'</span>) | <span class="keyword">...</span>
+0034             <a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>(Family,<span class="string">'QUAD'</span>) | <span class="keyword">...</span>
+0035             <a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>(Family,<span class="string">'SEXT'</span>) | <span class="keyword">...</span>
+0036             <a href="ismemberof.html" class="code" title="function  [IsTest, Index] = ismemberof(FamilyName, Field, MemberString)">ismemberof</a>(Family,<span class="string">'BEND'</span>)
+0037         
+0038         PhysData.(Family).Gain = 1;        
+0039         PhysData.(Family).Offset = 0;        
+0040         PhysData.(Family).Coupling = 0;        
+0041     <span class="keyword">end</span>
+0042 <span class="keyword">end</span>
+0043 
+0044 
+0045 <span class="comment">% if strcmpi(getfamilydata('Machine'), 'ALS');</span>
+0046 <span class="comment">%     PhysData.TUNE.Golden = [.25; .20; NaN];</span>
+0047 <span class="comment">%     PhysData.CHRO.Golden = [.4; 1.2];</span>
+0048 <span class="comment">% elseif strcmpi(getfamilydata('Machine'), 'SPEAR') | strcmpi(getfamilydata('Machine'), 'SPEAR3')</span>
+0049 <span class="comment">%     PhysData.TUNE.Golden = [.19; .23; NaN];</span>
+0050 <span class="comment">%     PhysData.CHRO.Golden = [1; 1];</span>
+0051 <span class="comment">% elseif strcmpi(getfamilydata('Machine'), 'PLS')</span>
+0052 <span class="comment">%     PhysData.TUNE.Golden = [.19; .23; NaN];   % ???</span>
+0053 <span class="comment">%     PhysData.CHRO.Golden = [1; 1];</span>
+0054 <span class="comment">% elseif strcmpi(getfamilydata('Machine'), 'NSRRC')</span>
+0055 <span class="comment">%     PhysData.TUNE.Golden = [.2026; .1650; NaN];</span>
+0056 <span class="comment">%     PhysData.CHRO.Golden = [1; 1];</span>
+0057 <span class="comment">% end</span>
+0058         
+0059 
+0060 <span class="comment">% All calibation data is saved in this file</span>
+0061 FileName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'OpsData'</span>,<span class="string">'PhysDataFile'</span>);
+0062 
+0063 <span class="comment">%DirectoryName = getfamilydata('Directory','DataRoot');</span>
+0064 <span class="comment">%Machine = lower(getfamilydata('Machine'));</span>
+0065 <span class="comment">%[DirectoryName, FileName, ExtentionName] = fileparts(which('getsp'));</span>
+0066 <span class="comment">%DirectoryName = fullfile(DirectoryName, Machine, filesep);</span>
+0067 <span class="comment">%FileName = [Machine, 'physdata'];</span>
+0068 
+0069 <span class="keyword">if</span> exist([FileName, <span class="string">'.mat'</span>], <span class="string">'file'</span>)
+0070     tmp = questdlg({<span class="keyword">...</span>
+0071             sprintf(<span class="string">'%s.mat'</span>, FileName), <span class="keyword">...</span>
+0072             <span class="string">'is where many important parameters are saved to operate'</span>, <span class="keyword">...</span>
+0073             <span class="string">'saved to operate this machine. You are about to completely'</span>, <span class="keyword">...</span>
+0074             <span class="string">'overwrite this file with no backup!'</span>, <span class="keyword">...</span>
+0075             <span class="string">'Are you sure you want to change the Physics Data Structure?'</span>},<span class="keyword">...</span>
+0076         <span class="string">'SETPHYSDATA'</span>,<span class="string">'YES'</span>,<span class="string">'NO'</span>,<span class="string">'NO'</span>);
+0077     <span class="keyword">if</span> ~strcmpi(tmp,<span class="string">'YES'</span>)
+0078         fprintf(<span class="string">'   No change made to the Physics Data Structure\n'</span>);
+0079         <span class="keyword">return</span>
+0080     <span class="keyword">end</span>
+0081 <span class="keyword">end</span>
+0082 
+0083 
+0084 save(FileName, <span class="string">'PhysData'</span>);    
+0085 fprintf(<span class="string">'   A new Physics Data Structure has been saved to %s\n'</span>, FileName);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

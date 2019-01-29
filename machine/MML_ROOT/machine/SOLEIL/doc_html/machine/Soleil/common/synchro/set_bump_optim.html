@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of set_bump_optim</title>
+  <meta name="keywords" content="set_bump_optim">
+  <meta name="description" content="deuxième optimisation du bump">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; set_bump_optim.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>set_bump_optim
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>deuxième optimisation du bump</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function set_bump_optim </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> deuxième optimisation du bump</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function set_bump_optim</a>
+0002 
+0003 <span class="comment">% deuxième optimisation du bump</span>
+0004 
+0005 <span class="comment">%delai0 =31522246;</span>
+0006 delai0 =5621670;
+0007 voltage0=3000;  
+0008 r=0.90   <span class="comment">% ratio global</span>
+0009 r1=1.010  <span class="comment">% ratio 2 derniers kicker</span>
+0010 
+0011 k=+0;
+0012 
+0013 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>,delai0-0     + k);
+0014 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>,delai0+3    + k);
+0015 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>,delai0+2    + k);
+0016 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>,delai0-1    + k);
+0017 
+0018 
+0019 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.1'</span>, <span class="string">'voltage'</span>,(((6240+0)*r)   +80) );
+0020 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.2'</span>, <span class="string">'voltage'</span>,(((6200-0)*r)   -40  ) ); 
+0021 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.3'</span>, <span class="string">'voltage'</span>,(((6050+0)*r)*r1+90  ) );
+0022 tango_write_attribute2(<span class="string">'ANS-C01/EP/AL_K.4'</span>, <span class="string">'voltage'</span>,(((6200+0)*r)*r1-70  ) ); 
+0023 
+0024 
+0025 
+0026 <span class="keyword">return</span>
+0027 
+0028 
+0029</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

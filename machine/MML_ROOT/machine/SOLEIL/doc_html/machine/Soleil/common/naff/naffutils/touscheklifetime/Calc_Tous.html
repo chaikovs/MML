@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Calc_Tous</title>
+  <meta name="keywords" content="Calc_Tous">
+  <meta name="description" content="function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../../../index.html">common</a> &gt; <a href="#">naff</a> &gt; <a href="../index.html">naffutils</a> &gt; <a href="index.html">touscheklifetime</a> &gt; Calc_Tous.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../../../index.html"><img alt="<" border="0" src="../../../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/naff/naffutils/touscheklifetime&nbsp;<img alt=">" border="0" src="../../../../../../right.png"></a></td></tr></table>-->
+
+<h1>Calc_Tous
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)
+
+  Function calculant la duree de vie Touscheck a partir de l'acceptance
+  en energie calculee par Tracy
+
+  Methode d'integration : Simpson (choix de BETA)
+  NB : A modifier si variation rapide de la duree de vie.
+
+  Function externe utilisee : la fonction C(xi) standard
+
+  Entree :
+    file   : fichier de sortie de Tracy
+    linlat : fichier d'optique
+    sigmas : longueur d'un paquet
+
+  Sortie :
+    T(h)  : duree de vie Touschek
+    Tp(h) : duree de vie Touschek delta &gt;0
+    Tn(h) : duree de vie Touschek delta &lt;0
+
+  Ajouter le choix du courant I0
+
+  Exemple:
+[T, Tp, Tn]=Calc_Tous('soleil.out','linlat.out')
+
+ Written by Laurent S. Nadolski, SOLEIL 2003</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="Calc_Tous.html" class="code" title="function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)">Calc_Tous</a>	function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)</li><li><a href="Cxi.html" class="code" title="function y = Cxi(t)">Cxi</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="Calc_Tous.html" class="code" title="function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)">Calc_Tous</a>	function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">%  Function calculant la duree de vie Touscheck a partir de l'acceptance</span>
+0004 <span class="comment">%  en energie calculee par Tracy</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  Methode d'integration : Simpson (choix de BETA)</span>
+0007 <span class="comment">%  NB : A modifier si variation rapide de la duree de vie.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  Function externe utilisee : la fonction C(xi) standard</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  Entree :</span>
+0012 <span class="comment">%    file   : fichier de sortie de Tracy</span>
+0013 <span class="comment">%    linlat : fichier d'optique</span>
+0014 <span class="comment">%    sigmas : longueur d'un paquet</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">%  Sortie :</span>
+0017 <span class="comment">%    T(h)  : duree de vie Touschek</span>
+0018 <span class="comment">%    Tp(h) : duree de vie Touschek delta &gt;0</span>
+0019 <span class="comment">%    Tn(h) : duree de vie Touschek delta &lt;0</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">%  Ajouter le choix du courant I0</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  Exemple:</span>
+0024 <span class="comment">%[T, Tp, Tn]=Calc_Tous('soleil.out','linlat.out')</span>
+0025 <span class="comment">%</span>
+0026 <span class="comment">% Written by Laurent S. Nadolski, SOLEIL 2003</span>
+0027 
+0028 <a name="_sub0" href="#_subfunctions" class="code">function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)</a>
+0029 
+0030 <span class="keyword">if</span> nargin &lt;1
+0031     help <a href="Calc_Tous.html" class="code" title="function [Tous,Tousp,Tousn]=Calc_Tous(file,linlat,sigmas)">Calc_Tous</a>
+0032     <span class="keyword">return</span>;
+0033 <span class="keyword">end</span>
+0034 
+0035 <span class="comment">% Lecture des fonction optiques</span>
+0036 <span class="comment">% name     s    alphax  betax   nux   etax   etapx  alphay  betay   nuy   etay   etapy</span>
+0037 <span class="comment">%         [m]            [m]           [m]                   [m]           [m]</span>
+0038 <span class="keyword">try</span>
+0039     [dummy s ax bx mux etax etaxp az bz muz etaz etazp] = <span class="keyword">...</span>
+0040         textread(linlat,<span class="string">'%s %f %f %f %f %f %f %f %f %f %f %f'</span>,<span class="string">'headerlines'</span>,4);
+0041 <span class="keyword">catch</span>
+0042     errmsg = lasterr;
+0043     <span class="keyword">if</span> strfind(errmsg, <span class="string">'File not found.'</span>);
+0044         error(<span class="string">'Input file %s not found \n Abort \n'</span>,linlat);
+0045     <span class="keyword">else</span>
+0046         error(<span class="string">'Unknown error %s \n'</span>, errmsg)
+0047     <span class="keyword">end</span>
+0048 <span class="keyword">end</span>
+0049 
+0050 ex = 3.7E-9;   <span class="comment">%Emittance H</span>
+0051 ez = ex*0.01;  <span class="comment">%Emittance V</span>
+0052 se = 1.016E-3; <span class="comment">%Dispersion en energie</span>
+0053 gx = (1+ax.^2)./bx; <span class="comment">%Gammax</span>
+0054 
+0055 sx = sqrt(bx*ex+(se*etax).^2);  <span class="comment">%Taille  H</span>
+0056 sxp= sqrt(gx*ex+(se*etaxp).^2); <span class="comment">%Divergence H</span>
+0057 sz = sqrt(bz*ez+(se*etaz).^2);  <span class="comment">%Taille V</span>
+0058 
+0059 [dummy sd acen lost nom] = textread(file,<span class="string">'%d %f %f %f %s'</span>,<span class="string">'headerlines'</span>,3);
+0060 Nb_pts=length(sd)/2;
+0061 s=sd(1:Nb_pts);
+0062 acen_p=acen(1:Nb_pts); acen_n=acen(Nb_pts+1:end);
+0063 
+0064 
+0065 <span class="keyword">if</span> nargin &lt;3
+0066     ss = 3.6E-3;  <span class="comment">%sigma_s</span>
+0067     fprintf(<span class="string">'Par defaut la longueur du paquet vaut : sigma_s= %f m\n'</span>,ss)
+0068 <span class="keyword">else</span>
+0069     ss =sigmas;
+0070 <span class="keyword">end</span>
+0071 
+0072 V     = 8*pi*sqrt(pi).*sx.*sz.*ss; <span class="comment">%Volume du paquet</span>
+0073 E     = 2.75;        <span class="comment">% Energy</span>
+0074 Gamma = 5382.57324;    <span class="comment">% Facteur de Lorentz</span>
+0075 c     = 2.99792458E8;    <span class="comment">% Vitesse de la lumiere</span>
+0076 re    = 2.81794092E-15;  <span class="comment">% Rayon classique de l'electron</span>
+0077 I0    = 1.2E-3;      <span class="comment">% Courant par paquet</span>
+0078 Qe    = 1.6022E-19;  <span class="comment">% Charge de l'electron</span>
+0079 L     = 354.097;     <span class="comment">% Circonference de l'anneau</span>
+0080 N     = I0/c*L/Qe;   <span class="comment">% Nombre d'electrons par paquet</span>
+0081 
+0082 <span class="comment">% Duree de vie Touschek inverse</span>
+0083 
+0084 <span class="comment">%Duree de vie locale positive et negative en heures</span>
+0085 <span class="comment">%xi_p=(acen_p./Gamma./sxp)^2;</span>
+0086 <span class="comment">%xi_n=(acen_n./Gamma./sxp)^2;</span>
+0087 FF = sqrt(pi)*re*re*c*N*3600;
+0088 Tinvp = zeros(1,Nb_pts);
+0089 Tinvn = zeros(1,Nb_pts);
+0090 
+0091 <span class="keyword">for</span> i=1:Nb_pts, <span class="comment">% loop because of Cxi function</span>
+0092     Tinvp(i) = (FF*<a href="Cxi.html" class="code" title="function y = Cxi(t)">Cxi</a>((acen_p(i)/Gamma/sxp(i))^2)/sxp(i) <span class="keyword">...</span>
+0093         /Gamma^3/acen_p(i)^2/V(i));
+0094     Tinvn(i) = (FF*<a href="Cxi.html" class="code" title="function y = Cxi(t)">Cxi</a>((acen_n(i)/Gamma/sxp(i))^2)/sxp(i) <span class="keyword">...</span>
+0095         /Gamma^3/acen_n(i)^2/V(i));
+0096 <span class="keyword">end</span>
+0097 
+0098 <span class="comment">% Duree de vie moyenne locale</span>
+0099 Tinv = (Tinvp+Tinvn)/2;
+0100 
+0101 Tp=1./Tinvp;
+0102 Tn=1./Tinvn;
+0103 T =1./Tinv;
+0104 
+0105 <span class="comment">% Integration : methode de Simpson</span>
+0106 s1=[0 ; s]; s2=[s ; 0]; ds=s2-s1;
+0107 Tousp=1/sum(1./Tp.*ds(1:end-1)')*s(end);
+0108 Tousn=1/sum(1./Tn.*ds(1:end-1)')*s(end);
+0109 
+0110 Tous=2/(1/Tousp+1/Tousn);
+0111 
+0112 <span class="comment">% lecture du fichier de structure</span>
+0113 <span class="comment">%struc=dlmread('structure');</span>
+0114 
+0115 figure(80)
+0116 subplot(2,1,1)
+0117 plot(s,Tp,<span class="string">'.-'</span>);
+0118 grid on
+0119 xlabel(<span class="string">'s (m)'</span>)
+0120 ylabel(<span class="string">'Tp (h)'</span>)
+0121 
+0122 subplot(2,1,2)
+0123 plot(s,Tn,<span class="string">'.-'</span>);
+0124 grid on
+0125 xlabel(<span class="string">'s (m)'</span>)
+0126 ylabel(<span class="string">'Tn (h)'</span>)
+0127 
+0128 
+0129 <span class="comment">% lecture du fichier de structure</span>
+0130 
+0131 files=<span class="string">'/home/nadolski/matlab/soleil/structure'</span>;
+0132 struc=dlmread(files);
+0133 
+0134 <span class="comment">% symetrie artificielle</span>
+0135 acen=acen*100;
+0136 
+0137 figure(81)
+0138 clf
+0139 plot([sd(1:Nb_pts); 2*sd(Nb_pts)-sd(Nb_pts:-1:1)],[acen(1:Nb_pts) ; acen(Nb_pts:-1:1)],<span class="string">'b.-'</span>);
+0140 hold on
+0141 plot([sd(Nb_pts+1:end); 2*sd(end)-sd(end:-1:1+Nb_pts)],[acen(Nb_pts+1:end) ; acen(end:-1:Nb_pts+1)],<span class="string">'b.-'</span>);
+0142 plot(struc(:,1),struc(:,2)/2,<span class="string">'k-'</span>)
+0143 axis([0 88.5 -7 7])
+0144 grid on
+0145 title(<span class="string">'solamor2'</span>)
+0146 xlabel(<span class="string">'s (m)'</span>)
+0147 ylabel(<span class="string">'Acceptance en energie \epsilon (%)'</span>)
+0148</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of synchro_70ns</title>
+  <meta name="keywords" content="synchro_70ns">
+  <meta name="description" content="pulse linac de 70 ns = 24 bunchs">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; synchro_70ns.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>synchro_70ns
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>pulse linac de 70 ns = 24 bunchs</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> pulse linac de 70 ns = 24 bunchs</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="bucketnumber.html" class="code" title="function [n1 n2] = bucketnumber(num)">bucketnumber</a>	BUCKETNUMBER - Computes n1 n2 for timing system master board for a bucket</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% pulse linac de 70 ns = 24 bunchs</span>
+0002 
+0003 boucle=1; <span class="comment">% nombre de boucle</span>
+0004 npulse=17 ; <span class="comment">% 1 à div max</span>
+0005 dbunch=24;
+0006 
+0007 bunch=((1:npulse)-1).*dbunch + 1;
+0008 [dtour,dpaquet]=<a href="bucketnumber.html" class="code" title="function [n1 n2] = bucketnumber(num)">bucketnumber</a>(bunch);
+0009 dtour
+0010 
+0011 <span class="keyword">return</span>
+0012 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcStepDelay'</span>);clk1=temp.value(1);
+0013 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftStepDelay'</span>);clk2=temp.value(1);
+0014 clk_pc  =int32(dtour) +  int32(clk1);
+0015 clk_soft=int32(dtour)  + int32(clk2);
+0016 
+0017 <span class="keyword">for</span> k=1:boucle
+0018     <span class="keyword">for</span> i=1:npulse
+0019         clk_pc(i)
+0020         tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcStepDelay'</span>,clk_pc(i));
+0021         tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftStepDelay'</span>,clk_soft(i));
+0022         
+0023         tango_command_inout(<span class="string">'ANS/SY/CENTRAL'</span>,<span class="string">'FireSoftEvent'</span>);
+0024         pause(0.4)
+0025          
+0026     <span class="keyword">end</span>
+0027 <span class="keyword">end</span>
+0028 
+0029 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcStepDelay'</span>,clk_pc(1));
+0030 tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftStepDelay'</span>,clk_soft(1));
+0031 
+0032 
+0033</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

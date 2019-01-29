@@ -1,0 +1,1427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of optics_LT1_LT2</title>
+  <meta name="keywords" content="optics_LT1_LT2">
+  <meta name="description" content="OPTICS_LT1_LT2 - M-file for optics_LT1_LT2.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">common</a> &gt; optics_LT1_LT2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>optics_LT1_LT2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>OPTICS_LT1_LT2 - M-file for optics_LT1_LT2.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function varargout = optics_LT1_LT2(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">OPTICS_LT1_LT2 - M-file for optics_LT1_LT2.fig
+      OPTICS_LT1_LT2, by itself, creates a new OPTICS_LT1_LT2 or raises the existing
+      singleton*.
+
+      H = OPTICS_LT1_LT2 returns the handle to a new OPTICS_LT1_LT2 or the handle to
+      the existing singleton*.
+
+      OPTICS_LT1_LT2('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in OPTICS_LT1_LT2.M with the given input arguments.
+
+      OPTICS_LT1_LT2('Property','Value',...) creates a new OPTICS_LT1_LT2 or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before optics_LT1_LT2_OpeningFunction gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to optics_LT1_LT2_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>	GETMAXSP - Maximum value of the setpoint</li><li><a href="getminsp.html" class="code" title="function S = getminsp(Family, DeviceList)">getminsp</a>	GETMINSP - Gets minimum value of the setpoint</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function optics_LT1_LT2_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function handles = computeTwiss(handles)</a></li><li><a href="#_sub3" class="code">function varargout = optics_LT1_LT2_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function sliderQP1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function sliderQP1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function editQP1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function editQP1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function sliderQP2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function sliderQP2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function editQP2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function editQP2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function sliderQP3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function sliderQP3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function editQP3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function editQP3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function editQP4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function editQP4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function sliderQP4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function sliderQP4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function editQP5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function editQP5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function sliderQP5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function sliderQP5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function sliderQP6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function sliderQP6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function editQP6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function editQP6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function editQP7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function editQP7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function sliderQP7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub31" class="code">function sliderQP7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function plot_axes(handles,quoi)</a></li><li><a href="#_sub33" class="code">function handles = setslider(hObject, handles)</a></li><li><a href="#_sub34" class="code">function handles = setATmagnet(handles,magnet,val)</a></li><li><a href="#_sub35" class="code">function handles = setedit(handles)</a></li><li><a href="#_sub36" class="code">function mutual_exclude(off)</a></li><li><a href="#_sub37" class="code">function popupmenu_y_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub38" class="code">function popupmenu_y_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub39" class="code">function popupmenu_x_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub40" class="code">function popupmenu_x_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub41" class="code">function popupmenu_plane_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub42" class="code">function popupmenu_plane_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub43" class="code">function pushbutton_reload_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub44" class="code">function handles = restart(handles)</a></li><li><a href="#_sub45" class="code">function popupmenu_bar1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub46" class="code">function popupmenu_bar1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub47" class="code">function setbar(handles)</a></li><li><a href="#_sub48" class="code">function popupmenu_bar2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub49" class="code">function popupmenu_bar2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub50" class="code">function popupmenu_bar3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub51" class="code">function popupmenu_bar3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub52" class="code">function popupmenu_bar4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub53" class="code">function popupmenu_bar4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub54" class="code">function popupmenu_bar5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub55" class="code">function popupmenu_bar5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub56" class="code">function popupmenu_bar6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub57" class="code">function popupmenu_bar6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub58" class="code">function popupmenu_bar7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub59" class="code">function popupmenu_bar7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub60" class="code">function pushbutton_refresh_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub61" class="code">function read_tango(handles)</a></li><li><a href="#_sub62" class="code">function write_tango(handles);</a></li><li><a href="#_sub63" class="code">function devicelist = get_device_name(machine,property,magnet)</a></li><li><a href="#_sub64" class="code">function pushbutton_reload_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub65" class="code">function pushbutton_model2online_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub66" class="code">function pushbutton_online2model_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub67" class="code">function handles = init_handles(handles)</a></li><li><a href="#_sub68" class="code">function store_model_values(handles)</a></li><li><a href="#_sub69" class="code">function set_model_values(handles)</a></li><li><a href="#_sub70" class="code">function submenu_print_setpoint_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub71" class="code">function submenu_print_model_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub72" class="code">function submenu_save_setpoint_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub73" class="code">function submenu_save_model_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub74" class="code">function submenu_load_setpoint_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub75" class="code">function submenu_load_model_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub76" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub77" class="code">function Untitled_4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub78" class="code">function Untitled_7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub79" class="code">function submenu_dump_model_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub80" class="code">function submenu_dump_setpoint_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub81" class="code">function submenu_dump_soleil_setpoint_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub82" class="code">function twiss_parameters_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub83" class="code">function submenu_twissparameters_entry_Callback(hObject, eventdata, handles)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = optics_LT1_LT2(varargin)</a>
+0002 <span class="comment">%OPTICS_LT1_LT2 - M-file for optics_LT1_LT2.fig</span>
+0003 <span class="comment">%      OPTICS_LT1_LT2, by itself, creates a new OPTICS_LT1_LT2 or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = OPTICS_LT1_LT2 returns the handle to a new OPTICS_LT1_LT2 or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      OPTICS_LT1_LT2('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in OPTICS_LT1_LT2.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      OPTICS_LT1_LT2('Property','Value',...) creates a new OPTICS_LT1_LT2 or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before optics_LT1_LT2_OpeningFunction gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to optics_LT1_LT2_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help optics_LT1_LT2</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 09-Mar-2005 10:49:46</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction optics_LT1_LT2_OpeningFcn(hObject, eventdata, handles, varargin)">optics_LT1_LT2_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub3" class="code" title="subfunction varargout = optics_LT1_LT2_OutputFcn(hObject, eventdata, handles)">optics_LT1_LT2_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 <span class="comment">% --- Executes just before optics_LT1_LT2 is made visible.</span>
+0047 <a name="_sub1" href="#_subfunctions" class="code">function optics_LT1_LT2_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0048 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0049 <span class="comment">% hObject    handle to figure</span>
+0050 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0051 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0052 <span class="comment">% varargin   command line arguments to optics_LT1_LT2 (see VARARGIN)</span>
+0053 
+0054 <span class="comment">% Choose default command line output for optics_LT1_LT2</span>
+0055 handles.output = hObject;
+0056 
+0057 <span class="comment">%mat: utilite ???</span>
+0058 setappdata(handles.figure1, <span class="string">'twissdatain'</span>,struct([]));
+0059 
+0060 <span class="comment">% construct initial twiss parameters</span>
+0061 
+0062 Machine = getfamilydata(<span class="string">'SubMachine'</span>);
+0063 
+0064 <span class="keyword">switch</span> Machine
+0065     <span class="keyword">case</span> {<span class="string">'LT1'</span>}
+0066 
+0067         twissdatain.ElemIndex  = 1;
+0068         twissdatain.SPos       = 0;
+0069         twissdatain.ClosedOrbit= [1e-3 0 2e-3 0]'*0;
+0070         twissdatain.M44        = eye(4);
+0071         twissdatain.beta       = [8.1 8.1];
+0072         twissdatain.alpha      = [0 0];
+0073         twissdatain.mu         = [0 0];
+0074         twissdatain.Dispersion = [0 0 0 0]';
+0075         set(handles.figure1,<span class="string">'Name'</span>, <span class="string">'LT1 Optical functions'</span>);
+0076         
+0077     <span class="keyword">case</span> {<span class="string">'LT2'</span>}
+0078         
+0079         twissdatain.ElemIndex  = 1;
+0080         twissdatain.SPos       = 0;
+0081         twissdatain.ClosedOrbit= [1e-3 0 2e-3 0]'*0;
+0082         twissdatain.M44        = eye(4);
+0083         twissdatain.beta       = [6.0 6.0];
+0084         twissdatain.alpha      = [-1.8 1.5];
+0085         twissdatain.mu         = [0 0];
+0086         twissdatain.Dispersion = [0 0 0 0]';
+0087         set(handles.figure1,<span class="string">'Name'</span>, <span class="string">'LT2 Optical functions'</span>);
+0088 
+0089     <span class="keyword">otherwise</span>
+0090         error(<span class="string">'No Machine loaded'</span>)        
+0091 <span class="keyword">end</span>
+0092 
+0093 setappdata(handles.figure1, <span class="string">'twissdatain0'</span>,twissdatain);
+0094 handles.restart = 1;
+0095 
+0096 <span class="comment">%% Initialize structure for handling LT1 and LT2 magnets</span>
+0097 handles = <a href="#_sub67" class="code" title="subfunction handles = init_handles(handles)">init_handles</a>(handles);
+0098 
+0099 <span class="comment">% Update handles structure</span>
+0100 guidata(hObject, handles);
+0101 
+0102 AO = getao;
+0103 <span class="comment">% setappdata(handles.figure1,'AOmagnet', AO);</span>
+0104 
+0105 <span class="comment">%set(handles.(name),'Max',9, 'Min', -9)</span>
+0106 
+0107 <span class="comment">% min et max des sliders (figé à l'ouverture puis modifiable par SETBAR)</span>
+0108 val_max = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(<span class="string">'QP'</span>);
+0109 val_min = <a href="getminsp.html" class="code" title="function S = getminsp(Family, DeviceList)">getminsp</a>(<span class="string">'QP'</span>);
+0110 
+0111 <span class="comment">%% Number of sliders</span>
+0112 handles.sliderNumber = 7;
+0113 
+0114 <span class="keyword">for</span> k = 1:handles.sliderNumber,
+0115     name = strcat(<span class="string">'sliderQP'</span>,num2str(k))
+0116     set(handles.(name),<span class="string">'Max'</span>,val_max(k),<span class="string">'Min'</span>,val_min(k));
+0117 <span class="keyword">end</span>
+0118 
+0119 
+0120 <span class="comment">%% liste de aimants a controler (menu deroulant)</span>
+0121 list = [AO.QP.CommonNames;<span class="keyword">...</span>
+0122         AO.CH.CommonNames; <span class="keyword">...</span>
+0123         AO.CV.CommonNames
+0124         ];
+0125 
+0126 <span class="comment">%% Automatic configuration for sliders</span>
+0127 <span class="keyword">for</span> k = 1:handles.sliderNumber
+0128     name = [<span class="string">'popupmenu_bar'</span> num2str(k)];
+0129     set(handles.(name),<span class="string">'String'</span>,list);
+0130     set(handles.(name),<span class="string">'Value'</span>,k);
+0131 <span class="keyword">end</span>
+0132 
+0133 <span class="comment">%% graphe par defaut</span>
+0134 axes(handles.axes1);
+0135 handles.xtype = <span class="string">'spos'</span>;
+0136 handles.ytype = <span class="string">'beta'</span>;
+0137 
+0138 <span class="comment">%% initialisation AT et IHM</span>
+0139 handles = <a href="#_sub44" class="code" title="subfunction handles = restart(handles)">restart</a>(handles);
+0140 
+0141 <span class="comment">%% Read Tango values</span>
+0142 <span class="comment">%read_tango(handles);</span>
+0143 
+0144 <span class="comment">% UIWAIT makes optics_LT1_LT2 wait for user response (see UIRESUME)</span>
+0145 <span class="comment">% uiwait(handles.figure1);</span>
+0146 set(0,<span class="string">'DefaultAxesXgrid'</span>,<span class="string">'on'</span>,<span class="string">'DefaultAxesYgrid'</span>,<span class="string">'on'</span>);
+0147 
+0148 <span class="comment">%% graphe symboles</span>
+0149 axes(handles.axes2);
+0150 drawlattice(0,0.8);
+0151 set(handles.axes2,<span class="string">'Xlim'</span>,[handles.spos(1) handles.spos(end)], <span class="keyword">...</span>
+0152     <span class="string">'XTick'</span>,[],<span class="string">'YTick'</span>,[]);
+0153 
+0154 
+0155 <span class="comment">% Update handles structure</span>
+0156 guidata(hObject, handles);
+0157 
+0158 <span class="comment">%% -------------------------------------</span>
+0159 <a name="_sub2" href="#_subfunctions" class="code">function handles = computeTwiss(handles)</a>
+0160 <span class="comment">% update ATmodel</span>
+0161 <span class="comment">% compute new twiss parameters</span>
+0162 <span class="comment">%</span>
+0163 <span class="keyword">global</span> THERING;
+0164 
+0165 <span class="comment">%%% parameters at the entrance of the line</span>
+0166 <span class="comment">% twissdatain.ElemIndex=1;</span>
+0167 <span class="comment">% twissdatain.SPos=0;</span>
+0168 <span class="comment">% twissdatain.ClosedOrbit=[1e-3 0 2e-3 0]'*0;</span>
+0169 <span class="comment">% twissdatain.M44=eye(4);</span>
+0170 <span class="comment">%</span>
+0171 <span class="comment">% if isequal(isfield(twissdatain,'beta'),0)</span>
+0172  
+0173  <span class="keyword">if</span> handles.restart == 1
+0174      twissdatain = getappdata(handles.figure1,<span class="string">'twissdatain0'</span>);
+0175      handles.restart = 0;
+0176  <span class="keyword">else</span>
+0177      twissdatain = getappdata(handles.figure1,<span class="string">'twissdatain'</span>);
+0178  <span class="keyword">end</span>
+0179 <span class="comment">%     twissdatain.beta= [8.1 8.1];</span>
+0180 <span class="comment">%     twissdatain.alpha= [0 0];</span>
+0181 <span class="comment">% else</span>
+0182 <span class="comment">%     twissdatain = getappdata(handles.figure1,'twissdatain')</span>
+0183 <span class="comment">% end</span>
+0184 
+0185 <span class="comment">% twissdatain.mu= [0 0];</span>
+0186 <span class="comment">% twissdatain.Dispersion= [0 0 0 0]';</span>
+0187 
+0188 <span class="comment">%%% get twiss paramaters</span>
+0189 TD = twissline(THERING,0.0,twissdatain,1:length(THERING),<span class="string">'chroma'</span>);
+0190 
+0191 handles.twissdatain = twissdatain;
+0192 handles.beta  = cat(1,TD.beta);
+0193 handles.cod   = cat(2,TD.ClosedOrbit)';
+0194 handles.eta   = cat(2,TD.Dispersion)';
+0195 handles.spos  = cat(1,TD.SPos);
+0196 handles.phase = cat(1,TD.mu);
+0197 
+0198 setappdata(handles.figure1,<span class="string">'twissdatain'</span>,twissdatain);
+0199 
+0200 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0201 <a name="_sub3" href="#_subfunctions" class="code">function varargout = optics_LT1_LT2_OutputFcn(hObject, eventdata, handles)</a>
+0202 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0203 <span class="comment">% hObject    handle to figure</span>
+0204 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0205 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0206 
+0207 <span class="comment">% Get default command line output from handles structure</span>
+0208 varargout{1} = handles.output;
+0209 
+0210 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0211 <a name="_sub4" href="#_subfunctions" class="code">function sliderQP1_CreateFcn(hObject, eventdata, handles)</a>
+0212 <span class="comment">% hObject    handle to sliderQP1 (see GCBO)</span>
+0213 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0214 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0215 
+0216 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0217 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0218 usewhitebg = 1;
+0219 <span class="keyword">if</span> usewhitebg
+0220     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0221 <span class="keyword">else</span>
+0222     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0223 <span class="keyword">end</span>
+0224 
+0225 <span class="comment">% --- Executes on slider movement.</span>
+0226 <a name="_sub5" href="#_subfunctions" class="code">function sliderQP1_Callback(hObject, eventdata, handles)</a>
+0227 <span class="comment">% hObject    handle to sliderQP1 (see GCBO)</span>
+0228 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0229 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0230 
+0231 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0232 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0233 
+0234 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0235 guidata(hObject, handles);
+0236 
+0237 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0238 <a name="_sub6" href="#_subfunctions" class="code">function editQP1_CreateFcn(hObject, eventdata, handles)</a>
+0239 <span class="comment">% hObject    handle to editQP1 (see GCBO)</span>
+0240 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0241 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0242 
+0243 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0244 <span class="comment">%       See ISPC and COMPUTER.</span>
+0245 <span class="keyword">if</span> ispc
+0246     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'green'</span>);
+0247 <span class="keyword">else</span>
+0248     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0249 <span class="keyword">end</span>
+0250 
+0251 <span class="comment">% --- Executes on slider movement.</span>
+0252 <a name="_sub7" href="#_subfunctions" class="code">function editQP1_Callback(hObject, eventdata, handles)</a>
+0253 <span class="comment">% hObject    handle to editQP1 (see GCBO)</span>
+0254 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0255 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0256 
+0257 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP1 as text</span>
+0258 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP1 as a double</span>
+0259 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0260 guidata(hObject, handles);
+0261 
+0262 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0263 <a name="_sub8" href="#_subfunctions" class="code">function sliderQP2_CreateFcn(hObject, eventdata, handles)</a>
+0264 <span class="comment">% hObject    handle to sliderQP2 (see GCBO)</span>
+0265 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0266 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0267 
+0268 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0269 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0270 usewhitebg = 1;
+0271 <span class="keyword">if</span> usewhitebg
+0272     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0273 <span class="keyword">else</span>
+0274     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0275 <span class="keyword">end</span>
+0276 
+0277 <span class="comment">% --- Executes on slider movement.</span>
+0278 <a name="_sub9" href="#_subfunctions" class="code">function sliderQP2_Callback(hObject, eventdata, handles)</a>
+0279 <span class="comment">% hObject    handle to sliderQP2 (see GCBO)</span>
+0280 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0281 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0282 
+0283 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0284 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0285 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0286 guidata(hObject, handles);
+0287 
+0288 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0289 <a name="_sub10" href="#_subfunctions" class="code">function editQP2_CreateFcn(hObject, eventdata, handles)</a>
+0290 <span class="comment">% hObject    handle to editQP2 (see GCBO)</span>
+0291 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0292 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0293 
+0294 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0295 <span class="comment">%       See ISPC and COMPUTER.</span>
+0296 <span class="keyword">if</span> ispc
+0297     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0298 <span class="keyword">else</span>
+0299     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0300 <span class="keyword">end</span>
+0301 
+0302 <a name="_sub11" href="#_subfunctions" class="code">function editQP2_Callback(hObject, eventdata, handles)</a>
+0303 <span class="comment">% hObject    handle to editQP2 (see GCBO)</span>
+0304 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0305 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0306 
+0307 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP2 as text</span>
+0308 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP2 as a double</span>
+0309 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0310 guidata(hObject, handles);
+0311 
+0312 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0313 <a name="_sub12" href="#_subfunctions" class="code">function sliderQP3_CreateFcn(hObject, eventdata, handles)</a>
+0314 <span class="comment">% hObject    handle to sliderQP3 (see GCBO)</span>
+0315 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0316 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0317 
+0318 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0319 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0320 usewhitebg = 1;
+0321 <span class="keyword">if</span> usewhitebg
+0322     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0323 <span class="keyword">else</span>
+0324     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0325 <span class="keyword">end</span>
+0326 
+0327 <span class="comment">% --- Executes on slider movement.</span>
+0328 <a name="_sub13" href="#_subfunctions" class="code">function sliderQP3_Callback(hObject, eventdata, handles)</a>
+0329 <span class="comment">% hObject    handle to sliderQP3 (see GCBO)</span>
+0330 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0331 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0332 
+0333 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0334 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0335 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0336 guidata(hObject, handles);
+0337 
+0338 
+0339 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0340 <a name="_sub14" href="#_subfunctions" class="code">function editQP3_CreateFcn(hObject, eventdata, handles)</a>
+0341 <span class="comment">% hObject    handle to editQP3 (see GCBO)</span>
+0342 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0343 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0344 
+0345 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0346 <span class="comment">%       See ISPC and COMPUTER.</span>
+0347 <span class="keyword">if</span> ispc
+0348     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0349 <span class="keyword">else</span>
+0350     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0351 <span class="keyword">end</span>
+0352 
+0353 <a name="_sub15" href="#_subfunctions" class="code">function editQP3_Callback(hObject, eventdata, handles)</a>
+0354 <span class="comment">% hObject    handle to editQP3 (see GCBO)</span>
+0355 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0356 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0357 
+0358 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP3 as text</span>
+0359 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP3 as a double</span>
+0360 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0361 guidata(hObject, handles);
+0362 
+0363 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0364 <a name="_sub16" href="#_subfunctions" class="code">function editQP4_CreateFcn(hObject, eventdata, handles)</a>
+0365 <span class="comment">% hObject    handle to editQP4 (see GCBO)</span>
+0366 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0367 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0368 
+0369 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0370 <span class="comment">%       See ISPC and COMPUTER.</span>
+0371 <span class="keyword">if</span> ispc
+0372     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0373 <span class="keyword">else</span>
+0374     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0375 <span class="keyword">end</span>
+0376 
+0377 <a name="_sub17" href="#_subfunctions" class="code">function editQP4_Callback(hObject, eventdata, handles)</a>
+0378 <span class="comment">% hObject    handle to editQP4 (see GCBO)</span>
+0379 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0380 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0381 
+0382 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP4 as text</span>
+0383 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP4 as a double</span>
+0384 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0385 
+0386 
+0387 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0388 <a name="_sub18" href="#_subfunctions" class="code">function sliderQP4_CreateFcn(hObject, eventdata, handles)</a>
+0389 <span class="comment">% hObject    handle to sliderQP4 (see GCBO)</span>
+0390 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0391 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0392 
+0393 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0394 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0395 usewhitebg = 1;
+0396 <span class="keyword">if</span> usewhitebg
+0397     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0398 <span class="keyword">else</span>
+0399     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0400 <span class="keyword">end</span>
+0401 
+0402 
+0403 <span class="comment">% --- Executes on slider movement.</span>
+0404 <a name="_sub19" href="#_subfunctions" class="code">function sliderQP4_Callback(hObject, eventdata, handles)</a>
+0405 <span class="comment">% hObject    handle to sliderQP4 (see GCBO)</span>
+0406 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0407 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0408 
+0409 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0410 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0411 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0412 guidata(hObject, handles);
+0413 
+0414 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0415 <a name="_sub20" href="#_subfunctions" class="code">function editQP5_CreateFcn(hObject, eventdata, handles)</a>
+0416 <span class="comment">% hObject    handle to editQP5 (see GCBO)</span>
+0417 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0418 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0419 
+0420 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0421 <span class="comment">%       See ISPC and COMPUTER.</span>
+0422 <span class="keyword">if</span> ispc
+0423     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0424 <span class="keyword">else</span>
+0425     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0426 <span class="keyword">end</span>
+0427 
+0428 
+0429 <a name="_sub21" href="#_subfunctions" class="code">function editQP5_Callback(hObject, eventdata, handles)</a>
+0430 <span class="comment">% hObject    handle to editQP5 (see GCBO)</span>
+0431 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0432 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0433 
+0434 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP5 as text</span>
+0435 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP5 as a double</span>
+0436 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0437 guidata(hObject, handles);
+0438 
+0439 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0440 <a name="_sub22" href="#_subfunctions" class="code">function sliderQP5_CreateFcn(hObject, eventdata, handles)</a>
+0441 <span class="comment">% hObject    handle to sliderQP5 (see GCBO)</span>
+0442 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0443 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0444 
+0445 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0446 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0447 usewhitebg = 1;
+0448 <span class="keyword">if</span> usewhitebg
+0449     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0450 <span class="keyword">else</span>
+0451     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0452 <span class="keyword">end</span>
+0453 
+0454 <span class="comment">% --- Executes on slider movement.</span>
+0455 <a name="_sub23" href="#_subfunctions" class="code">function sliderQP5_Callback(hObject, eventdata, handles)</a>
+0456 <span class="comment">% hObject    handle to sliderQP5 (see GCBO)</span>
+0457 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0458 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0459 
+0460 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0461 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0462 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0463 guidata(hObject, handles);
+0464 
+0465 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0466 <a name="_sub24" href="#_subfunctions" class="code">function sliderQP6_CreateFcn(hObject, eventdata, handles)</a>
+0467 <span class="comment">% hObject    handle to sliderQP6 (see GCBO)</span>
+0468 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0469 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0470 
+0471 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0472 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0473 usewhitebg = 1;
+0474 <span class="keyword">if</span> usewhitebg
+0475     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0476 <span class="keyword">else</span>
+0477     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0478 <span class="keyword">end</span>
+0479 
+0480 <span class="comment">% --- Executes on slider movement.</span>
+0481 <a name="_sub25" href="#_subfunctions" class="code">function sliderQP6_Callback(hObject, eventdata, handles)</a>
+0482 <span class="comment">% hObject    handle to sliderQP6 (see GCBO)</span>
+0483 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0484 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0485 
+0486 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0487 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0488 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0489 guidata(hObject, handles);
+0490 
+0491 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0492 <a name="_sub26" href="#_subfunctions" class="code">function editQP6_CreateFcn(hObject, eventdata, handles)</a>
+0493 <span class="comment">% hObject    handle to editQP6 (see GCBO)</span>
+0494 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0495 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0496 
+0497 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0498 <span class="comment">%       See ISPC and COMPUTER.</span>
+0499 <span class="keyword">if</span> ispc
+0500     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0501 <span class="keyword">else</span>
+0502     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0503 <span class="keyword">end</span>
+0504 
+0505 <a name="_sub27" href="#_subfunctions" class="code">function editQP6_Callback(hObject, eventdata, handles)</a>
+0506 <span class="comment">% hObject    handle to editQP6 (see GCBO)</span>
+0507 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0508 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0509 
+0510 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP6 as text</span>
+0511 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP6 as a double</span>
+0512 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0513 guidata(hObject, handles);
+0514 
+0515 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0516 <a name="_sub28" href="#_subfunctions" class="code">function editQP7_CreateFcn(hObject, eventdata, handles)</a>
+0517 <span class="comment">% hObject    handle to editQP7 (see GCBO)</span>
+0518 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0519 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0520 
+0521 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0522 <span class="comment">%       See ISPC and COMPUTER.</span>
+0523 <span class="keyword">if</span> ispc
+0524     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0525 <span class="keyword">else</span>
+0526     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0527 <span class="keyword">end</span>
+0528 
+0529 <a name="_sub29" href="#_subfunctions" class="code">function editQP7_Callback(hObject, eventdata, handles)</a>
+0530 <span class="comment">% hObject    handle to editQP7 (see GCBO)</span>
+0531 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0532 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0533 
+0534 <span class="comment">% Hints: get(hObject,'String') returns contents of editQP7 as text</span>
+0535 <span class="comment">%        str2double(get(hObject,'String')) returns contents of editQP7 as a double</span>
+0536 handles = <a href="#_sub35" class="code" title="subfunction handles = setedit(handles)">setedit</a>(handles);
+0537 
+0538 
+0539 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0540 <a name="_sub30" href="#_subfunctions" class="code">function sliderQP7_CreateFcn(hObject, eventdata, handles)</a>
+0541 <span class="comment">% hObject    handle to sliderQP7 (see GCBO)</span>
+0542 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0543 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0544 
+0545 <span class="comment">% Hint: slider controls usually have a light gray background, change</span>
+0546 <span class="comment">%       'usewhitebg' to 0 to use default.  See ISPC and COMPUTER.</span>
+0547 usewhitebg = 1;
+0548 <span class="keyword">if</span> usewhitebg
+0549     set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0550 <span class="keyword">else</span>
+0551     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0552 <span class="keyword">end</span>
+0553 
+0554 <span class="comment">% --- Executes on slider movement.</span>
+0555 <a name="_sub31" href="#_subfunctions" class="code">function sliderQP7_Callback(hObject, eventdata, handles)</a>
+0556 <span class="comment">% hObject    handle to sliderQP7 (see GCBO)</span>
+0557 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0558 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0559 
+0560 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0561 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0562 handles = <a href="#_sub33" class="code" title="subfunction handles = setslider(hObject, handles)">setslider</a>(hObject,handles);
+0563 guidata(hObject, handles);
+0564 
+0565 <span class="comment">%-----------------------------------------------------------------------</span>
+0566 <a name="_sub32" href="#_subfunctions" class="code">function plot_axes(handles,quoi)</a>
+0567 <span class="comment">%%% fonction generique</span>
+0568 
+0569 axes(handles.axes1); cla; hold on;
+0570 
+0571 <span class="keyword">switch</span> handles.xtype
+0572     <span class="keyword">case</span> <span class="string">'spos'</span>
+0573         x=handles.(handles.xtype);
+0574     <span class="keyword">case</span> <span class="string">'phase'</span>
+0575         x=handles.(handles.xtype); x = x(:,1);
+0576 <span class="keyword">end</span>
+0577 
+0578 <span class="keyword">switch</span> quoi
+0579     <span class="keyword">case</span> <span class="string">'beta'</span>
+0580         plot(x,handles.beta(:,1),<span class="string">'r.-'</span>); 
+0581         plot(x,handles.beta(:,2),<span class="string">'b.-'</span>); 
+0582         ylabel(<span class="string">'\beta (m)'</span>);
+0583         <span class="comment">%mat</span>
+0584    <span class="comment">%ylim([0 130]);</span>
+0585         
+0586     <span class="keyword">case</span> <span class="string">'eta'</span>        
+0587         plot(x,handles.eta(:,1),<span class="string">'r.-'</span>);
+0588         plot(x,handles.eta(:,3),<span class="string">'b.-'</span>);
+0589         ylabel(<span class="string">'\eta (m)'</span>);
+0590     <span class="keyword">case</span> <span class="string">'cod'</span>        
+0591         plot(x,handles.cod(:,1)*1e3,<span class="string">'r.-'</span>);
+0592         plot(x,handles.cod(:,3)*1e3,<span class="string">'b.-'</span>);
+0593         ylabel(<span class="string">'cod (mm)'</span>);
+0594     <span class="keyword">case</span> <span class="string">'phase'</span>        
+0595         plot(x,handles.phase(:,1),<span class="string">'r.-'</span>);
+0596         plot(x,handles.phase(:,2),<span class="string">'b.-'</span>);
+0597         ylabel(<span class="string">'phase '</span>);
+0598 <span class="keyword">end</span>
+0599 axis([x(1) x(end) -inf inf]);
+0600 datalabel on
+0601 
+0602 <span class="comment">%--------------------------------------------------------------------------</span>
+0603 <a name="_sub33" href="#_subfunctions" class="code">function handles = setslider(hObject, handles)</a>
+0604 <span class="comment">%%% fonction generique pour un slider de type aimant</span>
+0605 
+0606 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">%% get LT1 structure</span>
+0607 <span class="comment">%% extrait le numero</span>
+0608 tagstring = get(hObject,<span class="string">'Tag'</span>);
+0609 num = tagstring(regexp(tagstring,<span class="string">'\d'</span>));
+0610 magnet0 = [<span class="string">'QP'</span> num2str(num)];
+0611 val =  get(hObject,<span class="string">'Value'</span>);
+0612 str = num2str(val);
+0613 set(handles.([<span class="string">'edit'</span> magnet0]),<span class="string">'string'</span>,str);
+0614 
+0615 <span class="comment">%% Cherche le nom de l'aimant</span>
+0616 h = handles.([<span class="string">'popupmenu_bar'</span> num]);
+0617 contents = get(h,<span class="string">'String'</span>);
+0618 magnet = contents{get(h,<span class="string">'Value'</span>)};
+0619 handles = <a href="#_sub34" class="code" title="subfunction handles = setATmagnet(handles,magnet,val)">setATmagnet</a>(handles,magnet,val);
+0620 
+0621 AOmagnet.(magnet(1:2)).ModelVal(str2double(magnet(end))) = val;
+0622 
+0623 <span class="comment">% save data</span>
+0624 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet)
+0625 
+0626 <span class="comment">%--------------------------------------------------------------------------</span>
+0627 <a name="_sub34" href="#_subfunctions" class="code">function handles = setATmagnet(handles,magnet,val)</a>
+0628 <span class="comment">% function handles = setATmagnet(handles,magnet,val)</span>
+0629 <span class="comment">% set  val as new setvalue of element 'magnet'</span>
+0630 <span class="comment">% Replot current graph</span>
+0631 
+0632 AOmagnet= getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">% get magnet AO</span>
+0633 
+0634 <span class="comment">% set value to AT model</span>
+0635 setsp(common2family(magnet), val, common2dev(magnet),<span class="string">'Model'</span>);
+0636 
+0637 <span class="comment">% Recompute twiss parameters</span>
+0638 handles = <a href="#_sub2" class="code" title="subfunction handles = computeTwiss(handles)">computeTwiss</a>(handles);
+0639 <span class="comment">% Replot everything</span>
+0640 <a href="#_sub32" class="code" title="subfunction plot_axes(handles,quoi)">plot_axes</a>(handles,handles.ytype);
+0641 <span class="comment">%mat</span>
+0642 <span class="comment">%ylim([0 130]);</span>
+0643 
+0644 <span class="comment">%--------------------------------------------------------------------------</span>
+0645 <a name="_sub35" href="#_subfunctions" class="code">function handles = setedit(handles)</a>
+0646 <span class="comment">% function setedit(handles)</span>
+0647 <span class="comment">% generic callback for an edit box</span>
+0648 
+0649 AOmagnet= getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">% get magnet AO</span>
+0650 
+0651 <span class="comment">%% construction automatique du nom du slider</span>
+0652 val = str2double(get(gcbo,<span class="string">'String'</span>));
+0653 tagstring = get(gcbo,<span class="string">'Tag'</span>);
+0654 num = tagstring(regexp(tagstring,<span class="string">'\d'</span>));
+0655 magnet0=[<span class="string">'QP'</span> num2str(num)];
+0656 name = handles.([<span class="string">'slider'</span> magnet0]);
+0657 <span class="comment">%% Cherche le nom de l'aimant</span>
+0658 h = handles.([<span class="string">'popupmenu_bar'</span> num]);
+0659 contents = get(h,<span class="string">'String'</span>);
+0660 magnet = contents{get(h,<span class="string">'Value'</span>)};
+0661 
+0662 <span class="comment">%%% Test si dans les limites</span>
+0663 <span class="keyword">if</span> val&lt;get(name,<span class="string">'Max'</span>) &amp;&amp; val&gt; get(name,<span class="string">'Min'</span>)
+0664   set(name,<span class="string">'Value'</span>,val);
+0665   handles = <a href="#_sub34" class="code" title="subfunction handles = setATmagnet(handles,magnet,val)">setATmagnet</a>(handles,magnet,val);
+0666   AOmagnet.(magnet(1:2)).ModelVal(str2double(magnet(end))) = val;
+0667 <span class="keyword">else</span> <span class="comment">% message d'erreur</span>
+0668   warndlg(<span class="string">'Wrong value for K'</span>,<span class="string">'Edit Box'</span>,<span class="string">'Modal'</span>)
+0669   set(hObject,<span class="string">'String'</span>,num2str(get(name,<span class="string">'Value'</span>)));
+0670 <span class="keyword">end</span>
+0671 
+0672 <span class="comment">% Save data</span>
+0673 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet); 
+0674 
+0675 <span class="comment">%---------------------------------</span>
+0676 <a name="_sub36" href="#_subfunctions" class="code">function mutual_exclude(off)</a>
+0677 <span class="comment">% function mutual_exclude(off)</span>
+0678 <span class="comment">% fonction pour faire des radioboutons</span>
+0679 set(off,<span class="string">'Value'</span>,0);
+0680 
+0681 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0682 <a name="_sub37" href="#_subfunctions" class="code">function popupmenu_y_CreateFcn(hObject, eventdata, handles)</a>
+0683 <span class="comment">% hObject    handle to popupmenu_y (see GCBO)</span>
+0684 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0685 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0686 
+0687 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0688 <span class="comment">%       See ISPC and COMPUTER.</span>
+0689 <span class="keyword">if</span> ispc
+0690     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0691 <span class="keyword">else</span>
+0692     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0693 <span class="keyword">end</span>
+0694 
+0695 
+0696 <span class="comment">% --- Executes on selection change in popupmenu_y.</span>
+0697 <a name="_sub38" href="#_subfunctions" class="code">function popupmenu_y_Callback(hObject, eventdata, handles)</a>
+0698 <span class="comment">% hObject    handle to popupmenu_y (see GCBO)</span>
+0699 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0700 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0701 
+0702 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_y contents as cell array</span>
+0703 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_y</span>
+0704 contents = get(hObject,<span class="string">'String'</span>);
+0705 <a href="#_sub32" class="code" title="subfunction plot_axes(handles,quoi)">plot_axes</a>(handles, contents{get(hObject,<span class="string">'Value'</span>)});
+0706 <span class="comment">%mat</span>
+0707      <span class="comment">%ylim([0 130]);</span>
+0708 handles.ytype = contents{get(hObject,<span class="string">'Value'</span>)};       
+0709 guidata(hObject, handles);
+0710 
+0711 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0712 <a name="_sub39" href="#_subfunctions" class="code">function popupmenu_x_CreateFcn(hObject, eventdata, handles)</a>
+0713 <span class="comment">% hObject    handle to popupmenu_x (see GCBO)</span>
+0714 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0715 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0716 
+0717 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0718 <span class="comment">%       See ISPC and COMPUTER.</span>
+0719 <span class="keyword">if</span> ispc
+0720     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0721 <span class="keyword">else</span>
+0722     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0723 <span class="keyword">end</span>
+0724 
+0725 <span class="comment">% --- Executes on selection change in popupmenu_x.</span>
+0726 <a name="_sub40" href="#_subfunctions" class="code">function popupmenu_x_Callback(hObject, eventdata, handles)</a>
+0727 <span class="comment">% hObject    handle to popupmenu_x (see GCBO)</span>
+0728 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0729 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0730 
+0731 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_x contents as cell array</span>
+0732 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_x</span>
+0733 contents = get(hObject,<span class="string">'String'</span>);        
+0734 handles.xtype = contents{get(hObject,<span class="string">'Value'</span>)};       
+0735 guidata(hObject, handles);
+0736 <a href="#_sub32" class="code" title="subfunction plot_axes(handles,quoi)">plot_axes</a>(handles, handles.ytype);
+0737 <span class="comment">%mat</span>
+0738       <span class="comment">%ylim([0 130]);</span>
+0739 
+0740 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0741 <a name="_sub41" href="#_subfunctions" class="code">function popupmenu_plane_CreateFcn(hObject, eventdata, handles)</a>
+0742 <span class="comment">% hObject    handle to popupmenu_plane (see GCBO)</span>
+0743 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0744 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0745 
+0746 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0747 <span class="comment">%       See ISPC and COMPUTER.</span>
+0748 <span class="keyword">if</span> ispc
+0749     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0750 <span class="keyword">else</span>
+0751     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0752 <span class="keyword">end</span>
+0753 
+0754 
+0755 <span class="comment">% --- Executes on selection change in popupmenu_plane.</span>
+0756 <a name="_sub42" href="#_subfunctions" class="code">function popupmenu_plane_Callback(hObject, eventdata, handles)</a>
+0757 <span class="comment">% hObject    handle to popupmenu_plane (see GCBO)</span>
+0758 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0759 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0760 
+0761 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_plane contents as cell array</span>
+0762 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_plane</span>
+0763 
+0764 
+0765 <span class="comment">% --- Executes on button press in pushbutton_reload.</span>
+0766 <a name="_sub43" href="#_subfunctions" class="code">function pushbutton_reload_Callback(hObject, eventdata, handles)</a>
+0767 <span class="comment">% hObject    handle to pushbutton_reload (see GCBO)</span>
+0768 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0769 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0770 
+0771 handles = <a href="#_sub44" class="code" title="subfunction handles = restart(handles)">restart</a>(handles);
+0772 guidata(hObject,handles);
+0773 
+0774 <span class="comment">%--------------------------------------------------------</span>
+0775 <a name="_sub44" href="#_subfunctions" class="code">function handles = restart(handles)</a>
+0776 <span class="comment">% function handles = restart(handles)</span>
+0777 <span class="comment">% Reinitialise la maille et l'IHM</span>
+0778 
+0779 AD = getad;
+0780 run(AD.ATModel); <span class="comment">%% Load lattice</span>
+0781 <span class="keyword">global</span> THERING
+0782 <span class="comment">% MAT ET LAURENT : TEMPORAIRE</span>
+0783 <span class="comment">%warning('66 MeV');</span>
+0784 <span class="comment">%setenergymodel(0.066);</span>
+0785 
+0786 <span class="comment">%</span>
+0787 setappdata(handles.figure1, <span class="string">'LT1'</span>, THERING);
+0788 
+0789 handles.restart = 1;
+0790 handles         = <a href="#_sub2" class="code" title="subfunction handles = computeTwiss(handles)">computeTwiss</a>(handles);
+0791 
+0792 <a href="#_sub32" class="code" title="subfunction plot_axes(handles,quoi)">plot_axes</a>(handles,handles.ytype);
+0793 <span class="comment">%mat</span>
+0794    
+0795 <span class="comment">%ylim([0 130]);</span>
+0796 
+0797 handles.modelMagnetVal  = {<span class="string">'chModelVal'</span>, <span class="string">'cvModelVal'</span>, <span class="keyword">...</span>
+0798     <span class="string">'quadrupoleModelVal'</span>, <span class="string">'dipoleModelVal'</span>};
+0799 
+0800 <a href="#_sub68" class="code" title="subfunction store_model_values(handles)">store_model_values</a>(handles);
+0801 
+0802 <span class="comment">% Relaod Accelerator Object</span>
+0803 AO  = getao; 
+0804 
+0805 <span class="comment">%% Initialise les sliders et editboxes</span>
+0806 <span class="keyword">for</span> k = 1:handles.sliderNumber
+0807     name = [<span class="string">'popupmenu_bar'</span> num2str(k)];
+0808     contents = get(handles.(name),<span class="string">'String'</span>);
+0809     magnet = contents{get(handles.(name),<span class="string">'Value'</span>)};
+0810     
+0811     Qname = [<span class="string">'QP'</span> num2str(k)];   
+0812     
+0813     <span class="comment">% Read AT values</span>
+0814     val  = getam(common2family(magnet),common2dev(magnet),<span class="string">'Model'</span>);
+0815     
+0816     set(handles.([<span class="string">'slider'</span> Qname]),<span class="string">'Value'</span>, val);
+0817     set(handles.([<span class="string">'edit'</span> Qname]),<span class="string">'string'</span>, num2str(val));
+0818 <span class="keyword">end</span>
+0819 
+0820 
+0821 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0822 <a name="_sub45" href="#_subfunctions" class="code">function popupmenu_bar1_CreateFcn(hObject, eventdata, handles)</a>
+0823 <span class="comment">% hObject    handle to popupmenu_bar1 (see GCBO)</span>
+0824 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0825 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0826 
+0827 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0828 <span class="comment">%       See ISPC and COMPUTER.</span>
+0829 <span class="keyword">if</span> ispc
+0830     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0831 <span class="keyword">else</span>
+0832     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0833 <span class="keyword">end</span>
+0834 
+0835 
+0836 <span class="comment">% --- Executes on selection change in popupmenu_bar1.</span>
+0837 <a name="_sub46" href="#_subfunctions" class="code">function popupmenu_bar1_Callback(hObject, eventdata, handles)</a>
+0838 <span class="comment">% hObject    handle to popupmenu_bar1 (see GCBO)</span>
+0839 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0840 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0841 
+0842 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar1 contents as cell array</span>
+0843 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar1</span>
+0844 
+0845 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0846 
+0847 <span class="comment">%----------------------------------------------------------</span>
+0848 <a name="_sub47" href="#_subfunctions" class="code">function setbar(handles)</a>
+0849 <span class="comment">%% aimant selectionne</span>
+0850 contents = get(gcbo,<span class="string">'String'</span>);
+0851 magnet = contents{get(gcbo,<span class="string">'Value'</span>)}
+0852 
+0853 <span class="comment">%% mets a jour l'IHM pour cet aimant</span>
+0854 tagstring = get(gcbo,<span class="string">'Tag'</span>);
+0855 num = tagstring(regexp(tagstring,<span class="string">'\d'</span>));
+0856 slidername = [<span class="string">'sliderQP'</span> num]; 
+0857 editboxname = [<span class="string">'editQP'</span> num]; 
+0858 
+0859 AOmagnet  = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); 
+0860 
+0861 <span class="keyword">switch</span> magnet
+0862     <span class="keyword">case</span> AOmagnet.CH.CommonNames
+0863         val_max = <a href="getmaxsp.html" class="code" title="function S = getmaxsp(Family, DeviceList)">getmaxsp</a>(<span class="string">'CH'</span>);
+0864         <span class="keyword">for</span> k = 1:7
+0865             name = strcat(<span class="string">'sliderQP'</span>,num2str(k))
+0866             set(handles.(name),<span class="string">'Max'</span>,val_max);
+0867         <span class="keyword">end</span>
+0868         val = AOmagnet.CH.ModelVal(str2double(magnet(end)));
+0869     <span class="keyword">case</span> AOmagnet.CV.CommonNames
+0870         val = AOmagnet.CV.ModelVal(str2double(magnet(end)));
+0871     <span class="keyword">case</span> AOmagnet.QP.CommonNames
+0872         val = AOmagnet.QP.ModelVal(str2double(magnet(end)));
+0873 <span class="keyword">end</span>
+0874 
+0875 str = num2str(val);
+0876 set(handles.(slidername),<span class="string">'Value'</span>,val); <span class="comment">% writes slider</span>
+0877 set(handles.(editboxname),<span class="string">'String'</span>,str); <span class="comment">% writes editbox</span>
+0878 
+0879 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0880 <a name="_sub48" href="#_subfunctions" class="code">function popupmenu_bar2_CreateFcn(hObject, eventdata, handles)</a>
+0881 <span class="comment">% hObject    handle to popupmenu_bar2 (see GCBO)</span>
+0882 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0883 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0884 
+0885 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0886 <span class="comment">%       See ISPC and COMPUTER.</span>
+0887 <span class="keyword">if</span> ispc
+0888     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0889 <span class="keyword">else</span>
+0890     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0891 <span class="keyword">end</span>
+0892 
+0893 <span class="comment">% --- Executes on selection change in popupmenu_bar2.</span>
+0894 <a name="_sub49" href="#_subfunctions" class="code">function popupmenu_bar2_Callback(hObject, eventdata, handles)</a>
+0895 <span class="comment">% hObject    handle to popupmenu_bar2 (see GCBO)</span>
+0896 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0897 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0898 
+0899 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar2 contents as cell array</span>
+0900 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar2</span>
+0901 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0902 
+0903 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0904 <a name="_sub50" href="#_subfunctions" class="code">function popupmenu_bar3_CreateFcn(hObject, eventdata, handles)</a>
+0905 <span class="comment">% hObject    handle to popupmenu_bar3 (see GCBO)</span>
+0906 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0907 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0908 
+0909 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0910 <span class="comment">%       See ISPC and COMPUTER.</span>
+0911 <span class="keyword">if</span> ispc
+0912     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0913 <span class="keyword">else</span>
+0914     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0915 <span class="keyword">end</span>
+0916 
+0917 <span class="comment">% --- Executes on selection change in popupmenu_bar3.</span>
+0918 <a name="_sub51" href="#_subfunctions" class="code">function popupmenu_bar3_Callback(hObject, eventdata, handles)</a>
+0919 <span class="comment">% hObject    handle to popupmenu_bar3 (see GCBO)</span>
+0920 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0921 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0922 
+0923 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar3 contents as cell array</span>
+0924 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar3</span>
+0925 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0926 
+0927 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0928 <a name="_sub52" href="#_subfunctions" class="code">function popupmenu_bar4_CreateFcn(hObject, eventdata, handles)</a>
+0929 <span class="comment">% hObject    handle to popupmenu_bar4 (see GCBO)</span>
+0930 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0931 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0932 
+0933 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0934 <span class="comment">%       See ISPC and COMPUTER.</span>
+0935 <span class="keyword">if</span> ispc
+0936     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0937 <span class="keyword">else</span>
+0938     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0939 <span class="keyword">end</span>
+0940 
+0941 <span class="comment">% --- Executes on selection change in popupmenu_bar4.</span>
+0942 <a name="_sub53" href="#_subfunctions" class="code">function popupmenu_bar4_Callback(hObject, eventdata, handles)</a>
+0943 <span class="comment">% hObject    handle to popupmenu_bar4 (see GCBO)</span>
+0944 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0945 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0946 
+0947 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar4 contents as cell array</span>
+0948 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar4</span>
+0949 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0950 
+0951 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0952 <a name="_sub54" href="#_subfunctions" class="code">function popupmenu_bar5_CreateFcn(hObject, eventdata, handles)</a>
+0953 <span class="comment">% hObject    handle to popupmenu_bar5 (see GCBO)</span>
+0954 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0955 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0956 
+0957 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0958 <span class="comment">%       See ISPC and COMPUTER.</span>
+0959 <span class="keyword">if</span> ispc
+0960     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0961 <span class="keyword">else</span>
+0962     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0963 <span class="keyword">end</span>
+0964 
+0965 <span class="comment">% --- Executes on selection change in popupmenu_bar5.</span>
+0966 <a name="_sub55" href="#_subfunctions" class="code">function popupmenu_bar5_Callback(hObject, eventdata, handles)</a>
+0967 <span class="comment">% hObject    handle to popupmenu_bar5 (see GCBO)</span>
+0968 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0969 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0970 
+0971 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar5 contents as cell array</span>
+0972 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar5</span>
+0973 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0974 
+0975 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0976 <a name="_sub56" href="#_subfunctions" class="code">function popupmenu_bar6_CreateFcn(hObject, eventdata, handles)</a>
+0977 <span class="comment">% hObject    handle to popupmenu_bar6 (see GCBO)</span>
+0978 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0979 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0980 
+0981 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0982 <span class="comment">%       See ISPC and COMPUTER.</span>
+0983 <span class="keyword">if</span> ispc
+0984     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0985 <span class="keyword">else</span>
+0986     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+0987 <span class="keyword">end</span>
+0988 
+0989 
+0990 <span class="comment">% --- Executes on selection change in popupmenu_bar6.</span>
+0991 <a name="_sub57" href="#_subfunctions" class="code">function popupmenu_bar6_Callback(hObject, eventdata, handles)</a>
+0992 <span class="comment">% hObject    handle to popupmenu_bar6 (see GCBO)</span>
+0993 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0994 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0995 
+0996 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar6 contents as cell array</span>
+0997 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar6</span>
+0998 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+0999 
+1000 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1001 <a name="_sub58" href="#_subfunctions" class="code">function popupmenu_bar7_CreateFcn(hObject, eventdata, handles)</a>
+1002 <span class="comment">% hObject    handle to popupmenu_bar7 (see GCBO)</span>
+1003 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1004 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1005 
+1006 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+1007 <span class="comment">%       See ISPC and COMPUTER.</span>
+1008 <span class="keyword">if</span> ispc
+1009     set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1010 <span class="keyword">else</span>
+1011     set(hObject,<span class="string">'BackgroundColor'</span>,get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>));
+1012 <span class="keyword">end</span>
+1013 
+1014 <span class="comment">% --- Executes on selection change in popupmenu_bar7.</span>
+1015 <a name="_sub59" href="#_subfunctions" class="code">function popupmenu_bar7_Callback(hObject, eventdata, handles)</a>
+1016 <span class="comment">% hObject    handle to popupmenu_bar7 (see GCBO)</span>
+1017 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1018 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1019 
+1020 <span class="comment">% Hints: contents = get(hObject,'String') returns popupmenu_bar7 contents as cell array</span>
+1021 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu_bar7</span>
+1022 <a href="#_sub47" class="code" title="subfunction setbar(handles)">setbar</a>(handles);
+1023 
+1024 
+1025 <span class="comment">% --- Executes on button press in pushbutton_refresh.</span>
+1026 <a name="_sub60" href="#_subfunctions" class="code">function pushbutton_refresh_Callback(hObject, eventdata, handles)</a>
+1027 <span class="comment">% hObject    handle to pushbutton_refresh (see GCBO)</span>
+1028 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1029 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1030 
+1031 <span class="comment">%--------------------------------------------------------------------------</span>
+1032 <a name="_sub61" href="#_subfunctions" class="code">function read_tango(handles)</a>
+1033 <span class="comment">% Reads Tango values for LT1.</span>
+1034 
+1035 <span class="comment">% Get magnet AO</span>
+1036 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>);
+1037 FamilyName = fieldnames(AOmagnet); 
+1038 
+1039 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1040         <span class="comment">% get attribute readback value</span>
+1041         magnet = AOmagnet.(FamilyName{k1});
+1042         AOmagnet.(FamilyName{k1}).TangoVal = <span class="keyword">...</span>
+1043             getam(FamilyName{k1},<span class="string">'Online'</span>);
+1044 <span class="keyword">end</span>
+1045 
+1046 <span class="comment">% save data</span>
+1047 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet)
+1048 
+1049 <span class="comment">%--------------------------------------------------------------------------</span>
+1050 <a name="_sub62" href="#_subfunctions" class="code">function write_tango(handles);</a>
+1051 <span class="comment">%-- Writes Tango values</span>
+1052 <span class="comment">%% Ecriture courant aimant sur les devices serveurs</span>
+1053 
+1054 <span class="comment">% Get magnet AO</span>
+1055 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>);
+1056 
+1057 FamilyName = fieldnames(AOmagnet); 
+1058 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1059     magnet = AOmagnet.(FamilyName{k1});
+1060     setsp(magnet, magnet.ModelVal,<span class="string">'Online'</span>);
+1061 <span class="keyword">end</span>
+1062 
+1063 <span class="comment">%--------------------------------------------------------------------------</span>
+1064 <a name="_sub63" href="#_subfunctions" class="code">function devicelist = get_device_name(machine,property,magnet)</a>
+1065 <span class="comment">% get device list from mapping read in tango database</span>
+1066 
+1067 map        = tango_get_db_property(machine,property);
+1068 sep        = cell2mat(regexpi(map,<span class="string">'::'</span>,<span class="string">'once'</span>))-1;
+1069 devicelist = regexprep(map,[magnet <span class="string">'\d*::'</span>],<span class="string">''</span>)';
+1070 
+1071 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1072 <a name="_sub64" href="#_subfunctions" class="code">function pushbutton_reload_CreateFcn(hObject, eventdata, handles)</a>
+1073 <span class="comment">% hObject    handle to pushbutton_reload (see GCBO)</span>
+1074 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1075 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1076 
+1077 <span class="comment">% --- Executes on button press in pushbutton_model2online.</span>
+1078 <a name="_sub65" href="#_subfunctions" class="code">function pushbutton_model2online_Callback(hObject, eventdata, handles)</a>
+1079 <span class="comment">% hObject    handle to pushbutton_model2online (see GCBO)</span>
+1080 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1081 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1082 
+1083 AOmagnet      = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">%% get LT1 structure</span>
+1084 
+1085 user_response = questdlg(<span class="string">'Do you want to write setvalues to LT1?'</span>);
+1086 <span class="keyword">switch</span> user_response
+1087     <span class="keyword">case</span>{<span class="string">'No'</span>,<span class="string">'Cancel'</span>}
+1088         <span class="keyword">return</span>;
+1089     <span class="keyword">case</span>{<span class="string">'Yes'</span>}
+1090         FamilyName = fieldnames(AOmagnet);
+1091         <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1092             AOmagnet.(FamilyName{k1}).TangoVal = <span class="keyword">...</span>
+1093                 AOmagnet.(FamilyName{k1}).ModelVal;
+1094         <span class="keyword">end</span>
+1095         <a href="#_sub62" class="code" title="subfunction write_tango(handles);">write_tango</a>(handles);
+1096 <span class="keyword">end</span>
+1097 
+1098 <span class="comment">% save data</span>
+1099 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet)
+1100 
+1101 <span class="comment">% --- Executes on button press in pushbutton_online2model.</span>
+1102 <a name="_sub66" href="#_subfunctions" class="code">function pushbutton_online2model_Callback(hObject, eventdata, handles)</a>
+1103 <span class="comment">% hObject    handle to pushbutton_online2model (see GCBO)</span>
+1104 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1105 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1106 
+1107 <span class="comment">% Online values stored in model values except dipoles</span>
+1108 user_response = questdlg(<span class="string">'Do you want to read TANGO setvalues from LT1?'</span>);
+1109 <span class="keyword">switch</span> user_response
+1110     <span class="keyword">case</span>{<span class="string">'No'</span>,<span class="string">'Cancel'</span>}
+1111         <span class="keyword">return</span>;
+1112     <span class="keyword">case</span>{<span class="string">'Yes'</span>}
+1113         <a href="#_sub61" class="code" title="subfunction read_tango(handles)">read_tango</a>(handles);
+1114 <span class="keyword">end</span>
+1115 
+1116 AOmagnet    = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">%% get LT1 structure</span>
+1117 
+1118 FamilyName = fieldnames(AOmagnet); 
+1119 <span class="keyword">for</span> k1 = 1:length(FamilyName)    
+1120         AOmagnet.(FamilyName{k1}).ModelVal = AOmagnet.(FamilyName{k1}).TangoVal;
+1121 <span class="keyword">end</span>
+1122         
+1123 <span class="comment">%% Initialise les sliders et editboxes</span>
+1124 <span class="keyword">for</span> k = 1:handles.sliderNumber
+1125     name = [<span class="string">'popupmenu_bar'</span> num2str(k)];
+1126     contents = get(handles.(name),<span class="string">'String'</span>);
+1127     magnet = contents{get(handles.(name),<span class="string">'Value'</span>)};
+1128     
+1129     Qname = [<span class="string">'QP'</span> num2str(k)];   
+1130     
+1131     <span class="keyword">switch</span> magnet
+1132         <span class="keyword">case</span> AOmagnet.QP.CommonNames            
+1133             val = AOmagnet.QP.TangoVal(str2double(magnet(end)));
+1134         <span class="keyword">case</span> AOmagnet.CH.CommonNames
+1135             val = AOmagnet.CH.TangoVal(str2double(magnet(end)));
+1136         <span class="keyword">case</span> AOmagnet.CV.CommonNames
+1137             val = AOmagnet.CV.TangoVal(str2double(magnet(end)));
+1138     <span class="keyword">end</span>
+1139     
+1140     set(handles.([<span class="string">'slider'</span> Qname]),<span class="string">'Value'</span>, val);
+1141     set(handles.([<span class="string">'edit'</span> Qname]),<span class="string">'string'</span>, num2str(val));
+1142 <span class="keyword">end</span>
+1143 
+1144 <a href="#_sub69" class="code" title="subfunction set_model_values(handles)">set_model_values</a>(handles);
+1145 
+1146 handles = <a href="#_sub2" class="code" title="subfunction handles = computeTwiss(handles)">computeTwiss</a>(handles);
+1147 <a href="#_sub32" class="code" title="subfunction plot_axes(handles,quoi)">plot_axes</a>(handles,handles.ytype);
+1148 <span class="comment">%mat</span>
+1149         <span class="comment">%ylim([0 130]);</span>
+1150 <span class="comment">% Update handles structure</span>
+1151 guidata(hObject, handles);
+1152 
+1153 <span class="comment">%% Update date</span>
+1154 set(handles.text_date,<span class="string">'String'</span>,datestr(now,0));
+1155 
+1156 <span class="comment">%save data</span>
+1157 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet);
+1158 
+1159 <span class="comment">%--------------------------------------------------------------------------</span>
+1160 <a name="_sub67" href="#_subfunctions" class="code">function handles = init_handles(handles)</a>
+1161 <span class="comment">%% Inits structure storing all the magnet data</span>
+1162 
+1163 <span class="comment">%% AT model used</span>
+1164 <span class="comment">% global THERING;</span>
+1165 
+1166 A1 = getao; <span class="comment">% Load AO for the first time</span>
+1167 AOmagnet = [];
+1168 list = findmemberof(<span class="string">'Magnet'</span>);
+1169 <span class="keyword">for</span> k = 1:length(list)
+1170     AOmagnet.(list{k}) = A1.(list{k});
+1171 <span class="keyword">end</span>
+1172 clear A1;
+1173 
+1174 <span class="comment">%save data</span>
+1175 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet);
+1176 
+1177 <a href="#_sub68" class="code" title="subfunction store_model_values(handles)">store_model_values</a>(handles);
+1178 
+1179 <span class="comment">%% Update time</span>
+1180 set(handles.text_date,<span class="string">'String'</span>,datestr(now,0));
+1181 
+1182 <span class="comment">%--------------------------------------------------------------------------</span>
+1183 <a name="_sub68" href="#_subfunctions" class="code">function store_model_values(handles)</a>
+1184 <span class="comment">%% Stores model values in AOmagnet</span>
+1185 
+1186 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">% get AOmagnet structure</span>
+1187 
+1188 <span class="comment">% Loop over magnet types</span>
+1189 FamilyName = fieldnames(AOmagnet);
+1190 
+1191 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1192     AOmagnet.(FamilyName{k1}).ModelVal = getam(FamilyName{k1},<span class="string">'Model'</span>);
+1193 <span class="keyword">end</span>
+1194 
+1195 setappdata(handles.figure1,<span class="string">'AOmagnet'</span>,AOmagnet);
+1196 
+1197 <span class="comment">%--------------------------------------------------------------------------</span>
+1198 <a name="_sub69" href="#_subfunctions" class="code">function set_model_values(handles)</a>
+1199 <span class="comment">% Set Modelvalue into LT1 AT model</span>
+1200 
+1201 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>); <span class="comment">% get AOmagnet structure</span>
+1202 
+1203 <span class="comment">%% Set model values to AT</span>
+1204 FamilyName = fieldnames(AOmagnet); 
+1205 
+1206 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1207     magnet = AOmagnet.(FamilyName{k1});
+1208     setsp(FamilyName{k1}, magnet.ModelVal,<span class="string">'Model'</span>);
+1209 <span class="keyword">end</span>
+1210 
+1211 
+1212 <span class="comment">%--------------------------------------------------------------------------</span>
+1213 <a name="_sub70" href="#_subfunctions" class="code">function submenu_print_setpoint_Callback(hObject, eventdata, handles)</a>
+1214 <span class="comment">% hObject    handle to submenu_print_setpoint (see GCBO)</span>
+1215 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1216 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1217 
+1218 
+1219 <span class="comment">%--------------------------------------------------------------------------</span>
+1220 <a name="_sub71" href="#_subfunctions" class="code">function submenu_print_model_Callback(hObject, eventdata, handles)</a>
+1221 <span class="comment">% hObject    handle to submenu_print_model (see GCBO)</span>
+1222 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1223 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1224 
+1225 
+1226 <span class="comment">% -------------------------------------------------------------------------</span>
+1227 <a name="_sub72" href="#_subfunctions" class="code">function submenu_save_setpoint_Callback(hObject, eventdata, handles)</a>
+1228 <span class="comment">% hObject    handle to submenu_save_setpoint (see GCBO)</span>
+1229 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1230 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1231 
+1232 
+1233 <span class="comment">% -------------------------------------------------------------------------</span>
+1234 <a name="_sub73" href="#_subfunctions" class="code">function submenu_save_model_Callback(hObject, eventdata, handles)</a>
+1235 <span class="comment">% hObject    handle to submenu_save_model (see GCBO)</span>
+1236 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1237 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1238 
+1239 
+1240 <span class="comment">% -------------------------------------------------------------------------</span>
+1241 <a name="_sub74" href="#_subfunctions" class="code">function submenu_load_setpoint_Callback(hObject, eventdata, handles)</a>
+1242 <span class="comment">% hObject    handle to submenu_load_setpoint (see GCBO)</span>
+1243 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1244 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1245 
+1246 
+1247 <span class="comment">%--------------------------------------------------------------------------</span>
+1248 <a name="_sub75" href="#_subfunctions" class="code">function submenu_load_model_Callback(hObject, eventdata, handles)</a>
+1249 <span class="comment">% hObject    handle to submenu_load_model (see GCBO)</span>
+1250 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1251 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1252 
+1253 
+1254 <span class="comment">%--------------------------------------------------------------------------</span>
+1255 <a name="_sub76" href="#_subfunctions" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a>
+1256 <span class="comment">% hObject    handle to Untitled_1 (see GCBO)</span>
+1257 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1258 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1259 
+1260 
+1261 <span class="comment">%--------------------------------------------------------------------------</span>
+1262 <a name="_sub77" href="#_subfunctions" class="code">function Untitled_4_Callback(hObject, eventdata, handles)</a>
+1263 <span class="comment">% hObject    handle to Untitled_4 (see GCBO)</span>
+1264 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1265 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1266 
+1267 
+1268 <span class="comment">%--------------------------------------------------------------------------</span>
+1269 <a name="_sub78" href="#_subfunctions" class="code">function Untitled_7_Callback(hObject, eventdata, handles)</a>
+1270 <span class="comment">% hObject    handle to Untitled_7 (see GCBO)</span>
+1271 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1272 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1273 
+1274 
+1275 <span class="comment">% --------------------------------------------------------------------</span>
+1276 <a name="_sub79" href="#_subfunctions" class="code">function submenu_dump_model_Callback(hObject, eventdata, handles)</a>
+1277 <span class="comment">% hObject    handle to submenu_dump_model (see GCBO)</span>
+1278 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1279 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1280 
+1281 <span class="comment">% Get magnet AO</span>
+1282 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>);
+1283 
+1284 fprintf(<span class="string">'  DeviceName     Model   s(m)   phasex betax(m) etax(m) xcod(mm) phasez betaz(m) etaz(m) zcod(mm)\n'</span>)
+1285 
+1286 FamilyName = fieldnames(AOmagnet); 
+1287 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1288     alias = AOmagnet.(FamilyName{k1});
+1289     <span class="keyword">for</span> k2 = 1 : length(AOmagnet.(FamilyName{k1}).CommonNames)
+1290         fprintf(<span class="string">'%15s %6.2f %6.2f  %6.2f  %6.2f  %6.2f  %6.2f  %6.2f  %6.2f  %6.2f  %6.2f \n'</span>, <span class="keyword">...</span>
+1291             alias.DeviceName{k2}, alias.ModelVal(k2), <span class="keyword">...</span><span class="comment"> </span>
+1292             handles.spos(alias.AT.ATIndex(k2),1), handles.phase(alias.AT.ATIndex(k2),1), <span class="keyword">...</span>
+1293             handles.beta(alias.AT.ATIndex(k2),1), handles.eta(alias.AT.ATIndex(k2),1), <span class="keyword">...</span>
+1294             handles.cod(alias.AT.ATIndex(k2),1), <span class="keyword">...</span>
+1295             handles.phase(alias.AT.ATIndex(k2),2), <span class="keyword">...</span>
+1296             handles.beta(alias.AT.ATIndex(k2),2), handles.eta(alias.AT.ATIndex(k2),2), <span class="keyword">...</span>
+1297             handles.cod(alias.AT.ATIndex(k2),2));
+1298     <span class="keyword">end</span>
+1299 <span class="keyword">end</span>
+1300 
+1301 
+1302 <span class="comment">%--------------------------------------------------------------------------</span>
+1303 <a name="_sub80" href="#_subfunctions" class="code">function submenu_dump_setpoint_Callback(hObject, eventdata, handles)</a>
+1304 <span class="comment">% hObject    handle to submenu_dump_setpoint (see GCBO)</span>
+1305 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1306 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1307 
+1308 <span class="comment">% Get magnet AO</span>
+1309 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>);
+1310 
+1311 fprintf(<span class="string">'\n\n  DeviceName     TANGO\n'</span>)
+1312 
+1313 FamilyName = fieldnames(AOmagnet); 
+1314 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1315     <span class="keyword">for</span> k2 = 1 : length(AOmagnet.(FamilyName{k1}).CommonNames)
+1316         alias = AOmagnet.(FamilyName{k1});
+1317         fprintf(<span class="string">'%15s %6.2f \n'</span>, alias.DeviceName{k2}, <span class="keyword">...</span>
+1318             alias.TangoVal(k2));
+1319     <span class="keyword">end</span>
+1320 <span class="keyword">end</span>
+1321 
+1322 
+1323 <span class="comment">%--------------------------------------------------------------------------</span>
+1324 <a name="_sub81" href="#_subfunctions" class="code">function submenu_dump_soleil_setpoint_Callback(hObject, eventdata, handles)</a>
+1325 <span class="comment">% hObject    handle to submenu_dump_soleil_setpoint (see GCBO)</span>
+1326 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1327 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1328 
+1329 fprintf(<span class="string">'\n\n  DeviceName     Model  TANGO\n'</span>)
+1330 
+1331 <span class="comment">% Get magnet AO</span>
+1332 AOmagnet = getappdata(handles.figure1,<span class="string">'AOmagnet'</span>);
+1333 
+1334 FamilyName = fieldnames(AOmagnet); 
+1335 <span class="keyword">for</span> k1 = 1:length(FamilyName)
+1336     <span class="keyword">for</span> k2 = 1 : length(AOmagnet.(FamilyName{k1}).CommonNames)
+1337         alias = AOmagnet.(FamilyName{k1});
+1338         fprintf(<span class="string">'%15s %6.2f %6.2f\n'</span>, alias.DeviceName{k2}, <span class="keyword">...</span>
+1339             alias.ModelVal(k2), alias.TangoVal(k2));
+1340     <span class="keyword">end</span>
+1341 <span class="keyword">end</span>
+1342 
+1343 
+1344 <span class="comment">% --------------------------------------------------------------------</span>
+1345 <a name="_sub82" href="#_subfunctions" class="code">function twiss_parameters_Callback(hObject, eventdata, handles)</a>
+1346 <span class="comment">% hObject    handle to twiss_parameters (see GCBO)</span>
+1347 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1348 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1349 
+1350 
+1351 <span class="comment">% --------------------------------------------------------------------</span>
+1352 <a name="_sub83" href="#_subfunctions" class="code">function submenu_twissparameters_entry_Callback(hObject, eventdata, handles)</a>
+1353 <span class="comment">% hObject    handle to submenu_twissparameters_entry (see GCBO)</span>
+1354 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1355 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1356 
+1357 twiss_parameters_entry(handles)
+1358 
+1359 
+1360</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

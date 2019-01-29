@@ -1,0 +1,36 @@
+# Tests avec le Matlab Compiler 4.0 (R14) 
+# 29 juin 2004
+
+Le compilateur a entierement restructure. Il s'appuit maintenant sur la
+technologie RunTime
+
+Tel. Support 
+ MAtlab 01 41 14 67 14 --> demander le support technique
+
+## Les options ne sont plus les memes ...
+
+
+## BUG #0
+Simulink problem ....
+Modifier le fichier compiler/deploy/matlabrc.m
+Voir note 1-O9PX9
+
+## BUG #1
+Warning: Simulink app-defaults file cannot be found in any of the default
+places.  Contact your system administrator to have this file installed.
+
+Solution Solution Number: 1-1AY7B
+http://www.mathworks.com/support/solutions/data/1-1AY7B.html?solution=1-1AY7B
+
+Make a copy of $MATLAB/X11/app-defaults/Matlab and place it in your $HOME/Matlab
+
+## BUG a  la compilation de fichier qui ne sont pas dans le meme fichier
+
+# Exemple simple
+mcc -m hello.m
+
+# Exemple autre avec tango_ping
+mcc -m toto.m -I /home/nadolski/tutu titi.m -I  /home/nadolski/controlroom/tango_binding/tango_43/m-files/ tango_ping.m -I /home/nadolski/controlroom/tango_binding/tango_4/mex-file/
+
+## Regle d'or mettre tous les chemins de fichier en dur avec l'option -I
+Il ne faut pas que ces fichiers soient definis dans la variable PATH !!!

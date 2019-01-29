@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of get_synchro_delay</title>
+  <meta name="keywords" content="get_synchro_delay">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; get_synchro_delay.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>get_synchro_delay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function get_synchro_delay(handles) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="synchro_injecteur7_rafale.html" class="code" title="function varargout = synchro_injecteur7_rafale(varargin)">synchro_injecteur7_rafale</a>	SYNCHRO_INJECTEUR7_RAFALE M-file for synchro_injecteur7_rafale.fig</li><li><a href="synchro_injecteur8_rafale.html" class="code" title="function varargout = synchro_injecteur8_rafale(varargin)">synchro_injecteur8_rafale</a>	SYNCHRO_INJECTEUR8_RAFALE M-file for synchro_injecteur8_rafale.fig</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function get_synchro_delay(handles)</a>
+0002 bug_device=<span class="string">'Bug device'</span>;
+0003 n=1;
+0004 
+0005 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSprTimeDelay'</span>);
+0006 set(handles.central_spare,<span class="string">'String'</span>,num2str(temp.value(n)));
+0007 
+0008 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjTimeDelay'</span>);
+0009 set(handles.central_inj,<span class="string">'String'</span>,num2str(temp.value(n)));
+0010 
+0011 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftTimeDelay'</span>);
+0012 set(handles.central_soft,<span class="string">'String'</span>,num2str(temp.value(n)));
+0013 <span class="comment">%set(handles.central_soft1,'String',num2str(temp.value(n)));</span>
+0014 
+0015 temp=tango_read_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetTimeValue'</span>);
+0016 set(handles.central_ext,<span class="string">'String'</span>,num2str(temp.value(n)));
+0017 
+0018 
+0019 
+0020 inj_offset=str2double(get(handles.inj_offset,<span class="string">'String'</span>));
+0021 
+0022 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0023 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0024 set(handles.sdc1,<span class="string">'String'</span>,txt);
+0025 
+0026 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0027 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0028 set(handles.lin_modulateur,<span class="string">'String'</span>,txt);
+0029 
+0030 
+0031 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmTimeDelay'</span>);
+0032 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0033 set(handles.lin_canon_lpm,<span class="string">'String'</span>,txt);
+0034 
+0035 
+0036 temp=tango_read_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacTimeDelay'</span>);
+0037 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0038 set(handles.lin_canon_spm,<span class="string">'String'</span>,txt);
+0039 
+0040 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigTimeDelay'</span>);
+0041 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0042 set(handles.boo_bpm,<span class="string">'String'</span>,txt);
+0043 
+0044 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0045 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0046 set(handles.lt1_emittance,<span class="string">'String'</span>,txt);
+0047 
+0048 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1TimeDelay'</span>);
+0049 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0050 set(handles.lt1_MC1,<span class="string">'String'</span>,txt);
+0051 
+0052 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2TimeDelay'</span>);
+0053 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0054 set(handles.lt1_MC2,<span class="string">'String'</span>,txt);
+0055 
+0056 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscTimeDelay'</span>);
+0057 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0058 set(handles.lt1_osc,<span class="string">'String'</span>,txt);
+0059 
+0060 temp=tango_read_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booTimeDelay'</span>);
+0061 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0062 set(handles.boo_dcct,<span class="string">'String'</span>,txt);
+0063 
+0064 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigTimeDelay'</span>);
+0065 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0066 set(handles.boo_nod,<span class="string">'String'</span>,txt);
+0067 
+0068 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0069 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0070 set(handles.boo_inj_septum,<span class="string">'String'</span>,txt);
+0071 
+0072 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0073 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-inj_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0074 set(handles.boo_inj_kicker,<span class="string">'String'</span>,txt);
+0075 
+0076 
+0077 
+0078 
+0079 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpTimeDelay'</span>);
+0080 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0081 set(handles.boo_alim_dipole,<span class="string">'String'</span>,txt);
+0082 
+0083 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfTimeDelay'</span>);
+0084 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0085 set(handles.boo_alim_qf,<span class="string">'String'</span>,txt);
+0086 
+0087 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdTimeDelay'</span>);
+0088 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0089 set(handles.boo_alim_qd,<span class="string">'String'</span>,txt);
+0090 
+0091 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfTimeDelay'</span>);
+0092 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0093 set(handles.boo_alim_sf,<span class="string">'String'</span>,txt);
+0094 
+0095 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdTimeDelay'</span>);
+0096 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0097 set(handles.boo_alim_sd,<span class="string">'String'</span>,txt);
+0098 
+0099 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfTimeDelay'</span>);
+0100 <span class="keyword">try</span> ;txt=num2str(temp.value(n)); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0101 set(handles.boo_rf,<span class="string">'String'</span>,txt);
+0102 
+0103 
+0104 
+0105 ext_offset=str2double(get(handles.ext_offset,<span class="string">'String'</span>));
+0106 
+0107 
+0108 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigTimeDelay'</span>);
+0109 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0110 set(handles.boo_ext_dof,<span class="string">'String'</span>,txt);
+0111 
+0112 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0113 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0114 set(handles.boo_ext_sept_p,<span class="string">'String'</span>,txt);
+0115 
+0116 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+0117 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0118 set(handles.boo_ext_sept_a,<span class="string">'String'</span>,txt);
+0119 
+0120 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigTimeDelay'</span>);
+0121 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0122 set(handles.boo_ext_kicker,<span class="string">'String'</span>,txt);
+0123 
+0124 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareTimeDelay'</span>);
+0125 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0126 set(handles.sdc2,<span class="string">'String'</span>,txt);
+0127 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0128 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvTimeDelay'</span>);
+0129 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0130 set(handles.lt2_emittance,<span class="string">'String'</span>,txt);
+0131 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0132 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctTimeDelay'</span>);
+0133 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0134 set(handles.lt2_osc,<span class="string">'String'</span>,txt);
+0135 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0136 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0137 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0138 set(handles.lt2_bpm,<span class="string">'String'</span>,txt);
+0139 
+0140 
+0141 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigTimeDelay'</span>);
+0142 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0143 set(handles.ans_inj_k1,<span class="string">'String'</span>,txt);
+0144 
+0145 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigTimeDelay'</span>);
+0146 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0147 set(handles.ans_inj_k2,<span class="string">'String'</span>,txt);
+0148 
+0149 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigTimeDelay'</span>);
+0150 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0151 set(handles.ans_inj_k3,<span class="string">'String'</span>,txt);
+0152 
+0153 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigTimeDelay'</span>);
+0154 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0155 set(handles.ans_inj_k4,<span class="string">'String'</span>,txt);
+0156 
+0157 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigTimeDelay'</span>);
+0158 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0159 set(handles.ans_inj_sept_p,<span class="string">'String'</span>,txt);
+0160 
+0161 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigTimeDelay'</span>);
+0162 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0163 set(handles.ans_inj_sept_a,<span class="string">'String'</span>,txt);
+0164 
+0165 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctTimeDelay'</span>);
+0166 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0167 set(handles.ans_dcct,<span class="string">'String'</span>,txt);
+0168 
+0169 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0170 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0171 set(handles.ans_bpm,<span class="string">'String'</span>,txt);
+0172 set(handles.ans_bpm_c01,<span class="string">'String'</span>,txt);
+0173 temp=tango_read_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0174 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0175 set(handles.ans_bpm_c02,<span class="string">'String'</span>,txt);
+0176 temp=tango_read_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0177 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0178 set(handles.ans_bpm_c03,<span class="string">'String'</span>,txt);
+0179 temp=tango_read_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0180 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0181 set(handles.ans_bpm_c04,<span class="string">'String'</span>,txt);
+0182 temp=tango_read_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0183 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0184 set(handles.ans_bpm_c05,<span class="string">'String'</span>,txt);
+0185 temp=tango_read_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0186 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0187 set(handles.ans_bpm_c06,<span class="string">'String'</span>,txt);
+0188 temp=tango_read_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0189 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0190 set(handles.ans_bpm_c07,<span class="string">'String'</span>,txt);
+0191 temp=tango_read_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0192 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0193 set(handles.ans_bpm_c08,<span class="string">'String'</span>,txt);
+0194 temp=tango_read_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0195 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0196 set(handles.ans_bpm_c09,<span class="string">'String'</span>,txt);
+0197 temp=tango_read_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0198 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0199 set(handles.ans_bpm_c10,<span class="string">'String'</span>,txt);
+0200 temp=tango_read_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0201 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0202 set(handles.ans_bpm_c11,<span class="string">'String'</span>,txt);
+0203 temp=tango_read_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0204 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0205 set(handles.ans_bpm_c12,<span class="string">'String'</span>,txt);
+0206 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0207 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0208 set(handles.ans_bpm_c13,<span class="string">'String'</span>,txt);
+0209 temp=tango_read_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0210 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0211 set(handles.ans_bpm_c14,<span class="string">'String'</span>,txt);
+0212 temp=tango_read_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0213 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0214 set(handles.ans_bpm_c15,<span class="string">'String'</span>,txt);
+0215 temp=tango_read_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigTimeDelay'</span>);
+0216 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0217 set(handles.ans_bpm_c16,<span class="string">'String'</span>,txt);
+0218 
+0219 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigTimeDelay'</span>);
+0220 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0221 set(handles.ans_k_h,<span class="string">'String'</span>,txt);
+0222 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigTimeDelay'</span>);
+0223 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0224 set(handles.ans_k_v,<span class="string">'String'</span>,txt);
+0225 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcTimeDelay'</span>);
+0226 <span class="keyword">try</span> ;txt=num2str(temp.value(n)-ext_offset); <span class="keyword">catch</span> txt=bug_device ; <span class="keyword">end</span>
+0227 set(handles.ans_k_pc,<span class="string">'String'</span>,txt);</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

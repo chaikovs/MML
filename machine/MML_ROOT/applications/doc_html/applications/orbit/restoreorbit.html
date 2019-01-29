@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of restoreorbit</title>
+  <meta name="keywords" content="restoreorbit">
+  <meta name="description" content="RESTOREORBIT - Reads saved data from file">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">orbit</a> &gt; restoreorbit.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/orbit&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>restoreorbit
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RESTOREORBIT - Reads saved data from file</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function varargout = restoreorbit(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">RESTOREORBIT - Reads saved data from file
+load structures sys, bpm, cor, rsp for return
+no graphics in this routine
+
+ INPUTS
+ 1. Directory name
+ 2. Filename
+ 3. 'auto' - for non interactif
+ 4. SYS structure
+ 5. BPM structure
+ 6. COR structutre
+ 7. RSP strucutre
+
+ See also soleilrestore, <a href="readwrite.html" class="code" title="function readwrite(action, varargin)">readwrite</a>, orbgui('SaveSet'), orbgui('SaveSystem')</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="response2rsp.html" class="code" title="function rsp = response2rsp(datastruct,rsp,plane)">response2rsp</a>	RESPONSE2RSP - Loads middlelayer response matrix data format into orbit program response structure</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = restoreorbit(varargin)</a>
+0002 <span class="comment">%RESTOREORBIT - Reads saved data from file</span>
+0003 <span class="comment">%load structures sys, bpm, cor, rsp for return</span>
+0004 <span class="comment">%no graphics in this routine</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% INPUTS</span>
+0007 <span class="comment">% 1. Directory name</span>
+0008 <span class="comment">% 2. Filename</span>
+0009 <span class="comment">% 3. 'auto' - for non interactif</span>
+0010 <span class="comment">% 4. SYS structure</span>
+0011 <span class="comment">% 5. BPM structure</span>
+0012 <span class="comment">% 6. COR structutre</span>
+0013 <span class="comment">% 7. RSP strucutre</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% See also soleilrestore, readwrite, orbgui('SaveSet'), orbgui('SaveSystem')</span>
+0016 
+0017 <span class="comment">%</span>
+0018 <span class="comment">% Written by William J. Corbett</span>
+0019 <span class="comment">% Modified by Laurent S. Nadolski</span>
+0020 
+0021 <span class="comment">%% Get input arguments</span>
+0022 
+0023 DirSpec = char(varargin(1)); 
+0024 FileName= char(varargin(2)); 
+0025 auto    = char(varargin(3)); 
+0026 sys     = varargin{4};    
+0027 bpm     = varargin{5};    
+0028 cor     = varargin{6};    
+0029 rsp     = varargin{7};    
+0030 
+0031 <span class="comment">%=================================</span>
+0032 <span class="comment">%% check automatic file load request</span>
+0033 <span class="comment">%=================================</span>
+0034 <span class="keyword">if</span> ~strcmp(auto,<span class="string">'auto'</span>) == 1
+0035     answer = input(<span class="string">'Load Restore File? Y/N [Y]: '</span>,<span class="string">'s'</span>);
+0036     <span class="keyword">if</span> isempty(answer), answer =<span class="string">'n'</span>; <span class="keyword">end</span>
+0037     <span class="keyword">if</span> answer ==<span class="string">'n'</span> || answer == <span class="string">'N'</span>
+0038         disp(<span class="string">'WARNING: Restore File NOT LOADED'</span>);
+0039         fclose(fid);
+0040         <span class="keyword">return</span>
+0041     <span class="keyword">end</span>
+0042 <span class="keyword">end</span>
+0043 
+0044 <span class="comment">%===========================</span>
+0045 <span class="comment">%% execute script in save file</span>
+0046 <span class="comment">%===========================</span>
+0047 disp([<span class="string">'   Loading restore file... '</span>, FileName]);
+0048 
+0049 <span class="comment">%save file is a script - contains sys, bpm, cor, rsp, bpmx, bpmz, corx,</span>
+0050 <span class="comment">%corz</span>
+0051 run([DirSpec FileName]);     
+0052 
+0053 <span class="keyword">if</span> ~strcmpi(filetype,<span class="string">'Restore'</span>)
+0054     disp([<span class="string">'Warning: improper file specification - '</span> upper(filetype)]);
+0055     <span class="keyword">return</span>
+0056 <span class="keyword">else</span>
+0057     clear filetype
+0058 <span class="keyword">end</span>
+0059 
+0060 sys.xlimax = sys.maxs;           <span class="comment">%...scaling for abcissa</span>
+0061 
+0062 <span class="comment">%=========================================================</span>
+0063 <span class="comment">%% load BPM to Corrector response matrices</span>
+0064 <span class="comment">%=========================================================</span>
+0065 
+0066 <span class="comment">% automatically load golden response</span>
+0067 temp = getbpmresp(<span class="string">'struct'</span>);    
+0068 
+0069 <span class="comment">% Transform to orbit format</span>
+0070 rsp = <a href="response2rsp.html" class="code" title="function rsp = response2rsp(datastruct,rsp,plane)">response2rsp</a>(temp,rsp);
+0071 
+0072 <span class="comment">% read golden eta function (HW, frequency units)</span>
+0073 rsp(1).eta = getphysdata(bpm(1).AOFamily,<span class="string">'Dispersion'</span>);
+0074 rsp(2).eta = getphysdata(bpm(2).AOFamily,<span class="string">'Dispersion'</span>);
+0075 
+0076 <span class="comment">%=======================================================================</span>
+0077 <span class="comment">%% load BPM and COR data from cell arrays acquired while running save file</span>
+0078 <span class="comment">%=======================================================================</span>
+0079 <span class="comment">%horizontal BPM</span>
+0080 <span class="keyword">for</span> ii = 1 : size(bpmx,1),
+0081     bpm(1).ifit(ii) = bpmx{ii}{3};     <span class="comment">%convert from cell to real</span>
+0082     bpm(1).wt(ii)   = bpmx{ii}{4};
+0083     bpm(1).etawt(ii)= bpmx{ii}{5};
+0084 <span class="keyword">end</span>
+0085 bpm(1).ifit = find(bpm(1).ifit);       <span class="comment">%compress fitting vector</span>
+0086 
+0087 <span class="comment">%horizontal corrector</span>
+0088 <span class="keyword">for</span> ii = 1:size(corx,1),
+0089     cor(1).ifit(ii)=corx{ii}{3};       <span class="comment">%convert from cell to real</span>
+0090     cor(1).wt(ii)  =corx{ii}{4};
+0091 <span class="keyword">end</span>
+0092 cor(1).ifit = find(cor(1).ifit);       <span class="comment">%compress fitting vector</span>
+0093 
+0094 <span class="comment">%vertical BPM</span>
+0095 <span class="keyword">for</span> ii = 1:size(bpmz,1),
+0096     bpm(2).ifit(ii)  = bpmz{ii}{3};    <span class="comment">%convert from cell to real</span>
+0097     bpm(2).wt(ii)    = bpmz{ii}{4};
+0098     bpm(2).etawt(ii) = bpmz{ii}{5};
+0099 <span class="keyword">end</span>
+0100 bpm(2).ifit = find(bpm(2).ifit);       <span class="comment">%compress fitting vector</span>
+0101 
+0102 <span class="comment">%vertical corrector</span>
+0103 <span class="keyword">for</span> ii = 1:size(corz,1),
+0104     cor(2).ifit(ii) = corz{ii}{3};     <span class="comment">%convert from cell to real</span>
+0105     cor(2).wt(ii)   = corz{ii}{4};
+0106 <span class="keyword">end</span>
+0107 cor(2).ifit = find(cor(2).ifit);       <span class="comment">%compress fitting vector</span>
+0108 
+0109 <span class="comment">%==========================================================</span>
+0110 <span class="comment">%% load corrector limits and response matrix kicks via AO</span>
+0111 <span class="comment">%==========================================================</span>
+0112 AO = getao;
+0113 
+0114 <span class="comment">%good = find(getfamilydata(cor(1).AOFamily,'Status'));</span>
+0115 cor(1).lim = abs(AO.(cor(1).AOFamily).Setpoint.Range(:,1));  <span class="comment">%corrector limits</span>
+0116 <span class="comment">%cor(1).lim = cor(1).lim(good);</span>
+0117 cor(1).ebpm=AO.(cor(1).AOFamily).Setpoint.DeltaRespMat;      <span class="comment">%kicks for response matrix</span>
+0118 <span class="comment">%cor(1).ebpm = cor(1).ebpm(good);</span>
+0119 
+0120 cor(2).lim =abs(AO.(cor(2).AOFamily).Setpoint.Range(:,1));
+0121 <span class="comment">%cor(2).lim = cor(2).lim(good);</span>
+0122 cor(2).ebpm=AO.(cor(2).AOFamily).Setpoint.DeltaRespMat;
+0123 <span class="comment">%cor(2).ebpm = cor(2).ebpm(good);</span>
+0124 
+0125 disp([<span class="string">'   Finished loading restore file... '</span>,FileName]);
+0126 
+0127 varargout{1} = sys;
+0128 varargout{2} = bpm;
+0129 varargout{3} = cor;
+0130 varargout{4} = rsp;</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,11 @@
+function [w]=wz_f(data,M,z)
+Lambda_L=data(1);
+q0=data(6);
+  %M=M_z(z);
+  A=M(1,1);
+  B=M(1,2);
+  C=M(2,1);
+  D=M(2,2);
+  invq2=(C+D/q0)/(A+B/q0);
+  w=imag(invq2);
+  w=sqrt(-Lambda_L/(pi*w));

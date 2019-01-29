@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of step_load_synchro_rafale</title>
+  <meta name="keywords" content="step_load_synchro_rafale">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; step_load_synchro_rafale.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>step_load_synchro_rafale
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function load_synchro_rafale(Directory,file,DirName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function load_synchro_rafale(Directory,file,DirName)</a>
+0002 <span class="comment">%</span>
+0003 
+0004 pwdold = pwd;
+0005 cd(Directory);
+0006 load(file)
+0007 cd(pwdold);
+0008 
+0009 
+0010 tout=0.;
+0011 
+0012     display(<span class="string">'off set'</span>)
+0013     <span class="keyword">if</span> isfield(timing,<span class="string">'inj_offset'</span>);inj_offset=timing.inj_offset;
+0014        <span class="keyword">if</span> isfield(timing,<span class="string">'ext_offset'</span>);ext_offset=timing.ext_offset;
+0015            <span class="keyword">if</span> isfield(timing,<span class="string">'lin_fin'</span>   );
+0016                
+0017               lin_fin   =timing.lin_fin;
+0018               FileName = [DirName <span class="string">'synchro_offset_lin'</span>];
+0019               save(FileName, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0020               
+0021            <span class="keyword">end</span>
+0022        <span class="keyword">end</span>
+0023     <span class="keyword">end</span>
+0024     display(<span class="string">'Clk'</span>)
+0025     <span class="comment">% set address to value never used (prevent collision when swap adress)</span>
+0026     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigStepDelay'</span>,timing.boo_dof_ext(1));pause(tout);
+0027     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigStepDelay'</span>,timing.boo_sep_p_ext(1));pause(tout);
+0028     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigStepDelay'</span>,timing.boo_sep_a_ext(1));pause(tout);
+0029     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigStepDelay'</span>,timing.boo_k_ext(1));pause(tout);
+0030     <span class="keyword">if</span> isfield(timing,<span class="string">'boo_mrsv'</span>);tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceStepDelay'</span>,timing.boo_mrsv(1));pause(tout);<span class="keyword">end</span>
+0031     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.lt2_bpm(1));pause(tout);
+0032     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctStepDelay'</span>,timing.lt2_osc(1));pause(tout);
+0033     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvStepDelay'</span>,timing.lt2_emittance(1));pause(tout);
+0034     
+0035     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>,timing.ans_k1_inj(1));pause(tout);
+0036     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>,timing.ans_k2_inj(1));pause(tout);
+0037     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>,timing.ans_k3_inj(1));pause(tout);
+0038     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>,timing.ans_k4_inj(1));pause(tout);
+0039     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigStepDelay'</span>,timing.ans_sep_p_inj(1));pause(tout);
+0040     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigStepDelay'</span>,timing.ans_sep_a_inj(1));pause(tout);
+0041     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm01(1));pause(tout);
+0042     tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm02(1));pause(tout);
+0043     tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm03(1));pause(tout);
+0044     tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm04(1));pause(tout);
+0045     tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm05(1));pause(tout);
+0046     tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm06(1));pause(tout);
+0047     tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm07(1));pause(tout);
+0048     tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm08(1));pause(tout);
+0049     tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm09(1));pause(tout);
+0050     tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm10(1));pause(tout);  
+0051     tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm11(1));pause(tout);  
+0052     tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm12(1));pause(tout);  
+0053     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm13(1));pause(tout);  
+0054     tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm14(1));pause(tout);  
+0055     tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm15(1));pause(tout);  
+0056     tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,timing.ans_bpm16(1));pause(tout);   
+0057     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctStepDelay'</span>,timing.ans_dcct(1));pause(tout);  
+0058     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_nod'</span>) ;tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'perteStepDelay'</span>,timing.ans_nod(1));pause(tout);<span class="keyword">end</span>  
+0059    
+0060     
+0061     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_hv_pc'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcStepDelay'</span>,timing.ans_k_hv_pc(1));pause(tout);<span class="keyword">end</span>  
+0062     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_v'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigStepDelay'</span>,timing.ans_k_v(1));pause(tout);<span class="keyword">end</span>  
+0063     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_h'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigStepDelay'</span>,timing.ans_k_h(1));pause(tout);<span class="keyword">end</span>  
+0064 
+0065     display(<span class="string">'Event'</span>)
+0066     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'oscEvent'</span>,int32(timing.sdc1(2)));pause(tout);
+0067     tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'lpmEvent'</span>,int32(timing.lin_lpm(2)));pause(tout);
+0068     tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,int32(timing.lin_modulateur(2)));
+0069     <span class="keyword">if</span> isfield(timing,<span class="string">'lin_spm'</span>);tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.SPM.1'</span>, <span class="string">'spmLinacEvent'</span>,int32(timing.lin_spm(2)));pause(tout);<span class="keyword">end</span>
+0070     <span class="keyword">if</span> isfield(timing,<span class="string">'lin_alim'</span>);tango_write_attribute2(<span class="string">'LIN/SY/LOCAL.LPM.1'</span>, <span class="string">'spareEvent'</span>,int32(timing.lin_alim(2)));pause(tout);<span class="keyword">end</span>
+0071     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-bta.trigEvent'</span>,int32(timing.boo_bpm(2)));pause(tout);
+0072     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.1'</span>, <span class="string">'bpm-btd.trigEvent'</span>,int32(timing.boo_bpm(2)));pause(tout);
+0073     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.2'</span>, <span class="string">'bpm-btb.trigEvent'</span>,int32(timing.boo_bpm(2)));pause(tout);
+0074     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-btc.trigEvent'</span>,int32(timing.boo_bpm(2)));pause(tout);     
+0075     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'emittanceEvent'</span>,int32(timing.lt1_emittance(2)));pause(tout);
+0076     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.1Event'</span>,int32(timing.lt1_mc1(2)));pause(tout);
+0077     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'mc.2Event'</span>,int32(timing.lt1_mc2(2)));pause(tout);
+0078     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'oscEvent'</span>,int32(timing.lt1_osc(2)));pause(tout);
+0079     tango_write_attribute2(<span class="string">'LT1/SY/LOCAL.DG.1'</span>, <span class="string">'dcct-booEvent'</span>,int32(timing.boo_dcct(2)));pause(tout);
+0080     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'bpm-onde.trigEvent'</span>,int32(timing.boo_nod(2)));pause(tout);
+0081     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'sep-p.trigEvent'</span>,int32(timing.boo_sep_p_inj(2)));pause(tout);
+0082     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Binj.1'</span>, <span class="string">'k.trigEvent'</span>,int32(timing.boo_k_inj(2)));pause(tout);
+0083     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'dpEvent'</span>,int32(timing.boo_dp(2)));pause(tout);
+0084     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qfEvent'</span>,int32(timing.boo_qf(2)));pause(tout);
+0085     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'qdEvent'</span>,int32(timing.boo_qd(2)));pause(tout);
+0086     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sfEvent'</span>,int32(timing.boo_sf(2)));pause(tout);
+0087     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.ALIM.1'</span>, <span class="string">'sdEvent'</span>,int32(timing.boo_sd(2)));pause(tout);
+0088     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.RF.1'</span>, <span class="string">'rfEvent'</span>,int32(timing.boo_rf(2)));pause(tout);
+0089     tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareEvent'</span>,int32(timing.sdc2(2)));pause(tout);
+0090     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigEvent'</span>,int32(timing.boo_dof_ext(2)));pause(tout);
+0091     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigEvent'</span>,int32(timing.boo_sep_p_ext(2)));pause(tout);
+0092     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigEvent'</span>,int32(timing.boo_sep_a_ext(2)));pause(tout);
+0093     tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigEvent'</span>,int32(timing.boo_k_ext(2)));pause(tout);
+0094     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.lt2_bpm(2)));pause(tout);
+0095     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctEvent'</span>,int32(timing.lt2_osc(2)));pause(tout);
+0096     tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvEvent'</span>,int32(timing.lt2_emittance(2)));pause(tout);
+0097     <span class="keyword">if</span> isfield(timing,<span class="string">'boo_mrsv'</span>);tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceEvent'</span>,int32(timing.boo_mrsv(2)));pause(tout);<span class="keyword">end</span>
+0098     arg.svalue={<span class="string">'k1.trig'</span>,<span class="string">'k2.trig'</span>,<span class="string">'k3.trig'</span>,<span class="string">'k4.trig'</span>}; 
+0099     arg.lvalue=int32([timing.ans_k1_inj(2) timing.ans_k2_inj(2) timing.ans_k3_inj(2) timing.ans_k4_inj(2)]); 
+0100     tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupÃ© address sans update</span>
+0101     tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'Update'</span>);pause(tout);
+0102     
+0103     arg.svalue={<span class="string">'sep-p.trig'</span>,<span class="string">'sep-a.trig'</span>};
+0104     arg.lvalue=int32([timing.ans_sep_p_inj(2) timing.ans_sep_a_inj(2)]);
+0105     tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>,<span class="string">'SetEventsNumbers'</span>,arg);<span class="comment">% chagement groupÃ© address sans update</span>
+0106     tango_command_inout2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'Update'</span>);pause(tout);
+0107    
+0108     
+0109     tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm01(2)));pause(tout);
+0110     tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm02(2)));pause(tout);
+0111     tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm03(2)));pause(tout);
+0112     tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm04(2)));pause(tout);
+0113     tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm05(2)));pause(tout);
+0114     tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm06(2)));pause(tout);
+0115     tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm07(2)));pause(tout);
+0116     tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm08(2)));pause(tout);
+0117     tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm09(2)));pause(tout);
+0118     tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm10(2)));pause(tout);  
+0119     tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm11(2)));pause(tout);  
+0120     tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm12(2)));pause(tout);  
+0121     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm13(2)));pause(tout);  
+0122     tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm14(2)));pause(tout);  
+0123     tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm15(2)));pause(tout);  
+0124     tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigEvent'</span>,int32(timing.ans_bpm16(2)));pause(tout);   
+0125     tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctEvent'</span>,int32(timing.ans_dcct(2)));pause(tout);
+0126     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_nod'</span>) ;tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'perteEvent'</span>,int32(timing.ans_nod(2)));pause(tout);<span class="keyword">end</span>  
+0127     
+0128     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_hv_pc'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcEvent'</span>,int32(timing.ans_k_hv_pc(2)));pause(tout);<span class="keyword">end</span>  
+0129     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_v'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigEvent'</span>,int32(timing.ans_k_v(2)));pause(tout);<span class="keyword">end</span>  
+0130     <span class="keyword">if</span> isfield(timing,<span class="string">'ans_k_h'</span>) ;tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigEvent'</span>,int32(timing.ans_k_h(2)));pause(tout);<span class="keyword">end</span>  
+0131     
+0132     <span class="comment">% apply good value</span>
+0133     tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TPcStepDelay'</span>,timing.central_pc);
+0134     tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TInjStepDelay'</span>,timing.central_inj);
+0135     tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSoftStepDelay'</span>,timing.central_soft);
+0136     tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'TSprStepDelay'</span>,timing.central_spare);
+0137     tango_write_attribute2(<span class="string">'ANS/SY/CENTRAL'</span>, <span class="string">'ExtractionOffsetClkStepValue'</span>,timing.central_ext);
+0138  
+0139     
+0140 display(<span class="string">'OK'</span>)
+0141 
+0142</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

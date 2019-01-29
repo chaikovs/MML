@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getnu</title>
+  <meta name="keywords" content="getnu">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">Booster</a> &gt; getnu.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/Booster&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>getnu
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [tunex tunez] = getnu(ibpm1,ibpm2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [tunex tunez] = getnu(ibpm1,ibpm2)</a>
+0002 
+0003 istart=27;
+0004 iend=istart+1*512+1;
+0005 val =getbpmrawdata( [1 2] ,<span class="string">'nodisplay'</span>,<span class="string">'struct'</span>);
+0006 
+0007 xt=val.Data.X(1,istart:iend);
+0008 zt=val.Data.Z(2,istart:iend) ;
+0009 
+0010 nf=iend-istart+1;
+0011 fx=fft(xt); px=fx.*conj(fx)/nf; xf=(1:nf)/nf;
+0012 fz=fft(zt); pz=fz.*conj(fz)/nf; zf=(1:nf)/nf;
+0013 tunex=find(px==max(px))/nf
+0014 tunez=find(pz==max(pz))/nf
+0015 
+0016 figure(110)
+0017 subplot(1,2,1)
+0018 plot(xf(2:nf/2),px(2:nf/2)); 
+0019 <span class="comment">%ylim([0 1]);</span>
+0020 grid on
+0021 subplot(1,2,2)
+0022 plot(zf(2:nf/2),pz(2:nf/2))
+0023 suptitle([<span class="string">'TuneX= '</span> num2str(tunex) <span class="string">'            TuneZ= '</span> num2str(tunez)]);
+0024 grid on
+0025</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

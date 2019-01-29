@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of step_synchro_rafale</title>
+  <meta name="keywords" content="step_synchro_rafale">
+  <meta name="description" content="step central and delay on address 3 only">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; step_synchro_rafale.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>step_synchro_rafale
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>step central and delay on address 3 only</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function step_synchro_rafale(DirName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> step central and delay on address 3 only</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function step_synchro_rafale(DirName)</a>
+0002 <span class="comment">% step central and delay on address 3 only</span>
+0003 
+0004  n=1;
+0005 <span class="comment">% % central</span>
+0006 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'TPcStepDelay');</span>
+0007 <span class="comment">% timing.central_pc=temp.value(n);</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'TInjStepDelay');</span>
+0010 <span class="comment">% timing.central_inj=temp.value(n);</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'TSoftStepDelay');</span>
+0013 <span class="comment">% timing.central_soft=temp.value(n);</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'TSprStepDelay');</span>
+0016 <span class="comment">% timing.central_spare=temp.value(n);</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">% temp=tango_read_attribute2('ANS/SY/CENTRAL', 'ExtractionOffsetClkStepValue');</span>
+0019 <span class="comment">% timing.central_ext=temp.value(n);</span>
+0020 
+0021 offsettime=70000;
+0022 offset=176*offsettime;
+0023 
+0024 
+0025 <span class="comment">% ext on add 3</span>
+0026 
+0027 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigStepDelay'</span>);
+0028 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'dof.trigStepDelay'</span>,temp.value(1)+offset);
+0029 
+0030 
+0031 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigStepDelay'</span>);
+0032 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-p.trigStepDelay'</span>,temp.value(1)+offset);
+0033 
+0034 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigStepDelay'</span>);
+0035 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'sep-a.trigStepDelay'</span>,temp.value(1)+offset);
+0036 
+0037 
+0038 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigStepDelay'</span>);
+0039 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.Bext.1'</span>, <span class="string">'k.trigStepDelay'</span>,temp.value(1)+offset);
+0040 
+0041 temp=tango_read_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareStepDelay'</span>);
+0042 tango_write_attribute2(<span class="string">'ANS/SY/LOCAL.SDC.1'</span>, <span class="string">'spareStepDelay'</span>,temp.value(1)+offset);
+0043 
+0044 temp=tango_read_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceTimeDelay'</span>);
+0045 tango_write_attribute2(<span class="string">'BOO/SY/LOCAL.DG.3'</span>, <span class="string">'emittanceTimeDelay'</span>,temp.value(1)+offset);
+0046 
+0047 <span class="comment">% LT2</span>
+0048 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvStepDelay'</span>);
+0049 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'mrsvStepDelay'</span>,temp.value(1)+offset);
+0050 
+0051 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctStepDelay'</span>);
+0052 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.1'</span>, <span class="string">'osc-fctStepDelay'</span>,temp.value(1)+offset);
+0053 
+0054 temp=tango_read_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0055 tango_write_attribute2(<span class="string">'LT2/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0056 
+0057 <span class="comment">% ANS</span>
+0058 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>);
+0059 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k1.trigStepDelay'</span>,temp.value(1)+offset);
+0060 
+0061 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>);
+0062 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k2.trigStepDelay'</span>,temp.value(1)+offset);
+0063 
+0064 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>);
+0065 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k3.trigStepDelay'</span>,temp.value(1)+offset);
+0066 
+0067 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>);
+0068 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.1'</span>, <span class="string">'k4.trigStepDelay'</span>,temp.value(1)+offset);
+0069 
+0070 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigStepDelay'</span>);
+0071 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-p.trigStepDelay'</span>,temp.value(1)+offset);
+0072 
+0073 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigStepDelay'</span>);
+0074 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.Ainj.2'</span>, <span class="string">'sep-a.trigStepDelay'</span>,temp.value(1)+offset);
+0075 
+0076 
+0077 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0078 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.DG.2'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0079 
+0080 temp=tango_read_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0081 tango_write_attribute2(<span class="string">'ANS-C02/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0082 
+0083 temp=tango_read_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0084 tango_write_attribute2(<span class="string">'ANS-C03/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0085 
+0086 temp=tango_read_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0087 tango_write_attribute2(<span class="string">'ANS-C04/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0088 
+0089 temp=tango_read_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0090 tango_write_attribute2(<span class="string">'ANS-C05/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0091 
+0092 temp=tango_read_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0093 tango_write_attribute2(<span class="string">'ANS-C06/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0094 
+0095 
+0096 temp=tango_read_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0097 tango_write_attribute2(<span class="string">'ANS-C07/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0098 
+0099 temp=tango_read_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0100 tango_write_attribute2(<span class="string">'ANS-C08/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0101 
+0102 temp=tango_read_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0103 tango_write_attribute2(<span class="string">'ANS-C09/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0104 
+0105 temp=tango_read_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0106 tango_write_attribute2(<span class="string">'ANS-C10/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0107 
+0108 temp=tango_read_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0109 tango_write_attribute2(<span class="string">'ANS-C11/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0110 
+0111 temp=tango_read_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0112 tango_write_attribute2(<span class="string">'ANS-C12/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0113 
+0114 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0115 tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0116 
+0117 temp=tango_read_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0118 tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0119 
+0120 temp=tango_read_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0121 tango_write_attribute2(<span class="string">'ANS-C15/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0122 
+0123 
+0124 temp=tango_read_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>);
+0125 tango_write_attribute2(<span class="string">'ANS-C16/SY/LOCAL.DG.1'</span>, <span class="string">'bpm.trigStepDelay'</span>,temp.value(1)+offset);
+0126 
+0127 <span class="comment">%</span>
+0128 temp=tango_read_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctStepDelay'</span>);
+0129 tango_write_attribute2(<span class="string">'ANS-C13/SY/LOCAL.DG.1'</span>, <span class="string">'dcctStepDelay'</span>,temp.value(1)+offset);
+0130 
+0131 temp=tango_read_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'perteTimeDelay'</span>);
+0132 tango_write_attribute2(<span class="string">'ANS-C14/SY/LOCAL.DG.1'</span>, <span class="string">'perteTimeDelay'</span>,temp.value(1)+offset);
+0133 
+0134 <span class="comment">% kicker machine</span>
+0135 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcStepDelay'</span>);
+0136 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-hv.pcStepDelay'</span>,temp.value(1)+offset);
+0137 
+0138 
+0139 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigStepDelay'</span>);
+0140 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-v.trigStepDelay'</span>,temp.value(1)+offset);
+0141 
+0142 temp=tango_read_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigStepDelay'</span>);
+0143 tango_write_attribute2(<span class="string">'ANS-C01/SY/LOCAL.EP.1'</span>, <span class="string">'k-h.trigStepDelay'</span>,temp.value(1)+offset);
+0144 
+0145 
+0146 <span class="comment">% offset</span>
+0147 FileName = [DirName <span class="string">'synchro_offset_lin'</span>];
+0148 load(FileName, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0149 ext_offset=ext_offset+offsettime;
+0150 save(FileName, <span class="string">'inj_offset'</span> , <span class="string">'ext_offset'</span>, <span class="string">'lin_fin'</span>);
+0151 
+0152</pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

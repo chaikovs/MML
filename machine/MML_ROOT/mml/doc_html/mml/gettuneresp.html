@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gettuneresp</title>
+  <meta name="keywords" content="gettuneresp">
+  <meta name="description" content="GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; gettuneresp.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>gettuneresp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [TuneMatrix, FileName] = gettuneresp(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families
+  [TuneMatrix, FileName] = gettuneresp(FamilyName1, DeviceList1, FamilyName2, DeviceList2, ... , FileName, GeV)
+  [TuneMatrix, FileName] = gettuneresp(DataStructure1, DataStructure2, ... , FileName, GeV)
+
+  INPUTS
+  1. FamilyName - Quadrupole family name
+  2. DeviceList - DeviceList for a quadrupole family.  If [] or no input, then TuneMatrix 
+                  will be a column vector which is the cumulative sum of all magnets in the family.
+  3. FileName - File name to look for the response matrix (or cell array of file names)
+                '' prompts the user to choose a response matrix file
+  4. GeV will linearly scale the response matrix from the measured energy {Default: getenergy}.
+
+  OUTPUTS
+  1. TuneMatrix = Response matrix 
+
+     It is assumed that most common use of this function is with the  
+     Q7 and Q9 families on a ganged power supply.  Hence, the default
+     behavior is to return the cumulative sum of all the magnets in the chain.
+     If there is more than one FamilyName, then TuneMatrix will be a matrix  
+     where each column is the sum of the contribution of all magnets in that family.
+
+     To get the response matrix for individual magnets in the family use getrespmat:
+     getrespmat('TUNE', [1 1;1 2], MagnetFamilyName, MagnetDeviceList)
+     For instance, getrespmat('TUNE', [1 1;1 2], 'Q1', [])
+
+  EXAMPLES
+  1. M = gettuneresp
+     M = gettuneresp({'Q7','Q9'})
+     M = gettuneresp({'Q7','Q9'},{[],[]})
+     M = gettuneresp('Q7',getlist('Q9'))
+     All returns the same 2x2 matrix of Q7 and Q9 to horizontal and vertical tune
+
+  2. M = gettuneresp('Q7')
+     M = gettuneresp('Q7', [])
+     Returns a 2x1 matrix representing the cumulative sum of all the magnets in the chain
+
+  3. Q9_DataStruct = getsp('Q9','Struct');
+     M = gettuneresp(Q9_DataStruct);
+     Returns a 2x1 matrix representing the cumulative sum of all the magnets in the chain
+
+  4. Change the tune by [.01; -.01] using the entire 'Q7' and 'Q9' families (see stepchro)
+     DeltaTune = [.01; -.01];
+     DeltaAmps = inv(gettuneresp) * DeltaTune;
+     setsp({'Q7', 'Q9'}, {getsp('Q7')+DeltaAmps(1), getsp('Q9')+DeltaAmps(2)});</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="findmemberof.html" class="code" title="function  FamilyName = findmemberof(MemberString, Field)">findmemberof</a>	FINDMEMBEROF - Finds all family members</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getrespmat.html" class="code" title="function [S, FileName] = getrespmat(varargin)">getrespmat</a>	GETRESPMAT - Get response matrix data from a file</li><li><a href="isfamily.html" class="code" title="function  [FamilyFlag, AO] = isfamily(Family, Field)">isfamily</a>	ISFAMILY - True for family names</li><li><a href="meastuneresp.html" class="code" title="function [Rmat, OutputFileName] = meastuneresp(varargin)">meastuneresp</a>	MEASTUNERESP - Measures the response from quadrupole to tune</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="measidfftable.html" class="code" title="function ffgettbl(Sector, BPMFlag)">measidfftable</a>	FFGETTBL - Measures an insertion device feed forward table for the vertical gap</li><li><a href="settune.html" class="code" title="function [DelQuad, ActuatorFamily] = settune(varargin)">settune</a>	SETTUNE - Set the tune</li><li><a href="steptune.html" class="code" title="function [DelQuad, ActuatorFamily] = steptune(varargin)">steptune</a>	STEPTUNE - Step the tune</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [TuneMatrix, FileName] = gettuneresp(varargin)</a>
+0002 <span class="comment">%GETTUNERESP - Loads the tune response vector (or matrix) for multiple quadrupole families</span>
+0003 <span class="comment">%  [TuneMatrix, FileName] = gettuneresp(FamilyName1, DeviceList1, FamilyName2, DeviceList2, ... , FileName, GeV)</span>
+0004 <span class="comment">%  [TuneMatrix, FileName] = gettuneresp(DataStructure1, DataStructure2, ... , FileName, GeV)</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  INPUTS</span>
+0007 <span class="comment">%  1. FamilyName - Quadrupole family name</span>
+0008 <span class="comment">%  2. DeviceList - DeviceList for a quadrupole family.  If [] or no input, then TuneMatrix</span>
+0009 <span class="comment">%                  will be a column vector which is the cumulative sum of all magnets in the family.</span>
+0010 <span class="comment">%  3. FileName - File name to look for the response matrix (or cell array of file names)</span>
+0011 <span class="comment">%                '' prompts the user to choose a response matrix file</span>
+0012 <span class="comment">%  4. GeV will linearly scale the response matrix from the measured energy {Default: getenergy}.</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">%  OUTPUTS</span>
+0015 <span class="comment">%  1. TuneMatrix = Response matrix</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">%     It is assumed that most common use of this function is with the</span>
+0018 <span class="comment">%     Q7 and Q9 families on a ganged power supply.  Hence, the default</span>
+0019 <span class="comment">%     behavior is to return the cumulative sum of all the magnets in the chain.</span>
+0020 <span class="comment">%     If there is more than one FamilyName, then TuneMatrix will be a matrix</span>
+0021 <span class="comment">%     where each column is the sum of the contribution of all magnets in that family.</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%     To get the response matrix for individual magnets in the family use getrespmat:</span>
+0024 <span class="comment">%     getrespmat('TUNE', [1 1;1 2], MagnetFamilyName, MagnetDeviceList)</span>
+0025 <span class="comment">%     For instance, getrespmat('TUNE', [1 1;1 2], 'Q1', [])</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">%  EXAMPLES</span>
+0028 <span class="comment">%  1. M = gettuneresp</span>
+0029 <span class="comment">%     M = gettuneresp({'Q7','Q9'})</span>
+0030 <span class="comment">%     M = gettuneresp({'Q7','Q9'},{[],[]})</span>
+0031 <span class="comment">%     M = gettuneresp('Q7',getlist('Q9'))</span>
+0032 <span class="comment">%     All returns the same 2x2 matrix of Q7 and Q9 to horizontal and vertical tune</span>
+0033 <span class="comment">%</span>
+0034 <span class="comment">%  2. M = gettuneresp('Q7')</span>
+0035 <span class="comment">%     M = gettuneresp('Q7', [])</span>
+0036 <span class="comment">%     Returns a 2x1 matrix representing the cumulative sum of all the magnets in the chain</span>
+0037 <span class="comment">%</span>
+0038 <span class="comment">%  3. Q9_DataStruct = getsp('Q9','Struct');</span>
+0039 <span class="comment">%     M = gettuneresp(Q9_DataStruct);</span>
+0040 <span class="comment">%     Returns a 2x1 matrix representing the cumulative sum of all the magnets in the chain</span>
+0041 <span class="comment">%</span>
+0042 <span class="comment">%  4. Change the tune by [.01; -.01] using the entire 'Q7' and 'Q9' families (see stepchro)</span>
+0043 <span class="comment">%     DeltaTune = [.01; -.01];</span>
+0044 <span class="comment">%     DeltaAmps = inv(gettuneresp) * DeltaTune;</span>
+0045 <span class="comment">%     setsp({'Q7', 'Q9'}, {getsp('Q7')+DeltaAmps(1), getsp('Q9')+DeltaAmps(2)});</span>
+0046 
+0047 <span class="comment">%</span>
+0048 <span class="comment">%  Written by Gregory J. Portmann</span>
+0049 <span class="comment">%  Modified by Laurent S. Nadolski</span>
+0050 
+0051 FileName = <span class="string">''</span>;
+0052 NumericFlag = 1;
+0053 InputFlags = {};
+0054 <span class="keyword">for</span> i = length(varargin):-1:1
+0055     <span class="keyword">if</span> isstruct(varargin{i})
+0056         <span class="comment">% Ignore structures</span>
+0057     <span class="keyword">elseif</span> iscell(varargin{i})
+0058         <span class="comment">% Ignore cells</span>
+0059     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Struct'</span>)
+0060         <span class="comment">% Remove</span>
+0061         varargin(i) = [];
+0062     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Numeric'</span>)
+0063         <span class="comment">% Remove</span>
+0064         varargin(i) = [];
+0065     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Online'</span>)
+0066         <span class="comment">% Remove</span>
+0067         fprintf(<span class="string">'GETTUNERESP WARNING: ''Online'' input ignored.  Used meastuneresp to get the chromaticity response matrix.'</span>);
+0068         varargin(i) = [];
+0069     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Simulator'</span>)
+0070         <span class="comment">% Remove</span>
+0071         fprintf(<span class="string">'GETTUNERESP WARNING: ''Simulator'' input ignored.  Used meastuneresp to get the chromaticity response matrix.'</span>);
+0072         varargin(i) = [];
+0073     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Model'</span>)
+0074         <span class="comment">% Remove</span>
+0075         fprintf(<span class="string">'GETTUNERESP WARNING: ''Model'' input ignored.  Used meastuneresp to get the model chromaticity response matrix.'</span>);
+0076         varargin(i) = [];
+0077     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Model'</span>)
+0078         fprintf(<span class="string">'WARNING: ''Model'' input ignored.  Used meastuneresp to get the model tune response matrix.'</span>);
+0079         varargin(i) = [];
+0080     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoEnergyScaling'</span>)
+0081         InputFlags = [InputFlags varargin(i)];
+0082         varargin(i) = [];
+0083     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'EnergyScaling'</span>)
+0084         InputFlags = [InputFlags varargin(i)];
+0085         varargin(i) = [];
+0086     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Physics'</span>)
+0087         InputFlags = [InputFlags varargin(i)];
+0088         varargin(i) = [];
+0089     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Hardware'</span>)
+0090         InputFlags = [InputFlags varargin(i)];
+0091         varargin(i) = [];
+0092     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'FileName'</span>)
+0093         <span class="keyword">if</span> length(varargin) &gt;= i+1 &amp; ischar(varargin{i+1})
+0094             FileName = varargin{i+1};
+0095             varargin(i:i+1) = [];
+0096         <span class="keyword">else</span>
+0097             varargin(i) = [];
+0098         <span class="keyword">end</span>
+0099         <span class="keyword">if</span> isempty(FileName)
+0100             DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'TuneResponse'</span>);
+0101             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'Select a TUNE response matrix file'</span>, DirectoryName);
+0102             InputFlags = [InputFlags {[DirectoryName FileName]}];
+0103         <span class="keyword">else</span>
+0104             InputFlags = [InputFlags {FileName}];
+0105         <span class="keyword">end</span>
+0106     <span class="keyword">end</span>
+0107 <span class="keyword">end</span>
+0108 
+0109 ActuatorFamilyDefault = <a href="findmemberof.html" class="code" title="function  FamilyName = findmemberof(MemberString, Field)">findmemberof</a>(<span class="string">'Tune Corrector'</span>)';
+0110 <span class="keyword">if</span> isempty(ActuatorFamilyDefault)
+0111     ActuatorFamilyDefault = {<span class="string">'Q7'</span>,<span class="string">'Q9'</span>};
+0112 <span class="keyword">end</span>
+0113 
+0114 <span class="keyword">if</span> length(varargin) == 0
+0115     FamilyNameCell = ActuatorFamilyDefault;
+0116     DeviceListCell = cell(size(ActuatorFamilyDefault));
+0117     NumFamilies = length(FamilyNameCell);
+0118     
+0119 <span class="keyword">elseif</span> length(varargin) == 1 &amp; isempty(varargin{1})
+0120     FamilyNameCell = ActuatorFamilyDefault;
+0121     DeviceListCell = cell(size(ActuatorFamilyDefault));
+0122     NumFamilies = length(FamilyNameCell);
+0123     
+0124 <span class="keyword">elseif</span> iscell(varargin{1})
+0125     FamilyNameCell = varargin{1};
+0126     varargin(1) = [];
+0127     <span class="keyword">if</span> length(varargin) &gt;= 1
+0128         DeviceListCell = varargin{1};
+0129         varargin(1) = [];
+0130     <span class="keyword">else</span>
+0131         <span class="keyword">for</span> i = 1:length(FamilyNameCell)
+0132             DeviceListCell{i} = [];
+0133         <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     NumFamilies = length(FamilyNameCell);
+0136     <span class="keyword">if</span> ~iscell(DeviceListCell)
+0137         error(<span class="string">'If FamilyName is a cell array then DeviceList must be a cell array'</span>)
+0138     <span class="keyword">end</span>
+0139     
+0140 <span class="keyword">elseif</span> isstruct(varargin{1})
+0141     NumFamilies = 0;
+0142     <span class="keyword">while</span> ~isempty(varargin)
+0143         <span class="comment">% Look for Family and DeviceList</span>
+0144         <span class="keyword">if</span> length(varargin) &gt;= 1
+0145             <span class="keyword">if</span> ~isstruct(varargin{1})
+0146                 <span class="keyword">break</span>
+0147             <span class="keyword">end</span>
+0148             <span class="keyword">if</span> ~<a href="isfamily.html" class="code" title="function  [FamilyFlag, AO] = isfamily(Family, Field)">isfamily</a>(varargin{1}.FamilyName)
+0149                 error(<span class="string">'Unknown family name in data structure'</span>);
+0150             <span class="keyword">end</span>
+0151             NumFamilies = NumFamilies + 1;
+0152             FamilyNameCell{NumFamilies} = varargin{1}.FamilyName;
+0153             DeviceListCell{NumFamilies} = varargin{1}.DeviceList;
+0154             varargin(1) = [];
+0155         <span class="keyword">end</span>
+0156     <span class="keyword">end</span>
+0157     
+0158 <span class="keyword">else</span>
+0159     NumFamilies = 0;
+0160     <span class="keyword">while</span> ~isempty(varargin)
+0161         <span class="comment">% Look for Family and DeviceList</span>
+0162         <span class="keyword">if</span> length(varargin) &gt;= 1
+0163             <span class="keyword">if</span> ~<a href="isfamily.html" class="code" title="function  [FamilyFlag, AO] = isfamily(Family, Field)">isfamily</a>(varargin{1})
+0164                 <span class="keyword">break</span>
+0165             <span class="keyword">end</span>
+0166             NumFamilies = NumFamilies + 1;
+0167             FamilyNameCell{NumFamilies} = varargin{1};
+0168             varargin(1) = [];
+0169         <span class="keyword">end</span>
+0170         <span class="keyword">if</span> length(varargin) &gt;= 1
+0171             <span class="keyword">if</span> isnumeric(varargin{1}) | isempty(varargin{1})
+0172                 DeviceListCell{NumFamilies} = varargin{1};
+0173                 varargin(1) = [];
+0174             <span class="keyword">else</span>
+0175                 DeviceListCell{NumFamilies} = [];
+0176             <span class="keyword">end</span>
+0177         <span class="keyword">else</span>
+0178             DeviceListCell{NumFamilies} = [];
+0179         <span class="keyword">end</span>
+0180     <span class="keyword">end</span>
+0181 <span class="keyword">end</span>
+0182 
+0183 <span class="comment">% FileName should be the next input (if a string, or [] for dialog box)</span>
+0184 <span class="keyword">if</span> length(varargin) &gt;= 1
+0185     <span class="keyword">if</span> ischar(varargin{1}) | isempty(varargin{1})
+0186         FileName = varargin{1};
+0187         varargin(1) = [];
+0188 
+0189         <span class="keyword">if</span> isempty(FileName)
+0190             <span class="comment">% Note: This only works if all families are in the same file</span>
+0191             DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'TuneResponse'</span>);  
+0192             [FileName, DirectoryName, FilterIndex] = uigetfile(<span class="string">'*.mat'</span>,<span class="string">'Select Quadrupole-to-Tune Response Matrix File'</span>, DirectoryName);
+0193             <span class="keyword">if</span> FilterIndex == 0
+0194                 TuneMatrix = [];
+0195                 FileName = [];
+0196                 <span class="keyword">return</span>
+0197             <span class="keyword">end</span>
+0198             
+0199             FileName = [DirectoryName FileName];
+0200             InputFlags = [{FileName} InputFlags];
+0201         <span class="keyword">end</span>
+0202     <span class="keyword">end</span>
+0203 <span class="keyword">end</span>
+0204 
+0205 
+0206 <span class="comment">% The only thing left on the input line can be energy which can be left in varargin</span>
+0207 
+0208 
+0209 <span class="comment">% Get the response matrix</span>
+0210 <span class="keyword">if</span> NumericFlag == 1
+0211     TuneMatrix = [];
+0212 <span class="keyword">end</span>
+0213 <span class="keyword">for</span> i = 1:NumFamilies
+0214     <span class="keyword">if</span> NumericFlag == 1
+0215         <span class="keyword">try</span>
+0216             [M, FileName] = <a href="getrespmat.html" class="code" title="function [S, FileName] = getrespmat(varargin)">getrespmat</a>(<span class="string">'TUNE'</span>, [1 1;1 2], FamilyNameCell{i}, DeviceListCell{i}, <span class="string">'Numeric'</span>, InputFlags{:}, varargin{:});
+0217         <span class="keyword">catch</span>
+0218             fprintf(<span class="string">'   Could not find a TUNE response matrix file, so using the model (%s).\n'</span>, FamilyNameCell{i});
+0219             M = <a href="meastuneresp.html" class="code" title="function [Rmat, OutputFileName] = meastuneresp(varargin)">meastuneresp</a>(FamilyNameCell{i}, DeviceListCell{i}, <span class="string">'Model'</span>, <span class="string">'Numeric'</span>, InputFlags{:}, varargin{:});
+0220             <span class="comment">%M = measrespmat('TUNE', [1 1;1 2], FamilyNameCell{i}, DeviceListCell{i}, 'Model', 'Numeric', InputFlags{:}, varargin{:});</span>
+0221             FileName = <span class="string">''</span>;
+0222         <span class="keyword">end</span>
+0223         TuneMatrix = [TuneMatrix sum(M,2)];
+0224     <span class="keyword">else</span>
+0225         <span class="keyword">try</span>
+0226             [TuneMatrix(1,i), FileName] = <a href="getrespmat.html" class="code" title="function [S, FileName] = getrespmat(varargin)">getrespmat</a>(<span class="string">'TUNE'</span>, [1 1;1 2], FamilyNameCell{i}, DeviceListCell{i}, <span class="string">'Struct'</span>, InputFlags{:}, varargin{:});
+0227         <span class="keyword">catch</span>
+0228             fprintf(<span class="string">'   Could not find a TUNE response matrix file, so using the model (%s).\n'</span>, FamilyNameCell{i});
+0229             TuneMatrix(1,i) = <a href="meastuneresp.html" class="code" title="function [Rmat, OutputFileName] = meastuneresp(varargin)">meastuneresp</a>(FamilyNameCell{i}, DeviceListCell{i}, <span class="string">'Model'</span>, <span class="string">'Struct'</span>, InputFlags{:}, varargin{:});
+0230             FileName = <span class="string">''</span>;
+0231         <span class="keyword">end</span>
+0232     <span class="keyword">end</span>
+0233 <span class="keyword">end</span>
+0234 
+0235</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

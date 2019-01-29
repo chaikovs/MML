@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of readattribute</title>
+  <meta name="keywords" content="readattribute">
+  <meta name="description" content="READATTRIBUTE - Reads a list of Tango attributes">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; readattribute.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>readattribute
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>READATTRIBUTE - Reads a list of Tango attributes</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [Data, tout, DataTime, ErrorFlag] = readattribute(tangolist, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">READATTRIBUTE - Reads a list of Tango attributes
+  val = readattribute(tangolist,varargin)
+
+  INPUTS
+  1. tangolist - list of tango attributes
+  2. field (optional) - 'Monitor' for readback value
+                        'Setpoint' for setpoint value
+  3. t - Time vector of when to start taking data (t can not be a cell) {Default: 0}
+
+  OUTPUTS
+  1. Data - readvalue or setvalue
+  2. tout - Local computer timer on finish of data read
+  3. DataTime - Time stamp retrieved from TANGO
+  4. ErrorFlag - Return number of Error (non Valid Tango value)
+
+  NOTES
+  1. default field is 'Monitor'
+  2. For a spectrum returns just first element
+
+  See also <a href="writeattribute.html" class="code" title="function ErrorFlag = writeattribute(tangolist,val,varargin)">writeattribute</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getattribute.html" class="code" title="function [AttributeNames, DeviceNames] =  getattribute(varargin)">getattribute</a>	GETATTRIBUTE - Decomposes a full attributename into device and attribute names</li><li><a href="tango_shift_time.html" class="code" title="function realTime = tango_shift_time(tangoTime)">tango_shift_time</a>	TANGO_SHIFT_TIME - TANGO time is GMT - Convert to real time (East European</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getpvonline.html" class="code" title="function [AM, tout, DataTime, ErrorFlag] = getpvonline(TangoNames, Field, varargin);">getpvonline</a>	GETPVONLINE - Get the online value</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Data, tout, DataTime, ErrorFlag] = readattribute(tangolist, varargin)</a>
+0002 <span class="comment">%READATTRIBUTE - Reads a list of Tango attributes</span>
+0003 <span class="comment">%  val = readattribute(tangolist,varargin)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. tangolist - list of tango attributes</span>
+0007 <span class="comment">%  2. field (optional) - 'Monitor' for readback value</span>
+0008 <span class="comment">%                        'Setpoint' for setpoint value</span>
+0009 <span class="comment">%  3. t - Time vector of when to start taking data (t can not be a cell) {Default: 0}</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  OUTPUTS</span>
+0012 <span class="comment">%  1. Data - readvalue or setvalue</span>
+0013 <span class="comment">%  2. tout - Local computer timer on finish of data read</span>
+0014 <span class="comment">%  3. DataTime - Time stamp retrieved from TANGO</span>
+0015 <span class="comment">%  4. ErrorFlag - Return number of Error (non Valid Tango value)</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">%  NOTES</span>
+0018 <span class="comment">%  1. default field is 'Monitor'</span>
+0019 <span class="comment">%  2. For a spectrum returns just first element</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">%  See also writeattribute</span>
+0022 
+0023 <span class="comment">%</span>
+0024 <span class="comment">% Written by Laurent S. Nadolski, SOLEIL, 2004</span>
+0025 <span class="comment">% 12/12/05 - Modified extra output argument tout</span>
+0026 
+0027 <span class="comment">% TODO group</span>
+0028 
+0029 t0 = clock;
+0030 
+0031 ErrorFlag = 0;
+0032 
+0033 <span class="keyword">if</span> isempty(varargin)
+0034     field = <span class="string">'Monitor'</span>;
+0035 <span class="keyword">else</span>
+0036     field = varargin{1};
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> strcmpi(field,<span class="string">'Monitor'</span>)
+0040     index = 1;
+0041 <span class="keyword">elseif</span> strcmpi(field,<span class="string">'Setpoint'</span>)
+0042     index = 2;
+0043 <span class="keyword">else</span> <span class="comment">% Monitor</span>
+0044     index = 1;
+0045 <span class="keyword">end</span>
+0046 
+0047 <span class="keyword">if</span> length(varargin) &gt;=2
+0048     <span class="comment">% Only first sample delay is recognized</span>
+0049     t = varargin{2}(1);
+0050 <span class="keyword">else</span>
+0051     t = 0;
+0052 <span class="keyword">end</span>
+0053 
+0054 T = t - etime(clock,t0);
+0055 <span class="keyword">if</span> T &gt; 0
+0056     pause(T)
+0057 <span class="keyword">end</span>
+0058 
+0059 <span class="comment">%% get attribute name</span>
+0060 [attribute device]  = <a href="getattribute.html" class="code" title="function [AttributeNames, DeviceNames] =  getattribute(varargin)">getattribute</a>(tangolist);
+0061 
+0062 Data = [];
+0063 
+0064 <span class="keyword">for</span> k = 1:size(attribute,1)
+0065     attr_val = tango_read_attribute(device{k}, attribute{k});
+0066     <span class="keyword">if</span> (tango_error == -1)
+0067         <span class="comment">%- handle error</span>
+0068         tango_print_error_stack;
+0069         error(<span class="string">'readattribute for device'</span>);        
+0070     <span class="keyword">end</span>
+0071     <span class="comment">%% get attribute value</span>
+0072     <span class="keyword">switch</span> lower(class(attr_val(1).value(index)))
+0073         <span class="keyword">case</span> <span class="string">'char'</span>
+0074             Data{k} = attr_val(1).value(:)';           
+0075         <span class="keyword">otherwise</span>
+0076             Data(k) = attr_val(1).value(index);
+0077     <span class="keyword">end</span>
+0078     <span class="comment">%% Get real TANGO time stamp</span>
+0079     DataTime(k,:) = <a href="tango_shift_time.html" class="code" title="function realTime = tango_shift_time(tangoTime)">tango_shift_time</a>(attr_val(1).time);
+0080     
+0081     <span class="comment">%% Get Valid field</span>
+0082     <span class="keyword">if</span> ~strcmpi(attr_val(1).quality_str, <span class="string">'VALID'</span>)
+0083         ErrorFlag = ErrorFlag + 1;
+0084     <span class="keyword">end</span>
+0085 <span class="keyword">end</span>
+0086 
+0087 tout = etime(clock,t0);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of sectorticks</title>
+  <meta name="keywords" content="sectorticks">
+  <meta name="description" content="SECTORTICKS - Returns sector tick number for plotting purpose">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; sectorticks.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>sectorticks
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>SECTORTICKS - Returns sector tick number for plotting purpose</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Sector, Nsectors, Ndevices] = sectorticks(List) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">SECTORTICKS - Returns sector tick number for plotting purpose
+
+  INPUTS
+  1. List - device list
+
+  OUPUTS
+  1. Sector - Sector tick number
+  2. Nsector - Sector number
+  3. Ndevices - Element number in sector</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="monmags.html" class="code" title="function [MagnetSetpoints, MagnetMonitors, BPMMonitors, MagnetSetpointsEnd, FileName] = monmags(varargin)">monmags</a>	MONMAGS - Monitors all magnet power supplies and plots various statistics</li><li><a href="plotorbitdata.html" class="code" title="function [BPMx, BPMy] = plotorbitdata(varargin)">plotorbitdata</a>	PLOTORBITDATA - Plots BPM statistics</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Sector, Nsectors, Ndevices] = sectorticks(List)</a>
+0002 <span class="comment">%SECTORTICKS - Returns sector tick number for plotting purpose</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. List - device list</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  OUPUTS</span>
+0008 <span class="comment">%  1. Sector - Sector tick number</span>
+0009 <span class="comment">%  2. Nsector - Sector number</span>
+0010 <span class="comment">%  3. Ndevices - Element number in sector</span>
+0011 
+0012 <span class="comment">%</span>
+0013 <span class="comment">% Written by Gregory J. Portmann</span>
+0014 
+0015 Nsectors = max(List(:,1));
+0016 Ndevices = max(List(:,2));
+0017 Sector = List(:,1) + List(:,2)/Ndevices - 1/Ndevices/2;</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

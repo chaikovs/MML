@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of saveoffsetorbit</title>
+  <meta name="keywords" content="saveoffsetorbit">
+  <meta name="description" content="SAVEOFFSETORBIT - Save offset orbit into file">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; saveoffsetorbit.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>saveoffsetorbit
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>SAVEOFFSETORBIT - Save offset orbit into file</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function saveoffsetorbit(FileName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">SAVEOFFSETORBIT - Save offset orbit into file
+
+  INPUTS
+  1. FileName 
+
+  See Also <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>, <a href="setoffset.html" class="code" title="function varargout = setoffset(varargin)">setoffset</a>, <a href="plotoffsetorbit.html" class="code" title="function plotoffsetorbit(varargin)">plotoffsetorbit</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>	GETHBPMFAMILY - Return the default horizontal BPM family</li><li><a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>	GETOFFSET - Returns the offset values for a family</li><li><a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>	GETVBPMFAMILY - Return the default vertical BPM family</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function saveoffsetorbit(FileName)</a>
+0002 <span class="comment">%SAVEOFFSETORBIT - Save offset orbit into file</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. FileName</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  See Also getoffset, setoffset, plotoffsetorbit</span>
+0008 
+0009 <span class="comment">%</span>
+0010 <span class="comment">%  Written by Gregory J. Portmann</span>
+0011 <span class="comment">%  Adapted by Laurent S. Nadolski</span>
+0012 
+0013 BPMxFamily = <a href="gethbpmfamily.html" class="code" title="function Family = gethbpmfamily">gethbpmfamily</a>;
+0014 BPMyFamily = <a href="getvbpmfamily.html" class="code" title="function Family = getvbpmfamily">getvbpmfamily</a>;
+0015 
+0016 Xoffset = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMxFamily, <span class="string">'Struct'</span>);
+0017 Yoffset = <a href="getoffset.html" class="code" title="function Data = getoffset(varargin)">getoffset</a>(BPMyFamily, <span class="string">'Struct'</span>);
+0018 
+0019 <span class="keyword">if</span> nargin &lt; 1
+0020     FileName = <span class="string">''</span>;
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="keyword">if</span> isempty(FileName)
+0024     FileName = appendtimestamp([<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Default'</span>, <span class="string">'BPMArchiveFile'</span>), <span class="string">'Offset'</span>], clock);
+0025     DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'BPMData'</span>);
+0026     <span class="keyword">if</span> isempty(DirectoryName)
+0027         DirectoryName = [<a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>) <span class="string">'BPM'</span>, filesep];
+0028     <span class="keyword">end</span>
+0029 
+0030     <span class="comment">% Make sure default directory exists</span>
+0031     DirStart = pwd;
+0032     [DirectoryName, ErrorFlag] = gotodirectory(DirectoryName);
+0033     cd(DirStart);
+0034 
+0035     [FileName, DirectoryName] = uiputfile(<span class="string">'*.mat'</span>, <span class="string">'Save Offset BPM File to ...'</span>, [DirectoryName FileName]);
+0036     <span class="keyword">if</span> FileName == 0
+0037         FileName = <span class="string">''</span>;
+0038         <span class="keyword">return</span>
+0039     <span class="keyword">end</span>
+0040     FileName = [DirectoryName, FileName];
+0041 <span class="keyword">end</span>
+0042 
+0043 save(FileName, <span class="string">'Xoffset'</span>, <span class="string">'Yoffset'</span>);</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

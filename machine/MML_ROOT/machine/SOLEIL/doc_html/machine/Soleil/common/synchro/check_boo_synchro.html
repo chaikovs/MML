@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of check_boo_synchro</title>
+  <meta name="keywords" content="check_boo_synchro">
+  <meta name="description" content="Estime amplitude sur tune synchro">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">synchro</a> &gt; check_boo_synchro.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/synchro&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>check_boo_synchro
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>Estime amplitude sur tune synchro</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [flag]=check_boo_synchro </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Estime amplitude sur tune synchro</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="synchro_injecteur7_rafale.html" class="code" title="function varargout = synchro_injecteur7_rafale(varargin)">synchro_injecteur7_rafale</a>	SYNCHRO_INJECTEUR7_RAFALE M-file for synchro_injecteur7_rafale.fig</li><li><a href="synchro_injecteur8_rafale.html" class="code" title="function varargout = synchro_injecteur8_rafale(varargin)">synchro_injecteur8_rafale</a>	SYNCHRO_INJECTEUR8_RAFALE M-file for synchro_injecteur8_rafale.fig</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [flag]=check_boo_synchro</a>
+0002 <span class="comment">% Estime amplitude sur tune synchro</span>
+0003 ampmax=180; <span class="comment">% sur fft</span>
+0004 <span class="comment">%ampmax=3; % sur max x en mm</span>
+0005 
+0006 temp=tango_read_attribute2(<span class="string">'BOO-C03/DG/BPM.03'</span>,<span class="string">'XPosDD'</span>);
+0007 X = temp.value;
+0008 
+0009 istart   = 20;
+0010 nbpoints = 256;
+0011 iend     = istart + nbpoints-1;
+0012 Xval(1:nbpoints) = X(istart:iend);
+0013 
+0014 <span class="comment">% % fft</span>
+0015 Xfft     = fft(Xval,nbpoints);
+0016 PXfft    = Xfft.* conj(Xfft) / nbpoints;
+0017 PXfft([1 2 nbpoints]) = 0; <span class="comment">%% ???</span>
+0018 amp=max(PXfft(1:20));
+0019 ampf=amp;
+0020 
+0021 <span class="comment">% max X</span>
+0022 <span class="comment">% Xval=Xval-mean(Xval);</span>
+0023 <span class="comment">% amp=max(abs(Xval));</span>
+0024 
+0025 <span class="comment">%fprintf('%8.3f    %8.3f \n',ampf, amp)</span>
+0026 
+0027 <span class="keyword">if</span> amp&gt;ampmax
+0028     flag=1;
+0029 <span class="keyword">else</span>
+0030     flag=0;
+0031 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

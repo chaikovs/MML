@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of editlist</title>
+  <meta name="keywords" content="editlist">
+  <meta name="description" content="EDITLIST - Edits a list">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">common</a> &gt; editlist.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/common&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>editlist
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>EDITLIST - Edits a list</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function newList = editlist(List, ListName, CheckList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">EDITLIST - Edits a list
+ newList = editlist(List)
+ newList = editlist(List, InfoString)
+ newList = editlist(List, InfoString, CheckList)
+
+ Allows one to easily edit a element or device list 
+
+  INPUTS
+  1. List       - List to edit (matrix of numbers or strings)
+  2. InfoString - Informational string {optional}
+  3. CheckList  - Starting check box setting (0 - don't check, else check)
+
+  NOTE
+  1. Closing the window will result in no change to the list
+  2. List can have 1 or 2 columns or be a list of strings or cell array of strings. 
+
+
+  EXAMPLE
+  1. Edit the device list for the BPMx family
+     newList = editlist(family2dev('BPMx'), 'BPMx', family2status('BPMx'));
+
+ Written by Gregory J. Portmann</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function newList = editlist(List, ListName, CheckList)</a>
+0002 <span class="comment">%EDITLIST - Edits a list</span>
+0003 <span class="comment">% newList = editlist(List)</span>
+0004 <span class="comment">% newList = editlist(List, InfoString)</span>
+0005 <span class="comment">% newList = editlist(List, InfoString, CheckList)</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% Allows one to easily edit a element or device list</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  INPUTS</span>
+0010 <span class="comment">%  1. List       - List to edit (matrix of numbers or strings)</span>
+0011 <span class="comment">%  2. InfoString - Informational string {optional}</span>
+0012 <span class="comment">%  3. CheckList  - Starting check box setting (0 - don't check, else check)</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">%  NOTE</span>
+0015 <span class="comment">%  1. Closing the window will result in no change to the list</span>
+0016 <span class="comment">%  2. List can have 1 or 2 columns or be a list of strings or cell array of strings.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  EXAMPLE</span>
+0020 <span class="comment">%  1. Edit the device list for the BPMx family</span>
+0021 <span class="comment">%     newList = editlist(family2dev('BPMx'), 'BPMx', family2status('BPMx'));</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">% Written by Gregory J. Portmann</span>
+0024 
+0025 <span class="keyword">if</span> nargin &lt; 1 
+0026     error(<span class="string">'At least 1 input is required.'</span>)
+0027 <span class="keyword">end</span>
+0028 
+0029 <span class="keyword">if</span> strcmpi(List,<span class="string">'GetNewList101010101'</span>)
+0030     Index = [];
+0031     h = get(gco,<span class="string">'userdata'</span>);
+0032     l=[];m=1;
+0033     <span class="keyword">for</span> i = 1:length(h);
+0034         <span class="keyword">if</span> get(h(i),<span class="string">'Value'</span>) == 1
+0035             newList(m,:) = get(h(i),<span class="string">'userdata'</span>);
+0036             m=m+1;
+0037             Index = [Index; i]; 
+0038         <span class="keyword">end</span>;
+0039     <span class="keyword">end</span>;
+0040     
+0041     CellInputFlag = getappdata(gcf, <span class="string">'CellInputFlag'</span>);
+0042     
+0043     <span class="keyword">if</span> exist(<span class="string">'newList'</span>, <span class="string">'var'</span>)
+0044         <span class="keyword">if</span> CellInputFlag
+0045             <span class="keyword">for</span> i = 1:size(newList,1)
+0046                 newListCell{i,1} = deblank(newList(i,:));
+0047             <span class="keyword">end</span>
+0048             newList = newListCell;
+0049         <span class="keyword">end</span>
+0050     <span class="keyword">else</span>
+0051         <span class="keyword">if</span> CellInputFlag
+0052             newList = {};
+0053         <span class="keyword">else</span>
+0054             newList = [];
+0055         <span class="keyword">end</span>
+0056         Index = [];
+0057     <span class="keyword">end</span>
+0058     
+0059     set(gco,<span class="string">'userdata'</span>, {newList, Index});   <span class="comment">% Store the data</span>
+0060     set(gcf,<span class="string">'userdata'</span>,1);   <span class="comment">% So that waitfor executes</span>
+0061     drawnow;
+0062     pause(0);    
+0063     <span class="keyword">return</span>
+0064 <span class="keyword">end</span>
+0065 
+0066 
+0067 <span class="keyword">if</span> nargin &lt; 2
+0068     ListName = <span class="string">''</span>;
+0069 <span class="keyword">end</span>
+0070 
+0071 <span class="comment">% if isstr(List)</span>
+0072 <span class="comment">%    error('First input cannot be a string');</span>
+0073 <span class="comment">%    return</span>
+0074 <span class="comment">% end</span>
+0075 
+0076 <span class="keyword">if</span> nargin &lt; 3
+0077     CheckList = ones(size(List,1),1);
+0078 <span class="keyword">end</span>
+0079 <span class="keyword">if</span> ~ischar(ListName)
+0080     CheckList = ListName;   
+0081     ListName = <span class="string">''</span>;
+0082 <span class="keyword">end</span>
+0083 
+0084 
+0085 <span class="keyword">if</span> iscell(List)
+0086     ListCell = List;
+0087     List = [];
+0088     <span class="keyword">for</span> i = 1:length(ListCell)
+0089         List = strvcat(List, ListCell{i});
+0090     <span class="keyword">end</span>
+0091     CellInputFlag = 1;
+0092 <span class="keyword">else</span>
+0093     CellInputFlag = 0;
+0094 <span class="keyword">end</span>
+0095 
+0096 
+0097 <span class="keyword">if</span> length(CheckList) ~= size(List,1)
+0098     CheckList = CheckList * ones(max(size(List)),1);
+0099 <span class="keyword">end</span>
+0100 <span class="keyword">if</span> length(CheckList) ~= size(List,1)
+0101     error(<span class="string">'List and CheckList must have the same max(size).'</span>);
+0102 <span class="keyword">end</span>
+0103 
+0104 
+0105 <span class="keyword">if</span> isunix
+0106     ScaleFactor = 8;
+0107     ButtonHeight  = 20;
+0108     Offset = 6;
+0109 <span class="keyword">else</span>
+0110     ScaleFactor = 8; <span class="comment">%6.5;</span>
+0111     ButtonHeight  = 16;
+0112     Offset = 6;
+0113 <span class="keyword">end</span>
+0114 
+0115 
+0116 <span class="keyword">if</span> ischar(List)
+0117     <span class="comment">% String matrix</span>
+0118     RowVectorFlag = 0;
+0119     ButtonWidth = round(ScaleFactor*(size(List,2)+size(ListName,2))+Offset);
+0120 <span class="keyword">elseif</span> size(List,2) == 2
+0121     <span class="comment">% Column vector</span>
+0122     RowVectorFlag = 0;
+0123     ButtonWidth = round(ScaleFactor*length(sprintf(<span class="string">'%s(%d,%d)'</span>, ListName, max(List(:,1)), max(List(:,1))))+Offset);
+0124 <span class="keyword">elseif</span> size(List,1) == 1
+0125     <span class="comment">% Row vector</span>
+0126     List = List';
+0127     RowVectorFlag = 1;
+0128     ButtonWidth = 1.15*round(ScaleFactor*length(sprintf(<span class="string">'%s(%d)'</span>, ListName, max(List)))+Offset);
+0129     <span class="keyword">if</span> max(List) &gt; 99
+0130         ButtonWidth = 1.15*ButtonWidth;
+0131     <span class="keyword">end</span>
+0132 <span class="keyword">elseif</span> size(List,2) == 1
+0133     <span class="comment">% Column vector</span>
+0134     RowVectorFlag = 0;
+0135     ButtonWidth = 1.3*round(ScaleFactor*length(sprintf(<span class="string">'%s(%d)'</span>, ListName, max(List)))+Offset);
+0136     <span class="keyword">if</span> max(List) &gt; 99
+0137         ButtonWidth = 1.15*ButtonWidth;
+0138     <span class="keyword">end</span>
+0139 <span class="keyword">elseif</span> size(List,2) &gt; 2
+0140     <span class="keyword">if</span> ~ischar(List)
+0141         <span class="comment">% More than 2 columns is a problem</span>
+0142         error(<span class="string">'Input list must be 1 or 2 columns.'</span>)
+0143     <span class="keyword">end</span>
+0144 <span class="keyword">end</span>
+0145 
+0146 <span class="keyword">if</span> ButtonWidth &lt; 90
+0147     ButtonWidth = 90;
+0148 <span class="keyword">end</span>
+0149 
+0150 
+0151 n = size(List,1);
+0152 col = ceil(n/40);
+0153 row = ceil(n/col);
+0154 
+0155 
+0156 FigWidth = col*ButtonWidth + (col-1)*3 + 0;
+0157 <span class="comment">%if col &gt; 2</span>
+0158 <span class="comment">%    FigWidth = FigWidth + .2*FigWidth;</span>
+0159 <span class="comment">%end</span>
+0160 FigHeight  = 3+(row+1)*ButtonHeight;
+0161 
+0162 
+0163 <span class="comment">% Change figure position</span>
+0164 set(0,<span class="string">'Units'</span>,<span class="string">'pixels'</span>);
+0165 p=get(0,<span class="string">'screensize'</span>);
+0166 
+0167 h0 = figure( <span class="keyword">...</span>
+0168     <span class="string">'Color'</span>,[0.8 0.8 0.8], <span class="keyword">...</span>
+0169     <span class="string">'HandleVisibility'</span>,<span class="string">'On'</span>, <span class="keyword">...</span>
+0170     <span class="string">'Interruptible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0171     <span class="string">'MenuBar'</span>,<span class="string">'none'</span>, <span class="keyword">...</span>
+0172     <span class="string">'Name'</span>,[<span class="string">'Edit '</span>, ListName, <span class="string">' List'</span>], <span class="keyword">...</span>
+0173     <span class="string">'NumberTitle'</span>,<span class="string">'Off'</span>, <span class="keyword">...</span>
+0174     <span class="string">'Units'</span>,<span class="string">'pixels'</span>, <span class="keyword">...</span><span class="comment">   </span>
+0175     <span class="string">'Position'</span>,[30 p(4)-FigHeight-40 FigWidth FigHeight], <span class="keyword">...</span>
+0176     <span class="string">'Resize'</span>,<span class="string">'on'</span>, <span class="keyword">...</span>
+0177     <span class="string">'Userdata'</span>, [], <span class="keyword">...</span>
+0178     <span class="string">'Tag'</span>,<span class="string">'EditListFigure'</span>);
+0179 
+0180 k = 1;
+0181 <span class="keyword">for</span> j = 1:col
+0182     <span class="keyword">for</span> i = 1:row
+0183         
+0184         <span class="keyword">if</span> ischar(List)
+0185             liststring = [ListName, List(k,:)];
+0186         <span class="keyword">elseif</span> size(List,2) == 2
+0187             liststring = sprintf(<span class="string">'%s(%d,%d)'</span>, ListName, List(k,1), List(k,2));
+0188         <span class="keyword">else</span>
+0189             liststring = sprintf(<span class="string">'%s(%d)'</span>, ListName, List(k,1));
+0190         <span class="keyword">end</span>
+0191         
+0192         <span class="keyword">if</span> CheckList(k)
+0193             EnableFlag = 1;
+0194         <span class="keyword">else</span>
+0195             EnableFlag = 0;
+0196         <span class="keyword">end</span>
+0197         
+0198         h(k) = uicontrol(<span class="string">'Parent'</span>,h0, <span class="keyword">...</span>
+0199             <span class="string">'Callback'</span>,<span class="string">''</span>, <span class="keyword">...</span>
+0200             <span class="string">'Enable'</span>,<span class="string">'On'</span>, <span class="keyword">...</span>
+0201             <span class="string">'FontName'</span>, <span class="string">'MS Sans Serif'</span>, <span class="keyword">...</span>
+0202             <span class="string">'FontSize'</span>, 8, <span class="keyword">...</span>
+0203             <span class="string">'FontUnits'</span>, <span class="string">'points'</span>, <span class="keyword">...</span>
+0204             <span class="string">'Interruptible'</span>,<span class="string">'Off'</span>, <span class="keyword">...</span>
+0205             <span class="string">'Position'</span>,[6+(j-1)*(ButtonWidth+3) 3+(row-i+1)*ButtonHeight ButtonWidth-6 ButtonHeight], <span class="keyword">...</span>
+0206             <span class="string">'Style'</span>,<span class="string">'radio'</span>, <span class="keyword">...</span>
+0207             <span class="string">'String'</span>,liststring, <span class="keyword">...</span>
+0208             <span class="string">'Value'</span>,EnableFlag, <span class="keyword">...</span>
+0209             <span class="string">'Userdata'</span>,List(k,:), <span class="keyword">...</span>
+0210             <span class="string">'Tag'</span>,<span class="string">'Radio1'</span>);
+0211         k = k + 1;
+0212         <span class="keyword">if</span> k &gt; n
+0213             <span class="keyword">break</span>
+0214         <span class="keyword">end</span>    
+0215     <span class="keyword">end</span>
+0216 <span class="keyword">end</span>
+0217 
+0218 setappdata(h0, <span class="string">'CellInputFlag'</span>, CellInputFlag);
+0219 
+0220 <span class="comment">% h1 = uicontrol(...</span>
+0221 <span class="comment">%    'Parent',h0, ...</span>
+0222 <span class="comment">%    'Callback',[...</span>
+0223 <span class="comment">%       'h = get(gco,''userdata'');', ...</span>
+0224 <span class="comment">%       'l=[];m=1;', ...</span>
+0225 <span class="comment">%       'for i = 1:length(h);', ...</span>
+0226 <span class="comment">%       '   if get(h(i),''Value'') == 1', ...</span>
+0227 <span class="comment">%       '      l(m,:) = get(h(i),''userdata'');', ...</span>
+0228 <span class="comment">%       '      m=m+1;', ...</span>
+0229 <span class="comment">%       '   end;', ...</span>
+0230 <span class="comment">%       'end;', ...</span>
+0231 <span class="comment">%       'set(gco,''userdata'',l);', ...</span>
+0232 <span class="comment">%       'set(gcf,''userdata'',1);'], ...</span>
+0233 <span class="comment">%    'Enable','On', ...</span>
+0234 <span class="comment">%    'Interruptible','Off', ...</span>
+0235 <span class="comment">%    'Position',[3 3+0*ButtonHeight FigWidth-6 ButtonHeight], ...</span>
+0236 <span class="comment">%    'String','Change List', ...</span>
+0237 <span class="comment">%    'userdata', h, ...</span>
+0238 <span class="comment">%    'Tag','EditListClose');</span>
+0239 
+0240 h1 = uicontrol(<span class="keyword">...</span>
+0241     <span class="string">'Parent'</span>,h0, <span class="keyword">...</span>
+0242     <span class="string">'Callback'</span>,<span class="string">'editlist(''GetNewList101010101'');'</span>, <span class="keyword">...</span>
+0243     <span class="string">'Enable'</span>,<span class="string">'On'</span>, <span class="keyword">...</span>
+0244     <span class="string">'Interruptible'</span>,<span class="string">'Off'</span>, <span class="keyword">...</span>
+0245     <span class="string">'Position'</span>,[3 3+0*ButtonHeight FigWidth-6 ButtonHeight], <span class="keyword">...</span>
+0246     <span class="string">'String'</span>,<span class="string">'Done'</span>, <span class="keyword">...</span>
+0247     <span class="string">'userdata'</span>, h, <span class="keyword">...</span>
+0248     <span class="string">'Tag'</span>,<span class="string">'EditListClose'</span>);
+0249 
+0250 
+0251 waitfor(gcf,<span class="string">'userdata'</span>);
+0252 tmpcell = get(gco,<span class="string">'userdata'</span>);
+0253 
+0254 <span class="keyword">if</span> isempty(tmpcell)
+0255     <span class="comment">% Return the old list (figure got closed)</span>
+0256     <span class="keyword">if</span> CellInputFlag
+0257         i = find(CheckList);
+0258         newList = ListCell(i,:);
+0259         Index = (1:size(newList,1))';
+0260     <span class="keyword">else</span>
+0261         i = find(CheckList);
+0262         newList = List(i,:);
+0263         Index = (1:size(newList,1))';
+0264     <span class="keyword">end</span>
+0265 
+0266     <span class="keyword">if</span> RowVectorFlag
+0267         newList = newList';
+0268     <span class="keyword">end</span>
+0269     <span class="keyword">return</span>;
+0270 <span class="keyword">end</span>
+0271 
+0272 
+0273 newList = tmpcell{1};
+0274 Index = tmpcell{2};
+0275 
+0276 <span class="keyword">if</span> gcf == h0
+0277     close(h0);
+0278 <span class="comment">% else</span>
+0279 <span class="comment">%     % If the figure is closed (not changed) return the old list</span>
+0280 <span class="comment">%     i = find(CheckList);</span>
+0281 <span class="comment">%     newList = List(i,:);</span>
+0282 <span class="comment">%     Index = (1:size(newList,1))';</span>
+0283 <span class="keyword">end</span>
+0284 
+0285 <span class="keyword">if</span> RowVectorFlag
+0286     newList = newList';
+0287 <span class="keyword">end</span>
+0288 
+0289 
+0290 
+0291 
+0292 
+0293 
+0294 
+0295 
+0296 
+0297</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

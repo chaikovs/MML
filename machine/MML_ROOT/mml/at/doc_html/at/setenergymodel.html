@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of setenergymodel</title>
+  <meta name="keywords" content="setenergymodel">
+  <meta name="description" content="SETENERGYMODEL -set energy in AT model">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">at</a> &gt; setenergymodel.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for at&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>setenergymodel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>SETENERGYMODEL -set energy in AT model</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function setenergymodel(GeV) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> SETENERGYMODEL -set energy in AT model
+ setenergymodel(GeV)
+
+  INPUTS
+  1. GeV - energy in GeV
+
+  See Also <a href="getenergymodel.html" class="code" title="function GeV = getenergymodel">getenergymodel</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="setpvmodel.html" class="code" title="function ErrorFlag = setpvmodel(varargin)">setpvmodel</a>	SETPVMODEL - Sets the model</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function setenergymodel(GeV)</a>
+0002 <span class="comment">% SETENERGYMODEL -set energy in AT model</span>
+0003 <span class="comment">% setenergymodel(GeV)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. GeV - energy in GeV</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">%  See Also getenergymodel</span>
+0009 
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  Written by Gregory J. Portmann</span>
+0012 
+0013 <span class="comment">% GLOBVAL will be obsolete soon</span>
+0014 <span class="keyword">if</span> ~isempty(whos(<span class="string">'global'</span>,<span class="string">'GLOBVAL'</span>))
+0015     <span class="keyword">global</span> GLOBVAL
+0016     GLOBVAL.E0 = 1e+009 * GeV(end);
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="comment">% Newer AT versions require 'Energy' to be an AT field</span>
+0020 <span class="keyword">global</span> THERING
+0021 THERING = setcellstruct(THERING, <span class="string">'Energy'</span>, 1:length(THERING), 1e+009 * GeV(end));
+0022 
+0023</pre></div>
+<hr><address>Generated on Fri 18-May-2007 17:13:39 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,1285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of corgui</title>
+  <meta name="keywords" content="corgui">
+  <meta name="description" content="CORGUI - controls corrector manipulation and plotting for orbit program">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">orbit</a> &gt; corgui.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/orbit&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>corgui
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>CORGUI - controls corrector manipulation and plotting for orbit program</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function corgui(action, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> CORGUI - controls corrector manipulation and plotting for orbit program
+varargout = corgui(action, varargin)
+=============================================================
+
+ INPUT
+1. action among:
+   PlotCor_Init
+   Fract
+   ApplyCorrection
+   RemoveCorrection
+   ApplyFit
+   UpdateCors
+   GetAct
+   UpdateAct
+   PlotAct
+   PlotFit
+   ClearFit
+   ClearPlots
+   ShowPlots
+   HidePlots
+   RePlot
+   ylimits
+   CorSelect
+   CorDown
+   ProcessCor
+   CorBar
+   UpdateCorBox
+   CorBox
+   Up
+   CORmove
+   SelectAll
+   SelectNone
+   ToggleCor
+   ShowResp
+   ShowEig
+   SaveCors
+   RestoreCors
+   CorEdit
+   ShowCORState</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>	function varargout = bpmgui(action, varargin)</li><li><a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>	CORGUI - controls corrector manipulation and plotting for orbit program</li><li><a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>	ORBGUI -- Contains routines to set up the main orbit control panel</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>	function varargout = bpmgui(action, varargin)</li><li><a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>	CORGUI - controls corrector manipulation and plotting for orbit program</li><li><a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>	ORBGUI -- Contains routines to set up the main orbit control panel</li><li><a href="respgui.html" class="code" title="function respgui(action, varargin)">respgui</a>	RESPGUI - Part treating of the response matrice and the correction</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function corgui(action, varargin)</a>
+0002 <span class="comment">% CORGUI - controls corrector manipulation and plotting for orbit program</span>
+0003 <span class="comment">%varargout = corgui(action, varargin)</span>
+0004 <span class="comment">%=============================================================</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% INPUT</span>
+0007 <span class="comment">%1. action among:</span>
+0008 <span class="comment">%   PlotCor_Init</span>
+0009 <span class="comment">%   Fract</span>
+0010 <span class="comment">%   ApplyCorrection</span>
+0011 <span class="comment">%   RemoveCorrection</span>
+0012 <span class="comment">%   ApplyFit</span>
+0013 <span class="comment">%   UpdateCors</span>
+0014 <span class="comment">%   GetAct</span>
+0015 <span class="comment">%   UpdateAct</span>
+0016 <span class="comment">%   PlotAct</span>
+0017 <span class="comment">%   PlotFit</span>
+0018 <span class="comment">%   ClearFit</span>
+0019 <span class="comment">%   ClearPlots</span>
+0020 <span class="comment">%   ShowPlots</span>
+0021 <span class="comment">%   HidePlots</span>
+0022 <span class="comment">%   RePlot</span>
+0023 <span class="comment">%   ylimits</span>
+0024 <span class="comment">%   CorSelect</span>
+0025 <span class="comment">%   CorDown</span>
+0026 <span class="comment">%   ProcessCor</span>
+0027 <span class="comment">%   CorBar</span>
+0028 <span class="comment">%   UpdateCorBox</span>
+0029 <span class="comment">%   CorBox</span>
+0030 <span class="comment">%   Up</span>
+0031 <span class="comment">%   CORmove</span>
+0032 <span class="comment">%   SelectAll</span>
+0033 <span class="comment">%   SelectNone</span>
+0034 <span class="comment">%   ToggleCor</span>
+0035 <span class="comment">%   ShowResp</span>
+0036 <span class="comment">%   ShowEig</span>
+0037 <span class="comment">%   SaveCors</span>
+0038 <span class="comment">%   RestoreCors</span>
+0039 <span class="comment">%   CorEdit</span>
+0040 <span class="comment">%   ShowCORState</span>
+0041 <span class="comment">%</span>
+0042 
+0043 <span class="comment">%</span>
+0044 <span class="comment">% Written by William J. Corbett</span>
+0045 <span class="comment">% Adapted by Laurent S. Nadolski</span>
+0046 
+0047 <span class="comment">%globals</span>
+0048 <span class="keyword">global</span> COR RSP SYS
+0049 
+0050 <span class="comment">% HCORFamily = 'HCOR';</span>
+0051 <span class="comment">% VCORFamily = 'VCOR';</span>
+0052 <span class="comment">% BPMxFamily = 'BPMx';</span>
+0053 <span class="comment">% BPMzFamily = 'BPMz';</span>
+0054 
+0055 orbfig = findobj(0,<span class="string">'tag'</span>,<span class="string">'orbfig'</span>);
+0056 plane  = SYS.plane;
+0057 
+0058 <span class="keyword">switch</span> action
+0059     
+0060     <span class="comment">%==========================================================</span>
+0061     <span class="keyword">case</span> <span class="string">'PlotCor_Init'</span>             <span class="comment">% *** PlotCor_Init ***</span>
+0062         <span class="comment">%============Replot==============================================</span>
+0063         <span class="comment">%draw patches to create a &quot;bar&quot; plot for the correctors.</span>
+0064         set(SYS.ahcor,<span class="string">'Xlim'</span>,[0 SYS.xlimax]);
+0065 
+0066         <span class="comment">%========================================</span>
+0067         <span class="comment">%initialize for plane that IS NOT default</span>
+0068         <span class="comment">%========================================</span>
+0069         plane     = 1 + mod(plane,2);
+0070         SYS.plane = plane;
+0071 
+0072         xd = <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'GetAbscissa'</span>,SYS,<span class="string">'COR'</span>);  <span class="comment">%horizontal coordinates for plotting</span>
+0073 
+0074         COR(plane).id = 1;        <span class="comment">%first corrector selected as default</span>
+0075 
+0076         <span class="keyword">for</span> ii = 1:size(COR(plane).name,1)
+0077             c     = xd(ii);     <span class="comment">%horizontal coordinate</span>
+0078             color = <span class="string">'k'</span>;        <span class="comment">%default black if not in status vector</span>
+0079             <span class="keyword">if</span> ~isempty(find(COR(plane).status==ii,1)), color=<span class="string">'y'</span>; <span class="keyword">end</span>  <span class="comment">%yellow for available</span>
+0080             <span class="keyword">if</span> ~isempty(find(COR(plane).ifit==ii,1)),   color=<span class="string">'g'</span>; <span class="keyword">end</span>  <span class="comment">%green for fit</span>
+0081 
+0082             <span class="comment">%actual corrector strength (green)</span>
+0083             COR(plane).hact(ii,1) = line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0084                 c,<span class="string">'YData'</span>,0,<span class="string">'Marker'</span>,<span class="string">'diamond'</span>,<span class="keyword">...</span>
+0085                 <span class="string">'MarkerFaceColor'</span>,color,<span class="string">'MarkerSize'</span>,6,<span class="keyword">...</span>
+0086                 <span class="string">'tag'</span>, [<span class="string">'c'</span> num2str(plane) <span class="string">'_'</span> num2str(ii)],<span class="keyword">...</span><span class="comment">   %c for corrector</span>
+0087                 <span class="string">'ButtonDownFcn'</span>,<span class="string">'corgui(''CorSelect'')'</span>);
+0088             <span class="comment">%vertical bar to icon</span>
+0089             COR(plane).hact(ii,2) = line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0090                 [c c],<span class="string">'YData'</span>,[0 0],<span class="string">'Color'</span>,<span class="string">'b'</span>);
+0091 
+0092             <span class="comment">%actual+fitted strength (red)</span>
+0093             COR(plane).hfit(ii,1) = line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0094                 c,<span class="string">'YData'</span>,0,<span class="string">'Marker'</span>,<span class="string">'o'</span>,<span class="keyword">...</span>
+0095                 <span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>,<span class="string">'MarkerSize'</span>,4,<span class="keyword">...</span>
+0096                 <span class="string">'tag'</span>, [<span class="string">'f'</span> num2str(plane) <span class="string">'_'</span> num2str(ii)],<span class="keyword">...</span><span class="comment">   %f for fit</span>
+0097                 <span class="string">'ButtonDownFcn'</span>,<span class="string">'corgui(''CorSelect'')'</span>);
+0098             <span class="comment">%vertical bar to icon</span>
+0099             COR(plane).hfit(ii,2)=line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0100                 [c c],<span class="string">'YData'</span>,[0 0],<span class="string">'Color'</span>,<span class="string">'b'</span>);
+0101 
+0102             <span class="keyword">if</span> strcmp(color,<span class="string">'k'</span>)    <span class="comment">%if status bad make single black dot</span>
+0103                 set(COR(plane).hact(ii,1),<span class="string">'MarkerSize'</span>,4,<span class="string">'Marker'</span>,<span class="string">'o'</span>);
+0104                 set(COR(plane).hfit(ii,1),<span class="string">'MarkerFaceColor'</span>,<span class="string">'k'</span>);
+0105             <span class="keyword">end</span>
+0106 
+0107         <span class="keyword">end</span>
+0108         <span class="comment">%========================================</span>
+0109         <span class="comment">%initialize for plane that IS default</span>
+0110         <span class="comment">%========================================</span>
+0111         plane = 1+mod(plane,2);    <span class="comment">%return to default plane</span>
+0112         SYS.plane = plane;
+0113 
+0114         COR(plane).id = 1;
+0115 
+0116         xd = <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'GetAbscissa'</span>,SYS,<span class="string">'COR'</span>);  <span class="comment">%horizontal coordinates for plotting</span>
+0117 
+0118         <span class="keyword">for</span> ii = 1:size(COR(plane).name,1)
+0119             c = xd(ii);
+0120             color = <span class="string">'k'</span>;   <span class="comment">%black if not in status vector</span>
+0121             <span class="keyword">if</span> ~isempty(find(COR(plane).status==ii,1)), color=<span class="string">'y'</span>; <span class="keyword">end</span>  <span class="comment">%yellow for for available</span>
+0122             <span class="keyword">if</span> ~isempty(find(COR(plane).ifit==ii,1)),   color=<span class="string">'g'</span>; <span class="keyword">end</span>  <span class="comment">%green for fit</span>
+0123 
+0124             <span class="comment">%actual corrector strength (green)</span>
+0125             COR(plane).hact(ii,1)=line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0126                 c,<span class="string">'YData'</span>,0,<span class="string">'Marker'</span>,<span class="string">'diamond'</span>,<span class="keyword">...</span>
+0127                 <span class="string">'MarkerFaceColor'</span>,color,<span class="string">'MarkerSize'</span>,6,<span class="keyword">...</span>
+0128                 <span class="string">'tag'</span>, [<span class="string">'c'</span> num2str(plane) <span class="string">'_'</span> num2str(ii)],<span class="keyword">...</span>
+0129                 <span class="string">'ButtonDownFcn'</span>,<span class="string">'corgui(''CorSelect'')'</span>);
+0130             <span class="comment">%vertical bar to icon</span>
+0131             COR(plane).hact(ii,2)=line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0132                 [c c],<span class="string">'YData'</span>,[0 0]);
+0133 
+0134             <span class="comment">%actual+fitted strength (red)</span>
+0135             COR(plane).hfit(ii,1)=line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0136                 c,<span class="string">'YData'</span>,0,<span class="string">'Marker'</span>,<span class="string">'o'</span>,<span class="keyword">...</span>
+0137                 <span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>,<span class="string">'MarkerSize'</span>,4,<span class="keyword">...</span>
+0138                 <span class="string">'tag'</span>, [<span class="string">'f'</span> num2str(plane) <span class="string">'_'</span> num2str(ii)],<span class="keyword">...</span>
+0139                 <span class="string">'ButtonDownFcn'</span>,<span class="string">'corgui(''CorSelect'')'</span>);
+0140             <span class="comment">%vertical bar to icon</span>
+0141             COR(plane).hfit(ii,2)=line(<span class="string">'parent'</span>,SYS.ahcor,<span class="string">'XData'</span>, <span class="keyword">...</span>
+0142                 [c c],<span class="string">'YData'</span>,[0 0]);
+0143 
+0144             <span class="keyword">if</span> strcmp(color,<span class="string">'k'</span>)    <span class="comment">%if status bad make single black dot</span>
+0145                 set(COR(plane).hact(ii,1),<span class="string">'MarkerSize'</span>,4,<span class="string">'Marker'</span>,<span class="string">'o'</span>);
+0146                 set(COR(plane).hfit(ii,1),<span class="string">'MarkerFaceColor'</span>,<span class="string">'k'</span>);
+0147             <span class="keyword">end</span>
+0148         <span class="keyword">end</span>
+0149 
+0150 
+0151         <span class="comment">%set limits on corrector plot</span>
+0152         ylim = get(SYS.ahcor,<span class="string">'YLim'</span>);
+0153         
+0154         <span class="comment">%vertical bar on selected corrector</span>
+0155         SYS.lhcid = line(<span class="string">'parent'</span>,SYS.ahcor,<span class="keyword">...</span>
+0156             <span class="string">'XData'</span>,[xd(COR(plane).id),xd(COR(plane).id)+0.001],<span class="keyword">...</span>
+0157             <span class="string">'YData'</span>,[ylim(1),ylim(2)],<span class="string">'Color'</span>,<span class="string">'k'</span>);
+0158         set(SYS.lhcid,<span class="string">'ButtonDownFcn'</span>,<span class="string">'corgui(''CorSelect'')'</span>);
+0159 
+0160         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ylimits'</span>);
+0161 
+0162         <span class="comment">%===========================================================</span>
+0163     <span class="keyword">case</span> <span class="string">'Fract'</span>                                 <span class="comment">%*** Fract ***</span>
+0164         <span class="comment">%===========================================================</span>
+0165         <span class="comment">%callback of the text box used to set fraction</span>
+0166         h1    = SYS.fract;
+0167         fract = str2double(get(h1,<span class="string">'String'</span>));
+0168 
+0169         <span class="keyword">if</span> isnan(fract) || ~isnumeric(fract) || ~length(fract) == 1
+0170             <span class="comment">% flush the bad string out of the edit; replace with current value:</span>
+0171             set(h1,<span class="string">'String'</span>,num2str(COR(plane).fract));
+0172             disp(<span class="string">'Warning: Invalid fraction entry.'</span>);
+0173             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'Warning: Invalid fraction entry'</span>);
+0174             <span class="keyword">return</span>;
+0175         <span class="keyword">else</span>
+0176             COR(plane).fract = fract;
+0177             <span class="comment">%NOTE: fraction scalar only used at time of corrector application</span>
+0178             <span class="comment">%   respgui('UpdateFit');</span>
+0179             <span class="comment">%   orbgui('RefreshOrbGUI');</span>
+0180         <span class="keyword">end</span>
+0181 
+0182         <span class="comment">%===========================================================</span>
+0183     <span class="keyword">case</span> <span class="string">'ApplyCorrection'</span>              <span class="comment">%*** ApplyCorrection ***</span>
+0184         <span class="comment">%===========================================================</span>
+0185         <span class="comment">%Apply orbit correction</span>
+0186         <span class="keyword">if</span> ~isempty(COR(plane).ifit) || RSP(plane).rfflag
+0187             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Apply Correction for current plane'</span>);
+0188             <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ApplyFit'</span>);
+0189         <span class="keyword">else</span>
+0190             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Correction not valid for current plane'</span>);
+0191         <span class="keyword">end</span>
+0192 
+0193         <span class="comment">%===========================================================</span>
+0194     <span class="keyword">case</span> <span class="string">'RemoveCorrection'</span>            <span class="comment">%*** RemoveCorrection ***</span>
+0195         <span class="comment">%===========================================================</span>
+0196         <span class="comment">%restore to corrector pattern prior to 'ApplyFit'</span>
+0197 
+0198         <span class="keyword">if</span> ~isempty(COR(plane).ifit) || RSP(plane).rfflag
+0199             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Removing Correction'</span>);
+0200             
+0201             <span class="keyword">if</span> COR(plane).ifit <span class="comment">% Corrector magnet part</span>
+0202                 <span class="comment">%NOTE: corrector pattern (.act) measured at time of fit in RefreshOrbGUI</span>
+0203 
+0204                 <span class="comment">% Select good status correctors</span>
+0205                 status = COR(plane).status;
+0206                 val    = COR(plane).rst(status);
+0207                 <span class="comment">%restore values</span>
+0208                 setsp(COR(plane).AOFamily,val,status,SYS.mode);
+0209             <span class="keyword">end</span>
+0210             
+0211             <span class="keyword">if</span> RSP(plane).rfflag <span class="comment">% RF part</span>
+0212                 stepsp(<span class="string">'RF'</span>, -SYS.drfrst, SYS.mode);
+0213             <span class="keyword">end</span>
+0214             
+0215             <span class="comment">% Update gui</span>
+0216             <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'GetAct'</span>);
+0217             <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'GetAct'</span>);
+0218             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0219         <span class="keyword">else</span>
+0220             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Correction not valid for current plane'</span>);
+0221         <span class="keyword">end</span>
+0222 
+0223         <span class="comment">%===========================================================</span>
+0224     <span class="keyword">case</span> <span class="string">'ApplyFit'</span>                            <span class="comment">%*** ApplyFit ***</span>
+0225         <span class="comment">%===========================================================</span>
+0226         <span class="comment">%apply corrector fit pattern scaled by fract</span>
+0227         <span class="comment">%NOTE: corrector pattern (.act) measured at time of fit in RefreshOrbGUI</span>
+0228         
+0229         <span class="keyword">if</span> ~isempty(COR(plane).ifit) <span class="comment">% corrector magnet part</span>
+0230             <span class="comment">% Actual value + fitted value</span>
+0231             val = COR(plane).act(COR(plane).ifit) + <span class="keyword">...</span>
+0232                 COR(plane).fract*COR(plane).fit;
+0233 
+0234             <span class="comment">% Test if saturation</span>
+0235             istoobig = (abs(val) &gt; COR(plane).lim(COR(plane).ifit));
+0236             <span class="keyword">if</span> sum(istoobig) ~= 0
+0237                 <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Warning: cannot apply correction strength too large'</span>);
+0238                 <span class="keyword">return</span>;
+0239             <span class="keyword">end</span>
+0240 
+0241             <span class="comment">%load restore field to enable corrector pattern removal</span>
+0242             COR(plane).rst = COR(plane).act;
+0243 
+0244             <span class="comment">% Set new current values</span>
+0245             setsp(COR(plane).AOFamily,val,COR(plane).ifit,SYS.mode);
+0246             pause(2); <span class="comment">% pause for letting correctors reach their final value % (should be a special flag in setsp)</span>
+0247         <span class="keyword">end</span>
+0248         
+0249         <span class="keyword">if</span> RSP(plane).rfflag <span class="comment">% Apply RF correction</span>
+0250             stepsp(<span class="string">'RF'</span>,COR(plane).fract*SYS.drf, SYS.mode);
+0251             <span class="comment">%load restore field to enable corrector pattern removal</span>
+0252             SYS.drfrst = COR(plane).fract*SYS.drf;
+0253         <span class="keyword">end</span>
+0254             
+0255         setappdata(0,<span class="string">'SYS'</span>,SYS);
+0256         <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'GetAct'</span>);
+0257         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'GetAct'</span>);
+0258         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0259 
+0260         
+0261         <span class="comment">%==========================================================</span>
+0262     <span class="keyword">case</span> <span class="string">'UpdateCorrs'</span>                  <span class="comment">% *** UpdateCorrs ***</span>
+0263         <span class="comment">%==========================================================</span>
+0264         <span class="comment">%callback of the 'refresh corrector' button</span>
+0265         <span class="comment">%acquire corrector readbacks, plot, re-calculate fit</span>
+0266         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'UpdateAct'</span>);
+0267         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0268 
+0269         <span class="comment">%==========================================================</span>
+0270     <span class="keyword">case</span> <span class="string">'GetAct'</span>                              <span class="comment">% *** GetAct ***</span>
+0271         <span class="comment">%==========================================================</span>
+0272         <span class="comment">%get readback corrector values from database</span>
+0273         <span class="comment">%load values into full length array slots with valid status</span>
+0274         
+0275         <span class="comment">% H-correctors</span>
+0276         status             = COR(1).status;
+0277         COR(1).act(status) = getam(COR(1).AOFamily,[],SYS.mode);
+0278         <span class="comment">% V-correctors</span>
+0279         status             = COR(2).status;
+0280         COR(2).act(status) = getam(COR(2).AOFamily,[],SYS.mode);
+0281 
+0282         setappdata(0,<span class="string">'COR'</span>,COR);
+0283 
+0284         <span class="comment">%==========================================================</span>
+0285     <span class="keyword">case</span> <span class="string">'UpdateAct'</span>                  <span class="comment">% *** UpdateAct ***</span>
+0286         <span class="comment">%==========================================================</span>
+0287         <span class="comment">%callback of the 'refresh corrector' button</span>
+0288         <span class="comment">%acquire corrector readbacks and plot</span>
+0289 
+0290         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'GetAct'</span>);
+0291         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'PlotAct'</span>);
+0292         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'UpdateCorBox'</span>);
+0293         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">' Refresh Corrector Setpoints'</span>);
+0294 
+0295         <span class="comment">%==========================================================</span>
+0296     <span class="keyword">case</span> <span class="string">'PlotAct'</span>                            <span class="comment">% *** PlotAct ***</span>
+0297         <span class="comment">%==========================================================</span>
+0298         <span class="comment">%draw stem plot for the actual corrector values.</span>
+0299         <span class="comment">%act contains real values</span>
+0300 
+0301         <span class="comment">%scale start patch</span>
+0302         ah = get(SYS.ahcor);
+0303         set(orbfig,<span class="string">'currentaxes'</span>,SYS.ahcor)
+0304 
+0305         xd = <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'GetAbscissa'</span>,SYS,<span class="string">'COR'</span>);
+0306    
+0307         nstat = length(COR(plane).act);
+0308         kk = (1:nstat)';
+0309         colorcell = repmat({<span class="string">'g'</span>},nstat,1); <span class="comment">%green for fit</span>
+0310         colorcell(setdiff(kk,COR(plane).ifit))  = {<span class="string">'y'</span>};  <span class="comment">%yellow for no fit</span>
+0311         colorcell(setdiff(kk,COR(plane).status)) = {<span class="string">'k'</span>};  <span class="comment">%black for not available</span>
+0312         
+0313         <span class="keyword">if</span> strcmpi(COR(plane).units,<span class="string">'Physics'</span>) == 1
+0314             fact = COR(plane).hw2physics;
+0315         <span class="keyword">else</span>
+0316             fact = 1;
+0317         <span class="keyword">end</span>
+0318         
+0319         yd      = zeros(nstat,1);
+0320         idx     = intersect(kk,COR(plane).status);
+0321         yd(idx) = COR(plane).act(idx);
+0322         yd      = yd*fact;
+0323         
+0324         set(COR(plane).hact(:,1),{<span class="string">'XData'</span>},num2cell(xd),{<span class="string">'YData'</span>}, <span class="keyword">...</span>
+0325             num2cell(yd),{<span class="string">'MarkerFaceColor'</span>},colorcell);
+0326         set(COR(plane).hact(:,2),{<span class="string">'XData'</span>},num2cell([xd xd],2), <span class="keyword">...</span>
+0327             {<span class="string">'YData'</span>},num2cell([0*yd yd],2));
+0328 
+0329 <span class="comment">%         for kk = 1:size(COR(plane).name,1)</span>
+0330 <span class="comment">%             yd    = 0.0;      %default corrector value</span>
+0331 <span class="comment">%             color = 'k';   %default black if not in status vector</span>
+0332 <span class="comment">%             if ~isempty(find(COR(plane).status == kk))</span>
+0333 <span class="comment">%                 color = 'y';  %yellow for available</span>
+0334 <span class="comment">%                 yd    = COR(plane).act(kk);</span>
+0335 <span class="comment">%             end</span>
+0336 <span class="comment">%</span>
+0337 <span class="comment">%             if ~isempty(COR(plane).ifit);</span>
+0338 <span class="comment">%                 if ~isempty(find(COR(plane).ifit == kk))</span>
+0339 <span class="comment">%                     color = 'g';</span>
+0340 <span class="comment">%                 end</span>
+0341 <span class="comment">%             end</span>
+0342 <span class="comment">%</span>
+0343 <span class="comment">%             if strcmpi(COR(plane).units,'Physics') == 1</span>
+0344 <span class="comment">%                 fact = COR(plane).hw2physics;</span>
+0345 <span class="comment">%             else</span>
+0346 <span class="comment">%                 fact = 1;</span>
+0347 <span class="comment">%             end</span>
+0348 <span class="comment">%</span>
+0349 <span class="comment">%             set(COR(plane).hact(kk,1),'XData',xd(kk),'YData', ...</span>
+0350 <span class="comment">%                 yd*fact,'MarkerFaceColor',color);</span>
+0351 <span class="comment">%             set(COR(plane).hact(kk,2),'XData',[xd(kk) xd(kk)], ...</span>
+0352 <span class="comment">%                 'YData',[0 yd*fact]);</span>
+0353 <span class="comment">%         end  %end loop over all correctors</span>
+0354 
+0355         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ylimits'</span>);
+0356 
+0357         <span class="comment">%==========================================================</span>
+0358     <span class="keyword">case</span> <span class="string">'PlotFit'</span>                      <span class="comment">% *** PlotFit ***</span>
+0359         <span class="comment">%==========================================================</span>
+0360         <span class="comment">%draw stem plot for the total predicted corrector values after fitting</span>
+0361         <span class="comment">%note:COR(plane).fit is compressed</span>
+0362 
+0363         <span class="keyword">if</span> isempty(COR(plane).fit)
+0364             <span class="keyword">return</span>
+0365         <span class="keyword">end</span>
+0366 
+0367         xd = <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'GetAbscissa'</span>,SYS,<span class="string">'COR'</span>);
+0368 
+0369         len = length(COR(plane).ifit);        
+0370         idx = COR(plane).ifit(1:len); <span class="comment">%get indices</span>
+0371         xd  = xd(idx);
+0372         yd  = COR(plane).act(idx) + COR(plane).fit(1:len); <span class="comment">% new value</span>
+0373 
+0374         <span class="keyword">if</span> strcmpi(COR(plane).units,<span class="string">'Physics'</span>) == 1
+0375             fact = COR(plane).hw2physics;
+0376         <span class="keyword">else</span>
+0377             fact = 1;
+0378         <span class="keyword">end</span>
+0379         yd  = yd *fact;
+0380 
+0381         set(COR(plane).hfit(idx,1),{<span class="string">'Xdata'</span>}, num2cell(xd), <span class="keyword">...</span>
+0382             {<span class="string">'YData'</span>}, num2cell(yd));
+0383         set(COR(plane).hfit(idx,2),{<span class="string">'Xdata'</span>},num2cell([xd xd],2), <span class="keyword">...</span>
+0384             {<span class="string">'YData'</span>}, num2cell([0*yd yd],2));
+0385 
+0386 <span class="comment">%         for kk = 1:length(COR(plane).ifit)</span>
+0387 <span class="comment">%             k  = COR(plane).ifit(kk);</span>
+0388 <span class="comment">%             yd = COR(plane).act(k) + COR(plane).fit(kk);</span>
+0389 <span class="comment">%</span>
+0390 <span class="comment">%             if strcmpi(COR(plane).units,'Physics') ==1</span>
+0391 <span class="comment">%                 fact = COR(plane).hw2physics;</span>
+0392 <span class="comment">%             else</span>
+0393 <span class="comment">%                 fact = 1;</span>
+0394 <span class="comment">%             end</span>
+0395 <span class="comment">%</span>
+0396 <span class="comment">%             set(COR(plane).hfit(k,1),'Xdata', xd(k),'YData', yd*fact);</span>
+0397 <span class="comment">%             set(COR(plane).hfit(k,2),'Xdata',[xd(k) xd(k)],'YData',[0 yd*fact]);</span>
+0398 <span class="comment">%         end</span>
+0399 <span class="comment">%         corgui('ylimits');</span>
+0400 
+0401         <span class="comment">%==========================================================</span>
+0402     <span class="keyword">case</span> <span class="string">'ClearFit'</span>                      <span class="comment">% *** ClearFit ***</span>
+0403         <span class="comment">%==========================================================</span>
+0404         
+0405         <span class="comment">%clear horizontal fit</span>
+0406         set(COR(1).hfit(:,1),<span class="string">'YData'</span>,0);
+0407         set(COR(1).hfit(:,2),<span class="string">'YData'</span>,[0 0]);
+0408         
+0409         <span class="comment">%clear vertical   fit</span>
+0410         set(COR(2).hfit(:,1),<span class="string">'YData'</span>,0);
+0411         set(COR(2).hfit(:,2),<span class="string">'YData'</span>,[0 0]);
+0412 
+0413         <span class="comment">%==========================================================</span>
+0414     <span class="keyword">case</span> <span class="string">'ClearPlots'</span>                    <span class="comment">% *** Clearplots ***</span>
+0415         <span class="comment">%==========================================================</span>
+0416         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ClearFit'</span>);
+0417 
+0418         <span class="comment">%clear horizontal actuals</span>
+0419         set(COR(1).hact(:,1),<span class="string">'YData'</span>,0);
+0420         set(COR(1).hact(:,2),<span class="string">'YData'</span>,[0 0]);
+0421         <span class="comment">%clear vertical   actuals</span>
+0422         set(COR(2).hact(:,1),<span class="string">'YData'</span>,0);
+0423         set(COR(2).hact(:,2),<span class="string">'YData'</span>,[0 0]);
+0424 
+0425         <span class="comment">%==========================================================</span>
+0426     <span class="keyword">case</span> <span class="string">'ShowPlots'</span>                    <span class="comment">% *** Showplots ***</span>
+0427         <span class="comment">%==========================================================</span>
+0428         <span class="comment">%hide stem plots for current plane</span>
+0429         set(COR(plane).hact,<span class="string">'Visible'</span>,<span class="string">'On'</span>);
+0430         set(COR(plane).hfit,<span class="string">'Visible'</span>,<span class="string">'On'</span>);
+0431 
+0432         <span class="comment">%==========================================================</span>
+0433     <span class="keyword">case</span> <span class="string">'HidePlots'</span>                    <span class="comment">% *** Hideplots ***</span>
+0434         <span class="comment">%==========================================================</span>
+0435         <span class="comment">%hide stem plots for current plane</span>
+0436         set(COR(plane).hact,<span class="string">'Visible'</span>,<span class="string">'Off'</span>);
+0437         set(COR(plane).hfit,<span class="string">'Visible'</span>,<span class="string">'Off'</span>);
+0438 
+0439         <span class="comment">%=============================================================</span>
+0440     <span class="keyword">case</span> <span class="string">'RePlot'</span>                                  <span class="comment">% *** RePlot ***</span>
+0441         <span class="comment">%=============================================================</span>
+0442         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ClearPlots'</span>);
+0443         set(orbfig,<span class="string">'currentaxes'</span>,SYS.ahcor)
+0444         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'PlotAct'</span>);                        <span class="comment">%plot actual correctors</span>
+0445         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'PlotFit'</span>);                        <span class="comment">%plot fitted correctors</span>
+0446         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ylimits'</span>);
+0447         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'CorBar'</span>);
+0448         
+0449         <span class="comment">%=============================================================</span>
+0450     <span class="keyword">case</span> <span class="string">'ylimits'</span>                             <span class="comment">% *** ylimits ***</span>
+0451         <span class="comment">%=============================================================</span>
+0452         <span class="comment">%compute vertical axes limits for corrector plot</span>
+0453 
+0454         <span class="keyword">if</span> COR(plane).scalemode == 0 
+0455             <span class="keyword">return</span>;  <span class="comment">%manual mode</span>
+0456         <span class="keyword">end</span>    
+0457         
+0458         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'AutoScaleCorrAxis'</span>);
+0459 <span class="comment">%         mxfit = 0;</span>
+0460 <span class="comment">%         if ~isempty(COR(plane).ifit)</span>
+0461 <span class="comment">%             mxfit = max(abs(COR(plane).fit(:) + COR(plane).act(COR(plane).ifit)));</span>
+0462 <span class="comment">%         end</span>
+0463 <span class="comment">%</span>
+0464 <span class="comment">%         mxact = max(abs(COR(plane).act(COR(plane).status)));</span>
+0465 <span class="comment">%</span>
+0466 <span class="comment">%         ylim  = max(mxfit, mxact)*1.1;</span>
+0467 <span class="comment">%</span>
+0468 <span class="comment">%         if strcmpi(COR(plane).units,'Physics') == 1</span>
+0469 <span class="comment">%             fact = COR(plane).hw2physics;</span>
+0470 <span class="comment">%         else</span>
+0471 <span class="comment">%             fact = 1;</span>
+0472 <span class="comment">%         end</span>
+0473 <span class="comment">%</span>
+0474 <span class="comment">%         ylim = ylim*fact;</span>
+0475 <span class="comment">%</span>
+0476 <span class="comment">%         %% Saturation @ 10 um</span>
+0477 <span class="comment">%         if ylim &lt; 0.01</span>
+0478 <span class="comment">%             ylim = 0.01;</span>
+0479 <span class="comment">%         end</span>
+0480 <span class="comment">%</span>
+0481 <span class="comment">%         set(SYS.ahcor,'YLim',ylim*[-1, 1]);</span>
+0482 
+0483         <span class="comment">%=============================================================</span>
+0484     <span class="keyword">case</span> <span class="string">'CorSelect'</span>                          <span class="comment">% *** CorSelect ***</span>
+0485         <span class="comment">%=============================================================</span>
+0486         <span class="comment">%used if mouse clicks anywhere in COR window</span>
+0487         cpa = get(SYS.ahcor,<span class="string">'CurrentPoint'</span>);
+0488         pos = cpa(1); <span class="comment">% current position</span>
+0489 
+0490         <span class="keyword">switch</span> SYS.xscale
+0491             <span class="keyword">case</span> <span class="string">'meter'</span>
+0492                 id = find(min(abs(COR(plane).s-pos)) == abs(COR(plane).s-pos));
+0493             <span class="keyword">case</span> <span class="string">'phase'</span>
+0494                 id = find(min(abs(COR(plane).phi-pos)) == abs(COR(plane).phi-pos));
+0495         <span class="keyword">end</span>
+0496 
+0497         COR(plane).id = id;
+0498 
+0499         setappdata(0,<span class="string">'COR'</span>,COR);
+0500 
+0501         c = COR(plane).hact(id,1);  <span class="comment">%...get handle</span>
+0502 
+0503         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ProcessCor'</span>,id,c);
+0504         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'CorBar'</span>);
+0505 
+0506         <span class="comment">%=============================================================</span>
+0507     <span class="keyword">case</span> <span class="string">'CorDown'</span>                              <span class="comment">% *** CorDown ***</span>
+0508         <span class="comment">%=============================================================</span>
+0509         c    = gcbo;
+0510         ctag = get(c,<span class="string">'tag'</span>);
+0511         id   = str2double(ctag(4:length(ctag))); <span class="comment">%strip off 'c/plane_' to get the cor index</span>
+0512         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ProcessCor'</span>,id,c);
+0513 
+0514         <span class="comment">%=============================================================</span>
+0515     <span class="keyword">case</span> <span class="string">'ProcessCor'</span>                           <span class="comment">% *** ProcessCor ***</span>
+0516         <span class="comment">%=============================================================</span>
+0517         <span class="comment">%This function is activated whenever the left mouse button is pressed inside a BPM patch.</span>
+0518         <span class="comment">%It sets up corfig to interpret movement of the mouse and also puts data about the</span>
+0519         <span class="comment">%particular cor into the text fields.</span>
+0520 
+0521         <span class="comment">%identify COR handle and number</span>
+0522         id = varargin{1}; <span class="comment">%corrector index 'id' comes through varargin</span>
+0523         c  = varargin{2}; <span class="comment">%bpm handle 'c' comes through varargin</span>
+0524         <span class="comment">%c = gcbo;</span>
+0525         <span class="comment">%cortag = get(c,'tag');</span>
+0526         <span class="comment">%id = str2num(cortag(2:length(cortag)));         %strip off 'c' to get the cor index</span>
+0527 
+0528         <span class="keyword">if</span> COR(plane).mode == 1   <span class="comment">%Correctors in toggle mode</span>
+0529             first = 0;
+0530             <span class="keyword">if</span> isempty(COR(plane).ifit)       <span class="comment">%no CORs chosen</span>
+0531                 COR(plane).ifit(1) = id;
+0532                 set(c,<span class="string">'MarkerFaceColor'</span>,<span class="string">'g'</span>); <span class="comment">%add to fit list</span>
+0533                 first = 1;
+0534                 setappdata(0,<span class="string">'COR'</span>,COR);
+0535             <span class="keyword">end</span>
+0536 
+0537             <span class="keyword">if</span> ~isempty(find(COR(plane).ifit == id,1)) &amp;&amp; first == 0  <span class="comment">%presently selected for fit</span>
+0538                 set(c,<span class="string">'MarkerFaceColor'</span>,<span class="string">'y'</span>);
+0539                 COR(plane).ifit(find(COR(plane).ifit == id)) = 0;  <span class="comment">%set fit vector to zero</span>
+0540                 COR(plane).ifit = COR(plane).ifit(find(COR(plane).ifit)); <span class="comment">% compress data</span>
+0541 <span class="comment">%                 nfit = length(COR(plane).ifit);         %compute vector length used ???</span>
+0542                 setappdata(0,<span class="string">'COR'</span>,COR);
+0543 
+0544             <span class="keyword">elseif</span> isempty(find(COR(plane).ifit == id,1)) &amp;&amp; <span class="keyword">...</span>
+0545                     ~isempty(find(COR(plane).avail == id, 1))
+0546                 <span class="comment">%Corrector added to OK for fit</span>
+0547                 <span class="comment">%elseif ~isempty(find(COR(plane).avail==id))  %corrector is available</span>
+0548                 set(c,<span class="string">'MarkerFaceColor'</span>,<span class="string">'g'</span>);                 
+0549                 t = COR(plane).ifit; 
+0550                 t = t(find(t));       <span class="comment">% number 1 to 56 out of 120 for instance</span>
+0551                 t = sort([t; id]);    <span class="comment">% add to fit list</span>
+0552                 COR(plane).ifit = t;  <span class="comment">% updated corrector list for fit</span>
+0553 <span class="comment">%                 nfit            = length(COR(plane).ifit); % used ???</span>
+0554                 setappdata(0,<span class="string">'COR'</span>,COR); 
+0555             <span class="keyword">end</span>
+0556 
+0557             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0558         <span class="keyword">else</span>
+0559             <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'UpdateCorBox'</span>);
+0560         <span class="keyword">end</span>    <span class="comment">%end toggle mode condition</span>
+0561 
+0562         set(orbfig,<span class="string">'WindowButtonUpFcn'</span>,<span class="string">'corgui(''Up'')'</span>);
+0563 
+0564         <span class="comment">%update response matrix column plot</span>
+0565         <span class="keyword">if</span> strcmpi(RSP(plane).disp(1:3), <span class="string">'off'</span>)     <span class="comment">%Response display mode</span>
+0566             set(SYS.lhrsp,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0567         <span class="keyword">else</span>
+0568             <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotResp'</span>);                            <span class="comment">%plot matrix column vector</span>
+0569         <span class="keyword">end</span>
+0570 
+0571         <span class="comment">%=============================================================</span>
+0572     <span class="keyword">case</span> <span class="string">'CorBar'</span>                              <span class="comment">% *** CorBar ***</span>
+0573         <span class="comment">%=============================================================</span>
+0574         <span class="comment">%move black line in window to indicate selection</span>
+0575         id   = COR(plane).id;
+0576         ylim = get(SYS.ahcor,<span class="string">'YLim'</span>);
+0577 
+0578 
+0579         <span class="keyword">if</span> isempty(find(COR(plane).status == id, 1))
+0580             yd = ylim/4;
+0581         <span class="keyword">else</span>
+0582             yd = COR(plane).act(id) + ylim/4;
+0583         <span class="keyword">end</span>
+0584 
+0585 
+0586         xd = <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'GetAbscissa'</span>,SYS,<span class="string">'COR'</span>);  <span class="comment">%horizontal coordinates for plotting</span>
+0587         xd = [xd(id) xd(id) + 0.001];
+0588 
+0589         set(SYS.lhcid,<span class="string">'XData'</span>,xd,<span class="string">'YData'</span>,yd);
+0590 
+0591         <span class="comment">%=============================================================</span>
+0592     <span class="keyword">case</span> <span class="string">'UpdateCorBox'</span>                     <span class="comment">% *** UpdateCorBox ***</span>
+0593         <span class="comment">%=============================================================</span>
+0594         <span class="comment">%update UpdateCorBox</span>
+0595         <span class="comment">%called from orbgui(RefreshOrbGUI), corgui(UpdateCorrs),</span>
+0596         id = COR(plane).id;
+0597         <span class="comment">%put fit value in offset box and in request box</span>
+0598         fitindx = [];
+0599         <span class="keyword">if</span> ~isempty(COR(plane).ifit) 
+0600             fitindx = find(COR(plane).ifit == id); 
+0601         <span class="keyword">end</span>
+0602 
+0603         <span class="keyword">if</span> ~isempty(fitindx)
+0604             offset  = COR(plane).fit(fitindx);
+0605             request = COR(plane).act(id)+offset;
+0606         <span class="keyword">else</span>
+0607             offset  = 0.0;
+0608             request = COR(plane).act(id);
+0609         <span class="keyword">end</span>
+0610 
+0611         <span class="comment">% mean val</span>
+0612         meanV = mean(COR(plane).act(COR(plane).status));
+0613         <span class="comment">% rms val</span>
+0614         sigma = std(COR(plane).act(COR(plane).status));
+0615         
+0616         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'CorBox'</span>,COR(plane).name(id,:),COR(plane).act(id),<span class="keyword">...</span>
+0617             COR(plane).save(id),offset,request,<span class="keyword">...</span>
+0618             meanV,sigma,id);
+0619 
+0620         <span class="comment">%=============================================================</span>
+0621     <span class="keyword">case</span> <span class="string">'CorBox'</span>                            <span class="comment">% *** CorBox ***</span>
+0622         <span class="comment">%=============================================================</span>
+0623         <span class="comment">%called from</span>
+0624         <span class="comment">%corgui('CorBox',COR(plane).name(id,:),COR(plane).act(id),...</span>
+0625         <span class="comment">%                COR(plane).ref(id),id);</span>
+0626         corname   = SYS.corname;
+0627         actual    = SYS.coract;
+0628         reference = SYS.corref;
+0629         offset    = SYS.coroffset;
+0630         request   = SYS.correq;
+0631         rmsval    = SYS.cormean;
+0632         meanval   = SYS.corrms;
+0633 
+0634         name = varargin{1};
+0635         act  = varargin{2};
+0636         ref  = varargin{3};
+0637         off  = varargin{4};
+0638         req  = varargin{5};
+0639         rms  = varargin{6};
+0640         meanV= varargin{7};
+0641         id   = varargin{8};
+0642 
+0643         <span class="keyword">if</span> strcmpi(COR(plane).units,<span class="string">'Physics'</span>) == 1
+0644             fact = COR(plane).hw2physics;
+0645         <span class="keyword">else</span>
+0646             fact = 1;
+0647         <span class="keyword">end</span>
+0648             
+0649         <span class="comment">% conversion in device list</span>
+0650         dev = elem2dev(COR(plane).AOFamily,id);
+0651         
+0652         set(corname,  <span class="string">'String'</span>,[name <span class="string">'  ['</span>,num2str(dev(1)),<span class="string">' '</span>, <span class="keyword">...</span>
+0653             num2str(dev(2)),<span class="string">']'</span>]);
+0654         set(actual,   <span class="string">'String'</span>,num2str(act*fact,   <span class="string">'%6.3f'</span>));
+0655         set(reference,<span class="string">'String'</span>,num2str(ref*fact,   <span class="string">'%6.3f'</span>));
+0656         set(offset,   <span class="string">'String'</span>,num2str(off*fact,   <span class="string">'%6.3f'</span>));
+0657         set(meanval,  <span class="string">'String'</span>,num2str(meanV*fact, <span class="string">'%6.3f'</span>));
+0658         set(rmsval,   <span class="string">'String'</span>,num2str(rms*fact,   <span class="string">'%6.3f'</span>));
+0659         set(request,  <span class="string">'String'</span>,num2str(req*fact,   <span class="string">'%6.3f'</span>));
+0660 
+0661         <span class="comment">%=============================================================</span>
+0662     <span class="keyword">case</span> <span class="string">'Up'</span>                                  <span class="comment">% *** Up ***</span>
+0663         <span class="comment">%=============================================================</span>
+0664         <span class="comment">%once the mouse button is let up, don't respond to motion any more.</span>
+0665 
+0666         set(orbfig,<span class="string">'WindowButtonMotionFcn'</span>,<span class="string">''</span>,<span class="string">'WindowButtonUpFcn'</span>,<span class="string">''</span>);
+0667 
+0668         <span class="comment">%=============================================================</span>
+0669     <span class="keyword">case</span> <span class="string">'CORmove'</span>                      <span class="comment">% *** CORmove ***</span>
+0670         <span class="comment">%=============================================================</span>
+0671         <span class="comment">%empty for now: can't drag correctors</span>
+0672         <span class="keyword">return</span>;
+0673         
+0674         <span class="comment">%=============================================================</span>
+0675     <span class="keyword">case</span> <span class="string">'SelectAll'</span>                           <span class="comment">% *** SelectAll ***</span>
+0676         <span class="comment">%============================================================</span>
+0677         <span class="comment">%load all available correctors into ifit field</span>
+0678         COR(plane).ifit = [];
+0679         
+0680         set(COR(plane).hact(COR(plane).avail,1),<span class="string">'MarkerFaceColor'</span>,<span class="string">'g'</span>);
+0681         vavail = 1:length(COR(plane).avail);
+0682         COR(plane).ifit(vavail) = COR(plane).avail;
+0683         
+0684 <span class="comment">%         for kk = 1:length(COR(plane).avail)</span>
+0685 <span class="comment">%             k  = COR(plane).avail(kk);</span>
+0686 <span class="comment">%             h1 = COR(plane).hact(k,1);  %k,1 is the icon</span>
+0687 <span class="comment">%             set(h1,'MarkerFaceColor','g');</span>
+0688 <span class="comment">%             COR(plane).ifit(kk)=k;</span>
+0689 <span class="comment">%         end</span>
+0690 
+0691         COR(plane).ifit = COR(plane).ifit(:);
+0692         setappdata(0,<span class="string">'COR'</span>,COR);
+0693 
+0694         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'ClearFit'</span>); <span class="comment">%be sure to remove residual red corrector bars</span>
+0695         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0696 
+0697         <span class="comment">%=============================================================</span>
+0698     <span class="keyword">case</span> <span class="string">'SelectNone'</span>                           <span class="comment">% *** SelectNone ***</span>
+0699         <span class="comment">%=============================================================</span>
+0700         COR(plane).ifit = [];
+0701         COR(plane).fit  = [];
+0702 
+0703         set(COR(plane).hact(COR(plane).avail,1),<span class="string">'MarkerFaceColor'</span>,<span class="string">'y'</span>);
+0704         
+0705 <span class="comment">%         for kk = 1:length(COR(plane).avail)</span>
+0706 <span class="comment">%             k  = COR(plane).avail(kk);</span>
+0707 <span class="comment">%             h1 = COR(plane).hact(k,1);  %k,1 is the icon</span>
+0708 <span class="comment">%             set(h1,'MarkerFaceColor','y');</span>
+0709 <span class="comment">%         end</span>
+0710 
+0711         setappdata(0,<span class="string">'COR'</span>,COR);
+0712 
+0713         RSP(plane).nsvd   = 1;
+0714         RSP(plane).nsvdmax = 1;
+0715         setappdata(0,<span class="string">'RSP'</span>,RSP);
+0716 
+0717         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0718         <span class="comment">%respgui('FitOff',num2str(plane));</span>
+0719 
+0720         <span class="comment">%==========================================================</span>
+0721     <span class="keyword">case</span> <span class="string">'ToggleCor'</span>                              <span class="comment">%  ToggleCor</span>
+0722         <span class="comment">%==========================================================</span>
+0723         h1  = SYS.togglecor;
+0724         val = get(h1,<span class="string">'Value'</span>);
+0725         <span class="keyword">if</span> val == 0                        <span class="comment">%radio was on, push turned off</span>
+0726             COR(plane).mode = 0;               <span class="comment">%'0' for display</span>
+0727         <span class="keyword">elseif</span> val == 1                    <span class="comment">%radio was off, push turned on</span>
+0728             COR(plane).mode = 1;               <span class="comment">%'1' for toggle</span>
+0729         <span class="keyword">end</span>
+0730         setappdata(0,<span class="string">'COR'</span>,COR);
+0731 
+0732         <span class="comment">%==========================================================</span>
+0733     <span class="keyword">case</span> <span class="string">'ShowResp'</span>                       <span class="comment">%  ShowResp</span>
+0734         <span class="comment">%==========================================================</span>
+0735         <span class="comment">%toggle the 'showresp' flag to display columns of response matrix</span>
+0736         <span class="comment">%plotting in bpmgui('PlotResp')</span>
+0737 
+0738         <span class="comment">%first make sure eigenvector display is off</span>
+0739         val = get(SYS.showeig,<span class="string">'Checked'</span>);
+0740         <span class="keyword">if</span> strcmpi(val,<span class="string">'On'</span>)                        <span class="comment">%radio on, turn off</span>
+0741 <span class="comment">%             RSP(plane).eig = 'off';</span>
+0742             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0743             set(SYS.lheig,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0744             set(SYS.showeig,<span class="string">'Checked'</span>,<span class="string">'Off'</span>);
+0745         <span class="keyword">end</span>
+0746 
+0747         val = get(SYS.showresp,<span class="string">'Checked'</span>);
+0748         <span class="comment">%RSP=getappdata(0,'RSP');</span>
+0749         <span class="keyword">if</span> strcmpi(val,<span class="string">'on'</span>)                       <span class="comment">%radio was on, push turned off</span>
+0750 <span class="comment">%             RSP(plane).disp = 'off';</span>
+0751             set(SYS.lhrsp,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0752             set(SYS.showresp,<span class="string">'Checked'</span>,<span class="string">'Off'</span>);
+0753         <span class="keyword">elseif</span> strcmpi(val,<span class="string">'off'</span>)                    <span class="comment">%radio was off, push turned on</span>
+0754 <span class="comment">%             RSP(plane).disp = 'on';</span>
+0755             setappdata(0,<span class="string">'RSP'</span>,RSP);
+0756             <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotResp'</span>);
+0757             set(SYS.showresp,<span class="string">'Checked'</span>,<span class="string">'On'</span>);
+0758         <span class="keyword">end</span>
+0759 
+0760         <span class="comment">%==========================================================</span>
+0761     <span class="keyword">case</span> <span class="string">'ShowEig'</span>                       <span class="comment">%  ShowEig</span>
+0762         <span class="comment">%==========================================================</span>
+0763         <span class="comment">%toggle state to show eigenvectors</span>
+0764         <span class="comment">%first make sure response matrix display is off</span>
+0765 
+0766         val = get(SYS.showresp,<span class="string">'Checked'</span>);
+0767         <span class="keyword">if</span> strcmpi(val, <span class="string">'On'</span>)                   <span class="comment">%radio on, turn off</span>
+0768             RSP(plane).disp = <span class="string">'off'</span>;
+0769             set(SYS.lhrsp,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0770             set(SYS.showresp,<span class="string">'Checked'</span>,<span class="string">'Off'</span>);
+0771         <span class="keyword">end</span>
+0772 
+0773         val = get(SYS.showeig,<span class="string">'Checked'</span>);
+0774         <span class="keyword">if</span> strcmpi(val, <span class="string">'On'</span>)                       <span class="comment">%radio was on, push turned off</span>
+0775 <span class="comment">%             RSP(plane).eig = 'off';</span>
+0776             set(SYS.lheig,<span class="string">'XData'</span>,[],<span class="string">'YData'</span>,[]);
+0777             set(SYS.showeig,<span class="string">'Checked'</span>,<span class="string">'Off'</span>);
+0778         <span class="keyword">elseif</span> strcmpi(val, <span class="string">'Off'</span>)                    <span class="comment">%radio was off, push turned on</span>
+0779 <span class="comment">%             RSP(plane).eig = 'on';</span>
+0780             <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'PlotEig'</span>);
+0781             set(SYS.showeig,<span class="string">'Checked'</span>,<span class="string">'On'</span>);
+0782         <span class="keyword">end</span>
+0783 
+0784         <span class="comment">%===========================================================</span>
+0785     <span class="keyword">case</span> <span class="string">'SaveCors'</span>                          <span class="comment">%*** SaveCors ***</span>
+0786         <span class="comment">%===========================================================</span>
+0787         <span class="comment">%Save Corrector Readbacks for RESET button</span>
+0788         plane = varargin{1};
+0789 
+0790         <span class="comment">% Corrector magnet part</span>
+0791               
+0792         <span class="comment">% Read true values for want all correctors</span>
+0793         val    = getsp(COR(plane).AOFamily, SYS.mode);
+0794         status = COR(plane).status;
+0795         COR(plane).save(status) = val;
+0796         
+0797         <span class="comment">% Set corrector save flag</span>
+0798         COR(plane).saveflag = 1;
+0799 
+0800         setappdata(0,<span class="string">'COR'</span>,COR);
+0801         
+0802         <span class="comment">% RF part</span>
+0803         SYS.rfsave = getrf(SYS.mode);
+0804         SYS.rfsaveflag = 1;
+0805         
+0806         setappdata(0,<span class="string">'SYS'</span>,SYS);
+0807         
+0808         <span class="comment">%update corrector display</span>
+0809         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'UpdateCorBox'</span>);
+0810 
+0811         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">' Corrector and RF saved for plane: '</span> num2str(plane)]);
+0812 
+0813         <span class="comment">%===========================================================</span>
+0814     <span class="keyword">case</span> <span class="string">'RestoreCors'</span>                    <span class="comment">%*** RestoreCors ***</span>
+0815         <span class="comment">%===========================================================</span>
+0816         <span class="comment">%restore correctors to saved values</span>
+0817         <span class="keyword">if</span> ~COR(plane).saveflag || ~SYS.rfsaveflag
+0818             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">' Corrector pattern not saved for plane: '</span> <span class="keyword">...</span>
+0819                 num2str(plane)]);
+0820             <span class="keyword">return</span>
+0821         <span class="keyword">end</span>
+0822 
+0823         <span class="keyword">if</span> COR(plane).saveflag <span class="comment">% Corrector magnet</span>
+0824             <span class="comment">%Get saved corrector values</span>
+0825             val    = COR(plane).save;
+0826             status = COR(plane).status;
+0827 
+0828             <span class="comment">% set back coorector values</span>
+0829             setsp(COR(plane).AOFamily, val(status), status, SYS.mode);
+0830 
+0831             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,[<span class="string">' Corrector pattern restored for plane: '</span> num2str(plane)]);
+0832         <span class="keyword">end</span>
+0833         
+0834         <span class="keyword">if</span> SYS.rfsaveflag <span class="comment">% RF part</span>
+0835             setrf(SYS.rfsave, SYS.mode);
+0836             <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'LBox'</span>,<span class="string">'RF frequency restored '</span>);
+0837         <span class="keyword">end</span>
+0838             
+0839         <span class="comment">%% Update gui</span>
+0840         <a href="bpmgui.html" class="code" title="function bpmgui(action, varargin)">bpmgui</a>(<span class="string">'GetAct'</span>);
+0841         <a href="corgui.html" class="code" title="function corgui(action, varargin)">corgui</a>(<span class="string">'GetAct'</span>);
+0842         <a href="orbgui.html" class="code" title="function varargout = orbgui(action, varargin)">orbgui</a>(<span class="string">'RefreshOrbGUI'</span>);
+0843 
+0844 <span class="comment">%         %==============================================================</span>
+0845 <span class="comment">%     case 'MakeOrbitSlider'                       %  MakeOrbitSlider</span>
+0846 <span class="comment">%         %==============================================================</span>
+0847 <span class="comment">%         %figure to create bump sliders and/or write files</span>
+0848 <span class="comment">%</span>
+0849 <span class="comment">%         [screen_wide, screen_high]=screensizecm;</span>
+0850 <span class="comment">%         fig_start = [0.4*screen_wide 0.5*screen_high];</span>
+0851 <span class="comment">%         fig_size  = [0.4*screen_wide 0.25*screen_high];</span>
+0852 <span class="comment">%</span>
+0853 <span class="comment">%         h = findobj(0,'tag','makeorbitslider');</span>
+0854 <span class="comment">%         if ~isempty(h)</span>
+0855 <span class="comment">%             delete(h);</span>
+0856 <span class="comment">%         end</span>
+0857 <span class="comment">%</span>
+0858 <span class="comment">%         if SYS.plane==1</span>
+0859 <span class="comment">%             planestr = 'Horizontal ';</span>
+0860 <span class="comment">%         else</span>
+0861 <span class="comment">%             planestr = 'Vertical';</span>
+0862 <span class="comment">%         end</span>
+0863 <span class="comment">%</span>
+0864 <span class="comment">%         figh = figure('units','centimeters',...                %...Figure</span>
+0865 <span class="comment">%             'Position',[fig_start fig_size],'tag','makeorbitslider',...</span>
+0866 <span class="comment">%             'NumberTitle','off','Doublebuffer','on','Visible','On','Name',[planestr 'corrector bump panel'],...</span>
+0867 <span class="comment">%             'PaperPositionMode','Auto','MenuBar','None');</span>
+0868 <span class="comment">%         %------------------------------------------------------------------</span>
+0869 <span class="comment">%         path     = getfamilydata('Directory','BumpData');</span>
+0870 <span class="comment">%         filename = appendtimestamp('bump', clock);</span>
+0871 <span class="comment">%</span>
+0872 <span class="comment">%         uicontrol('Style','Text',...                           %...Header</span>
+0873 <span class="comment">%             'units', 'normalize', ...</span>
+0874 <span class="comment">%             'Position', [.02 .8 .12 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0875 <span class="comment">%             'String','Header:','ToolTipString','Name of slider in gui display',...</span>
+0876 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0877 <span class="comment">%</span>
+0878 <span class="comment">%         SYS.bumpheader=uicontrol('Style','Edit',...       %...Header</span>
+0879 <span class="comment">%             'units', 'normalize', ...</span>
+0880 <span class="comment">%             'Position', [.2 .8 .4 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0881 <span class="comment">%             'String','Bump','ToolTipString','Name of slider in gui display',...</span>
+0882 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0883 <span class="comment">%</span>
+0884 <span class="comment">%         uicontrol('Style','Text',...                           %...File Name</span>
+0885 <span class="comment">%             'units', 'normalize', ...</span>
+0886 <span class="comment">%             'Position', [.02 .7 .12 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0887 <span class="comment">%             'String','File Name:','ToolTipString','Name of file written to disk',...</span>
+0888 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0889 <span class="comment">%</span>
+0890 <span class="comment">%         SYS.bumpfile=uicontrol('Style','Edit',...      %...File Name</span>
+0891 <span class="comment">%             'units', 'normalize', ...</span>
+0892 <span class="comment">%             'Position', [.2 .7 .5 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0893 <span class="comment">%             'String',filename,'ToolTipString','Name of file written to disk',...</span>
+0894 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0895 <span class="comment">%</span>
+0896 <span class="comment">%         uicontrol('Style','Text',...                          %...Save Directory</span>
+0897 <span class="comment">%             'units', 'normalize', ...</span>
+0898 <span class="comment">%             'Position', [.02 .6 .12 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0899 <span class="comment">%             'String','File Path','ToolTipString','Path of file written to disk',...</span>
+0900 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0901 <span class="comment">%</span>
+0902 <span class="comment">%         SYS.bumppath=uicontrol('Style','Edit',...      %...Save Directory</span>
+0903 <span class="comment">%             'units', 'normalize', ...</span>
+0904 <span class="comment">%             'Position', [.2 .6 .8 .08],'ForeGroundColor','k','HorizontalAlignment','Left',...</span>
+0905 <span class="comment">%             'String',path,'ToolTipString','Path of file written to disk',...</span>
+0906 <span class="comment">%             'FontSize',8,'FontWeight','demi');</span>
+0907 <span class="comment">%</span>
+0908 <span class="comment">%         uicontrol('Style','pushbutton',...                      %...Save Command</span>
+0909 <span class="comment">%             'units', 'normalize', ...</span>
+0910 <span class="comment">%             'Position', [.2 .3 .3 .1],'ForeGroundColor','k',...</span>
+0911 <span class="comment">%             'String','Save file','ToolTipString','Write bump file to disk (do not launch slider)',...</span>
+0912 <span class="comment">%             'FontSize',8,'FontWeight','demi','Callback',['corgui(''WriteBumpFile'');', 'close(''gcf'')']);</span>
+0913 <span class="comment">%</span>
+0914 <span class="comment">%         uicontrol('Style','pushbutton',...                      %...Save &amp; Launch Command</span>
+0915 <span class="comment">%             'units', 'normalize', ...</span>
+0916 <span class="comment">%             'Position', [.6 .3 .3 .1],'ForeGroundColor','k',...</span>
+0917 <span class="comment">%             'String','Save file/Launch Slider','ToolTipString','Write bump file to disk and launch slider',...</span>
+0918 <span class="comment">%             'FontSize',8,'FontWeight','demi','Callback','corgui(''LaunchBumpSlider'')');</span>
+0919 <span class="comment">%</span>
+0920 <span class="comment">%         uicontrol('Style','pushbutton',...                      %...cancel</span>
+0921 <span class="comment">%             'units', 'normalize','Position', [.8 .08 .1 .1],'ForeGroundColor','k','String','cancel',...</span>
+0922 <span class="comment">%             'Callback','delete(gcf)','FontSize',8,'FontWeight','demi');</span>
+0923 <span class="comment">%</span>
+0924 <span class="comment">%         %==========================================================</span>
+0925 <span class="comment">%     case 'WriteBumpFile'             % *** WriteBumpFile ***</span>
+0926 <span class="comment">%         %==========================================================</span>
+0927 <span class="comment">%         %call of MakeOrbitSlider</span>
+0928 <span class="comment">%         %call function WriteBumpFile with corrector strengths</span>
+0929 <span class="comment">%</span>
+0930 <span class="comment">%         if plane == 1</span>
+0931 <span class="comment">%             Family = HCORFamily;</span>
+0932 <span class="comment">%         elseif plane == 2</span>
+0933 <span class="comment">%             Family = VCORFamily;</span>
+0934 <span class="comment">%         end</span>
+0935 <span class="comment">%</span>
+0936 <span class="comment">%         pv    = common2tango(COR(plane).name(COR(plane).ifit,:),'Setpoint',Family);</span>
+0937 <span class="comment">%         delta = zeros(length(COR(plane).ifit),1);</span>
+0938 <span class="comment">%         for ii = 1:length(COR(plane).ifit)</span>
+0939 <span class="comment">%             jj          = COR(plane).ifit(ii);</span>
+0940 <span class="comment">%             delta(ii,1) = COR(plane).fit(ii)-COR(plane).act(jj);</span>
+0941 <span class="comment">%         end</span>
+0942 <span class="comment">%</span>
+0943 <span class="comment">%         header   = get(SYS.bumpheader,'String');</span>
+0944 <span class="comment">%         path     = get(SYS.bumppath,'String');</span>
+0945 <span class="comment">%         filename = get(SYS.bumpfile,'String');</span>
+0946 <span class="comment">%</span>
+0947 <span class="comment">%         if isempty(header)   header = 'slider'; end</span>
+0948 <span class="comment">%         if isempty(path) path = getfamilydata('Directory','BumpFiles'); end</span>
+0949 <span class="comment">%</span>
+0950 <span class="comment">%         set(SYS.bumppath,'String',path);       %update so launchbumpslider has correct path</span>
+0951 <span class="comment">%</span>
+0952 <span class="comment">%         if isempty(filename) filename = appendtimestamp('bump', clock);</span>
+0953 <span class="comment">%             if isempty(findstr(filename,'.m')) filename = [filename '.m']; end</span>
+0954 <span class="comment">%             set(SYS.bumpfile,'String',filename);   %update so launchbumpslider has correct filename</span>
+0955 <span class="comment">%         end</span>
+0956 <span class="comment">%</span>
+0957 <span class="comment">%         writebumpfile(pv,delta,header,path,filename);</span>
+0958 <span class="comment">%         orbgui('LBox',[' Bump File Created: ', filename]);</span>
+0959 <span class="comment">%</span>
+0960 <span class="comment">%         %==========================================================</span>
+0961 <span class="comment">%     case 'LaunchBumpSlider'             % *** LaunchBumpSlider ***</span>
+0962 <span class="comment">%         %==========================================================</span>
+0963 <span class="comment">%         %call of MakeOrbitSlider 'Save and Launch</span>
+0964 <span class="comment">%         %call function SingleSlider with corrector strengths</span>
+0965 <span class="comment">%</span>
+0966 <span class="comment">%         corgui('WriteBumpFile');    %first write file</span>
+0967 <span class="comment">%</span>
+0968 <span class="comment">%         header=  get(SYS.bumpheader,'String');</span>
+0969 <span class="comment">%         path=    get(SYS.bumppath,'String');</span>
+0970 <span class="comment">%         filename=get(SYS.bumpfile,'String');</span>
+0971 <span class="comment">%</span>
+0972 <span class="comment">%         if isempty(header)   header='slider'; end</span>
+0973 <span class="comment">%         if isempty(path)     path=getfamilydata('Directory','BumpFiles'); end</span>
+0974 <span class="comment">%         if isempty(filename) filename=appendtimestamp('bump', clock); end</span>
+0975 <span class="comment">%</span>
+0976 <span class="comment">%         setappdata(0,'SliderIndex',1);</span>
+0977 <span class="comment">%         setappdata(0,'SliderFigHandle',gcf);</span>
+0978 <span class="comment">%</span>
+0979 <span class="comment">%         singleslider(path,filename);</span>
+0980 
+0981 
+0982         <span class="comment">%==========================================================</span>
+0983     <span class="keyword">case</span> <span class="string">'CorEdit'</span>                                <span class="comment">%...CorEdit</span>
+0984         <span class="comment">%==========================================================</span>
+0985         <span class="comment">%The callback of the single corrector edit box (not implemented)</span>
+0986         <span class="comment">%</span>
+0987         h1 = SYS.corname;
+0988         <span class="keyword">if</span> ~isempty(get(h1,<span class="string">'String'</span>))
+0989             set(SYS.coredit,<span class="string">'String'</span>,num2str(0.0));
+0990             <span class="keyword">return</span>
+0991 
+0992         <span class="keyword">end</span>
+0993 
+0994         <span class="comment">%===========================================================</span>
+0995     <span class="keyword">case</span> <span class="string">'ShowCORState'</span>              <span class="comment">%*** ShowCORState ***</span>
+0996         <span class="comment">%===========================================================</span>
+0997 
+0998         <span class="comment">% Show =corrector settings</span>
+0999         
+1000         len = size(COR(plane).name,1);
+1001         tavail  = zeros(len,1);
+1002         tfit    = zeros(len,1);
+1003         tifit   = zeros(len,1);
+1004         tstatus = zeros(len,1);
+1005       
+1006         idx = intersect(COR(plane).avail,1:len);
+1007         tavail(idx) = idx;
+1008         idx = intersect(COR(plane).ifit,1:len);
+1009         tifit(idx) = idx;
+1010         tfit(idx) = COR(plane).fit;
+1011         idx = intersect(COR(plane).status,1:len);
+1012         tstatus(idx) = idx;
+1013   
+1014 <span class="comment">%         findx=1;</span>
+1015 <span class="comment">%         for ind=1:length(COR(plane).name)</span>
+1016 <span class="comment">%             if ~isempty(find(COR(plane).avail==ind)) tavail(ind)=ind;  end</span>
+1017 <span class="comment">%             if ~isempty(find(COR(plane).ifit==ind))</span>
+1018 <span class="comment">%                 tifit(ind)=ind;</span>
+1019 <span class="comment">%                 tfit(ind)=COR(plane).fit(findx);</span>
+1020 <span class="comment">%                 findx=findx+1;</span>
+1021 <span class="comment">%             end</span>
+1022 <span class="comment">%             if ~isempty(find(COR(plane).status==ind)) tstatus(ind)=ind;  end</span>
+1023 <span class="comment">%         end</span>
+1024 
+1025   <span class="comment">%%% BUILD UP CELL TO DISPLAY</span>
+1026         ivec = (1:len)';        
+1027         Strcell = cell(8,len);
+1028         Strcell(1,:) = num2cell(ivec);
+1029         Strcell(2,:) = cellstr(COR(plane).name(ivec,:))';
+1030         Strcell(3:<span class="keyword">end</span>,:) = num2cell([tstatus(ivec),tavail(ivec),tifit(ivec), <span class="keyword">...</span>
+1031             COR(plane).act(ivec),tfit(ivec),COR(plane).wt(ivec) ])';
+1032         
+1033         <span class="comment">%% Speed issue</span>
+1034         <span class="comment">%  see bpmgui('ShowBPMState') for more details</span>
+1035                      
+1036         filename = [SYS.localdata <span class="string">'cordata.txt'</span>];
+1037         fid = fopen(filename,<span class="string">'w'</span>);
+1038         fprintf(fid,<span class="string">'%s\n'</span>,<span class="string">'index   name     stat  avail ifit      act        fit       weight'</span>);
+1039         fprintf(fid,<span class="string">'%3d %10s %5d %5d %5d %10.3f %10.3f %10.3f\n'</span>, Strcell{:});
+1040         fclose(fid)
+1041 <span class="comment">%         edit 'cordata.txt'</span>
+1042         system([<span class="string">'nedit '</span>, filename, <span class="string">' &amp;'</span>]); <span class="comment">%much faster</span>
+1043         
+1044 <span class="comment">%         fprintf('%s\n','index name       stat  avail ifit      act        fit       weight');</span>
+1045 <span class="comment">%         for ind=1:length(COR(plane).name)</span>
+1046 <span class="comment">%             fprintf('%3d %10s %5d %5d %5d %10.3f %10.3f %10.3f\n',...</span>
+1047 <span class="comment">%                 ind, COR(plane).name(ind,:),...</span>
+1048 <span class="comment">%                 tstatus(ind),tavail(ind),tifit(ind),COR(plane).act(ind),tfit(ind),COR(plane).wt(ind));</span>
+1049 <span class="comment">%         end</span>
+1050 
+1051 <span class="comment">%         %==========================================================</span>
+1052 <span class="comment">%     case 'MeasureXResp'                  % *** MeasureXResp ***</span>
+1053 <span class="comment">%         %==========================================================</span>
+1054 <span class="comment">%         %callback of the 'Measure X-Response' menu selection</span>
+1055 <span class="comment">%</span>
+1056 <span class="comment">%         orbitfiginvisible;</span>
+1057 <span class="comment">%</span>
+1058 <span class="comment">%         disp('Orbit gui visibility turned off while response matrix measurement in progress');</span>
+1059 <span class="comment">%         disp(['To re-activate, issue command :  ', 'OrbitFigVisible']);</span>
+1060 <span class="comment">%</span>
+1061 <span class="comment">%         % acquire initial orbit</span>
+1062 <span class="comment">%         disp('   Acquiring initial orbit')</span>
+1063 <span class="comment">%         Xorb                = getx('struct');</span>
+1064 <span class="comment">%         Xorb.DataDescriptor = 'ResponseMatrixReference';</span>
+1065 <span class="comment">%         Zorb                = getz('struct');</span>
+1066 <span class="comment">%         Zorb.DataDescriptor = 'ResponseMatrixReference';</span>
+1067 <span class="comment">%</span>
+1068 <span class="comment">%         %acquire machine configuration</span>
+1069 <span class="comment">%         disp('   Acquiring machine configuration')</span>
+1070 <span class="comment">%         machineconfig = getmachineconfig;</span>
+1071 <span class="comment">%</span>
+1072 <span class="comment">%         ad = getad;</span>
+1073 <span class="comment">%</span>
+1074 <span class="comment">%         xbpms = BPM(1).status;</span>
+1075 <span class="comment">%         ybpms = BPM(2).status;</span>
+1076 <span class="comment">%</span>
+1077 <span class="comment">%         xcors = COR(1).status;</span>
+1078 <span class="comment">%         xkick = COR(1).ebpm(xcors);</span>
+1079 <span class="comment">%</span>
+1080 <span class="comment">%         WaitFlag   = ad.BPMDelay;</span>
+1081 <span class="comment">%         ExtraDelay = 0;</span>
+1082 <span class="comment">%</span>
+1083 <span class="comment">%         disp('   *** Begin measuring horizontal response matrix ***');</span>
+1084 <span class="comment">%         mat = measrespmat({BPMxFamily,BPMzFamily},{xbpms,ybpms},HCORFamily, ...</span>
+1085 <span class="comment">%             xcors,xkick,'bipolar',WaitFlag,ExtraDelay,'struct');</span>
+1086 <span class="comment">%</span>
+1087 <span class="comment">%         % Make a response matrix array</span>
+1088 <span class="comment">%         Rmat(1,1) = mat{1};  % xx</span>
+1089 <span class="comment">%         Rmat(2,1) = mat{2};  % zx</span>
+1090 <span class="comment">%</span>
+1091 <span class="comment">%         %load xx data</span>
+1092 <span class="comment">%         Rmat(1,1).NaNData              = zeros(size(getlist(BPMxFamily,0),1), ...</span>
+1093 <span class="comment">%             size(getlist(HCORFamily,0),1));</span>
+1094 <span class="comment">%         Rmat(1,1).NaNData(:)           = deal(NaN);</span>
+1095 <span class="comment">%         Rmat(1,1).NaNData(xbpms,xcors) = mat{1}.Data;     %Kick x, look x</span>
+1096 <span class="comment">%         %</span>
+1097 <span class="comment">%         %load zx data</span>
+1098 <span class="comment">%         Rmat(2,1).NaNData              = zeros(size(getlist(BPMzFamily,0),1), ...</span>
+1099 <span class="comment">%             size(getlist(HCORFamily,0),1));</span>
+1100 <span class="comment">%         Rmat(2,1).NaNData(:)           = deal(NaN);</span>
+1101 <span class="comment">%         Rmat(2,1).NaNData(ybpms,xcors) = mat{2}.Data;     %Kick x, look z</span>
+1102 <span class="comment">%</span>
+1103 <span class="comment">%         for ii = 1:2</span>
+1104 <span class="comment">%             Rmat(ii,1).X              = Xorb;</span>
+1105 <span class="comment">%             Rmat(ii,1).Y              = Zorb;</span>
+1106 <span class="comment">%             Rmat(ii,1).MachineConfig  = machineconfig;</span>
+1107 <span class="comment">%         end</span>
+1108 <span class="comment">%         Rmat(1,1).Monitor.DataDescriptor  = 'Horizontal Orbit';</span>
+1109 <span class="comment">%         Rmat(1,1).Actuator.DataDescriptor = 'Horizontal Correctors';</span>
+1110 <span class="comment">%         Rmat(2,1).Monitor.DataDescriptor  = 'Vertical Orbit';</span>
+1111 <span class="comment">%         Rmat(2,1).Actuator.DataDescriptor = 'Horizontal Correctors';</span>
+1112 <span class="comment">%</span>
+1113 <span class="comment">%         RSP(1) = response2rsp(Rmat(1,1),RSP(1),1);</span>
+1114 <span class="comment">%</span>
+1115 <span class="comment">%         orbitfigvisible;</span>
+1116 <span class="comment">%</span>
+1117 <span class="comment">%         BPM = SortBPMs(BPM,RSP);</span>
+1118 <span class="comment">%         COR = SortCORs(COR,RSP);</span>
+1119 <span class="comment">%         orbgui('RefreshOrbGUI');</span>
+1120 <span class="comment">%</span>
+1121 <span class="comment">%         orbgui('LBox',' Finished measuring horizontal eBPM response matrix');</span>
+1122 <span class="comment">%</span>
+1123 <span class="comment">%         %==========================================================</span>
+1124 <span class="comment">%     case 'MeasureZResp'                  % *** MeasureZResp ***</span>
+1125 <span class="comment">%         %==========================================================</span>
+1126 <span class="comment">%</span>
+1127 <span class="comment">%         %callback of the 'Measure Z-Response' menu selection</span>
+1128 <span class="comment">%</span>
+1129 <span class="comment">%         orbitfiginvisible;</span>
+1130 <span class="comment">%</span>
+1131 <span class="comment">%         disp('Orbit gui visibility turned off while response matrix measurement in progress');</span>
+1132 <span class="comment">%         disp(['To re-activate, issue command :  ', 'OrbitFigVisible']);</span>
+1133 <span class="comment">%</span>
+1134 <span class="comment">%         % acquire initial orbit</span>
+1135 <span class="comment">%         disp('   Acquiring initial orbit')</span>
+1136 <span class="comment">%         Xorb                = getx('struct');</span>
+1137 <span class="comment">%         Xorb.DataDescriptor = 'ResponseMatrixReference';</span>
+1138 <span class="comment">%         Zorb                = getz('struct');</span>
+1139 <span class="comment">%         Zorb.DataDescriptor = 'ResponseMatrixReference';</span>
+1140 <span class="comment">%</span>
+1141 <span class="comment">%         %acquire machine configuration</span>
+1142 <span class="comment">%         disp('   Acquiring machine configuration')</span>
+1143 <span class="comment">%         machineconfig=getmachineconfig;</span>
+1144 <span class="comment">%</span>
+1145 <span class="comment">%         ad = getad;</span>
+1146 <span class="comment">%</span>
+1147 <span class="comment">%         xbpms = BPM(1).status;</span>
+1148 <span class="comment">%         ybpms = BPM(2).status;</span>
+1149 <span class="comment">%</span>
+1150 <span class="comment">%         ycors = COR(2).status;</span>
+1151 <span class="comment">%         ykick = COR(2).ebpm(ycors);</span>
+1152 <span class="comment">%</span>
+1153 <span class="comment">%         WaitFlag   = 0;</span>
+1154 <span class="comment">%         ExtraDelay = ad.BPMDelay;</span>
+1155 <span class="comment">%</span>
+1156 <span class="comment">%         disp('   *** Begin measuring vertical response matrix ***');</span>
+1157 <span class="comment">%         mat = measrespmat({BPMxFamily,BPMzFamily},{xbpms,ybpms}, ...</span>
+1158 <span class="comment">%             VCORFamily,ycors,ykick,'bipolar',WaitFlag,ExtraDelay,'struct');</span>
+1159 <span class="comment">%</span>
+1160 <span class="comment">%         % Make a response matrix array</span>
+1161 <span class="comment">%         Rmat(1,2) = mat{1};  % zx</span>
+1162 <span class="comment">%         Rmat(2,2) = mat{2};  % zz</span>
+1163 <span class="comment">%</span>
+1164 <span class="comment">%         %load x-y data</span>
+1165 <span class="comment">%         Rmat(1,2).NaNData              = zeros(size(getlist(BPMzFamily,0),1), ...</span>
+1166 <span class="comment">%             size(getlist(VCORFamily,0),1));</span>
+1167 <span class="comment">%         Rmat(1,2).NaNData(:)           = deal(NaN);</span>
+1168 <span class="comment">%         Rmat(1,2).NaNData(xbpms,ycors) = mat{1}.Data;     %Kick x, look z</span>
+1169 <span class="comment">%</span>
+1170 <span class="comment">%         %load y-y data</span>
+1171 <span class="comment">%         Rmat(2,2).NaNData              = zeros(size(getlist(BPMxFamily,0),1), ...</span>
+1172 <span class="comment">%             size(getlist(VCORFamily,0),1));</span>
+1173 <span class="comment">%         Rmat(2,2).NaNData(:)           = deal(NaN);</span>
+1174 <span class="comment">%         Rmat(2,2).NaNData(xbpms,ycors) = mat{2}.Data;     %Kick z, look z</span>
+1175 <span class="comment">%         %</span>
+1176 <span class="comment">%         for ii = 1:2</span>
+1177 <span class="comment">%             Rmat(ii,2).X              = Xorb;</span>
+1178 <span class="comment">%             Rmat(ii,2).Y              = Zorb;</span>
+1179 <span class="comment">%             Rmat(ii,2).MachineConfig  = machineconfig;</span>
+1180 <span class="comment">%         end</span>
+1181 <span class="comment">%</span>
+1182 <span class="comment">%         Rmat(1,2).Monitor.DataDescriptor  = 'Horizontal Orbit';</span>
+1183 <span class="comment">%         Rmat(1,2).Actuator.DataDescriptor = 'Vertical Correctors';</span>
+1184 <span class="comment">%         Rmat(2,2).Monitor.DataDescriptor  = 'Vertical Orbit';</span>
+1185 <span class="comment">%         Rmat(2,2).Actuator.DataDescriptor = 'Vertical Correctors';</span>
+1186 <span class="comment">%</span>
+1187 <span class="comment">%         RSP(2) = response2rsp(Rmat(2,2),RSP(2),2);</span>
+1188 <span class="comment">%</span>
+1189 <span class="comment">%         orbitfigvisible;</span>
+1190 <span class="comment">%</span>
+1191 <span class="comment">%         BPM = SortBPMs(BPM,RSP);</span>
+1192 <span class="comment">%         COR = SortCORs(COR,RSP);</span>
+1193 <span class="comment">%         orbgui('RefreshOrbGUI');</span>
+1194 <span class="comment">%</span>
+1195 <span class="comment">%         orbgui('LBox',' Finished measuring vertical eBPM response matrix');</span>
+1196 
+1197         <span class="comment">%==========================================================</span>
+1198     <span class="keyword">otherwise</span>
+1199         disp([<span class="string">'Warning: no CASE found in corgui: '</span> action]);
+1200 
+1201 <span class="keyword">end</span>  <span class="comment">%end switchyard</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

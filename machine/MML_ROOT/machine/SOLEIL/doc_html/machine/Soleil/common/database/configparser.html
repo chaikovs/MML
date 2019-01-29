@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of configparser</title>
+  <meta name="keywords" content="configparser">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">database</a> &gt; configparser.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/database&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>configparser
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>	configparser_fn - Contructs a expression for TangoParser</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="keyword">return</span>;
+0002 disp(<span class="string">'A NE PAS EXECUTER'</span>);
+0003 error(<span class="string">'Laurent Nadolski'</span>);
+0004 
+0005 dbserver = <span class="string">'sys/database/2'</span>;
+0006 
+0007 <span class="comment">%% VIDE LT1</span>
+0008 
+0009 <span class="comment">%% declaration TANGO - A faire une seule fois</span>
+0010 <span class="comment">% Ajouter un device serveur et les devices associes</span>
+0011 className=<span class="string">'TangoParser'</span>;
+0012 deviceName=<span class="string">'LT1/VI/CALC-PI.1'</span>;
+0013 serverName=<span class="string">'tangoparser/LT1'</span>;
+0014 
+0015 argin = {serverName,deviceName,className};
+0016 tango_command_inout(dbserver,<span class="string">'DbAddDevice'</span>,argin)
+0017 
+0018 <span class="comment">% efface</span>
+0019 <span class="comment">%tango_command_inout(dbserver,'DbDeleteDevice',deviceName)</span>
+0020 
+0021 <span class="comment">% Lire une propriete d'un device</span>
+0022 <span class="comment">%tango_command_inout2(dbserver,'DbGetDeviceProperty',{deviceName, propertyName});</span>
+0023 
+0024 <span class="comment">% cree une propriete de device</span>
+0025 <span class="comment">% valeur somme pour les pressions</span>
+0026 propertyName = <span class="string">'AttributeNames'</span>;
+0027 tangoNames= family2tango(<span class="string">'PI'</span>);
+0028 <span class="comment">%%</span>
+0029 nb = length(tangoNames);
+0030 
+0031 <span class="comment">% build list of the type</span>
+0032 <span class="comment">% x1, attribute1</span>
+0033 <span class="comment">% x2, attribute2</span>
+0034 <span class="comment">% ...</span>
+0035 <span class="comment">% xn, attributen</span>
+0036 
+0037 <span class="keyword">for</span> k = 1:nb,
+0038     mapping{k} = [<span class="string">'x'</span>, num2str(k) <span class="string">','</span> tangoNames{k}]
+0039 <span class="keyword">end</span>
+0040 
+0041 argin = {deviceName, <span class="string">'1'</span>, propertyName, num2str(nb), mapping{:}};
+0042 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,argin);
+0043 
+0044 propertyName = <span class="string">'OutputNames'</span>;
+0045 nameValue = <span class="string">'meanPressure'</span>;
+0046 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,{deviceName, <span class="string">'1'</span>, propertyName, <span class="string">'1'</span>, nameValue});
+0047 
+0048 <span class="comment">%% 2 commands required</span>
+0049 <span class="comment">% init : fait bugger tout !!!!</span>
+0050 <span class="comment">%tango_command_inout2(deviceName,'Init');</span>
+0051 
+0052 <span class="comment">%% configuration expression</span>
+0053 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Mean'</span>,nb);
+0054 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue, stringExpression});
+0055 
+0056 
+0057 <span class="comment">%% LT1 correcteurs</span>
+0058 <span class="comment">%% declaration TANGO - A faire une seule fois</span>
+0059 <span class="comment">% Ajouter un device serveur et les devices associes</span>
+0060 className=<span class="string">'TangoParser'</span>;
+0061 deviceName=<span class="string">'LT1/AE/CALC-CV.1'</span>;
+0062 serverName=<span class="string">'tangoparser/LT1'</span>;
+0063 
+0064 argin = {serverName,deviceName,className};
+0065 tango_command_inout(dbserver,<span class="string">'DbAddDevice'</span>,argin)
+0066 
+0067 <span class="comment">% efface</span>
+0068 <span class="comment">%tango_command_inout(dbserver,'DbDeleteDevice',deviceName)</span>
+0069 
+0070 <span class="comment">% Lire une propriete d'un device</span>
+0071 <span class="comment">%tango_command_inout2(dbserver,'DbGetDeviceProperty',{deviceName, propertyName});</span>
+0072 
+0073 <span class="comment">% cree une propriete de device</span>
+0074 <span class="comment">% valeur somme pour les pressions</span>
+0075 propertyName = <span class="string">'AttributeNames'</span>;
+0076 tangoNames= family2tango(<span class="string">'CV'</span>);
+0077 <span class="comment">%%</span>
+0078 nb = length(tangoNames);
+0079 
+0080 <span class="comment">% build list of the type</span>
+0081 <span class="comment">% x1, attribute1</span>
+0082 <span class="comment">% x2, attribute2</span>
+0083 <span class="comment">% ...</span>
+0084 <span class="comment">% xn, attributen</span>
+0085 
+0086 mapping=[];
+0087 <span class="keyword">for</span> k = 1:nb,
+0088     mapping{k} = [<span class="string">'x'</span>, num2str(k) <span class="string">','</span> tangoNames{k}]
+0089 <span class="keyword">end</span>
+0090 
+0091 argin = {deviceName, <span class="string">'1'</span>, propertyName, num2str(nb), mapping{:}};
+0092 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,argin);
+0093 
+0094 propertyName = <span class="string">'OutputNames'</span>;
+0095 nameValue = {<span class="string">'meanCurrent'</span>,<span class="string">'rmsCurrent'</span>};
+0096 tango_command_inout2(dbserver,<span class="string">'DbPutDeviceProperty'</span>,{deviceName, <span class="string">'1'</span>, propertyName, <span class="string">'2'</span>, nameValue{:}});
+0097 
+0098 <span class="comment">%% 2 commands required</span>
+0099 <span class="comment">% init : fait bugger tout !!!!</span>
+0100 <span class="comment">%tango_command_inout2(deviceName,'Init');</span>
+0101 
+0102 <span class="comment">%% configuration expression</span>
+0103 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Mean'</span>,nb);
+0104 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{1}, stringExpression});
+0105 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Rms'</span>,nb);
+0106 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{2}, stringExpression});
+0107 
+0108 
+0109 <span class="comment">%% Reconfigure TOUT : bug sir tangoparser arr�er</span>
+0110 
+0111 deviceName=<span class="string">'LT1/VI/CALC-PI.1'</span>;
+0112 nameValue = <span class="string">'meanPressure'</span>; nb = 9;
+0113 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Mean'</span>,nb);
+0114 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue, stringExpression});
+0115 
+0116  
+0117 
+0118 deviceName=<span class="string">'LT1/AE/CALC-CH.1'</span>;
+0119 nameValue = {<span class="string">'meanCurrent'</span>,<span class="string">'rmsCurrent'</span>}; nb = 3;
+0120 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Mean'</span>,nb);
+0121 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{1}, stringExpression});
+0122 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Rms'</span>,nb);
+0123 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{2}, stringExpression});
+0124 
+0125 
+0126 deviceName=<span class="string">'LT1/AE/CALC-CV.1'</span>;
+0127 nameValue = {<span class="string">'meanCurrent'</span>,<span class="string">'rmsCurrent'</span>}; nb = 3;
+0128 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Mean'</span>,nb);
+0129 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{1}, stringExpression});
+0130 stringExpression = <a href="configparser_fn.html" class="code" title="function stringExpression = configparser_fn(functionName,nb)">configparser_fn</a>(<span class="string">'Rms'</span>,nb);
+0131 tango_command_inout2(deviceName,<span class="string">'SetExpression'</span>,{nameValue{2}, stringExpression});
+0132</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

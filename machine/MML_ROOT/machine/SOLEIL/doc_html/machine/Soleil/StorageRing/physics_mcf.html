@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of physics_mcf</title>
+  <meta name="keywords" content="physics_mcf">
+  <meta name="description" content="PHYSICS_MCF - Computes momentum compaction up to 3rd order">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="index.html">StorageRing</a> &gt; physics_mcf.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/StorageRing&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>physics_mcf
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>PHYSICS_MCF - Computes momentum compaction up to 3rd order</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [alpha1 alpha2 alpha3] = physics_mcf(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> PHYSICS_MCF - Computes momentum compaction up to 3rd order
+
+  INPUTS
+  1. Option Flag Display, NoDisplay
+
+  OUPUTS
+  2. pvalue - momentum compaction factor : alpha1, alpha2, alpha3 
+
+  See Also mcf2, getmcf</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="modelmcfsensitivity.html" class="code" title="function [Rmcf Rmcf2]=modelmcfsensitivity(varargin)">modelmcfsensitivity</a>	TUNESENSITIVITY - Computes quadrupole change for a given tune step</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [alpha1 alpha2 alpha3] = physics_mcf(varargin)</a>
+0002 <span class="comment">% PHYSICS_MCF - Computes momentum compaction up to 3rd order</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  INPUTS</span>
+0005 <span class="comment">%  1. Option Flag Display, NoDisplay</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  OUPUTS</span>
+0008 <span class="comment">%  2. pvalue - momentum compaction factor : alpha1, alpha2, alpha3</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">%  See Also mcf2, getmcf</span>
+0011 
+0012 <span class="comment">%</span>
+0013 <span class="comment">%% Written by Laurent S. Nadolski</span>
+0014 
+0015 DisplayFlag = 1;
+0016 
+0017 <span class="keyword">global</span> THERING
+0018 
+0019 <span class="keyword">for</span> i = length(varargin):-1:1
+0020     <span class="keyword">if</span> strcmpi(varargin{i},<span class="string">'Display'</span>)
+0021         DisplayFlag = 1;
+0022         varargin{i} = [];
+0023     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'NoDisplay'</span>)
+0024         DisplayFlag = 0;
+0025         varargin{i} = [];
+0026     <span class="keyword">end</span>
+0027 <span class="keyword">end</span>
+0028         
+0029 <span class="comment">% energy variation for fitting mcf</span>
+0030 deltamin = -1e-3;
+0031 deltamax = -deltamin;
+0032 delta = deltamin:5e-5:deltamax;
+0033 alpha = zeros(size(delta));
+0034 
+0035 <span class="keyword">for</span> k =1:length(delta)
+0036     alpha(k) = mcf2(THERING,delta(k));
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="comment">% fit curve upto 3rd order</span>
+0040 pvalue = polyfit(delta, alpha, 2);
+0041 palpha = polyval(pvalue, delta);
+0042 
+0043 alpha1 = pvalue(3);
+0044 alpha2 = pvalue(2)/2;
+0045 alpha3 = pvalue(1)/3;
+0046 
+0047 <span class="keyword">if</span> DisplayFlag
+0048     figure
+0049     plot(delta*100,alpha,<span class="string">'k'</span>)
+0050     grid on; hold on;
+0051     plot(delta*100,palpha,<span class="string">'r'</span>)
+0052     title(sprintf(<span class="string">'Momentum compaction factor \n mcf = %3.2e + %3.2e x + %3.2e x**2'</span>, <span class="keyword">...</span>
+0053         alpha1, alpha2, alpha3))
+0054     xlabel(<span class="string">'Energy (%)'</span>)
+0055     ylabel(<span class="string">'Momemtum compaction factor'</span>);
+0056 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 23-Jul-2010 00:42:07 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

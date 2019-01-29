@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tango_set_attribute_property</title>
+  <meta name="keywords" content="tango_set_attribute_property">
+  <meta name="description" content="TANGO_SET_ATTRIBUTE_PROPERTY - Set an attribute property to a given value">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../index.html">Home</a> &gt;  <a href="../../index.html">mml</a> &gt; <a href="#">links</a> &gt; <a href="index.html">tango</a> &gt; tango_set_attribute_property.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../index.html"><img alt="<" border="0" src="../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/links/tango&nbsp;<img alt=">" border="0" src="../../../right.png"></a></td></tr></table>-->
+
+<h1>tango_set_attribute_property
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TANGO_SET_ATTRIBUTE_PROPERTY - Set an attribute property to a given value</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function tango_set_attribute_property(FamilyName, property, strvalue) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TANGO_SET_ATTRIBUTE_PROPERTY - Set an attribute property to a given value
+ tango_set_attribute_property(FamilyName, value)
+
+ INPUTS
+ 1. FamilyName
+ 2. property to set
+ 3. strvalue - values to set
+
+ EXAMPLES
+ 1. tango_set_attribute_property('BEND','max_value','600')
+
+ See also <a href="tango_get_attribute_property.html" class="code" title="function attr_prop = tango_get_attribute_property(varargin)">tango_get_attribute_property</a></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="family2tango.html" class="code" title="function [TangoNames, ErrorFlag] = family2tango(varargin)">family2tango</a>	FAMILY2TANGO - Converts a familly to TANGO names</li><li><a href="getattribute.html" class="code" title="function [AttributeNames, DeviceNames] =  getattribute(varargin)">getattribute</a>	GETATTRIBUTE - Decomposes a full attributename into device and attribute names</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function tango_set_attribute_property(FamilyName, property, strvalue)</a>
+0002 <span class="comment">%TANGO_SET_ATTRIBUTE_PROPERTY - Set an attribute property to a given value</span>
+0003 <span class="comment">% tango_set_attribute_property(FamilyName, value)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">% INPUTS</span>
+0006 <span class="comment">% 1. FamilyName</span>
+0007 <span class="comment">% 2. property to set</span>
+0008 <span class="comment">% 3. strvalue - values to set</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% EXAMPLES</span>
+0011 <span class="comment">% 1. tango_set_attribute_property('BEND','max_value','600')</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% See also tango_get_attribute_property</span>
+0014 
+0015 <span class="comment">%</span>
+0016 <span class="comment">% Written by Laurent S. Nadolski</span>
+0017 
+0018 <span class="keyword">if</span> nargin &lt; 3
+0019     error(<span class="string">'Not enough arguments'</span>)
+0020 <span class="keyword">end</span>
+0021 
+0022 <span class="keyword">if</span> isfamily(FamilyName)
+0023     name = <a href="family2tango.html" class="code" title="function [TangoNames, ErrorFlag] = family2tango(varargin)">family2tango</a>(FamilyName);
+0024 <span class="keyword">else</span> <span class="comment">%not a family name</span>
+0025     name = FamilyName;
+0026 <span class="keyword">end</span>
+0027 
+0028 [attrlist devlist] = <a href="getattribute.html" class="code" title="function [AttributeNames, DeviceNames] =  getattribute(varargin)">getattribute</a>(name); 
+0029 
+0030 nb = length(devlist);
+0031 
+0032 <span class="keyword">if</span> size(strvalue,1) == 1
+0033     strlist = cellstr(repmat(strvalue,nb,1));
+0034 <span class="keyword">else</span>
+0035     strlist = strvalue;
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="comment">%%%</span>
+0039 <span class="keyword">for</span> k = 1:nb
+0040     dev = devlist{k,:};
+0041     attr = attrlist{k,:};
+0042     attr_config = tango_get_attribute_config(dev,attr);
+0043     attr_config.(property) = strlist{k};
+0044     tango_set_attribute_config(dev,attr_config);
+0045     <span class="keyword">if</span> (tango_error == -1)
+0046         <span class="comment">%- handle error</span>
+0047         tango_print_error_stack;
+0048         fprintf(1,<span class="string">'TracyServer Error %s\n'</span>,dev)
+0049         <span class="keyword">return</span>;
+0050     <span class="keyword">end</span>
+0051 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getsigma</title>
+  <meta name="keywords" content="getsigma">
+  <meta name="description" content="GETSIGMA - Return the standard deviation in the monitor for a family">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">mml</a> &gt; getsigma.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>getsigma
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>GETSIGMA - Return the standard deviation in the monitor for a family</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Data, FileName] = getsigma(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GETSIGMA - Return the standard deviation in the monitor for a family
+  [Data, FileName] = getsigma(Family, DeviceList, Navg, FileName)
+
+  INPUTS
+  1. Family - Family Name 
+              Data Structure
+              Accelerator Object
+  2. DeviceList ([Sector Device #] or [element #]) {Default: whole family}
+  3. Navg - Number of BPM averages {Default: return the sigma as in the data file}   
+  4. FileName - File of loop for data {Default: &lt;OpsData&gt;,&lt;BPMSigmaFile&gt;}
+  5. 'Physics'  - Use physics  units (optional override of units)
+     'Hardware' - Use hardware units (optional override of units)
+  6. 'Struct'  - Return a data structure
+     'Numeric' - Return numeric outputs  {Default}
+     'Object'  - Return a accelerator object (AccObj)
+
+  OUTPUTS
+  1. Offset - Offset value for the family
+ 
+  NOTES
+  1. Family, DeviceList, and N can be cell arrays
+
+  Written by Greg Portmann</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="elem2dev.html" class="code" title="function Output = elem2dev(Family, ElementList)">elem2dev</a>	ELEM2DEV - Converts a device list to an element list</li><li><a href="family2datastruct.html" class="code" title="function [DataStruct, ErrorFlag] = family2datastruct(varargin)">family2datastruct</a>	FAMILY2DATASTRUCTURE - Returns a datastructure corresponding to a Family</li><li><a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>	FAMILY2DEV - Return the device list for a family</li><li><a href="getdata.html" class="code" title="function [S, FileName] = getdata(varargin)">getdata</a>	GETDATA - Searches through a file (or group of files) for a data structure which matches the family name</li><li><a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>	GETFAMILYDATA - Gets data associated with the accelerator control</li><li><a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>	GETSIGMA - Return the standard deviation in the monitor for a family</li><li><a href="getunits.html" class="code" title="function [Units, UnitsString] = getunits(Family, Field)">getunits</a>	GETUNITS - Return the present family units and units string</li><li><a href="hw2physics.html" class="code" title="function S = hw2physics(Family, Field, value, DeviceList, Energy)">hw2physics</a>	HW2PHYSICS - Converts from 'Hardware' units to 'Physics' units</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>	GETSIGMA - Return the standard deviation in the monitor for a family</li><li><a href="quadcenter.html" class="code" title="function [QMS1, QMS2] = quadcenter(QuadFamily, QuadDev, XYPlane, FigureHandle)">quadcenter</a>	QUADCENTER - Measure the magnet center of a quadrupole magnet</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Data, FileName] = getsigma(varargin)</a>
+0002 <span class="comment">%GETSIGMA - Return the standard deviation in the monitor for a family</span>
+0003 <span class="comment">%  [Data, FileName] = getsigma(Family, DeviceList, Navg, FileName)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. Family - Family Name</span>
+0007 <span class="comment">%              Data Structure</span>
+0008 <span class="comment">%              Accelerator Object</span>
+0009 <span class="comment">%  2. DeviceList ([Sector Device #] or [element #]) {Default: whole family}</span>
+0010 <span class="comment">%  3. Navg - Number of BPM averages {Default: return the sigma as in the data file}</span>
+0011 <span class="comment">%  4. FileName - File of loop for data {Default: &lt;OpsData&gt;,&lt;BPMSigmaFile&gt;}</span>
+0012 <span class="comment">%  5. 'Physics'  - Use physics  units (optional override of units)</span>
+0013 <span class="comment">%     'Hardware' - Use hardware units (optional override of units)</span>
+0014 <span class="comment">%  6. 'Struct'  - Return a data structure</span>
+0015 <span class="comment">%     'Numeric' - Return numeric outputs  {Default}</span>
+0016 <span class="comment">%     'Object'  - Return a accelerator object (AccObj)</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%  OUTPUTS</span>
+0019 <span class="comment">%  1. Offset - Offset value for the family</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">%  NOTES</span>
+0022 <span class="comment">%  1. Family, DeviceList, and N can be cell arrays</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">%  Written by Greg Portmann</span>
+0025 
+0026 
+0027 <span class="comment">%%%%%%%%%%%%%%%%%</span>
+0028 <span class="comment">% Input Parsing %</span>
+0029 <span class="comment">%%%%%%%%%%%%%%%%%</span>
+0030 UnitsFlag = {};
+0031 StructOutputFlag = 0;
+0032 ObjectOutputFlag = 0;
+0033 <span class="keyword">for</span> i = length(varargin):-1:1
+0034     <span class="keyword">if</span> isstruct(varargin{i})
+0035         <span class="comment">% Ignor structures</span>
+0036     <span class="keyword">elseif</span> iscell(varargin{i})
+0037         <span class="comment">% Ignor cells</span>
+0038     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'struct'</span>)
+0039         StructOutputFlag = 1;
+0040         varargin(i) = [];
+0041     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'numeric'</span>)
+0042         StructOutputFlag = 0;
+0043         varargin(i) = [];
+0044     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'Object'</span>)
+0045         ObjectOutputFlag = 1;
+0046         StructOutputFlag = 1;
+0047         varargin(i) = [];
+0048     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'simulator'</span>) || strcmpi(varargin{i},<span class="string">'model'</span>) || strcmpi(varargin{i},<span class="string">'Online'</span>) || strcmpi(varargin{i},<span class="string">'Manual'</span>)
+0049         <span class="comment">% Remove and ignor</span>
+0050         varargin(i) = [];
+0051     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'physics'</span>)
+0052         UnitsFlag = {<span class="string">'Physics'</span>};
+0053         varargin(i) = [];
+0054     <span class="keyword">elseif</span> strcmpi(varargin{i},<span class="string">'hardware'</span>)
+0055         UnitsFlag = {<span class="string">'Hardware'</span>};
+0056         varargin(i) = [];
+0057     <span class="keyword">end</span>
+0058 <span class="keyword">end</span>
+0059 
+0060 <span class="keyword">if</span> isempty(varargin)
+0061     error(<span class="string">'Must have at least a family name input'</span>);
+0062 <span class="keyword">else</span>
+0063     Family = varargin{1};
+0064     <span class="keyword">if</span> length(varargin) &gt;= 2
+0065         DeviceList = varargin{2};
+0066     <span class="keyword">end</span>
+0067     <span class="keyword">if</span> length(varargin) &gt;= 3
+0068         N = varargin{3};
+0069     <span class="keyword">end</span>
+0070     <span class="keyword">if</span> length(varargin) &gt;= 4
+0071         FileName = varargin{4};
+0072     <span class="keyword">end</span>
+0073 <span class="keyword">end</span>
+0074 
+0075 
+0076 <span class="comment">%%%%%%%%%%%%%%%%%%%%%</span>
+0077 <span class="comment">% Cell Array Inputs %</span>
+0078 <span class="comment">%%%%%%%%%%%%%%%%%%%%%</span>
+0079 <span class="keyword">if</span> iscell(Family)
+0080     <span class="keyword">for</span> i = 1:length(Family)
+0081         <span class="keyword">if</span> length(varargin) &lt; 2
+0082             [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, UnitsFlag{:});
+0083         <span class="keyword">elseif</span> length(varargin) &lt; 3
+0084             <span class="keyword">if</span> iscell(DeviceList)
+0085                 [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList{i}, UnitsFlag{:});
+0086             <span class="keyword">else</span>
+0087                 [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList, UnitsFlag{:});
+0088             <span class="keyword">end</span>
+0089         <span class="keyword">elseif</span> length(varargin) &lt; 4
+0090             <span class="keyword">if</span> iscell(DeviceList)
+0091                 <span class="keyword">if</span> iscell(N)
+0092                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList{i}, N{i}, UnitsFlag{:});
+0093                 <span class="keyword">else</span>
+0094                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList{i}, N, UnitsFlag{:});
+0095                 <span class="keyword">end</span>
+0096             <span class="keyword">else</span>
+0097                 <span class="keyword">if</span> iscell(N)
+0098                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList, N{i}, UnitsFlag{:});
+0099                 <span class="keyword">else</span>
+0100                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList, N, UnitsFlag{:});
+0101                 <span class="keyword">end</span>
+0102             <span class="keyword">end</span>
+0103         <span class="keyword">else</span>
+0104             <span class="keyword">if</span> iscell(DeviceList)
+0105                 <span class="keyword">if</span> iscell(N)
+0106                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList{i}, N{i}, FileName, UnitsFlag{:});
+0107                 <span class="keyword">else</span>
+0108                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList{i}, N, FileName, UnitsFlag{:});
+0109                 <span class="keyword">end</span>
+0110             <span class="keyword">else</span>
+0111                 <span class="keyword">if</span> iscell(N)
+0112                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList, N{i}, FileName, UnitsFlag{:});
+0113                 <span class="keyword">else</span>
+0114                     [Data{i}, FileName{i}] = <a href="getsigma.html" class="code" title="function [Data, FileName] = getsigma(varargin)">getsigma</a>(Family{i}, DeviceList, N, FileName, UnitsFlag{:});
+0115                 <span class="keyword">end</span>
+0116             <span class="keyword">end</span>
+0117         <span class="keyword">end</span>
+0118     <span class="keyword">end</span>
+0119     <span class="keyword">return</span>
+0120 <span class="keyword">end</span>
+0121 
+0122 
+0123 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0124 <span class="comment">% Family or data structure inputs beyond this point %</span>
+0125 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0126 <span class="keyword">if</span> isstruct(Family)
+0127     <span class="comment">% Data structure inputs</span>
+0128     <span class="keyword">if</span> length(varargin) &lt; 2
+0129         <span class="keyword">if</span> isfield(Family,<span class="string">'DeviceList'</span>)
+0130             DeviceList = Family.DeviceList;
+0131         <span class="keyword">else</span>
+0132             DeviceList = [];
+0133         <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     <span class="keyword">if</span> isempty(UnitsFlag)
+0136         <span class="keyword">if</span> isfield(Family,<span class="string">'Units'</span>)
+0137             UnitsFlag{1} = Family.Units; 
+0138         <span class="keyword">end</span>
+0139     <span class="keyword">end</span>
+0140     <span class="keyword">if</span> isfield(Family,<span class="string">'FamilyName'</span>)
+0141         Family = Family.FamilyName;
+0142     <span class="keyword">else</span>
+0143         error(<span class="string">'For data structure inputs FamilyName field must exist'</span>)
+0144     <span class="keyword">end</span>
+0145 <span class="keyword">else</span>
+0146     <span class="comment">% Family string input</span>
+0147     <span class="keyword">if</span> length(varargin) &lt; 2
+0148         DeviceList = [];
+0149     <span class="keyword">end</span>
+0150 <span class="keyword">end</span>
+0151 <span class="keyword">if</span> isempty(DeviceList)
+0152     DeviceList = <a href="family2dev.html" class="code" title="function DeviceList = family2dev(Family, varargin);">family2dev</a>(Family);
+0153 <span class="keyword">end</span>
+0154 <span class="keyword">if</span> (size(DeviceList,2) == 1) 
+0155     DeviceList = <a href="elem2dev.html" class="code" title="function Output = elem2dev(Family, ElementList)">elem2dev</a>(Family, DeviceList);
+0156 <span class="keyword">end</span>
+0157 
+0158 <span class="keyword">if</span> length(varargin) &lt; 3
+0159     N = [];
+0160 <span class="keyword">end</span>
+0161 <span class="keyword">if</span> length(varargin) &lt; 4
+0162     FileName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'OpsData'</span>,<span class="string">'BPMSigmaFile'</span>);
+0163     DirectoryName = <a href="getfamilydata.html" class="code" title="function [Data, ErrorFlag] = getfamilydata(Family, Field1, Field2, DeviceList)">getfamilydata</a>(<span class="string">'Directory'</span>, <span class="string">'OpsData'</span>); 
+0164     FileName = [DirectoryName FileName];
+0165 <span class="keyword">end</span>
+0166 
+0167 <span class="keyword">if</span> isempty(UnitsFlag)
+0168     UnitsFlag = <span class="string">''</span>;
+0169 <span class="keyword">else</span>
+0170     UnitsFlag = UnitsFlag{1};    
+0171 <span class="keyword">end</span>
+0172 
+0173 
+0174 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0175 <span class="comment">% Look in the BPMsigma file %</span>
+0176 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0177 <span class="keyword">try</span>
+0178     [Data, FileName] = <a href="getdata.html" class="code" title="function [S, FileName] = getdata(varargin)">getdata</a>(Family, DeviceList, FileName, <span class="string">'Struct'</span>);
+0179 <span class="keyword">catch</span>
+0180     Data = <a href="family2datastruct.html" class="code" title="function [DataStruct, ErrorFlag] = family2datastruct(varargin)">family2datastruct</a>(Family, <span class="string">'Monitor'</span>, DeviceList);
+0181     [Units, UnitsString] = <a href="getunits.html" class="code" title="function [Units, UnitsString] = getunits(Family, Field)">getunits</a>(Family);
+0182     
+0183     <span class="keyword">if</span> any(strcmpi(UnitsString, {<span class="string">'um'</span>, <span class="string">'umeter'</span>, <span class="string">'micron'</span>, <span class="string">'micrometer'</span>, <span class="string">'micro-meter'</span>}))
+0184         fprintf(<span class="string">'   Could not find a BPM sigma file, so using .1 %s (%s).\n'</span>, UnitsString, Family);
+0185         Data.Data = .1 * ones(size(DeviceList,1),1);
+0186     <span class="keyword">else</span>
+0187         fprintf(<span class="string">'   Could not find a BPM sigma file, so using .0001 %s (%s).\n'</span>, UnitsString, Family);
+0188         Data.Data = .0001 * ones(size(DeviceList,1),1);
+0189     <span class="keyword">end</span>
+0190 
+0191     Data.CreatedBy = <span class="string">'getsigma'</span>;
+0192     FileName = <span class="string">''</span>;
+0193     Data.NumberOfAverages = N;
+0194 <span class="keyword">end</span>
+0195 
+0196 <span class="keyword">if</span> strcmpi(Data.CreatedBy, <span class="string">'monbpm'</span>) 
+0197     Data.Data = Data.Sigma;
+0198     Ndata = size(Data.Data,2);
+0199 <span class="keyword">elseif</span> strcmpi(Data.CreatedBy, <span class="string">'measbpmsigma'</span>)
+0200     Ndata = size(Data.RawData,2);
+0201 <span class="keyword">elseif</span> strcmpi(Data.CreatedBy, <span class="string">'getsigma'</span>)
+0202 <span class="keyword">else</span>
+0203     error(sprintf(<span class="string">'BPM sigma file was created by function %s.  Not good!'</span>, Data.CreatedBy));
+0204 <span class="keyword">end</span>
+0205 
+0206 
+0207 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0208 <span class="comment">% Sigma is scaled by the orbit reads %</span>
+0209 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0210 <span class="keyword">if</span> ~isempty(N)
+0211     <span class="keyword">if</span> isfield(Data, <span class="string">'NumberOfAverages'</span>) 
+0212         NumberOfAverages = Data.NumberOfAverages;
+0213     <span class="keyword">else</span>
+0214         error(<span class="string">'NumberOfAverages field must exist in the BPM monitor data'</span>);
+0215     <span class="keyword">end</span>
+0216     Data.Data = (Data.Data .* sqrt(NumberOfAverages)) ./ sqrt(N);
+0217 <span class="keyword">end</span>
+0218 
+0219 
+0220 <span class="keyword">if</span> isstruct(Data)
+0221     Data = Data.Data;
+0222 <span class="keyword">end</span>
+0223 
+0224 
+0225 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0226 <span class="comment">% Change to physics units if requested %</span>
+0227 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0228 <span class="keyword">if</span> strcmpi(UnitsFlag, <span class="string">'Physics'</span>)
+0229     Data = <a href="hw2physics.html" class="code" title="function S = hw2physics(Family, Field, value, DeviceList, Energy)">hw2physics</a>(Family, Field, Data, DeviceList);
+0230 <span class="keyword">end</span>
+0231 
+0232 
+0233 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0234 <span class="comment">% Return a data structure if requested %</span>
+0235 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0236 <span class="keyword">if</span> StructOutputFlag
+0237     DataNumeric = Data;
+0238     Data = <a href="family2datastruct.html" class="code" title="function [DataStruct, ErrorFlag] = family2datastruct(varargin)">family2datastruct</a>(Family, DeviceList, UnitsFlag);
+0239     <span class="comment">%Data = family2datastruct(Family, Field, DeviceList, UnitsFlag);</span>
+0240     Data.Data = DataNumeric;
+0241     Data.DataDescriptor = sprintf(<span class="string">'%s Sigma'</span>, Family);
+0242     Data.CreatedBy = <span class="string">'getsigma'</span>;
+0243     
+0244     <span class="comment">% Make the output an AccObj object</span>
+0245     <span class="keyword">if</span> ObjectOutputFlag
+0246         Data = AccObj(Data);
+0247     <span class="keyword">end</span>
+0248 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

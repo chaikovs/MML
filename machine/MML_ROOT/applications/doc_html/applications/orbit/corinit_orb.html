@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of corinit_orb</title>
+  <meta name="keywords" content="corinit_orb">
+  <meta name="description" content="CORINIT_ORB - Initializes COR structure for SPEAR ORBIT program">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="#">applications</a> &gt; <a href="index.html">orbit</a> &gt; corinit_orb.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for applications/orbit&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>corinit_orb
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>CORINIT_ORB - Initializes COR structure for SPEAR ORBIT program</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function varargout = corinit_orb(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> CORINIT_ORB - Initializes COR structure for SPEAR ORBIT program
+COR=CORInit_Orb(COR);</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = corinit_orb(varargin)</a>
+0002 <span class="comment">% CORINIT_ORB - Initializes COR structure for SPEAR ORBIT program</span>
+0003 <span class="comment">%COR=CORInit_Orb(COR);</span>
+0004 
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Written by William J. Corbett</span>
+0007 <span class="comment">% Adapted by Laurent S. Nadolski</span>
+0008 
+0009 HCORFamily = <span class="string">'HCOR'</span>;
+0010 VCORFamily = <span class="string">'VCOR'</span>;
+0011 
+0012 AO = getao;
+0013 
+0014 <span class="comment">%horizontal</span>
+0015 COR(1).name     = AO.(HCORFamily).CommonNames;
+0016 COR(1).s        = AO.(HCORFamily).Position;   
+0017 COR(1).AOFamily = HCORFamily;
+0018 good            = AO.(HCORFamily).Status;
+0019 ntcor           = size(COR(1).name,1);
+0020 COR(1).ntcor    = ntcor;
+0021 COR(1).mode     = 0;                     <span class="comment">%...display to show name, toggle for cor.ifit</span>
+0022 COR(1).wt       = ones(ntcor,1);         <span class="comment">%...fitting weights</span>
+0023 COR(1).fit      = zeros(ntcor,1);        <span class="comment">%...result of fitting</span>
+0024 <span class="comment">% COR(1).knob     = zeros(ntcor,1);        %...for corrector knob</span>
+0025 <span class="comment">% COR(1).iknob    = zeros(ntcor,1);        %...knob indices</span>
+0026 <span class="comment">% COR(1).knobflag = 0;                     %...knob not saved</span>
+0027 COR(1).save     = zeros(ntcor,1);        <span class="comment">%...for corrector restore</span>
+0028 COR(1).saveflag = 0;                     <span class="comment">%...correctors not saved</span>
+0029 COR(1).fract    = 1.0;                   <span class="comment">%...fraction of correction</span>
+0030 COR(1).id       = 1;                     <span class="comment">%...initialize cor selection</span>
+0031 COR(1).scalemode= 1;                     <span class="comment">%...0=manual mode, 1=autoscale</span>
+0032 COR(1).ylim     = 10.0;                  <span class="comment">%...10 amp vertical axis scale</span>
+0033 COR(1).status   = (1:ntcor)'.*good;      <span class="comment">%...initial status vector</span>
+0034 COR(1).avail    = COR(1).status;         <span class="comment">%...initial availability vector (in response matrix)</span>
+0035 COR(1).ifit     = COR(1).status;         <span class="comment">%...initial fitting index vector</span>
+0036 COR(1).ibump    = [];                    <span class="comment">%...initial corrrector bump index vector</span>
+0037 <span class="comment">% COR(1).bumpref  = [];                    %...initial corrrector values for bump</span>
+0038 COR(1).ATindex  = AO.(HCORFamily).AT.ATIndex;   <span class="comment">%load AT indices</span>
+0039 COR(1).act      = zeros(ntcor,1);       <span class="comment">%...actual values</span>
+0040 COR(1).ref      = zeros(ntcor,1);       <span class="comment">%...reference values</span>
+0041 COR(1).des      = zeros(ntcor,1);       <span class="comment">%...desired values</span>
+0042 
+0043 <span class="comment">%vertical</span>
+0044 COR(2).AOFamily = VCORFamily;
+0045 COR(2).name     = AO.(VCORFamily).CommonNames;
+0046 COR(2).s        = AO.(VCORFamily).Position;   
+0047 good            = AO.(VCORFamily).Status;
+0048 ntcor           = size(COR(2).name,1);
+0049 COR(2).ntcor    = ntcor;
+0050 COR(2).mode     = 0;                    <span class="comment">%...display to show name, toggle for cor.ifit</span>
+0051 COR(2).avail    = zeros(ntcor,1);       <span class="comment">%...available bpm</span>
+0052 COR(2).fit      = zeros(ntcor,1);       <span class="comment">%...result of fitting</span>
+0053 COR(2).wt       = ones(ntcor,1);        <span class="comment">%...weights for fitting</span>
+0054 <span class="comment">% COR(2).knob     = zeros(ntcor,1);       %...forcorrector knob</span>
+0055 <span class="comment">% COR(2).iknob    = zeros(ntcor,1);       %...knob indices</span>
+0056 <span class="comment">% COR(2).knobflag = 0;                    %...knob not saved</span>
+0057 COR(2).save     = zeros(ntcor,1);       <span class="comment">%...for corrector reset</span>
+0058 COR(2).saveflag = 0;                    <span class="comment">%...correctors not saved</span>
+0059 COR(2).fract    = 1.0;                  <span class="comment">%...fraction of correction</span>
+0060 COR(2).id       = 1;                    <span class="comment">%...initialize corrector selection</span>
+0061 COR(2).scalemode= 1;                    <span class="comment">%...0=manual mode, 1=autoscale</span>
+0062 COR(2).ylim     = 10.0;                 <span class="comment">%...10 amp vertical axis scale</span>
+0063 COR(2).status   = (1:ntcor)'.*good;     <span class="comment">%...initial status vector</span>
+0064 COR(2).avail    = COR(2).status;        <span class="comment">%...initial availability vector (in response matrix)</span>
+0065 COR(2).ifit     = COR(2).status;        <span class="comment">%...initial fitting index vector</span>
+0066 COR(2).ibump    = [];                   <span class="comment">%...initial corrrector bump index vector</span>
+0067 <span class="comment">% COR(2).bumpref  = [];                   %...initial corrrector values for bump</span>
+0068 COR(2).ATindex  = AO.(VCORFamily).AT.ATIndex;   <span class="comment">%load AT indices</span>
+0069 COR(2).act      = zeros(ntcor,1);       <span class="comment">%...actual values</span>
+0070 COR(2).ref      = zeros(ntcor,1);       <span class="comment">%...reference values</span>
+0071 COR(2).des      = zeros(ntcor,1);       <span class="comment">%...desired values</span>
+0072 
+0073 varargout{1} = COR;</pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:32:41 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

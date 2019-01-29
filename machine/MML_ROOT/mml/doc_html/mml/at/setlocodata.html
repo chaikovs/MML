@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of setlocodata</title>
+  <meta name="keywords" content="setlocodata">
+  <meta name="description" content="SETLOCODATA - Applies the LOCO calibration data to both the middle layer & the accelerator">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">mml</a> &gt; <a href="index.html">at</a> &gt; setlocodata.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for mml/at&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>setlocodata
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>SETLOCODATA - Applies the LOCO calibration data to both the middle layer & the accelerator</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function setlocodata(CommandInput, FileName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">SETLOCODATA - Applies the LOCO calibration data to both the middle layer &amp; the accelerator
+  setlocodata(CommandInput, FileName)
+
+  INPUTS
+  1. CommandInput
+     'Nominal'    - Sets nominal gains (1) / rolls (0) to the model.
+     'SetGains'   - Set gains/coupling from a LOCO file.
+     'Symmetrize' - Symmetry correction of the lattice based on a LOCO file.
+     'CorrectCoupling' - Coupling correction of the lattice based on a LOCO file.
+     'SetModel'   - Set the model from a LOCO file.  But it only changes
+                    the part of the model that does not get corrected
+                    in 'Symmetrize' (also does a SetGains).
+     'LOCO2Model' - Set the model from a LOCO file (also does a 'SetGains').
+                    This sets all lattice machines fit in the LOCO run to the model.
+     'EtaWave'    - Set a dispersion wave.
+  2. FileName - LOCO file name {Default: getfamilydata('OpsData', 'LOCOFile')}
+                '' to browse for a file
+
+  NOTES
+  How one uses this function depends on how LOCO was setup.
+  1. Use setlocodata('Nominal') if no model calibration information is known.
+  2. The most typical situation is to apply:
+         setlocodata('Symmetrize') to the accelerator
+         setlocodata('SetModel')   to the middle layer (usually done in setoperationalmode)
+  3. If a LOCO run was done on the present lattice with no changes made to lattice
+     after LOCO run, then setting all the LOCO fits to the model makes sense.
+         setlocodata('LOCO2Model')
+  4. This function obviously has machine dependent parts.
+
+  Written by Greg Portmann</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>	SETATFIELD - Returns the contents of an AT model field</li><li><a href="setlocodata.html" class="code" title="function setlocodata(CommandInput, FileName)">setlocodata</a>	SETLOCODATA - Applies the LOCO calibration data to both the middle layer & the accelerator</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="setlocodata.html" class="code" title="function setlocodata(CommandInput, FileName)">setlocodata</a>	SETLOCODATA - Applies the LOCO calibration data to both the middle layer & the accelerator</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function setlocodata(CommandInput, FileName)</a>
+0002 <span class="comment">%SETLOCODATA - Applies the LOCO calibration data to both the middle layer &amp; the accelerator</span>
+0003 <span class="comment">%  setlocodata(CommandInput, FileName)</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  INPUTS</span>
+0006 <span class="comment">%  1. CommandInput</span>
+0007 <span class="comment">%     'Nominal'    - Sets nominal gains (1) / rolls (0) to the model.</span>
+0008 <span class="comment">%     'SetGains'   - Set gains/coupling from a LOCO file.</span>
+0009 <span class="comment">%     'Symmetrize' - Symmetry correction of the lattice based on a LOCO file.</span>
+0010 <span class="comment">%     'CorrectCoupling' - Coupling correction of the lattice based on a LOCO file.</span>
+0011 <span class="comment">%     'SetModel'   - Set the model from a LOCO file.  But it only changes</span>
+0012 <span class="comment">%                    the part of the model that does not get corrected</span>
+0013 <span class="comment">%                    in 'Symmetrize' (also does a SetGains).</span>
+0014 <span class="comment">%     'LOCO2Model' - Set the model from a LOCO file (also does a 'SetGains').</span>
+0015 <span class="comment">%                    This sets all lattice machines fit in the LOCO run to the model.</span>
+0016 <span class="comment">%     'EtaWave'    - Set a dispersion wave.</span>
+0017 <span class="comment">%  2. FileName - LOCO file name {Default: getfamilydata('OpsData', 'LOCOFile')}</span>
+0018 <span class="comment">%                '' to browse for a file</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">%  NOTES</span>
+0021 <span class="comment">%  How one uses this function depends on how LOCO was setup.</span>
+0022 <span class="comment">%  1. Use setlocodata('Nominal') if no model calibration information is known.</span>
+0023 <span class="comment">%  2. The most typical situation is to apply:</span>
+0024 <span class="comment">%         setlocodata('Symmetrize') to the accelerator</span>
+0025 <span class="comment">%         setlocodata('SetModel')   to the middle layer (usually done in setoperationalmode)</span>
+0026 <span class="comment">%  3. If a LOCO run was done on the present lattice with no changes made to lattice</span>
+0027 <span class="comment">%     after LOCO run, then setting all the LOCO fits to the model makes sense.</span>
+0028 <span class="comment">%         setlocodata('LOCO2Model')</span>
+0029 <span class="comment">%  4. This function obviously has machine dependent parts.</span>
+0030 <span class="comment">%</span>
+0031 <span class="comment">%  Written by Greg Portmann</span>
+0032 
+0033 
+0034 <span class="keyword">global</span> THERING
+0035 
+0036 <span class="keyword">if</span> nargin &lt; 1
+0037     <span class="comment">%CommandInput = 'Default';</span>
+0038     ModeCell = {<span class="string">'Nominal - Set Gain=1 &amp; Rolls=0 in the model'</span>, <span class="string">'SetGains - Set gains/rolls from a LOCO file'</span>,<span class="string">'Symmetrize - Symmetry correction of the lattice'</span>, <span class="string">'CorrectCoupling - Coupling correction of the lattice'</span>, <span class="string">'SetModel - Set the model from a LOCO file'</span>,<span class="string">'LOCO2Model - Set the model from a LOCO file (also does a SetGains)'</span>, <span class="string">'see &quot;help setlocodata&quot; for more details'</span>};
+0039     [ModeNumber, OKFlag] = listdlg(<span class="string">'Name'</span>,<span class="string">'Soleil'</span>,<span class="string">'PromptString'</span>, <span class="keyword">...</span>
+0040         <span class="string">'Select the proper set LOCO data command:'</span>, <span class="keyword">...</span>
+0041         <span class="string">'SelectionMode'</span>,<span class="string">'single'</span>, <span class="string">'ListString'</span>, ModeCell, <span class="string">'ListSize'</span>, [500 200]);
+0042     <span class="keyword">if</span> OKFlag ~= 1
+0043         fprintf(<span class="string">'   setlocodata cancelled\n'</span>);
+0044         <span class="keyword">return</span>
+0045     <span class="keyword">end</span>
+0046     <span class="keyword">if</span> ModeNumber == 1
+0047         CommandInput = <span class="string">'Nominal'</span>;
+0048     <span class="keyword">elseif</span> ModeNumber == 2
+0049         CommandInput = <span class="string">'SetGains'</span>;
+0050     <span class="keyword">elseif</span> ModeNumber == 3
+0051         CommandInput = <span class="string">'Symmetrize'</span>;
+0052     <span class="keyword">elseif</span> ModeNumber == 4
+0053         CommandInput = <span class="string">'CorrectCoupling'</span>;
+0054     <span class="keyword">elseif</span> ModeNumber == 5
+0055         CommandInput = <span class="string">'SetModel'</span>;
+0056     <span class="keyword">elseif</span> ModeNumber == 6
+0057         CommandInput = <span class="string">'LOCO2Model'</span>;
+0058     <span class="keyword">elseif</span> ModeNumber == 7
+0059         help <a href="setlocodata.html" class="code" title="function setlocodata(CommandInput, FileName)">setlocodata</a>;
+0060         <span class="keyword">return</span>
+0061     <span class="keyword">end</span>
+0062 <span class="keyword">end</span>
+0063 
+0064 
+0065 <span class="keyword">if</span> nargin &lt; 2
+0066     <span class="comment">% Default (Golden) LOCO file</span>
+0067     <span class="comment">% If empty, the user will be prompted if needed.</span>
+0068     FileName = getfamilydata(<span class="string">'OpsData'</span>,<span class="string">'LOCOFile'</span>);
+0069 <span class="keyword">end</span>
+0070 
+0071 
+0072 <span class="comment">% Device list</span>
+0073 BPMxDeviceList = family2dev(<span class="string">'BPMx'</span>);
+0074 BPMxDeviceListTotal = family2dev(<span class="string">'BPMx'</span>,0);
+0075 
+0076 BPMzDeviceList = family2dev(<span class="string">'BPMz'</span>);
+0077 BPMzDeviceListTotal = family2dev(<span class="string">'BPMz'</span>,0);
+0078 
+0079 HCORDeviceList = family2dev(<span class="string">'HCOR'</span>);
+0080 HCORDeviceListTotal = family2dev(<span class="string">'HCOR'</span>,0);
+0081 VCORDeviceList = family2dev(<span class="string">'VCOR'</span>);
+0082 VCORDeviceListTotal = family2dev(<span class="string">'VCOR'</span>,0);
+0083 
+0084 
+0085 <span class="keyword">if</span> any(strcmpi(CommandInput, <span class="string">'Nominal'</span>))
+0086     fprintf(<span class="string">'   Using nominal BPM and corrector Gain=1 and Roll=0\n'</span>);
+0087 
+0088     <span class="comment">% To speed things up, put Gains/Rolls/etc in the AO</span>
+0089     AO = getao;
+0090 
+0091     <span class="comment">% Zero or one the gains and rolls</span>
+0092     AO.BPMx.Gain = ones(size(BPMxDeviceListTotal,1),1);
+0093     AO.BPMz.Gain = ones(size(BPMzDeviceListTotal,1),1);
+0094     AO.BPMx.Roll = zeros(size(BPMxDeviceListTotal,1),1);
+0095     AO.BPMz.Roll = zeros(size(BPMzDeviceListTotal,1),1);
+0096     AO.BPMx.Crunch = zeros(size(BPMxDeviceListTotal,1),1);
+0097     AO.BPMz.Crunch = zeros(size(BPMzDeviceListTotal,1),1);
+0098 
+0099     AO.HCOR.Gain = ones(size(HCORDeviceListTotal,1),1);
+0100     AO.VCOR.Gain = ones(size(VCORDeviceListTotal,1),1);
+0101     AO.HCOR.Roll = zeros(size(HCORDeviceListTotal,1),1);
+0102     AO.VCOR.Roll = zeros(size(VCORDeviceListTotal,1),1);
+0103 
+0104 
+0105     <span class="comment">% Set the roll, crunch to the AT model to be used by getpvmodel, setpvmodel, etc</span>
+0106     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(<span class="string">'BPMx'</span>, <span class="string">'GCR'</span>, [AO.BPMx.Gain AO.BPMz.Gain AO.BPMx.Crunch AO.BPMx.Roll], BPMxDeviceListTotal);
+0107 
+0108     <span class="comment">% Set the gains to the AT model to be used by getpvmodel, setpvmodel, etc</span>
+0109     <span class="comment">% Make sure the Roll field is 1x2 even for single plane correctors</span>
+0110 
+0111     <span class="comment">% First set the cross planes to zero</span>
+0112     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(<span class="string">'HCOR'</span>, <span class="string">'Roll'</span>, 0*AO.HCOR.Roll, HCORDeviceListTotal, 1, 2);
+0113     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(<span class="string">'VCOR'</span>, <span class="string">'Roll'</span>, 0*AO.VCOR.Roll, VCORDeviceListTotal, 1, 1);
+0114 
+0115     <span class="comment">% Then set the roll field</span>
+0116     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(<span class="string">'HCOR'</span>, <span class="string">'Roll'</span>, AO.HCOR.Roll, HCORDeviceListTotal, 1, 1);
+0117     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(<span class="string">'VCOR'</span>, <span class="string">'Roll'</span>, AO.VCOR.Roll, VCORDeviceListTotal, 1, 2);
+0118 
+0119     setao(AO);
+0120 
+0121 
+0122 <span class="keyword">elseif</span> any(strcmpi(CommandInput, <span class="string">'SetGains'</span>))
+0123 
+0124     <span class="keyword">if</span> isempty(FileName) || strcmp(FileName, <span class="string">'.'</span>)
+0125         <span class="keyword">if</span> isempty(FileName)
+0126             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>, [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>), <span class="string">'LOCO'</span>, filesep]);
+0127         <span class="keyword">else</span>
+0128             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>);
+0129         <span class="keyword">end</span>
+0130         drawnow;
+0131         <span class="keyword">if</span> isequal(FileName,0) || isequal(DirectoryName,0)
+0132             fprintf(<span class="string">'   setlocodata canceled\n'</span>);
+0133             <span class="keyword">return</span>
+0134         <span class="keyword">end</span>
+0135         FileName = [DirectoryName FileName];
+0136     <span class="keyword">end</span>
+0137 
+0138     <span class="comment">% Set the model gains</span>
+0139     <a href="setlocodata.html" class="code" title="function setlocodata(CommandInput, FileName)">setlocodata</a>(<span class="string">'Nominal'</span>);
+0140 
+0141     AO = getao;
+0142 
+0143     <span class="comment">% Load the LOCO data</span>
+0144     fprintf(<span class="string">'   Setting BPM and corrector gains and rolls based on %s.\n'</span>, FileName);
+0145     load(FileName);
+0146 
+0147 
+0148     <span class="comment">% Get the device list from the LOCO file</span>
+0149     <span class="keyword">try</span>
+0150         BPMxDeviceList = LocoMeasData.HBPM.DeviceList;
+0151         BPMzDeviceList = LocoMeasData.VBPM.DeviceList;
+0152         HCORDeviceList  = LocoMeasData.HCOR.DeviceList;
+0153         VCORDeviceList  = LocoMeasData.VCOR.DeviceList;
+0154     <span class="keyword">catch</span>
+0155         <span class="comment">% Legacy</span>
+0156         BPMxDeviceList = LocoMeasData.(BPMxFamily).DeviceList;
+0157         BPMzDeviceList = LocoMeasData.(BPMzFamily).DeviceList;
+0158         HCORDeviceList  = LocoMeasData.(HCORFamily).DeviceList;
+0159         VCORDeviceList  = LocoMeasData.(VCORFamily).DeviceList;
+0160     <span class="keyword">end</span>
+0161 
+0162 
+0163     <span class="comment">% Change to Gain, Roll, Crunch system (Need to add a logic for single view BPMs???)</span>
+0164     i = findrowindex(BPMxDeviceList, BPMxDeviceListTotal);
+0165     <span class="keyword">for</span> j = 1:length(BPMData(end).HBPMGain)
+0166         MLOCO = [BPMData(end).HBPMGain(j)     BPMData(end).HBPMCoupling(j)
+0167             BPMData(end).VBPMCoupling(j) BPMData(end).VBPMGain(j) ];
+0168 
+0169         [AO.(BPMxFamily).Gain(i(j),:), AO.(BPMzFamily).Gain(i(j),:), AO.(BPMxFamily).Crunch(i(j),:), AO.(BPMxFamily).Roll(i(j),:)] = loco2gcr(MLOCO);
+0170     <span class="keyword">end</span>
+0171     AO.(BPMzFamily).Roll   = AO.(BPMxFamily).Roll;
+0172     AO.(BPMzFamily).Crunch = AO.(BPMxFamily).Crunch;
+0173 
+0174     <span class="keyword">if</span> ~isreal(AO.(BPMxFamily).Gain)
+0175         error(<span class="string">'Horizontal BPM gain is complex.'</span>);
+0176     <span class="keyword">end</span>
+0177     <span class="keyword">if</span> ~isreal(AO.(BPMzFamily).Gain)
+0178         error(<span class="string">'Vertical BPM gain is complex.'</span>);
+0179     <span class="keyword">end</span>
+0180     <span class="keyword">if</span> ~isreal(AO.(BPMxFamily).Crunch)
+0181         error(<span class="string">'BPM Crunch is complex.'</span>);
+0182     <span class="keyword">end</span>
+0183     <span class="keyword">if</span> ~isreal(AO.(BPMxFamily).Roll)
+0184         error(<span class="string">'BPM roll is complex.'</span>);
+0185     <span class="keyword">end</span>
+0186 
+0187 
+0188 
+0189     <span class="comment">%%%%%%%%%%%%%%</span>
+0190     <span class="comment">% Correctors %</span>
+0191     <span class="comment">%%%%%%%%%%%%%%</span>
+0192 
+0193     <span class="comment">% Kick strength (LOCO is in milliradian)</span>
+0194     <span class="comment">% LOCO is run with the original gain in hw2physics (stored in LocoMeasData.VCORGain/LocoMeasData.HCORGain).</span>
+0195     <span class="comment">% The new gain must combine the new CM gain and the one used in buildlocoinput.</span>
+0196     <span class="comment">% hw2physics:  Rad = G * amps   (original)</span>
+0197     <span class="comment">% LOCO gain:   Gloco = KickNew/KickStart</span>
+0198     <span class="comment">% New hw2physics gain: Gloco * G</span>
+0199 
+0200     <span class="comment">% HCOR</span>
+0201     i = findrowindex(HCORDeviceList, HCORDeviceListTotal);
+0202 
+0203     HCORGainOldLOCO  = LocoMeasData.HCORGain .* cos(LocoMeasData.HCORRoll);
+0204     HCORGainLOCO     = HCORGainOldLOCO .* CMData(end).HCORKicks ./ CMData(1).HCORKicks;
+0205     HCORCouplingLOCO = HCORGainLOCO .* CMData(end).HCORCoupling;
+0206 
+0207     <span class="comment">%AO.(HCORFamily).Roll(i) = atan2(-HCORCouplingLOCO, HCORGainLOCO);</span>
+0208     AO.(HCORFamily).Roll(i) = atan(HCORCouplingLOCO ./ abs(HCORGainLOCO));
+0209     AO.(HCORFamily).Gain(i) = sign(HCORGainLOCO) .* sqrt(HCORCouplingLOCO.^2 + HCORGainLOCO.^2);
+0210 
+0211 
+0212     <span class="comment">% VCOR</span>
+0213     i = findrowindex(VCORDeviceList, VCORDeviceListTotal);
+0214 
+0215     VCORGainOldLOCO  = LocoMeasData.VCORGain .* cos(LocoMeasData.VCORRoll);
+0216     VCORGainLOCO     = VCORGainOldLOCO .* CMData(end).VCORKicks ./ CMData(1).VCORKicks;
+0217     VCORCouplingLOCO = VCORGainLOCO .* CMData(end).VCORCoupling;
+0218 
+0219     <span class="comment">%AO.(VCORFamily).Roll(i) = atan2(-VCORCouplingLOCO, VCORGainLOCO);</span>
+0220     AO.(VCORFamily).Roll(i) = atan(-VCORCouplingLOCO ./ abs(VCORGainLOCO));
+0221     AO.(VCORFamily).Gain(i) = sign(VCORGainLOCO) .* sqrt(VCORCouplingLOCO.^2 + VCORGainLOCO.^2);
+0222 
+0223 
+0224     <span class="comment">% Set the roll, crunch to the AT model to be used by getpvmodel, setpvmodel, etc</span>
+0225     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(BPMxFamily, <span class="string">'GCR'</span>, [AO.(BPMxFamily).Gain AO.(BPMzFamily).Gain AO.(BPMxFamily).Crunch AO.(BPMxFamily).Roll], BPMxDeviceListTotal);
+0226 
+0227     <span class="comment">% Set the gains to the AT model to be used by getpvmodel, setpvmodel, etc</span>
+0228     <span class="comment">% Make sure the Roll field is 1x2 even for single plane correctors</span>
+0229 
+0230     <span class="comment">% First set the cross planes to zero</span>
+0231     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(HCORFamily, <span class="string">'Roll'</span>, 0*AO.(HCORFamily).Roll, HCORDeviceListTotal, 1, 2);
+0232     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(VCORFamily, <span class="string">'Roll'</span>, 0*AO.(VCORFamily).Roll, VCORDeviceListTotal, 1, 1);
+0233 
+0234     <span class="comment">% Then set the roll field</span>
+0235     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(HCORFamily, <span class="string">'Roll'</span>, AO.(HCORFamily).Roll, HCORDeviceListTotal, 1, 1);
+0236     <a href="setatfield.html" class="code" title="function ATIndexList = family2atfield(Family, Field, Value, varargin)">setatfield</a>(VCORFamily, <span class="string">'Roll'</span>, AO.(VCORFamily).Roll, VCORDeviceListTotal, 1, 2);
+0237 
+0238 
+0239     <span class="comment">% If other magnet fits were done (like roll), it should be add to the AT model as well</span>
+0240 
+0241     setao(AO);
+0242 
+0243 
+0244 <span class="keyword">elseif</span> any(strcmpi(CommandInput, <span class="string">'SetModel'</span>))
+0245 
+0246     error(<span class="string">'   Function not complete.  Look at the ALS setlocodata for an example.'</span>);
+0247 
+0248 <span class="keyword">elseif</span> any(strcmpi(CommandInput, <span class="string">'SetMachine'</span>))
+0249 
+0250     <span class="keyword">if</span> isempty(FileName) || strcmp(FileName, <span class="string">'.'</span>)
+0251         <span class="keyword">if</span> isempty(FileName)
+0252             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>, [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>), <span class="string">'LOCO'</span>, filesep]);
+0253         <span class="keyword">else</span>
+0254             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>);
+0255         <span class="keyword">end</span>
+0256         drawnow;
+0257         <span class="keyword">if</span> isequal(FileName,0) || isequal(DirectoryName,0)
+0258             fprintf(<span class="string">'   setlocodata canceled\n'</span>);
+0259             <span class="keyword">return</span>
+0260         <span class="keyword">end</span>
+0261         FileName = [DirectoryName FileName];
+0262     <span class="keyword">end</span>
+0263 
+0264     <span class="comment">% Load the LOCO data</span>
+0265     load(FileName);
+0266 
+0267 
+0268     
+0269     error(<span class="string">'You need to edit here with your parameter setting program!'</span>)
+0270     
+0271     le = length(FitParameters);
+0272     
+0273     QFscale(1:6) = FitParameters(1).Values(1)/FitParameters(le).Values(1);
+0274     QFscale(7:28) = FitParameters(1).Values(2:23)./FitParameters(le).Values(2:23);
+0275     QDscale(1:6) = FitParameters(1).Values(24)/FitParameters(le).Values(24);
+0276     QDscale(7:28) = FitParameters(1).Values(25:46)./FitParameters(le).Values(25:46);
+0277     QFCscale = FitParameters(1).Values(47)/FitParameters(le).Values(47);
+0278     QDXscale = FitParameters(1).Values(48)/FitParameters(le).Values(48);
+0279     QFXscale = FitParameters(1).Values(49)/FitParameters(le).Values(49);
+0280     QDYscale = FitParameters(1).Values(50)/FitParameters(le).Values(50);
+0281     QFYscale = FitParameters(1).Values(51)/FitParameters(le).Values(51);
+0282     QDZscale = FitParameters(1).Values(52)/FitParameters(le).Values(52);
+0283     QFZscale = FitParameters(1).Values(53)/FitParameters(le).Values(53);
+0284 
+0285     QFnew  = QFscale'.*getsp(<span class="string">'QF'</span>);  <span class="comment">% I would base it on the LOCO data setpoint!!!</span>
+0286     QDnew  = QDscale'.*getsp(<span class="string">'QD'</span>);
+0287     QFCnew = QFCscale*getsp(<span class="string">'QFC'</span>);
+0288     QDXnew = QDXscale*getsp(<span class="string">'QDX'</span>);
+0289     QFXnew = QFXscale*getsp(<span class="string">'QFX'</span>);
+0290     QDYnew = QDYscale*getsp(<span class="string">'QDY'</span>);
+0291     QFYnew = QFYscale*getsp(<span class="string">'QFY'</span>);
+0292     QDZnew = QDZscale*getsp(<span class="string">'QDZ'</span>);
+0293     QFZnew = QFZscale*getsp(<span class="string">'QFZ'</span>);
+0294 
+0295 
+0296     setsp(<span class="string">'QF'</span>, QFnew);
+0297     setsp(<span class="string">'QD'</span>, QDnew);
+0298     setsp(<span class="string">'QFC'</span>, QFCnew);
+0299 
+0300     setsp(<span class="string">'QFX'</span>, QFXnew);
+0301     setsp(<span class="string">'QFY'</span>, QFYnew);
+0302     setsp(<span class="string">'QFZ'</span>, QFZnew);
+0303 
+0304     setsp(<span class="string">'QDX'</span>, QDXnew);
+0305     setsp(<span class="string">'QDY'</span>, QDYnew);
+0306     setsp(<span class="string">'QDZ'</span>, QDZnew);
+0307 
+0308 
+0309 <span class="keyword">elseif</span> any(strcmpi(CommandInput, <span class="string">'CorrectCoupling'</span>))
+0310 
+0311     <span class="keyword">if</span> isempty(FileName) || strcmp(FileName, <span class="string">'.'</span>)
+0312         <span class="keyword">if</span> isempty(FileName)
+0313             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>, [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>), <span class="string">'LOCO'</span>, filesep]);
+0314         <span class="keyword">else</span>
+0315             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>);
+0316         <span class="keyword">end</span>
+0317         drawnow;
+0318         <span class="keyword">if</span> isequal(FileName,0) || isequal(DirectoryName,0)
+0319             fprintf(<span class="string">'   setlocodata canceled\n'</span>);
+0320             <span class="keyword">return</span>
+0321         <span class="keyword">end</span>
+0322         FileName = [DirectoryName FileName];
+0323     <span class="keyword">end</span>
+0324 
+0325     
+0326     <span class="comment">% Load the LOCO data</span>
+0327     load(FileName);
+0328 
+0329     NQT = size(family2dev(<span class="string">'QT'</span>),1); 
+0330     fprintf(<span class="string">'   Correcting the coupling based on LOCO file %s.\n'</span>, FileName);
+0331     fprintf(<span class="string">'   It is assumed that the QT are in FitParameters.Values(end-%d:end)\n'</span>, NQT-1);
+0332 
+0333     QT = FitParameters(end).Values(end-(NQT-1):end);
+0334 
+0335     <span class="comment">% Starting point for the skew quadrupoles when LOCO data was measured</span>
+0336     MachineConfig = LocoMeasData.MachineConfig;
+0337     setpv(MachineConfig.QT.Setpoint);
+0338 
+0339     QThw = physics2hw(<span class="string">'QT'</span>, <span class="string">'Setpoint'</span>, -QT);
+0340 
+0341     <span class="comment">% Maximum setpoint check</span>
+0342     <span class="keyword">if</span> any(abs(MachineConfig.QT.Setpoint.Data+QThw)&gt;maxsp(<span class="string">'QT'</span>))
+0343         error(<span class="string">'At least one of the QT would go beyond it''s limit ... aborting coupling correction'</span>);
+0344     <span class="keyword">end</span>
+0345 
+0346     <span class="comment">% Make the setpoint change</span>
+0347     stepsp(<span class="string">'QT'</span>, QThw);
+0348 
+0349     <span class="comment">% Keep the change?</span>
+0350     CorrectFlag = questdlg(<span class="string">'Keep the new skew quadrupole setpoints or return to the old values?'</span>,<span class="string">'SETLOCOGAINS(''CorrectCoupling'')'</span>,<span class="string">'Keep this lattice'</span>,<span class="string">'Restore Old Lattice'</span>,<span class="string">'Keep this lattice'</span>);
+0351     <span class="keyword">if</span> strcmpi(CorrectFlag, <span class="string">'Restore Old Lattice'</span>) || isempty(CorrectFlag)
+0352         fprintf(<span class="string">'   Changing the skew quadrupole magnets back to the original setpoints.\n'</span>);
+0353         stepsp(<span class="string">'QT'</span>, QThw);
+0354     <span class="keyword">end</span>
+0355 
+0356 
+0357 <span class="keyword">elseif</span> any(strcmpi(CommandInput, <span class="string">'LOCO2Model'</span>))
+0358 
+0359     <span class="comment">% LOCO is usually used to correct the model.  If the LOCO fit parameters are</span>
+0360     <span class="comment">% not applied to the accelerator, then the entire model needs to be updated.</span>
+0361     <span class="comment">% Ie, the machine lattice file is the same as it was when the LOCO data was</span>
+0362     <span class="comment">% taken, then put the LOCO output settings in the model.</span>
+0363 
+0364     <span class="keyword">if</span> isempty(FileName) || strcmp(FileName, <span class="string">'.'</span>)
+0365         <span class="keyword">if</span> isempty(FileName)
+0366             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>, [getfamilydata(<span class="string">'Directory'</span>,<span class="string">'DataRoot'</span>), <span class="string">'LOCO'</span>, filesep]);
+0367         <span class="keyword">else</span>
+0368             [FileName, DirectoryName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'LOCO Output File Name?'</span>);
+0369         <span class="keyword">end</span>
+0370         drawnow;
+0371         <span class="keyword">if</span> isequal(FileName,0) || isequal(DirectoryName,0)
+0372             fprintf(<span class="string">'   setlocodata canceled\n'</span>);
+0373             <span class="keyword">return</span>
+0374         <span class="keyword">end</span>
+0375         FileName = [DirectoryName FileName];
+0376     <span class="keyword">end</span>
+0377 
+0378 
+0379     <span class="comment">% Load the LOCO data</span>
+0380     load(FileName);
+0381 
+0382 
+0383     <span class="comment">% Use loco file for the lattice and the fit parameter</span>
+0384     <span class="comment">% Using everything in the loco lattice may not be what you want!</span>
+0385     <span class="keyword">global</span> THERING
+0386     <span class="comment">%RINGData.Lattice = THERING;</span>
+0387     <span class="keyword">for</span> i = 1:length(FitParameters(end).Params)
+0388         RINGData = locosetlatticeparam(RINGData, FitParameters(end).Params{i}, FitParameters(end).Values(i));
+0389     <span class="keyword">end</span>
+0390     THERING = RINGData.Lattice;
+0391 
+0392 
+0393     <span class="comment">% Since the lattice may have changed</span>
+0394     <span class="comment">%updateatindex;</span>
+0395 
+0396 
+0397     <span class="comment">% Set the model gains (this added GCR field to lattice)</span>
+0398     <a href="setlocodata.html" class="code" title="function setlocodata(CommandInput, FileName)">setlocodata</a>(<span class="string">'SetGains'</span>, FileName);
+0399 
+0400 <span class="keyword">else</span>
+0401 
+0402     error(<span class="string">'   '</span>);
+0403 
+0404 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:29:18 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

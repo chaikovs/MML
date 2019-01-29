@@ -1,0 +1,41 @@
+QuadLinearPass
+Required:  Length, K
+Optional:  R1, R2, T1, T2
+
+
+BendLinearPass (with optional fields Replaces BendLinearFringeTiltPass)
+Required:  BendingAngle, EntranceAngle, ExitAngle, Length
+Optional:  K, ByError, FullGap, FieldInt, R1, R2, T1, T2
+
+
+
+Testing 
+ 
+BendLinearPass (1.3) No fringe, No MA              with       BendLinearPass(1.2)
+
+BendLinearPass (1.3) Fringe, MA                    with       BendLinearFringeTiltPass(1.2) Fringe, MA
+
+QuadLinearPass (1.3)         MA                    with       QuadLinearPass(1.2) MA
+
+StrMPoleSymplectic4Pass (1.3) MA                   with       StrMPoleSymplectic4Pass (1.2) MA
+
+StrMPoleSymplectic4RadPass (1.3)                   with       StrMPoleSymplectic4RadPass (1.2)
+
+BndMPoleSymplectic4Pass (1.3)  No Fringe, MA       with       BndMPoleSymplectic4Pass (1.2)
+
+BndMPoleSymplectic4RadPass (1.3)  No Fringe, MA    with       BndMPoleSymplectic4RadPass (1.2)
+
+DriftPass (1.3)                                    with       DriftPass (1.2)
+
+ThinMPolePass (1.3)                                with       ThinMPolePass (1.2)
+
+AperturePass (1.3)                                 with       AperturePass (1.2)
+
+IdentityPass (1.3)                                 with       IdentityPass (1.2)
+
+CavityPass   (1.3)    L=0                          with       ThinCavityPass (1.2) L=0
+
+CavityPass   (1.3)    L~=0                         with       ThinCavityPass (1.2) L~=0
+
+Make sure ThinCavityPass and cavityPass are the same in (1.3)
+

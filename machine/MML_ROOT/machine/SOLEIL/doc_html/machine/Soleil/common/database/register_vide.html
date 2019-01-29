@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of register_vide</title>
+  <meta name="keywords" content="register_vide">
+  <meta name="description" content="%">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../../../index.html">Home</a> &gt;  <a href="#">machine</a> &gt; <a href="#">Soleil</a> &gt; <a href="../index.html">common</a> &gt; <a href="index.html">database</a> &gt; register_vide.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../../../index.html"><img alt="<" border="0" src="../../../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for machine/Soleil/common/database&nbsp;<img alt=">" border="0" src="../../../../right.png"></a></td></tr></table>-->
+
+<h1>register_vide
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>%</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function register_vide </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function register_vide</a>
+0002 
+0003 <span class="comment">%%</span>
+0004 dbserver = <span class="string">'sys/database/dbds'</span>;
+0005 serverName = <span class="string">'statecomposer/ANS-VI'</span>;
+0006 className = <span class="string">'StateComposer'</span>;
+0007 
+0008 deviceName = 
+0009 {
+0010 <span class="string">'ANS/VI/STATECOMPOSER.1'</span>,
+0011 <span class="string">'ANS-C01/VI/STATECOMPOSER.1'</span>,
+0012 <span class="string">'ANS-C02/VI/STATECOMPOSER.1'</span>,
+0013 <span class="string">'ANS-C03/VI/STATECOMPOSER.1'</span>,
+0014 <span class="string">'ANS-C04/VI/STATECOMPOSER.1'</span>,
+0015 <span class="string">'ANS-C05/VI/STATECOMPOSER.1'</span>,
+0016 <span class="string">'ANS-C06/VI/STATECOMPOSER.1'</span>,
+0017 <span class="string">'ANS-C07/VI/STATECOMPOSER.1'</span>,
+0018 <span class="string">'ANS-C08/VI/STATECOMPOSER.1'</span>,
+0019 <span class="string">'ANS-C09/VI/STATECOMPOSER.1'</span>,
+0020 <span class="string">'ANS-C10/VI/STATECOMPOSER.1'</span>,
+0021 <span class="string">'ANS-C11/VI/STATECOMPOSER.1'</span>,
+0022 <span class="string">'ANS-C12/VI/STATECOMPOSER.1'</span>,
+0023 <span class="string">'ANS-C13/VI/STATECOMPOSER.1'</span>,
+0024 <span class="string">'ANS-C14/VI/STATECOMPOSER.1'</span>,
+0025 <span class="string">'ANS-C15/VI/STATECOMPOSER.1'</span>,
+0026 <span class="string">'ANS-C16/VI/STATECOMPOSER.1'</span>
+0027 }
+0028 
+0029 
+0030 <span class="keyword">for</span> k=1:3,
+0031     deviceName = [<span class="string">'LT2/VI/JPEN.'</span> num2str(k)];
+0032      tango_command_inout2(dbserver,<span class="string">'DbAddDevice'</span>,{serverName,deviceName,className})
+0033 <span class="comment">%     tango_command_inout(dbserver,'DbDeleteDevice',deviceName);</span>
+0034 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 21-May-2007 15:35:27 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>
